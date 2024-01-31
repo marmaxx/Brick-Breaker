@@ -20,7 +20,7 @@ public class View extends JFrame {
     }
     
     /**
-     * @return
+     * 
      * gameZone.setLayout(null) is necessary, it appears that if this line of code isn't there 
      * gameZone inherits the Layout of View and it creates unexpected results
      */

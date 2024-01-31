@@ -7,7 +7,7 @@ public class GameGraphicsFactory {
 	
 	public GameGraphicsFactory() {
 		//beginning of paddle implementation
-		Paddle paddle = new Paddle(200,300);
+		Paddle paddle = new Paddle(680,700);
 		View.GameView.add(paddle);
 		//end of paddle implementation
 	}

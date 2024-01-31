@@ -11,8 +11,8 @@ public class Paddle extends JPanel {
     public Paddle(int x, int y) {
         this.x=x;
         this.y=y;
-        setBounds(x, y, WIDTH, HEIGHT); // Set the bounds of the JPanel
-        setOpaque(false); // Make the JPanel transparent
+        setBounds(x, y, WIDTH, HEIGHT); // Set the bounds of the Paddle 
+        setOpaque(false); //makes it non transparent
     }
 
     public Paddle(Color color, int x, int y) {
@@ -25,7 +25,7 @@ public class Paddle extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(color);
-        g.fillRect(1, 1, WIDTH, HEIGHT); // Draw the rectangle at (0, 0)
+        g.fillRect(0, 0, WIDTH, HEIGHT); //Displays a rectangle representing the paddle
         
     }
 }
