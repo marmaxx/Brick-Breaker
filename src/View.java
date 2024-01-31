@@ -6,13 +6,13 @@ import java.awt.*;
 public class View extends JFrame {
 	public static JPanel GameView; //to be able to add/manipulate graphical elements to the game
     
-	Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize(); // get the size of the screen
+	static Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize(); // get the size of the screen
     
     public View(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Breakout");
         setLayout(new BorderLayout()); // set Layout Manager of JFrame to Border Layout
-        setSize(ScreenSize); // set the size of the Frame to size of screen
+        setSize(SCREEN_SIZE); // set the size of the Frame to size of screen
         
         GameView=GameZone();
         this.add(GameView, BorderLayout.CENTER); // Add game zone JPanel to the center of the Frame
