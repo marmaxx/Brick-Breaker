@@ -1,28 +1,31 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import javax.swing.JComponent;
+import javax.swing.*;
+import java.awt.*;
 
+public class Paddle extends JPanel {
+    private static final int WIDTH = 100;
+    private static final int HEIGHT = 20;
+    private int x = 300;
+    private int y = 200;
+    private Color color = java.awt.Color.RED;
 
-public class Paddle extends JComponent {
-    private static final int WIDTH = 100; //refactor it to lowercase if we implement a powerup that modifies width
-    private static final int HEIGHT = 20; 
-    private Rectangle paddleRectangle;
+    public Paddle(int x, int y) {
+        this.x=x;
+        this.y=y;
+        setBounds(x, y, WIDTH, HEIGHT); // Set the bounds of the JPanel
+        setOpaque(false); // Make the JPanel transparent
+    }
 
-
-    public Paddle() {
-        paddleRectangle = new Rectangle(200, 300, WIDTH, HEIGHT);
-        setOpaque(false); 
+    public Paddle(Color color, int x, int y) {
+        this(x, y);
+        this.color = color;
     }
 
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLUE);
-        g.fillRect(paddleRectangle.x, paddleRectangle.y, paddleRectangle.width, paddleRectangle.height);
+        g.setColor(color);
+        g.fillRect(1, 1, WIDTH, HEIGHT); // Draw the rectangle at (0, 0)
+        
     }
-
-
-	    
 }
