@@ -112,5 +112,3 @@ functionName(type: arg1, objectType|null: arg2) : returnType1 | returnType2 // (
     executeFunction();
 }
 ```
-
-Un checkstyle avec le .xml correspondant se situant dans le dossier du projet a également été utilisé.
