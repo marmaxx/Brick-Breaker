@@ -11,8 +11,9 @@ Groupe AD1a :
 
 Informations pour les développeurs:
 
-⚠️ Le projet a été traduit en anglais par convention,
-pour des raisons de compréhension, le README.md sera en français.
+⚠️ Le projet utilise l'anglais américain par convention
+pour des raisons de compréhension et pour plus de facilité,
+le français est utilisé dans les fichiers .md et sur gitlab.
 
 Le Casse-Brique est un jeu vidéo classique.
 Contrôlez une plateforme afin de ne pas laissez le boulet tomber,
@@ -35,14 +36,6 @@ Ce projet a été réalisé en mode projet dans un contexte scolaire. Il a été
       - [Interface Graphique utilisateur](#gui)
       - [Entitées](#modèle)
     - [Conventions et nomenclature](#conventions-et-nomenclature)
-- [Rapports](#Rapports-des-réunions)
-  - [à déterminer](#première-réunion)
-  - [à déterminer](#deuxième-réunion)
-  - [à déterminer](#troisième-réunion)
-  - [à déterminer](#quatrième-réunion)
-  - [à déterminer](#cinquième-réunion)
-  - [à déterminer](#sixième-réunion)
-
 
 ## Développer sur Casse Brique
 
@@ -54,7 +47,7 @@ Requis:
 Étape 1: Cloner le projet (avec les droits requis)
 
 ```bash
-git clone https://gaufre.informatique.univ-paris-diderot.fr/xun/todump.git
+git clone https://gaufre.informatique.univ-paris-diderot.fr/labbi/casse-brique-groupe-ad1a.git
 ```
 (marche également dans le terminal de Visual Studio Code)
 
@@ -79,21 +72,21 @@ git clone https://gaufre.informatique.univ-paris-diderot.fr/xun/todump.git
 
 ### Comment l'application est structurée
 
-#### Configuration
+#### package1
 
-Les fichiers dans le dossier config servent à la création de la map et du labyrinth.
+404
 
-#### Géométrie
+#### package2
 
-Les fichiers dans le dossier geometry permettent la gestion des coordonnées sur le labyrinth et les entitées.
+404
 
-#### GUI
+#### package3
 
-Dossier principal gui qui contient les fichiers essentiels pour le lancement du jeu et la partie interface graphique.
+404 
 
-#### Modèle
+#### package4
 
-Contient entitées et leur gestion.
+404
 
 ### Conventions et nomenclature
 
@@ -121,26 +114,3 @@ functionName(type: arg1, objectType|null: arg2) : returnType1 | returnType2 // (
 ```
 
 Un checkstyle avec le .xml correspondant se situant dans le dossier du projet a également été utilisé.
-
-
-# Rapports des Réunions
-
-## Première Réunion
-
-TÂCHES COMMUNES :
-
-TÂCHES PERSONNELLES : 
-
-
-## Deuxième Réunion
-
-
-## Troisième Réunion
-
-## Quatrième Réunion
-
-  - COMMUNE : Test + javadoc
-
-## Cinquième Réunion
-
-## Sixième Réunion
