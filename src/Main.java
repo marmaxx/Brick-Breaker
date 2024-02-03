@@ -9,12 +9,5 @@ public class Main {
         // Create new thread to stat new view
         SwingUtilities.invokeLater(() -> new GameFrame());
         SwingUtilities.invokeLater(()-> new GameGraphicsFactory());
-        /*
-        BrickBreaker game = new BrickBreaker(gameFrame);
-        game.init();
-        gameFrame.add(game);
-        gameFrame.setVisible(true);
-        game.render(); 
-         */
     }
 }

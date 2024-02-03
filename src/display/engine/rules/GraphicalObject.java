@@ -4,12 +4,12 @@ public abstract class GraphicalObject {
 
     protected int posX, posY;
     protected int scaleX, scaleY;
-    protected int red, blue, green;
+    protected float red, blue, green;
     
     public GraphicalObject(
         int posX, int posY,
         int scaleX, int scaleY,
-        int red, int blue, int green
+        float red, float blue, float green
     ) {
         this.posX = posX;
         this.posY = posY;
@@ -52,27 +52,27 @@ public abstract class GraphicalObject {
         this.scaleY = scaleY;
     }
 
-    public int getRed() {
+    public float getRed() {
         return this.red;
     }
 
-    public void setRed(int red) {
+    public void setRed(float red) {
         this.red = red;
     }
 
-    public int getBlue() {
+    public float getBlue() {
         return this.blue;
     }
 
-    public void setBlue(int blue) {
+    public void setBlue(float blue) {
         this.blue = blue;
     }
 
-    public int getGreen() {
+    public float getGreen() {
         return this.green;
     }
 
-    public void setGreen(int green) {
+    public void setGreen(float green) {
         this.green = green;
     }
 }
