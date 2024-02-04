@@ -24,18 +24,19 @@ Ce projet a été réalisé en mode projet dans un contexte scolaire. Il a été
 
 ## Table des matières
 
+- [Casse brique groupe AD1a](#casse-brique-groupe-ad1a)
 - [Casse Brique](#casse-brique)
-  - [Table of contents](#table-des-matières)
-  - [Développer sur Convergence](#développer-sur-Casse-Brique)
-  - [À faire](#à-faire)
-    - [Optionnel (futur)](#optionnel)
-  - [Documentation](#documentation)
-    - [Comment l'application est structurée](#comment-lapplication-est-structurée)
-      - [Configuration](#configuration)
-      - [Géometrie](#géométrie)
-      - [Interface Graphique utilisateur](#gui)
-      - [Entitées](#modèle)
-    - [Conventions et nomenclature](#conventions-et-nomenclature)
+	- [Table des matières](#table-des-matières)
+	- [Développer sur Casse Brique](#développer-sur-casse-brique)
+	- [À faire](#à-faire)
+		- [Optionnel](#optionnel)
+	- [Documentation](#documentation)
+		- [Comment l'application est structurée](#comment-lapplication-est-structurée)
+			- [package1](#package1)
+			- [package2](#package2)
+			- [package3](#package3)
+			- [package4](#package4)
+		- [Conventions et nomenclature](#conventions-et-nomenclature)
 
 ## Développer sur Casse Brique
 
@@ -49,16 +50,23 @@ Requis:
 ```bash
 git clone https://gaufre.informatique.univ-paris-diderot.fr/labbi/casse-brique-groupe-ad1a.git
 ```
+
 (marche également dans le terminal de Visual Studio Code)
 
 Étape 2: Aller dans le dossier du projet
 
 Étape 3: à déterminer
 
-
 ## À faire
 
-- 404
+- Propreté du code:
+  - Commenter le code
+  - Encapsuler les variables et les méthodes au maximum
+  - Changer les types de variables pour rendre le polymorphisme plus évident
+- Jeu:
+  - Régler le bug qui cache les objets à partir d'une certaine position relative à la taille de l'objet
+  - Ajouter le système de vitesse, de direction de la balle (via calcul des angles, vecteurs et rebonds)
+  - Ajouter le système de collisions avec les briques et les bords de l'écran
 
 ### Optionnel
 
@@ -82,7 +90,7 @@ git clone https://gaufre.informatique.univ-paris-diderot.fr/labbi/casse-brique-g
 
 #### package3
 
-404 
+404
 
 #### package4
 
@@ -92,10 +100,14 @@ git clone https://gaufre.informatique.univ-paris-diderot.fr/labbi/casse-brique-g
 
 ```java
 /**
- * javadoc
- *
+ * What the function does
+ * 
+ * @param type arg1 the first argument
+ * @param objectType arg2 the second argument
+ * 
+ * @return void
  */
-functionName(type: arg1, objectType|null: arg2) : returnType1 | returnType2 // (en camelCase)
+public void functionName(Type arg1, ObjectType arg2){
 {
     // Si la condition est vraie, [...] (expliquer le sens)
     if(condition){

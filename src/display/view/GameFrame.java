@@ -1,35 +1,65 @@
 package display.view;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import java.awt.*;
 
 public class GameFrame extends JFrame {
-	public static JPanel GameView; //to be able to add/manipulate graphical elements to the game
+	public static final Color INTERFACE_BACKGROUND = Color.BLUE;
+
+	private GamePanel gamePanel;
     
-	public static Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize(); // get the size of the screen
-    
-    public GameFrame() {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Breakout");
-        setLayout(new BorderLayout()); // set Layout Manager of JFrame to Border Layout
-        setSize(SCREEN_SIZE); // set the size of the Frame to size of screen
-        
-        GameView=GameZone();
-        this.add(GameView, BorderLayout.CENTER); // Add game zone JPanel to the center of the Frame
-        this.setVisible(true); // set the Frame to visible
-    }
-    
-    /**
-     * 
-     * gameZone.setLayout(null) is necessary, it appears that if this line of code isn't there 
-     * gameZone inherits the Layout of View and it creates unexpected results
-     */
-    public JPanel GameZone(){
-        JPanel gameZone = new JPanel(); // create new JPanel for the game zone 
-        gameZone.setBackground(new Color(153,153,153));
-        gameZone.setLayout(null); 
-        return gameZone;
-    }
+	/**
+	 * Instantiates a new GameFrame
+	 * 
+	 * @param title The title of the frame
+	 */
+    public GameFrame(String title) {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle(title);
+
+        this.setLayout(new GridLayout(1, 1)); 
+
+		this.getContentPane().setBackground(GameFrame.INTERFACE_BACKGROUND);
+
+		this.setGamePanel(new GamePanel(this));
+		this.getContentPane().add(this.getGamePanel());
+
+		this.pack();
+		this.setVisible(true);
+	}
+
+	/**
+	 * Instantiates a new GameFrame
+	 */
+	public GameFrame() {
+		this("Fenêtre de jeu vide");
+	}
+
+	/**
+	 * Get the game panel attached to the frame
+	 * 
+	 * @return The game panel attached to the frame
+	 */
+	public GamePanel getGamePanel() {
+		return this.gamePanel;
+	}
+
+	/**
+	 * Set the game panel to attach to the frame
+	 * 
+	 * @param gamePanel The game panel to attach to the frame
+	 */
+	private void setGamePanel(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
+	}
+
+	/**
+	 * Set the background color of the game panel
+	 * 
+	 * @param color The color to set
+	 */
+	public void setGamePanelColor(Color color) {
+		this.getGamePanel().setBackground(color);
+	}
 }

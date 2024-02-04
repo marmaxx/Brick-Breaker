@@ -5,23 +5,22 @@ import java.awt.Graphics;
 
 import display.engine.shapes.rules.Shape;
 
-public class Rectangle extends Shape {
+public class Circle extends Shape {
 	
 	/**
-	 * Instantiates a new Rectangle
+	 * Instantiates a new Circle
 	 * 
 	 * @param posX the initial x position of the graphical object
 	 * @param posY the initial y position of the graphical object
-	 * @param width the width of the graphical object
-	 * @param height the height of the graphical object
+	 * @param size the size of the graphical object
 	 * @param color the color of the graphical object (ignored if the graphical object is represented by an image)
 	 */
-    public Rectangle(
+    public Circle(
         int posX, int posY,
-        int width, int height,
+        int size,
 		Color color
     ) {
-        super(posX, posY, width, height, color);
+        super(posX, posY, size, size, color);
     }
 	
 	/**
@@ -30,6 +29,6 @@ public class Rectangle extends Shape {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.fillRect(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight());
+        g.fillOval(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight());
     }  
 }

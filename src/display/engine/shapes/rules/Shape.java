@@ -1,14 +1,13 @@
-package display.engine.shapes;
+package display.engine.shapes.rules;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
-import display.engine.shapes.rules.Shape;
+import display.engine.rules.GraphicalObject;
 
-public class Rectangle extends Shape {
-	
+public abstract class Shape extends GraphicalObject {
+
 	/**
-	 * Instantiates a new Rectangle
+	 * Instantiates a new Shape
 	 * 
 	 * @param posX the initial x position of the graphical object
 	 * @param posY the initial y position of the graphical object
@@ -16,20 +15,12 @@ public class Rectangle extends Shape {
 	 * @param height the height of the graphical object
 	 * @param color the color of the graphical object (ignored if the graphical object is represented by an image)
 	 */
-    public Rectangle(
+    public Shape(
         int posX, int posY,
         int width, int height,
-		Color color
+        Color color
     ) {
         super(posX, posY, width, height, color);
     }
-	
-	/**
-	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
-	 */
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.fillRect(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight());
-    }  
+
 }

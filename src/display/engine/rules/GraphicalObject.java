@@ -1,78 +1,135 @@
 package display.engine.rules;
 
-public abstract class GraphicalObject {
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JComponent;
+
+public abstract class GraphicalObject extends JComponent{
 
     protected int posX, posY;
-    protected int scaleX, scaleY;
-    protected float red, blue, green;
+    protected int width, height;
+	protected Color color;
     
+	/**
+	 * Instantiates a new GraphicalObject
+	 * 
+	 * @param posX the initial x position of the graphical object
+	 * @param posY the initial y position of the graphical object
+	 * @param width the width of the graphical object
+	 * @param height the height of the graphical object
+	 * @param color the color of the graphical object (ignored if the graphical object is represented by an image)
+	 */
     public GraphicalObject(
         int posX, int posY,
-        int scaleX, int scaleY,
-        float red, float blue, float green
+        int width, int height,
+		Color color
     ) {
-        this.posX = posX;
-        this.posY = posY;
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
-        this.red = red;
-        this.blue = blue;
-        this.green = green;
+		this.setPosX(posX);
+		this.setPosY(posY);
+		this.setWidth(width);
+		this.setHeight(height);
+		this.setColor(color);
     }
 
-    public int getPosX() {
-        return posX;
-    }
+	/**
+	 * Gets the x position of the graphical object
+	 * 
+	 * @return The x position of the graphical object
+	 */
+	public int getPosX() {
+		return posX;
+	}
 
+	/**
+	 * Sets the x position of the graphical object
+	 * 
+	 * @param posX The x position of the graphical object
+	 */
     public void setPosX(int posX) {
         this.posX = posX;
     }
 
+	/**
+	 * Gets the y position of the graphical object
+	 * 
+	 * @return The y position of the graphical object
+	 */
     public int getPosY() {
         return posY;
     }
 
-    public void setPosy(int posY) {
+	/**
+	 * Sets the y position of the graphical object
+	 * 
+	 * @param posY The y position of the graphical object
+	 */
+    public void setPosY(int posY) {
         this.posY = posY;
     }
 
-    public int getScaleX() {
-        return scaleY;
+	/**
+	 * Gets the width of the graphical object
+	 * 
+	 * @return The width of the graphical object
+	 */
+    public int getWidth() {
+        return width;
     }
 
-    public void setScaleX(int scaleX) {
-        this.scaleX = scaleX;
+	/**
+	 * Sets the width of the graphical object
+	 * 
+	 * @param width The width of the graphical object
+	 */
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public int getScaleY() {
-        return scaleY;
+	/**
+	 * Gets the height of the graphical object
+	 * 
+	 * @return The height of the graphical object
+	 */
+    public int getHeight() {
+        return height;
     }
 
-    public void setScaleY(int scaleY) {
-        this.scaleY = scaleY;
+	/**
+	 * Sets the height of the graphical object
+	 * 
+	 * @param height The height of the graphical object
+	 */
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public float getRed() {
-        return this.red;
-    }
+	/**
+	 * Gets the color of the graphical object
+	 * 
+	 * @return The color of the graphical object
+	 */
+	public Color getColor() {
+		return color;
+	}
 
-    public void setRed(float red) {
-        this.red = red;
-    }
-
-    public float getBlue() {
-        return this.blue;
-    }
-
-    public void setBlue(float blue) {
-        this.blue = blue;
-    }
-
-    public float getGreen() {
-        return this.green;
-    }
-
-    public void setGreen(float green) {
-        this.green = green;
-    }
+	/**
+	 * Sets the color of the graphical object
+	 * 
+	 * @param color The color of the graphical object
+	 */
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	/**
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+        g.setColor(this.getColor());
+		this.setLocation(posX, posY);
+		this.setSize(width, height);
+	}
 }
