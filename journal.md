@@ -6,3 +6,4 @@ Tout le monde est là.
 
 - mettre en place projet gradle
 - projet exécutable minimal dans fenêtre graphique swing
+- 
