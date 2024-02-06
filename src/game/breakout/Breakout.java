@@ -33,11 +33,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().move(Player.Direction.LEFT);
+						getPlayer().move(Player.Direction.LEFT);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-					Breakout.this.getPlayer().move(Player.Direction.RIGHT);
+						getPlayer().move(Player.Direction.RIGHT);
 						break;
 					case KeyEvent.VK_SPACE:
 						System.out.println("Touche espace pressée");
