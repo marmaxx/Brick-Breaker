@@ -51,7 +51,7 @@ public abstract class Image extends GraphicalObject {
 	 */
 	public void paintComponent(java.awt.Graphics g){
 		super.paintComponent(g);
-		g.drawImage(this.getImage(), this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), null);
+		g.drawImage(this.getImage(), 0, 0, null);
 	}
 
 }
