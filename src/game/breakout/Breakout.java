@@ -137,7 +137,7 @@ public class Breakout extends Game{
 	@Override
 	public void update() {
 		super.update();
-
+		this.getBall().update();
 		// TODO Update game logic
 	}
 
