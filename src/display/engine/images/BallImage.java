@@ -19,11 +19,11 @@ public class BallImage extends Image {
 	 * @param color The color of the graphical object (ignored but used to call the super constructor)
 	 */
     public BallImage(String fileName,
-        int posX, int posY,
+        double posX, double posY,
         int width, int height,
 		Color color
     ) {
-        super(new ImageIcon(fileName).getImage(), posX, posY, width, height, color);
+        super(new ImageIcon(fileName).getImage(), (int)posX, (int)posY, width, height, color);
     }
 
 	/**
@@ -35,7 +35,7 @@ public class BallImage extends Image {
 	 * @param height The height of the graphical object
 	 * @param color The color of the graphical object (ignored but used to call the super constructor)
 	 */
-	public BallImage(int posX, int posY, int width, int height, Color color) {
+	public BallImage(double posX, double posY, int width, int height, Color color) {
 		this(DEFAULT_IMAGE, posX, posY, width, height, color);
 	}
 }
