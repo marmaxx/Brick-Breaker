@@ -1,6 +1,7 @@
 package game.rules;
 
 import display.view.GamePanel;
+import game.breakout.Breakout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -126,6 +127,7 @@ public abstract class Game{
 		Timer timer = new Timer(1, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game.this.update();
+
 			}
 		});
 		timer.start();

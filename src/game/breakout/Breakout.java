@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import display.view.GameFrame;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
+import game.breakout.entities.Player.Direction;
 import game.breakout.entities.rules.Entity;
 import game.rules.Game;
 
@@ -33,11 +34,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						getPlayer().move(Player.Direction.LEFT);
+						getPlayer().setDirection(Direction.LEFT);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						getPlayer().move(Player.Direction.RIGHT);
+						getPlayer().setDirection(Direction.RIGHT);
 						break;
 					case KeyEvent.VK_SPACE:
 						System.out.println("Touche espace pressée");
@@ -50,6 +51,7 @@ public class Breakout extends Game{
 
 			@Override
 			public void keyReleased(KeyEvent e) {
+				getPlayer().setDirection(Direction.NONE);
 			}
 
 			@Override
@@ -137,7 +139,7 @@ public class Breakout extends Game{
 	@Override
 	public void update() {
 		super.update();
-
+		getPlayer().update();
 		// TODO Update game logic
 	}
 

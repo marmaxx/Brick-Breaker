@@ -12,8 +12,10 @@ public class Player extends Entity {
 	public static final int DEFAULT_POS_Y = 300;
 	public static final int MOVE_STEP = 10;
 
+	private Direction direction=Direction.NONE;  //current player direction
+
 	public static enum Direction {
-		LEFT, RIGHT
+		LEFT, RIGHT, NONE
 	}
 
 	/**
@@ -59,6 +61,13 @@ public class Player extends Entity {
 	public Player() {
 		this(DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE, DEFAULT_COLOR);
 	}
+	
+	/**
+	 * Instantiates a new Player
+	 */
+	public void setDirection(Direction d) {
+		this.direction=d;
+	}
 
 	/**
 	 * Moves the player in the specified direction
@@ -74,6 +83,11 @@ public class Player extends Entity {
 			case RIGHT:
 				this.getRepresentation().setPosX(this.getRepresentation().getPosX() + MOVE_STEP);
 				break;
+			case NONE:break;
 		}
+	}
+	
+	public void update(){
+		this.move(direction);
 	}
 }
