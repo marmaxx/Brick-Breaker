@@ -30,6 +30,7 @@ public abstract class GraphicalObject extends JComponent{
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setColor(color);
+
     }
 
 	/**

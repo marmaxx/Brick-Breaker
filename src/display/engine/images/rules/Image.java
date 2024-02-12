@@ -23,7 +23,8 @@ public abstract class Image extends GraphicalObject {
         Color color
     ) {
         super(posX, posY, width, height, color);
-		this.setImage(image);
+		java.awt.Image scaledImage = image.getScaledInstance(getWidth(), getHeight(), java.awt.Image.SCALE_SMOOTH);
+		this.setImage(scaledImage);
     }
 
 	/**
@@ -51,7 +52,8 @@ public abstract class Image extends GraphicalObject {
 	 */
 	public void paintComponent(java.awt.Graphics g){
 		super.paintComponent(g);
-		g.drawImage(this.getImage(), 0, 0, null);
+		g.drawImage(this.getImage(), 0, 0 , null);
+		
 	}
 
 }

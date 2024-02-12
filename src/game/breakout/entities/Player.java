@@ -11,17 +11,13 @@ import game.breakout.entities.rules.Entity;
 
 public class Player extends Entity {
 	public static final Color DEFAULT_COLOR = Color.WHITE;
-	public static final int DEFAULT_SIZE = 100;
+	public static final int DEFAULT_SIZE = 64; //the size of the paddle image
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
 	public static final int MOVE_STEP = 10;
 	private boolean moving_left;
 	private boolean moving_right;
-	private Direction direction=Direction.NONE;  //current player direction
 
-	public static enum Direction {
-		LEFT, RIGHT, NONE
-	}
 
 	/**
 	 * Instantiates a new Player
@@ -80,22 +76,23 @@ public class Player extends Entity {
 	public void stopMovingLeft(){
 		this.moving_left=false;
 	}
-    private void moveLeft() {
-        int newX = this.getRepresentation().getPosX() - MOVE_STEP;
-        if (newX < 0) {
-                newX = 0; // Prevent the paddle from moving off the screen
-            }
-            this.getRepresentation().setPosX(this.getRepresentation().getPosX() - MOVE_STEP);
-        }
 
-        private void moveRight() {
-        	Dimension SCREEN_SIZE = GamePanel.SCREEN_FULL_SIZE;
-            int newX = this.getRepresentation().getPosX() + MOVE_STEP;
-            if (newX > SCREEN_SIZE.width - this.DEFAULT_SIZE) {
-                newX = SCREEN_SIZE.width - this.DEFAULT_SIZE; // Prevent the paddle from moving off the screen
-            }
-            this.getRepresentation().setPosX(this.getRepresentation().getPosX() + MOVE_STEP);
+    private void moveLeft() {
+        int newX = this.getRepresentation().getPosX() - MOVE_STEP; //to check if the paddle is going to go out of bounds
+        if (newX < 0) {
+            newX = 0; // Prevent the paddle from moving off the screen
         }
+        this.getRepresentation().setPosX(newX);
+    }
+
+    private void moveRight() {
+        Dimension SCREEN_SIZE = GamePanel.SCREEN_FULL_SIZE; //to check if the paddle is going out of bounds (to the right of the screen)
+        int newX = this.getRepresentation().getPosX() + MOVE_STEP;
+        if (newX > SCREEN_SIZE.width - DEFAULT_SIZE) {
+            newX = SCREEN_SIZE.width - DEFAULT_SIZE; // Prevent the paddle from moving off the screen
+        }
+        this.getRepresentation().setPosX(newX);
+    }
 
 	public void update(){ 
 		if(moving_right) {

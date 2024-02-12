@@ -131,25 +131,8 @@ public class Ball extends Entity {
     public void brickCollision(){}
 
     public void move(){
-		//System.out.println("Delta time: "+DELTA_TIME);
-		//System.out.println("forceX :"+forceX);
-		//System.out.println("forceY :"+forceY);
-		//System.out.println("Mass :"+MASS);
-		//System.out.println();
 		double x = Math.pow(DELTA_TIME,2)*forceX/MASS;
 		double y = Math.pow(DELTA_TIME,2)*forceY/MASS;
-		//System.out.println("x :"+x);
-		//System.out.println("y :"+y);
-		//System.out.println();
-		//System.out.println("posX :"+posX);
-		//System.out.println("posY :"+posY);
-		//System.out.println();
-        /*double x = forceX/MASS;
-        double y = forceY/MASS;
-        double x1 = DELTA_TIME*x;
-        double y1 = DELTA_TIME*y;
-        double x2 = DELTA_TIME*x1;
-        double y2 = DELTA_TIME*y1;*/
 		
 		setPos(posX + x, posY + y);
     }
