@@ -4,6 +4,7 @@ import display.engine.images.BallImage;
 import game.breakout.entities.rules.Entity;
 import display.view.GamePanel;
 import display.engine.shapes.Circle;
+import java.util.*;
 
 public class Ball extends Entity {
 	public static final Color DEFAULT_COLOR = Color.RED;
@@ -103,8 +104,8 @@ public class Ball extends Entity {
         return false;
     }
 
-    /* Method to check if the Ball is touching the Paddle 
-    public boolean touchPaddle(Paddle paddle){ 
+    // Method to check if the Ball is touching the Paddle 
+    /*public boolean touchPaddle(Player paddle){ 
     	Rectangle paddleBounds = paddle.getBounds();
     	Rectangle myBounds = this.getBounds();
         return myBounds.intersects(paddleBounds);
@@ -140,10 +141,14 @@ public class Ball extends Entity {
 	/*public void update(){
 		this.move();
 	}*/
-
-	public void update(){ //actualisation des conditions physiques impactant la balle
-    	Ball ball = this;
-    	//TODO: put all of these in a update method in Ball and just call it here
+	
+	public void update(Player player){ //actualisation des conditions physiques impactant la balle
+	Ball ball = this;
+	Timer timer = new Timer();
+	TimerTask task = new TimerTask() {
+		@Override
+		public void run(){
+    	//TODO : ajuster les fonctions appelées a la classe player au lieu de paddle
         /*if (ball.touchPaddle(paddle)){
             ball.paddleCollision();
         }*/
@@ -158,6 +163,10 @@ public class Ball extends Entity {
         
         
         //paddle.update();
+		}
+	};
+	timer.schedule(task,0,20);
+    	
         
     }
 

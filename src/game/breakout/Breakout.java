@@ -142,7 +142,7 @@ public class Breakout extends Game{
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run(){
-				ball.update();
+				ball.update(player);
 			}
 		};
 		timer.schedule(task,0,20);
@@ -155,7 +155,7 @@ public class Breakout extends Game{
 	public void update() {
 		super.update();
 		this.getPlayer().update();
-		this.getBall().update();
+		this.getBall().update(player);
 
 		// TODO Update game logic
 	}
