@@ -7,7 +7,7 @@ import display.engine.shapes.Circle;
 
 public class Ball extends Entity {
 	public static final Color DEFAULT_COLOR = Color.RED;
-	public static final int DEFAULT_SIZE = 20;
+	public static final int DEFAULT_SIZE = 30;
 	public static final double DEFAULT_POS_X = 0;
 	public static final double DEFAULT_POS_Y = 0;
 	public double posX, posY;
@@ -32,8 +32,8 @@ public class Ball extends Entity {
         int size,
 		Color color
     ) {
-		super(new Circle((int)posX, (int)posY, size, color));
-        // super(new BallImage(posX, posY, size, size, color));
+		//super(new Circle((int)posX, (int)posY, size, color));
+        super(new BallImage(posX, posY, size, size, color));
     }
 
 	/**
@@ -73,6 +73,8 @@ public class Ball extends Entity {
 	}
 
 	public void setPos(double x, double y){
+		this.getRepresentation().setPosX((int)x);
+		this.getRepresentation().setPosY((int)y);
 		posX = x;
 		posY = y;
 	}
@@ -129,14 +131,26 @@ public class Ball extends Entity {
     public void brickCollision(){}
 
     public void move(){
+		//System.out.println("Delta time: "+DELTA_TIME);
+		//System.out.println("forceX :"+forceX);
+		//System.out.println("forceY :"+forceY);
+		//System.out.println("Mass :"+MASS);
+		//System.out.println();
 		double x = Math.pow(DELTA_TIME,2)*forceX/MASS;
 		double y = Math.pow(DELTA_TIME,2)*forceY/MASS;
+		//System.out.println("x :"+x);
+		//System.out.println("y :"+y);
+		//System.out.println();
+		//System.out.println("posX :"+posX);
+		//System.out.println("posY :"+posY);
+		//System.out.println();
         /*double x = forceX/MASS;
         double y = forceY/MASS;
         double x1 = DELTA_TIME*x;
         double y1 = DELTA_TIME*y;
         double x2 = DELTA_TIME*x1;
         double y2 = DELTA_TIME*y1;*/
+		
 		setPos(posX + x, posY + y);
     }
 

@@ -11,7 +11,7 @@ public class Player extends Entity {
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
 	public static final int MOVE_STEP = 10;
-
+	
 	private Direction direction=Direction.NONE;  //current player direction
 
 	public static enum Direction {
