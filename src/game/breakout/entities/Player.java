@@ -1,8 +1,12 @@
 package game.breakout.entities;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.text.View;
 
 import display.engine.images.PaddleImage;
+import display.view.GamePanel;
 import game.breakout.entities.rules.Entity;
 
 public class Player extends Entity {
@@ -11,7 +15,8 @@ public class Player extends Entity {
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
 	public static final int MOVE_STEP = 10;
-	
+	private boolean moving_left;
+	private boolean moving_right;
 	private Direction direction=Direction.NONE;  //current player direction
 
 	public static enum Direction {
@@ -31,7 +36,7 @@ public class Player extends Entity {
         int size,
 		Color color
     ) {
-		super(new PaddleImage(posX, posY, size*3, size, color));
+		super(new PaddleImage(posX, posY, size, size, color));
     }
 
 	/**
@@ -62,32 +67,42 @@ public class Player extends Entity {
 		this(DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE, DEFAULT_COLOR);
 	}
 	
-	/**
-	 * Instantiates a new Player
-	 */
-	public void setDirection(Direction d) {
-		this.direction=d;
-	}
 
-	/**
-	 * Moves the player in the specified direction
-	 * 
-	 * @param direction the direction in which the player should move
-	 * @see Direction
-	 */
-	public void move (Direction direction) {
-		switch (direction) {
-			case LEFT:
-				this.getRepresentation().setPosX(this.getRepresentation().getPosX() - MOVE_STEP);
-				break;
-			case RIGHT:
-				this.getRepresentation().setPosX(this.getRepresentation().getPosX() + MOVE_STEP);
-				break;
-			case NONE:break;
+	public void startMovingRight(){
+		this.moving_right=true;
+	}
+	public void startMovingLeft(){
+		this.moving_left=true;
+	}
+	public void stopMovingRight(){
+		this.moving_right=false;
+	}
+	public void stopMovingLeft(){
+		this.moving_left=false;
+	}
+    private void moveLeft() {
+        int newX = this.getRepresentation().getPosX() - MOVE_STEP;
+        if (newX < 0) {
+                newX = 0; // Prevent the paddle from moving off the screen
+            }
+            this.getRepresentation().setPosX(this.getRepresentation().getPosX() - MOVE_STEP);
+        }
+
+        private void moveRight() {
+        	Dimension SCREEN_SIZE = GamePanel.SCREEN_FULL_SIZE;
+            int newX = this.getRepresentation().getPosX() + MOVE_STEP;
+            if (newX > SCREEN_SIZE.width - this.DEFAULT_SIZE) {
+                newX = SCREEN_SIZE.width - this.DEFAULT_SIZE; // Prevent the paddle from moving off the screen
+            }
+            this.getRepresentation().setPosX(this.getRepresentation().getPosX() + MOVE_STEP);
+        }
+
+	public void update(){ 
+		if(moving_right) {
+			moveRight();
+		}else if(moving_left) {
+			moveLeft();
 		}
 	}
-	
-	public void update(){
-		this.move(direction);
-	}
+
 }

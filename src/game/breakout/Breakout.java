@@ -34,11 +34,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						getPlayer().setDirection(Direction.LEFT);
+						getPlayer().startMovingLeft();
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						getPlayer().setDirection(Direction.RIGHT);
+						getPlayer().startMovingRight();
 						break;
 					case KeyEvent.VK_SPACE:
 						System.out.println("Touche espace pressée");
@@ -51,7 +51,14 @@ public class Breakout extends Game{
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				getPlayer().setDirection(Direction.NONE);
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_LEFT:
+						getPlayer().stopMovingLeft();
+						break;
+					case KeyEvent.VK_RIGHT:
+						getPlayer().stopMovingRight();
+						break;
+				}
 			}
 
 			@Override
