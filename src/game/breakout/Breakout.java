@@ -1,6 +1,7 @@
 package game.breakout;
 
 import java.util.ArrayList;
+import java.util.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -137,6 +138,14 @@ public class Breakout extends Game{
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
 		this.getPanel().add(this.getBall().getRepresentation());
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run(){
+				ball.update();
+			}
+		};
+		timer.schedule(task,0,20);
 	}
 
 	/**

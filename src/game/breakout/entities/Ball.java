@@ -137,8 +137,28 @@ public class Ball extends Entity {
 		setPos(posX + x, posY + y);
     }
 
-	public void update(){
+	/*public void update(){
 		this.move();
-	}
+	}*/
+
+	public void update(){ //actualisation des conditions physiques impactant la balle
+    	Ball ball = this;
+    	//TODO: put all of these in a update method in Ball and just call it here
+        /*if (ball.touchPaddle(paddle)){
+            ball.paddleCollision();
+        }*/
+       /* else */if (ball.touchBrick()){
+            ball.brickCollision();
+        }
+        else if (ball.touchWall()){
+            ball.wallCollision();
+            
+        }
+        ball.move();
+        
+        
+        //paddle.update();
+        
+    }
 
 }
