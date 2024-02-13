@@ -130,9 +130,6 @@ public abstract class GraphicalObject extends JComponent{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
         g.setColor(this.getColor());
-		System.out.println(posX);
-		System.out.println(posY);
-		System.out.println();
 		this.setLocation(posX, posY);
 		this.setSize(width, height);
 	}

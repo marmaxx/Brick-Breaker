@@ -35,6 +35,8 @@ public class Ball extends Entity {
     ) {
 		//super(new Circle((int)posX, (int)posY, size, color));
         super(new BallImage(posX, posY, size, size, color));
+		this.posX=posX;
+		this.posY=posY;
     }
 
 	/**
@@ -46,6 +48,8 @@ public class Ball extends Entity {
 	 */
 	public Ball(double posX, double posY, int size) {
 		this(posX, posY, size, DEFAULT_COLOR);
+		this.posX=posX;
+		this.posY=posY;
 	}
 
 	/**
@@ -56,6 +60,7 @@ public class Ball extends Entity {
 	 */
 	public Ball(double posX, double posY) {
 		this(posX, posY, DEFAULT_SIZE, DEFAULT_COLOR);
+
 	}
 
 	/**
@@ -120,7 +125,7 @@ public class Ball extends Entity {
     public void wallCollision(){
         // double y = -forceCoordinates.getY();
         // forceCoordinates=new Coordinates(forceCoordinates.getX(), y);
-        setForce(forceX, - forceY);
+        setForce(forceX, -forceY);
     }
 
     /* Method to handle paddle collision */
@@ -132,6 +137,7 @@ public class Ball extends Entity {
     public void brickCollision(){}
 
     public void move(){
+
 		double x = Math.pow(DELTA_TIME,2)*forceX/MASS;
 		double y = Math.pow(DELTA_TIME,2)*forceY/MASS;
 
