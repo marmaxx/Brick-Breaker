@@ -41,8 +41,8 @@ public class Brick extends Entity {
 		Color color,
         int lifespan, boolean dropBonus
     ) {
-        //super(new Rectangle(posX, posY, width, height, color));
-		super(new PaddleImage(posX, posY, width, height, color));
+        super(new Rectangle(posX, posY, width, height, color));
+		//super(new PaddleImage(posX, posY, width, height, color));
 		if (!lifespans.containsKey(lifespan)) {
 			throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
 		}

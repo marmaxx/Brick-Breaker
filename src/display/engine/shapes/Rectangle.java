@@ -30,6 +30,6 @@ public class Rectangle extends Shape {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.fillRect(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight());
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }  
 }
