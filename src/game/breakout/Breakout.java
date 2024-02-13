@@ -5,10 +5,12 @@ import java.util.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Color;
 
 import display.view.GameFrame;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
+import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.rules.Game;
 
@@ -24,7 +26,10 @@ public class Breakout extends Game{
 	 */
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
-		this.setBricks(new ArrayList<Entity>());
+		this.bricks = new ArrayList<Entity>();
+		this.bricks.add(new Brick(500,200,100,50,Color.ORANGE,1,false));
+		this.bricks.add(new Brick(350,200,100,50,Color.ORANGE,1,false));
+		this.bricks.add(new Brick(650,200,100,50,Color.ORANGE,1,false));
 		this.setPlayer(new Player(300,300,100));
 		this.setBall(new Ball());
 
