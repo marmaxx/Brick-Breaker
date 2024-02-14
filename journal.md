@@ -41,4 +41,31 @@ Grosse restructuration et adaptation des pushes sur la nouvelle structure, l’o
 
 ### Objectifs semaine suivante 
 
-(à compléter!!! remplissez vos issues et faites une planification de sprint)
+## Semaine 3
+
+Ce qui a été fait:
+
+L'objectif principal de cette semaine était de fusionner tout le contenu fonctionnel de la branche 6-rebond et la bonne structure de projet de la branche develop.
+
+Develop
+
+- La balle a bien implémentée dans la nouvelle structure. La librairie contenant les outils physiques nécessaires a été débutée mais aucun résultat n'apparaît sur le gitlab pour le moment. (Marius)
+- Le paddle a bien été implémenté dans la nouvelle structure et son mouvement
+est maintenant beaucoup plus fluide/un bug d'affichage de la balle a été reglé.(Noaym)
+- Le mouvement ainsi que les collisions de la balle ont bien été implémentés dans la nouvelle structure (implémenté comme sur 6-rebond et on s'aperçoit qu'il y a quelques soucis). (Lucas)
+- Quelques briques sont maintenant affichées mais leur collision n'est pas encore implémentée (soucis avec le rectangle donc pour le
+moment c'est affiché comme un paddle). (Maxime)
+- La brique ainsi que ses différents types ont été implémentés/long travail sur des bugs graphiques. (Nic)
+
+=> Conclusion: Le plus gros du travail a été fait en ce qui concerne la fusion des deux versions de la semaine dernière. On fait face à quelques soucis
+qui seront la priorité du prochain sprint.
+
+Ce qu'il faut faire:
+
+- Gérer les soucis rencontrés cette semaine (PRIORITAIRE)
+- Régler le problème des FPS chez Maxime
+- Gérer la collision balle/brique balle/paddle
+- Améliorer la fenêtre de jeu
+- Continuer à avancer sur la physique (rebond amélioré)
+- Peut-être un respawn de la balle si elle sort de la fenêtre en bas.
+- Mettre en place GRADLE (débuté mais pas convaincant)
