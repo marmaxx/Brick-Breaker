@@ -138,14 +138,6 @@ public class Breakout extends Game{
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
 		this.getPanel().add(this.getBall().getRepresentation());
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
-			@Override
-			public void run(){
-				ball.update(player);
-			}
-		};
-		timer.schedule(task,0,20);
 	}
 
 	/**

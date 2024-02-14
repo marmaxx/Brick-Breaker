@@ -9,8 +9,8 @@ import java.util.*;
 public class Ball extends Entity {
 	public static final Color DEFAULT_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
-	public static final double DEFAULT_POS_X = 0;
-	public static final double DEFAULT_POS_Y = 0;
+	public static final double DEFAULT_POS_X = 300;
+	public static final double DEFAULT_POS_Y = 200;
 	public double posX, posY;
 	private static final double DELTA_TIME = 1;
 	private static final double GRAVITY_CONSTANT = 9.81;
@@ -134,7 +134,7 @@ public class Ball extends Entity {
     public void move(){
 		double x = Math.pow(DELTA_TIME,2)*forceX/MASS;
 		double y = Math.pow(DELTA_TIME,2)*forceY/MASS;
-		
+
 		setPos(posX + x, posY + y);
     }
 
@@ -144,10 +144,10 @@ public class Ball extends Entity {
 	
 	public void update(Player player){ //actualisation des conditions physiques impactant la balle
 	Ball ball = this;
-	Timer timer = new Timer();
+	/*Timer timer = new Timer();
 	TimerTask task = new TimerTask() {
 		@Override
-		public void run(){
+		public void run(){*/
     	//TODO : ajuster les fonctions appelées a la classe player au lieu de paddle
         /*if (ball.touchPaddle(paddle)){
             ball.paddleCollision();
@@ -163,9 +163,9 @@ public class Ball extends Entity {
         
         
         //paddle.update();
-		}
+		/*}
 	};
-	timer.schedule(task,0,20);
+	timer.schedule(task,0,20);*/
     	
         
     }
