@@ -1,6 +1,9 @@
 package game.breakout.entities;
 import java.awt.Color;
 import display.engine.images.BallImage;
+import display.engine.rules.Collisions;
+import display.engine.rules.GraphicalObject;
+import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 import display.view.GamePanel;
 import display.engine.shapes.Circle;
@@ -19,7 +22,6 @@ public class Ball extends Entity {
 	// private static final double WEIGHTY = MASS * GRAVITY_CONSTANT;
 	private double forceX = 0;
 	private double forceY = MASS * GRAVITY_CONSTANT;
-
 	/**
 	 * Instantiates a new Ball
 	 * 
@@ -110,11 +112,9 @@ public class Ball extends Entity {
     }
 
     // Method to check if the Ball is touching the Paddle 
-    /*public boolean touchPaddle(Player paddle){ 
-    	Rectangle paddleBounds = paddle.getBounds();
-    	Rectangle myBounds = this.getBounds();
-        return myBounds.intersects(paddleBounds);
-    }*/
+    public boolean touchPaddle(Player paddle){ 
+        return Collisions.checkCollisions(this.getRepresentation(),paddle.getRepresentation());
+    }
 
     /* Method to check if the Ball is touching a Brick */
     public boolean touchBrick(){
@@ -155,10 +155,10 @@ public class Ball extends Entity {
 		@Override
 		public void run(){*/
     	//TODO : ajuster les fonctions appelées a la classe player au lieu de paddle
-        /*if (ball.touchPaddle(paddle)){
+        if (ball.touchPaddle(player)){
             ball.paddleCollision();
-        }*/
-       /* else */if (ball.touchBrick()){
+        }
+       if (ball.touchBrick()){
             ball.brickCollision();
         }
         else if (ball.touchWall()){

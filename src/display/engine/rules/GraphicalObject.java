@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-public abstract class GraphicalObject extends JComponent{
+public abstract class GraphicalObject extends JComponent implements Collisions{
 
     protected int posX, posY;
     protected int width, height;
@@ -20,7 +20,7 @@ public abstract class GraphicalObject extends JComponent{
 	 * @param height the height of the graphical object
 	 * @param color the color of the graphical object (ignored if the graphical object is represented by an image)
 	 */
-    public GraphicalObject(
+    public GraphicalObject (
         int posX, int posY,
         int width, int height,
 		Color color

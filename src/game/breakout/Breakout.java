@@ -65,7 +65,7 @@ public class Breakout extends Game{
 						break;
 				}
 			}
-
+			
 			@Override
 			public void keyTyped(KeyEvent e) {
 			}
