@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.HashMap;
 
 import display.engine.shapes.Rectangle;
-import display.engine.images.PaddleImage;
 import game.breakout.entities.rules.Entity;
 
 public class Brick extends Entity {

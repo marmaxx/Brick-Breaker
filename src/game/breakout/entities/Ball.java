@@ -1,6 +1,7 @@
 package game.breakout.entities;
 import java.awt.Color;
-import display.engine.images.BallImage;
+//import display.engine.images.BallImage;
+import display.engine.shapes.BallImage;
 import game.breakout.entities.rules.Entity;
 import display.view.GamePanel;
 import display.engine.shapes.Circle;
