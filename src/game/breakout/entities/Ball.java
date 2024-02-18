@@ -13,7 +13,7 @@ import java.util.*;
 
 public class Ball extends Entity {
 	public static final Color DEFAULT_COLOR = Color.RED;
-	public static final int DEFAULT_SIZE = 30;
+	public static final int DEFAULT_SIZE = 31;
 	public static final double DEFAULT_POS_X = 300;
 	public static final double DEFAULT_POS_Y = 200;
 	public double posX, posY;
@@ -138,11 +138,7 @@ public class Ball extends Entity {
     public void brickCollision(){}
 
     public void move(){
-
-		double x = Math.pow(DELTA_TIME,2)*forceX/MASS;
-		double y = Math.pow(DELTA_TIME,2)*forceY/MASS;
-
-		setPos(posX + x, posY + y);
+		setPos(getNextX(), getNextY());
     }
 
 	/*public void update(){
@@ -159,14 +155,13 @@ public class Ball extends Entity {
         if (ball.touchPaddle(player)){
             ball.paddleCollision();
         }
-       if (ball.touchBrick()){
+       else if (ball.touchBrick()){
             ball.brickCollision();
         }
-        else if (ball.touchWall()){
+         if (ball.touchWall()){
             ball.wallCollision();
-            
         }
-        ball.move();
+        	ball.move();
         
         
         //paddle.update();

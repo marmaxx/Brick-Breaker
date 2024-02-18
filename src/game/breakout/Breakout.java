@@ -31,7 +31,7 @@ public class Breakout extends Game{
 		this.bricks.add(new Brick(350,200,100,20,Color.RED,1,false));
 		this.bricks.add(new Brick(500,200,100,20,Color.RED,2,false));
 		this.bricks.add(new Brick(650,200,100,20,Color.RED,3,false));
-		this.setPlayer(new Player(300,300));
+		this.setPlayer(new Player(100,300));
 		this.setBall(new Ball(100,100));
 
 		KeyListener keyListener = new KeyListener() {
