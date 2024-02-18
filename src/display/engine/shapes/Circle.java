@@ -3,6 +3,8 @@ package display.engine.shapes;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import display.engine.images.BallImage;
+import display.engine.shapes.rules.Collisions;
 import display.engine.shapes.rules.Shape;
 
 public class Circle extends Shape {
@@ -26,6 +28,7 @@ public class Circle extends Shape {
 	/**
 	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
 	 */
+
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);

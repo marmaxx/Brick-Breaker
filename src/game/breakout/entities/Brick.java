@@ -43,13 +43,13 @@ public class Brick extends Entity {
         super(new Rectangle(posX, posY, width, height, color));
 		//super(new PaddleImage(posX, posY, width, height, color));
 		if (!lifespans.containsKey(lifespan)) {
-			throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
+			//throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
 		}
 		if (width <= 0 || height <= 0) {
-			throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
+			//throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
 		}
 		if (!lifespans.containsValue(color) || color == null) {
-			throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
+			//throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
 		}
 
         this.setDestroyed(false);

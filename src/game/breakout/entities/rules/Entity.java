@@ -1,6 +1,7 @@
 package game.breakout.entities.rules;
 
 import display.engine.rules.GraphicalObject;
+import display.engine.shapes.rules.Shape;
 
 public abstract class Entity {
     protected GraphicalObject representation;
@@ -10,7 +11,7 @@ public abstract class Entity {
 	 * 
 	 * @param representation the graphical representation of the entity
 	 */
-    public Entity(GraphicalObject representation) {
+    public Entity(GraphicalObject representation ) {
 		this.setRepresentation(representation);       
     }
 
@@ -28,7 +29,8 @@ public abstract class Entity {
 	 * 
 	 * @param representation the new graphical representation of the entity
 	 */
-    public void setRepresentation(GraphicalObject representation) {
+    private void setRepresentation(GraphicalObject representation) {
         this.representation = representation;
     }
+
 }
