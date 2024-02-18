@@ -5,14 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-import display.engine.images.BallImage;
-import display.engine.images.PaddleImage;
-import display.engine.shapes.Circle;
-import display.engine.shapes.Rectangle;
-import display.engine.shapes.rules.Collisions;
-import display.engine.shapes.rules.Shape;
-
-public abstract class GraphicalObject extends JComponent {
+public abstract class GraphicalObject extends JComponent{
 
     protected int posX, posY;
     protected int width, height;
@@ -27,7 +20,7 @@ public abstract class GraphicalObject extends JComponent {
 	 * @param height the height of the graphical object
 	 * @param color the color of the graphical object (ignored if the graphical object is represented by an image)
 	 */
-    public GraphicalObject (
+    public GraphicalObject(
         int posX, int posY,
         int width, int height,
 		Color color
@@ -129,8 +122,7 @@ public abstract class GraphicalObject extends JComponent {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-
-
+	
 	/**
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
@@ -141,6 +133,4 @@ public abstract class GraphicalObject extends JComponent {
 		this.setLocation(posX, posY);
 		this.setSize(width, height);
 	}
-
-
 }

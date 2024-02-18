@@ -2,12 +2,10 @@ package display.engine.shapes.rules;
 
 import java.awt.Color;
 
-import display.engine.images.BallImage;
 import display.engine.rules.GraphicalObject;
-import display.engine.shapes.Circle;
-import display.engine.shapes.Rectangle;
 
-public abstract class Shape extends GraphicalObject  implements Collisions{
+public abstract class Shape extends GraphicalObject {
+	protected java.awt.Image image;
 
 	/**
 	 * Instantiates a new Shape
