@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-import display.engine.images.BallImage;
-import display.engine.images.PaddleImage;
+import display.engine.shapes.BallImage;
+import display.engine.shapes.PaddleImage;
 import display.engine.shapes.Circle;
 import display.engine.shapes.Rectangle;
 import display.engine.shapes.rules.Collisions;

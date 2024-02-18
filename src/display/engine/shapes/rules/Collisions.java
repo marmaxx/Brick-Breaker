@@ -1,7 +1,7 @@
 package display.engine.shapes.rules;
 
-import display.engine.images.BallImage;
-import display.engine.images.PaddleImage;
+import display.engine.shapes.BallImage;
+import display.engine.shapes.PaddleImage;
 import display.engine.rules.GraphicalObject;
 import display.engine.shapes.Circle;
 import display.engine.shapes.Rectangle;
@@ -52,8 +52,7 @@ public interface Collisions {
 	}
 
     /**
-	 * checks for collisions between a circle and a rectangle
-	 * 
+	 * checks for collisions between a BallImage and a rectangle
 	 * @param tw width of a
 	 * @param th height of a
      * @param rw widht of b

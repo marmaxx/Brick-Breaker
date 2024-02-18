@@ -3,8 +3,7 @@ package display.engine.shapes;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import display.engine.images.BallImage;
-import display.engine.shapes.rules.Collisions;
+
 import display.engine.shapes.rules.Shape;
 
 public class Circle extends Shape {
