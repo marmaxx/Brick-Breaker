@@ -5,7 +5,14 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-public abstract class GraphicalObject extends JComponent implements Collisions{
+import display.engine.images.BallImage;
+import display.engine.images.PaddleImage;
+import display.engine.shapes.Circle;
+import display.engine.shapes.Rectangle;
+import display.engine.shapes.rules.Collisions;
+import display.engine.shapes.rules.Shape;
+
+public abstract class GraphicalObject extends JComponent {
 
     protected int posX, posY;
     protected int width, height;
@@ -122,7 +129,8 @@ public abstract class GraphicalObject extends JComponent implements Collisions{
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
+
 	/**
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
@@ -133,4 +141,6 @@ public abstract class GraphicalObject extends JComponent implements Collisions{
 		this.setLocation(posX, posY);
 		this.setSize(width, height);
 	}
+
+
 }

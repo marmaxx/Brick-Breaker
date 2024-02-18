@@ -2,9 +2,12 @@ package display.engine.shapes.rules;
 
 import java.awt.Color;
 
+import display.engine.images.BallImage;
 import display.engine.rules.GraphicalObject;
+import display.engine.shapes.Circle;
+import display.engine.shapes.Rectangle;
 
-public abstract class Shape extends GraphicalObject {
+public abstract class Shape extends GraphicalObject  implements Collisions{
 
 	/**
 	 * Instantiates a new Shape
@@ -22,5 +25,25 @@ public abstract class Shape extends GraphicalObject {
     ) {
         super(posX, posY, width, height, color);
     }
+
+	/**
+     * takes into argument two graphical objects and calls collision detection methods based on their type
+     * @param a graphical object 
+     * @param b graphical object
+     * @return boolean that is set to true if there is a collision, false otherwise or if there is a type missmatch
+     */
+    public boolean checkCollisions(Shape b){ 
+		if (this instanceof BallImage ball && b instanceof Rectangle rect){
+            return Collisions.checkCollisions(ball, rect);
+        }
+        if (this instanceof Circle ball && b instanceof Rectangle rect){
+            return Collisions.checkCollisions(ball, rect);
+        }
+        if (this instanceof Rectangle rect1&& b instanceof Rectangle rect2){
+            return Collisions.checkCollisions(rect1, rect2);
+        }
+        return false;
+    }
+
 
 }

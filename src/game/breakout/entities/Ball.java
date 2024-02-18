@@ -1,12 +1,14 @@
 package game.breakout.entities;
 import java.awt.Color;
 import display.engine.images.BallImage;
-import display.engine.rules.Collisions;
 import display.engine.rules.GraphicalObject;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 import display.view.GamePanel;
 import display.engine.shapes.Circle;
+import display.engine.shapes.rules.Collisions;
+import display.engine.shapes.rules.Shape;
+
 import java.util.*;
 
 public class Ball extends Entity {
@@ -35,7 +37,6 @@ public class Ball extends Entity {
         int size,
 		Color color
     ) {
-		//super(new Circle((int)posX, (int)posY, size, color));
         super(new BallImage(posX, posY, size, size, color));
 		this.posX=posX;
 		this.posY=posY;
@@ -113,7 +114,7 @@ public class Ball extends Entity {
 
     // Method to check if the Ball is touching the Paddle 
     public boolean touchPaddle(Player paddle){ 
-        return Collisions.checkCollisions(this.getRepresentation(),paddle.getRepresentation());
+        return this.getRepresentation().checkCollisions(paddle);
     }
 
     /* Method to check if the Ball is touching a Brick */

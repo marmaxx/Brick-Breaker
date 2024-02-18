@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import javax.swing.text.View;
 
 import display.engine.images.PaddleImage;
+import display.engine.shapes.Rectangle;
 import display.view.GamePanel;
 import game.breakout.entities.rules.Entity;
 

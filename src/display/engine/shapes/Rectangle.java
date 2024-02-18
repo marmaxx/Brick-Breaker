@@ -23,7 +23,7 @@ public class Rectangle extends Shape {
     ) {
         super(posX, posY, width, height, color);
     }
-	
+
 	/**
 	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
 	 */

@@ -1,28 +1,16 @@
-package display.engine.rules;
+package display.engine.shapes.rules;
 
+import display.engine.images.BallImage;
+import display.engine.images.PaddleImage;
+import display.engine.rules.GraphicalObject;
 import display.engine.shapes.Circle;
 import display.engine.shapes.Rectangle;
 
 
 public interface Collisions {
-    
 
 
 
-
-
-
-    public static boolean checkCollisions(GraphicalObject a, GraphicalObject b){
-        if (a instanceof Circle && b instanceof Rectangle){
-            System.out.println("checking circle");
-            return checkCollisions(a, b);
-        }
-        if (a instanceof Rectangle && b instanceof Rectangle){
-            System.out.println("checking rectangle");
-            return checkCollisions(a, b);
-        }
-        return false;
-    }
 
 	/**
 	 * checks for collisions between 2 rectangles a and b
@@ -78,8 +66,36 @@ public interface Collisions {
      * 
      * @return true if a and b intersect, false otherwise
 	 */
-    public static boolean checkCollisions(Circle a, Rectangle b){
+    public static boolean checkCollisions(BallImage a, PaddleImage b){   
+        // Find the closest point to the circle within the rectangle
+        int closestX = clamp(a.getX(), b.getX(), b.getX() + b.getWidth());
+        int closestY = clamp(a.getY(), b.getY(), b.getY() + b.getHeight());
 
+        // Calculate the distance between the circle's center and this closest point
+        int distanceX = a.getX() - closestX;
+        int distanceY = a.getY() - closestY;
+
+        // If the distance is less than the circle's radius, an intersection occurs
+        int distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+        return distanceSquared < (a.getWidth()/2 * a.getWidth()/2);
+    }
+
+    /**
+	 * checks for collisions between a circle and a rectangle
+	 * 
+	 * @param tw width of a
+	 * @param th height of a
+     * @param rw widht of b
+     * @param rh height of b
+     * 
+     * @param tx x of a
+     * @param ty y of a
+     * @param rx x of b
+     * @param ry y of b
+     * 
+     * @return true if a and b intersect, false otherwise
+	 */
+    public static boolean checkCollisions(Circle a, Rectangle b){   
         // Find the closest point to the circle within the rectangle
         int closestX = clamp(a.getX(), b.getX(), b.getX() + b.getWidth());
         int closestY = clamp(a.getY(), b.getY(), b.getY() + b.getHeight());
