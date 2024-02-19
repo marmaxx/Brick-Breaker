@@ -69,3 +69,35 @@ Ce qu'il faut faire:
 - Continuer à avancer sur la physique (rebond amélioré)
 - Peut-être un respawn de la balle si elle sort de la fenêtre en bas.
 - Mettre en place GRADLE (débuté mais pas convaincant)
+
+## Semaine 4
+
+Ce qui a été fait:
+
+- 20-updating_ball (Marius):
+    . La balle a une nouvelle position initiale (plus centrée et surtout démarre au niveau du paddle)
+    . Il n'y a plus de rebond sur le mur du bas. Si la balle arrive à ce niveau là, elle réapparait en haut et
+    redescend.
+    . Le paddle est position plus bas.
+
+- 18_implementation_bricks (Maxime):
+    . Une méthode a été écrite pour initialiser les briques du jeu. Elle sera améliorée par la suite en fonction
+    des niveaux qu'on créera.
+    . Modification logique de la fonction update pour enlever les briques qui seront détruites (pas fait pour
+    le moment).
+
+- 19-implementer-la-collision-entre-la-balle-et-le-paddle (Noaym):
+## A COMPLETER 
+
+- Lucas:
+## A COMPLETER
+
+- Nic:
+## A COMPLETER
+
+Ce qu'il faut faire:
+
+- Implémenter la logique des briques (modification de la vie, destruction, bonus...)
+- Mettre en place Gradle
+- Continuer le projet physiques en parallèle
+- Améliration de la fenêtre de jeu
