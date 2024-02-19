@@ -166,8 +166,10 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-
-		this.bricksInitialisation(30);
+		//for fun to see that initialisation can change for each level 
+		Random random = new Random();
+		int randomNumberOfBrick = random.nextInt(50 - 20) + 20;
+		this.bricksInitialisation(randomNumberOfBrick);
 
 		// Add all entities to the game
 		for (Entity brick : this.getBricks()) {
@@ -186,8 +188,13 @@ public class Breakout extends Game{
 		this.getPlayer().update();
 		this.getBall().update(player);
 
-		// TODO Update game logic
 		
+		// TODO Update game logic
+		for (Entity b : bricks){
+			if (b instanceof Brick && ((Brick)b).isDestroyed()){
+				this.bricks.remove(b);
+			}
+		}
 	}
 
 	/**

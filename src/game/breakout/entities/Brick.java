@@ -52,12 +52,16 @@ public class Brick extends Entity {
     }
 
 	/**
-	 * Gets whether the brick is destroyed
+	 * check if the brick is destroyed 
 	 * 
 	 * @return whether the brick is destroyed
 	 */
     public boolean isDestroyed() {
-        return this.isDestroyed;
+		if (this.getLifespan() < 0 ){
+			this.setDestroyed(true);
+			return true;
+		}
+        return false;
     }
 
 	/**
