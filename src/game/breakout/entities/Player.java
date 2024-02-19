@@ -34,7 +34,7 @@ public class Player extends Entity {
         int size,
 		Color color
     ) {
-		super(new Rectangle(posX, posY, size, size, color));
+		super(new Rectangle(posX, posY, size, size/4, color));
     }
 
 	/**

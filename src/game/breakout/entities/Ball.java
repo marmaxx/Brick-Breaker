@@ -8,18 +8,18 @@ import display.engine.shapes.Circle;
 import java.util.*;
 
 public class Ball extends Entity {
-	public static final Color DEFAULT_COLOR = Color.CYAN;
+	public static final Color DEFAULT_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
-	public static final double DEFAULT_POS_X = 300;
-	public static final double DEFAULT_POS_Y = 200;
+	public static final double DEFAULT_POS_X = 630;
+	public static final double DEFAULT_POS_Y = 0;
 	public double posX, posY;
 	private static final double DELTA_TIME = 1;
 	private static final double GRAVITY_CONSTANT = 9.81;
     private static final double MASS = 0.2;
     // private static final double WEIGHTX = 0;
 	// private static final double WEIGHTY = MASS * GRAVITY_CONSTANT;
-	private double forceX = 0;
-	private double forceY = MASS * GRAVITY_CONSTANT;
+	private double forceX = 100;
+	private double forceY = - MASS * GRAVITY_CONSTANT;
 
 	/**
 	 * Instantiates a new Ball
@@ -101,21 +101,27 @@ public class Ball extends Entity {
 		forceY = y;
 	}
 
-	/* Method to check if the Ball is touching a wall */
+	/* Method to check if the Ball is touching a wall except the lower wall */
     public boolean touchWall(){ 
         if (getX() >= 0 && getNextX() <= 0) return true;
         else if (getX() <= GamePanel.SCREEN_FULL_SIZE.getWidth() && getNextX() >= GamePanel.SCREEN_FULL_SIZE.getWidth()) return true;
         else if (getY() >= 0 && getNextY() <= 0) return true;
-        else if (getY() <= GamePanel.SCREEN_FULL_SIZE.getHeight() && getNextY() >= GamePanel.SCREEN_FULL_SIZE.getHeight()) return true;
         return false;
     }
 
+	/* Method to check if the Ball is touching the lower wall */
+	public boolean touchLowerWall(){
+        if (getY() <= GamePanel.SCREEN_FULL_SIZE.getHeight() && (getNextY() >= GamePanel.SCREEN_FULL_SIZE.getHeight())) return true;
+		return false;
+	}
+
     // Method to check if the Ball is touching the Paddle 
-    /*public boolean touchPaddle(Player paddle){ 
-    	Rectangle paddleBounds = paddle.getBounds();
+    public boolean touchPaddle(Player paddle){ 
+    	/*Rectangle paddleBounds = paddle.getBounds();
     	Rectangle myBounds = this.getBounds();
-        return myBounds.intersects(paddleBounds);
-    }*/
+        return myBounds.intersects(paddleBounds);*/
+		return false;
+    }
 
     /* Method to check if the Ball is touching a Brick */
     public boolean touchBrick(){
@@ -147,14 +153,19 @@ public class Ball extends Entity {
 	
 	public void update(Player player){ //actualisation des conditions physiques impactant la balle
 		Ball ball = this;
-		//System.out.println(ball.getY());
+		if (ball.touchPaddle(player)){
+			ball.paddleCollision();
+		}
 		if (ball.touchBrick()){
             ball.brickCollision();
         }
-        else if (ball.touchWall()){
+		if (ball.touchLowerWall()){
+			ball.setPos(630, 0);
+		}
+        if (ball.touchWall()){
             ball.wallCollision();
         }
-        ball.move();    
+		ball.move();    
     }
 
 }

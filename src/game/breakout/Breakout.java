@@ -31,8 +31,8 @@ public class Breakout extends Game{
 		//this.bricks.add(new Brick(350,200,100,20,Color.RED,1,false));
 		//this.bricks.add(new Brick(500,200,100,20,Color.RED,2,false));
 		//this.bricks.add(new Brick(650,200,100,20,Color.RED,3,false));
-		this.setPlayer(new Player(300,300));
-		//this.setBall(new Ball(100,100));
+		this.setPlayer(new Player(630,700));
+		this.setBall(new Ball(630,700, 30, Color.CYAN));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -45,6 +45,7 @@ public class Breakout extends Game{
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
 						getPlayer().startMovingRight();
+						System.out.println(getPlayer().getRepresentation().getLocation());
 						break;
 					case KeyEvent.VK_SPACE:
 						System.out.println("Touche espace pressée");
@@ -143,7 +144,7 @@ public class Breakout extends Game{
 			this.getPanel().add(brick.getRepresentation());
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
-		//this.getPanel().add(this.getBall().getRepresentation());
+		this.getPanel().add(this.getBall().getRepresentation());
 	}
 
 	/**
@@ -153,7 +154,7 @@ public class Breakout extends Game{
 	public void update() {
 		super.update();
 		this.getPlayer().update();
-		//this.getBall().update(player);
+		this.getBall().update(player);
 
 		// TODO Update game logic
 	}
@@ -168,6 +169,6 @@ public class Breakout extends Game{
 		}
 		
 		this.getPlayer().getRepresentation().repaint();
-		//this.getBall().getRepresentation().repaint();
+		this.getBall().getRepresentation().repaint();
 	}
 }

@@ -29,6 +29,6 @@ public class Circle extends Shape {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.fillOval(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight());
+        g.fillOval(0, 0, this.getWidth(), this.getHeight());
     }  
 }
