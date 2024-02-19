@@ -92,6 +92,7 @@ Ce qui a été fait:
 - Lucas:
     . Début du "projet" physiques dans un autre git
     . Première structuration (dossiers, fichiers)
+    . Implémentatiion des classes, méthodes...
 
 - Nic:
 ## A COMPLETER
@@ -102,3 +103,4 @@ Ce qu'il faut faire:
 - Mettre en place Gradle
 - Continuer le projet physiques en parallèle
 - Améliration de la fenêtre de jeu
+- les TODOs du projet Physiques
