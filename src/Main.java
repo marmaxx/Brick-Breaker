@@ -11,6 +11,7 @@ public class Main {
 		// in a separate thread
         SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				System.out.println("BONJOUR");
 				GameFrame gameFrame = new GameFrame();
 				// Create the game and attach it to the frame
 				Game game = new Breakout(gameFrame);

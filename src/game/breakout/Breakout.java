@@ -27,12 +27,12 @@ public class Breakout extends Game{
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.bricks = new ArrayList<Entity>();
-		this.bricks.add(new Brick(200,200,100,20,Color.RED,0,false));
-		this.bricks.add(new Brick(350,200,100,20,Color.RED,1,false));
-		this.bricks.add(new Brick(500,200,100,20,Color.RED,2,false));
-		this.bricks.add(new Brick(650,200,100,20,Color.RED,3,false));
+		//this.bricks.add(new Brick(200,200,100,20,Color.RED,0,false));
+		//this.bricks.add(new Brick(350,200,100,20,Color.RED,1,false));
+		//this.bricks.add(new Brick(500,200,100,20,Color.RED,2,false));
+		//this.bricks.add(new Brick(650,200,100,20,Color.RED,3,false));
 		this.setPlayer(new Player(300,300));
-		this.setBall(new Ball(100,100));
+		//this.setBall(new Ball(100,100));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -143,7 +143,7 @@ public class Breakout extends Game{
 			this.getPanel().add(brick.getRepresentation());
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
-		this.getPanel().add(this.getBall().getRepresentation());
+		//this.getPanel().add(this.getBall().getRepresentation());
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class Breakout extends Game{
 	public void update() {
 		super.update();
 		this.getPlayer().update();
-		this.getBall().update(player);
+		//this.getBall().update(player);
 
 		// TODO Update game logic
 	}
@@ -168,6 +168,6 @@ public class Breakout extends Game{
 		}
 		
 		this.getPlayer().getRepresentation().repaint();
-		this.getBall().getRepresentation().repaint();
+		//this.getBall().getRepresentation().repaint();
 	}
 }

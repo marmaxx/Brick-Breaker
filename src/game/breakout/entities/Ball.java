@@ -8,7 +8,7 @@ import display.engine.shapes.Circle;
 import java.util.*;
 
 public class Ball extends Entity {
-	public static final Color DEFAULT_COLOR = Color.RED;
+	public static final Color DEFAULT_COLOR = Color.CYAN;
 	public static final int DEFAULT_SIZE = 30;
 	public static final double DEFAULT_POS_X = 300;
 	public static final double DEFAULT_POS_Y = 200;
@@ -34,8 +34,8 @@ public class Ball extends Entity {
         int size,
 		Color color
     ) {
-		//super(new Circle((int)posX, (int)posY, size, color));
-        super(new BallImage(posX, posY, size, size, color));
+		super(new Circle((int)posX, (int)posY, size, color));
+        //super(new BallImage(posX, posY, size, size, color));
 		this.posX=posX;
 		this.posY=posY;
     }
@@ -43,7 +43,7 @@ public class Ball extends Entity {
 	/**
 	 * Instantiates a new Ball
 	 * 
-	 * @param getX() the initial x position of the ball
+	 * @param posX the initial x position of the ball
 	 * @param posY the initial y position of the ball
 	 * @param size the size of the ball
 	 */
@@ -56,7 +56,7 @@ public class Ball extends Entity {
 	/**
 	 * Instantiates a new Ball
 	 * 
-	 * @param getX() the initial x position of the ball
+	 * @param posX the initial x position of the ball
 	 * @param posY the initial y position of the ball
 	 */
 	public Ball(double posX, double posY) {
@@ -144,37 +144,17 @@ public class Ball extends Entity {
 
 		setPos(posX + x, posY + y);
     }
-
-	/*public void update(){
-		this.move();
-	}*/
 	
 	public void update(Player player){ //actualisation des conditions physiques impactant la balle
-	Ball ball = this;
-	/*Timer timer = new Timer();
-	TimerTask task = new TimerTask() {
-		@Override
-		public void run(){*/
-    	//TODO : ajuster les fonctions appelées a la classe player au lieu de paddle
-        /*if (ball.touchPaddle(paddle)){
-            ball.paddleCollision();
-        }*/
-       /* else */if (ball.touchBrick()){
+		Ball ball = this;
+		//System.out.println(ball.getY());
+		if (ball.touchBrick()){
             ball.brickCollision();
         }
         else if (ball.touchWall()){
             ball.wallCollision();
-            
         }
-        ball.move();
-        
-        
-        //paddle.update();
-		/*}
-	};
-	timer.schedule(task,0,20);*/
-    	
-        
+        ball.move();    
     }
 
 }

@@ -34,7 +34,7 @@ public class Player extends Entity {
         int size,
 		Color color
     ) {
-		super(new PaddleImage(posX, posY, size, size, color));
+		super(new Rectangle(posX, posY, size, size, color));
     }
 
 	/**
@@ -65,7 +65,6 @@ public class Player extends Entity {
 		this(DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE, DEFAULT_COLOR);
 	}
 	
-
 	public void startMovingRight(){
 		this.moving_right=true;
 	}
