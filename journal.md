@@ -90,7 +90,8 @@ Ce qui a été fait:
 ## A COMPLETER 
 
 - Lucas:
-## A COMPLETER
+    . Début du "projet" physiques dans un autre git
+    . Première structuration (dossiers, fichiers)
 
 - Nic:
 ## A COMPLETER
