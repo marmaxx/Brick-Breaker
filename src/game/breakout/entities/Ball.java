@@ -18,7 +18,7 @@ public class Ball extends Entity {
     private static final double MASS = 0.2;
     // private static final double WEIGHTX = 0;
 	// private static final double WEIGHTY = MASS * GRAVITY_CONSTANT;
-	private double forceX = 100;
+	private double forceX = 0;
 	private double forceY = - MASS * GRAVITY_CONSTANT;
 
 	/**
