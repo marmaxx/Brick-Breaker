@@ -2,8 +2,6 @@ package display.engine.shapes;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-
 import display.engine.shapes.rules.Shape;
 
 public class Rectangle extends Shape {
@@ -30,6 +28,7 @@ public class Rectangle extends Shape {
     ) {
 		super(image, posX, posY, width, height);
     }
+	
 	
 	/**
 	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
