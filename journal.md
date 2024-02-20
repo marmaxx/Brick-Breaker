@@ -72,7 +72,7 @@ Ce qu'il faut faire:
 
 ## Semaine 4
 
-Ce qui a été fait:
+.Ce qui a été fait:
 
 - 20-updating_ball (Marius):
     . La balle a une nouvelle position initiale (plus centrée et surtout démarre au niveau du paddle)
@@ -87,20 +87,21 @@ Ce qui a été fait:
     le moment).
 
 - 19-implementer-la-collision-entre-la-balle-et-le-paddle (Noaym):
-## A COMPLETER 
+    . Création d'une interface du nom de Collisions qui gère toutes les collisions entre les différents objets.
 
 - Lucas:
-    . Début du "projet" physiques dans un autre git
-    . Première structuration (dossiers, fichiers)
-    . Implémentatiion des classes, méthodes...
+    . Début du "projet" physiques dans un autre git.
+    . Première structuration (dossiers, fichiers).
+    . Implémentation des classes, méthodes...
 
 - Nic:
-## A COMPLETER
+    . Une limite pour Les FPS a été fixée (< 45).
+    . Restructuration de l'engine.
 
-Ce qu'il faut faire:
+.Ce qu'il faut faire:
 
 - Implémenter la logique des briques (modification de la vie, destruction, bonus...)
 - Mettre en place Gradle
-- Continuer le projet physiques en parallèle
+- Continuer le projet physiques en parallèle (TODOs)
 - Améliration de la fenêtre de jeu
-- les TODOs du projet Physiques
+- Gérer les collisions briques/balle
