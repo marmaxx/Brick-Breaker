@@ -1,17 +1,16 @@
 package game.breakout;
 
-import java.util.ArrayList;
 import java.util.*;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Color;
 import java.awt.Dimension; 
 import java.awt.Toolkit;
-
 import display.view.GameFrame;
+import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
+import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.rules.Game;
@@ -20,6 +19,8 @@ public class Breakout extends Game{
 	private ArrayList<Entity> bricks;
 	private Player player;
 	private Ball ball;
+	private Wall eastWall, northWall, westWall;
+	private static final int WALL_WIDTH = 20;
 
 	/**
 	 * Instantiates a new Breakout game
@@ -31,6 +32,9 @@ public class Breakout extends Game{
 		this.bricks = new ArrayList<Entity>();
 		this.setPlayer(new Player(630,700));
 		this.setBall(new Ball(630,700, 30, Color.CYAN));
+		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
+		this.setWestWall(new Wall((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
+		this.setNorthWall(new Wall(0, 0, (int)GamePanel.SCREEN_FULL_SIZE.getWidth(), WALL_WIDTH));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -129,6 +133,30 @@ public class Breakout extends Game{
 		this.ball = ball;
 	}
 
+	public Wall getEastWAll(){
+		return this.eastWall;
+	}
+
+	public void setEastWall (Wall wall){
+		this.eastWall = wall;
+	}
+
+	public Wall getWestWall(){
+		return this.westWall;
+	}
+
+	public void setWestWall(Wall wall){
+			this.westWall = wall;
+	}
+
+	public Wall getNorthWall(){
+		return this.northWall;
+	}
+
+	public void setNorthWall(Wall wall){
+		this.northWall =  wall;
+	}
+
 	/**
 	 * Initializes bricks in a level
 	 * 
@@ -177,6 +205,9 @@ public class Breakout extends Game{
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
 		this.getPanel().add(this.getBall().getRepresentation());
+		this.getPanel().add(this.getEastWAll().getRepresentation());
+		this.getPanel().add(this.getWestWall().getRepresentation());
+		this.getPanel().add(this.getNorthWall().getRepresentation());
 	}
 
 	/**
