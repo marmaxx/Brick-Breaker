@@ -150,13 +150,25 @@ public class Brick extends Entity {
         this.dropBonus = dropBonus;
     }
 
+
 	public void updater(){ 
-		Timer collisionTimer = new Timer(5, (ActionEvent e)->{
+		final Timer[] timer = new Timer[2];  //timer[0] is the collision timer, and timer[1] is the deletion timer
+		timer[0] = new Timer(40, (ActionEvent e)->{ 
 			if(this.checkBallCollisions()){
 				((Ball)Breakout.currentInstance.getBall()).touchBrick();
+				this.haveCollision();
 			}
 		});
-		collisionTimer.start();
+
+		timer[1] = new Timer(50, (ActionEvent e)->{
+			if(this.isDestroyed){
+				timer[0].stop();
+				timer[1].stop();
+				return;
+			}
+		});
+		timer[0].start();
+		timer[1].start();
     }
 	/**
 	 * 
@@ -165,4 +177,6 @@ public class Brick extends Entity {
 	private boolean checkBallCollisions(){
 		return ((Shape)this.getRepresentation()).checkCollisions((Shape)Breakout.currentInstance.getBall().getRepresentation());
 	}
+
+	
 }
