@@ -5,7 +5,14 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-public abstract class GraphicalObject extends JComponent{
+import display.engine.shapes.BallImage;
+import display.engine.shapes.PaddleImage;
+import display.engine.shapes.Circle;
+import display.engine.shapes.Rectangle;
+import display.engine.shapes.rules.Collisions;
+import display.engine.shapes.rules.Shape;
+
+public abstract class GraphicalObject extends JComponent {
 
     protected int posX, posY;
     protected int width, height;
