@@ -50,6 +50,29 @@ public class Brick extends Entity {
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
     }
+	public Brick(
+        int posX, int posY,
+        int width, int height,
+		Color color,
+        int lifespan, boolean dropBonus
+    ) {
+        super(new Rectangle(posX, posY, width, height, color));
+		//super(new PaddleImage(posX, posY, width, height, color));
+		if (!lifespans.containsKey(lifespan)) {
+			//throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
+		}
+		if (width <= 0 || height <= 0) {
+			//throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
+		}
+		if (!lifespans.containsValue(color) || color == null) {
+			//throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
+		}
+
+        this.setDestroyed(false);
+        this.setLifespan(lifespan);
+        this.setDropBonus(dropBonus);
+    }
+
 
 	/**
 	 * check if the brick is destroyed 

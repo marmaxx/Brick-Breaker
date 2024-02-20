@@ -7,8 +7,7 @@ import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 import display.view.GamePanel;
 import display.engine.shapes.Circle;
-import display.engine.shapes.rules.Shape;
-
+import display.engine.shapes.rules.*;
 import java.util.*;
 
 public class Ball extends Entity {
