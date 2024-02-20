@@ -14,7 +14,7 @@ import java.util.*;
 public class Ball extends Entity {
 	public static final Color DEFAULT_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
-	public static final double DEFAULT_POS_X = 630;
+	public static final double DEFAULT_POS_X = 600;
 	public static final double DEFAULT_POS_Y = 0;
 	public double posX, posY;
 	private static final double DELTA_TIME = 1;
@@ -23,7 +23,7 @@ public class Ball extends Entity {
     // private static final double WEIGHTX = 0;
 	// private static final double WEIGHTY = MASS * GRAVITY_CONSTANT;
 	private double forceX = 0;
-	private double forceY = - MASS * GRAVITY_CONSTANT;
+	private double forceY = MASS * GRAVITY_CONSTANT;
 
 	/**
 	 * Instantiates a new Ball
