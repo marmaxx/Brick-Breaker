@@ -3,7 +3,6 @@ package display.engine.shapes;
 import java.awt.Color;
 import java.awt.Graphics;
 
-
 import display.engine.shapes.rules.Shape;
 
 public class Circle extends Shape {
@@ -27,10 +26,9 @@ public class Circle extends Shape {
 	/**
 	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
 	 */
-
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.fillOval(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight());
+        g.fillOval(0, 0, this.getWidth(), this.getHeight());
     }  
 }

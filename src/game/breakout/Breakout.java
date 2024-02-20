@@ -6,6 +6,8 @@ import java.util.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Color;
+import java.awt.Dimension; 
+import java.awt.Toolkit;
 
 import display.view.GameFrame;
 import game.breakout.entities.Ball;
@@ -66,7 +68,7 @@ public class Breakout extends Game{
 						break;
 				}
 			}
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 			}
@@ -132,11 +134,46 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * Initializes bricks in a level
+	 * 
+	 * @param numberOfBrick the number of bricks to initialize
+	 */
+	public void bricksInitialisation(int numberOfBrick){
+		int width = 100; //width of each bricks 
+		int height = 20; //height of each bricks
+		int verticalPos = 200; // Initial vertical position of the first brick in a row of bricks
+		int widthPos = 1; // initiali horizontal position of the first brick in a row of bricks
+		int spaceBeforeBorderScreenSide = 200;
+
+		// Get screen size 
+		 Toolkit toolkit = Toolkit.getDefaultToolkit();
+		 Dimension screenSize = toolkit.getScreenSize();
+		 int screenWidth = (int) screenSize.getWidth(); 
+
+		Random random = new Random(); // random generator for lifespans
+		
+		for(int i = 1; i < numberOfBrick+1; i++){
+			int randomLife = random.nextInt(4); // generate random number between 0 and 3
+			if (widthPos*110 >= screenWidth - spaceBeforeBorderScreenSide){ //check if the next brick will go beyon the screen size
+				verticalPos += 30; // Move to the next row 
+				widthPos = 1; //reset horizental pose to the next row
+			}
+			this.bricks.add(new Brick(widthPos*110,verticalPos,width,height,randomLife,false)); //create new brick 
+			widthPos++; // Move to the next horizontal position for the next brick
+		}
+	}
+
+
+	/**
 	 * @see game.rules.Game#start()
 	 */
 	@Override
 	public void start() {
 		super.start();
+		//for fun to see that initialisation can change for each level 
+		Random random = new Random();
+		int randomNumberOfBrick = random.nextInt(50 - 20) + 20;
+		this.bricksInitialisation(randomNumberOfBrick);
 
 		// Add all entities to the game
 		for (Entity brick : this.getBricks()) {
@@ -155,7 +192,13 @@ public class Breakout extends Game{
 		this.getPlayer().update();
 		this.getBall().update(player);
 
+		
 		// TODO Update game logic
+		for (Entity b : bricks){
+			if (b instanceof Brick && ((Brick)b).isDestroyed()){
+				this.bricks.remove(b);
+			}
+		}
 	}
 
 	/**

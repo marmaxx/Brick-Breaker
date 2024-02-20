@@ -26,7 +26,6 @@ public class Brick extends Entity {
 	 * @param posY the initial y position of the brick
 	 * @param width the width of the brick
 	 * @param height the height of the brick
-	 * @param color the color of the brick, see the lifespans hashmap
 	 * @param lifespan the lifespan of the brick, see the lifespans hashmap
 	 * @param dropBonus whether the brick drops a bonus when destroyed
 	 * 
@@ -35,6 +34,23 @@ public class Brick extends Entity {
 	 * @throws IllegalArgumentException if the color is not in the hashmap
 	 */
     public Brick(
+        int posX, int posY,
+        int width, int height,
+        int lifespan, boolean dropBonus
+    ) {
+        super(new Rectangle(posX, posY, width, height,lifespans.get(lifespan)));
+		if (!lifespans.containsKey(lifespan)) {
+			throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
+		}
+		if (width <= 0 || height <= 0) {
+			throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
+		}
+
+        this.setDestroyed(false);
+        this.setLifespan(lifespan);
+        this.setDropBonus(dropBonus);
+    }
+	public Brick(
         int posX, int posY,
         int width, int height,
 		Color color,
@@ -57,13 +73,18 @@ public class Brick extends Entity {
         this.setDropBonus(dropBonus);
     }
 
+
 	/**
-	 * Gets whether the brick is destroyed
+	 * check if the brick is destroyed 
 	 * 
 	 * @return whether the brick is destroyed
 	 */
     public boolean isDestroyed() {
-        return this.isDestroyed;
+		if (this.getLifespan() < 0 ){
+			this.setDestroyed(true);
+			return true;
+		}
+        return false;
     }
 
 	/**
@@ -103,6 +124,15 @@ public class Brick extends Entity {
 		this.getRepresentation().setColor(lifespans.get(lifespan));
 		return true;
     }
+
+	/**
+	 * If brick have a collision 
+	 * set the lifeSpan at LifeSpan -1
+	 */
+	public void haveCollision(){
+		this.lifespan--;
+	}
+
 
 	/**
 	 * Gets whether the brick drops a bonus
