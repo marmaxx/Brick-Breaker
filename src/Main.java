@@ -1,5 +1,4 @@
 import javax.swing.SwingUtilities;
-
 import display.view.GameFrame;
 import display.view.MenuPanel;
 
