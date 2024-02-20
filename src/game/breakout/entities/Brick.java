@@ -1,11 +1,15 @@
 package game.breakout.entities;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 
-import display.engine.shapes.Rectangle;
-import game.breakout.entities.rules.Entity;
+import javax.swing.Timer;
 
+import display.engine.shapes.Rectangle;
+import display.engine.shapes.rules.Shape;
+import game.breakout.Breakout;
+import game.breakout.entities.rules.Entity;
 public class Brick extends Entity {
     
     protected boolean isDestroyed, dropBonus;
@@ -49,6 +53,8 @@ public class Brick extends Entity {
         this.setDestroyed(false);
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
+
+		this.updater(); //takes care of updating the brick
     }
 	public Brick(
         int posX, int posY,
@@ -71,6 +77,8 @@ public class Brick extends Entity {
         this.setDestroyed(false);
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
+
+		this.updater(); //takes care of updating the brick
     }
 
 
@@ -153,4 +161,20 @@ public class Brick extends Entity {
     public void setDropBonus(boolean dropBonus) {
         this.dropBonus = dropBonus;
     }
+
+	public void updater(){ 
+		Timer collisionTimer = new Timer(5, (ActionEvent e)->{
+			if(this.checkBallCollisions()){
+				((Ball)Breakout.currentInstance.getBall()).touchBrick();
+			}
+		});
+		collisionTimer.start();
+    }
+	/**
+	 * 
+	 * @return true if this brick is colliding with the ball, false otherwise
+	 */
+	private boolean checkBallCollisions(){
+		return ((Shape)this.getRepresentation()).checkCollisions((Shape)Breakout.currentInstance.getBall().getRepresentation());
+	}
 }

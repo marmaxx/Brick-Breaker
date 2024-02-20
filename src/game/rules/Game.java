@@ -124,7 +124,7 @@ public abstract class Game{
 	 * Start the game
 	 */
 	public void start() {
-		int delay = 20; // Delay in milliseconds for 30 FPS
+		int delay = 33; // Delay in milliseconds for 30 FPS
 		Timer timer = new Timer(delay, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game.this.update();

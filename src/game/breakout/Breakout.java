@@ -17,7 +17,7 @@ import game.breakout.entities.rules.Entity;
 import game.rules.Game;
 
 public class Breakout extends Game{
-	private ArrayList<Entity> bricks;
+	public static Breakout currentInstance;
 	private Player player;
 	private Ball ball;
 
@@ -28,9 +28,9 @@ public class Breakout extends Game{
 	 */
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
-		this.bricks = new ArrayList<Entity>();
+		currentInstance=this;
 		this.setPlayer(new Player(630,700));
-		this.setBall(new Ball(630,700, 30, Color.CYAN));
+		this.setBall(new Ball(630,00, 30, Color.CYAN));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -74,24 +74,6 @@ public class Breakout extends Game{
 		this.getPanel().addKeyListener(keyListener);
 	}
 
-
-	/**
-	 * Get the list of bricks in the game.
-	 * 
-	 * @return The list of bricks
-	 */
-	public ArrayList<Entity> getBricks() {
-		return this.bricks;
-	}
-
-	/**
-	 * Set the list of bricks in the game.
-	 * 
-	 * @param bricks The list of bricks
-	 */
-	public void setBricks(ArrayList<Entity> bricks) {
-		this.bricks = bricks;
-	}
 
 	/**
 	 * Get the player entity in the game.
@@ -154,7 +136,8 @@ public class Breakout extends Game{
 				verticalPos += 30; // Move to the next row 
 				widthPos = 1; //reset horizental pose to the next row
 			}
-			this.bricks.add(new Brick(widthPos*110,verticalPos,width,height,randomLife,false)); //create new brick 
+			Brick brick = new Brick(widthPos*110,verticalPos,width,height,randomLife,false); //create new brick 
+			this.getPanel().add(brick.getRepresentation());
 			widthPos++; // Move to the next horizontal position for the next brick
 		}
 	}
@@ -171,10 +154,7 @@ public class Breakout extends Game{
 		int randomNumberOfBrick = random.nextInt(50 - 20) + 20;
 		this.bricksInitialisation(randomNumberOfBrick);
 
-		// Add all entities to the game
-		for (Entity brick : this.getBricks()) {
-			this.getPanel().add(brick.getRepresentation());
-		}
+
 		this.getPanel().add(this.getPlayer().getRepresentation());
 		this.getPanel().add(this.getBall().getRepresentation());
 	}
@@ -189,12 +169,6 @@ public class Breakout extends Game{
 		this.getBall().update(player);
 
 		
-		// TODO Update game logic
-		for (Entity b : bricks){
-			if (b instanceof Brick && ((Brick)b).isDestroyed()){
-				this.bricks.remove(b);
-			}
-		}
 	}
 
 	/**
@@ -202,10 +176,6 @@ public class Breakout extends Game{
 	 */
 	@Override
 	public void render() {
-		for (Entity brick : this.getBricks()) {
-			brick.getRepresentation().repaint();
-		}
-		
 		this.getPlayer().getRepresentation().repaint();
 		this.getBall().getRepresentation().repaint();
 	}
