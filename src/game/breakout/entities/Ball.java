@@ -140,7 +140,9 @@ public class Ball extends Entity {
     }
 
     /* Method to handle brick collision */
-    public void brickCollision(){}
+    public void brickCollision(){
+		setForce(forceX, -forceY);
+	}
 
     public void move(){
 		setPos(getNextX(), getNextY());
@@ -152,7 +154,6 @@ public class Ball extends Entity {
 			ball.paddleCollision();
 		}
 		if (collidingBrick){
-			System.out.println("boing");
             ball.wallCollision();
 			collidingBrick=false; //resets the brick collision variable to false
         }
@@ -162,7 +163,7 @@ public class Ball extends Entity {
         if (ball.touchWall()){
             ball.wallCollision();
         }
-		ball.move();    
+		ball.move();     
     }
 
 }

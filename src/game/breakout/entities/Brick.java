@@ -50,7 +50,6 @@ public class Brick extends Entity {
 			throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
 		}
 
-        this.setDestroyed(false);
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
 
@@ -74,7 +73,6 @@ public class Brick extends Entity {
 			//throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
 		}
 
-        this.setDestroyed(false);
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
 
@@ -89,21 +87,18 @@ public class Brick extends Entity {
 	 */
     public boolean isDestroyed() {
 		if (this.getLifespan() < 0 ){
-			this.setDestroyed(true);
+			this.Destroy();
 			return true;
 		}
         return false;
     }
 
 	/**
-	 * Sets whether the brick is destroyed
-	 * 
-	 * @param isDestroyed whether the brick is destroyed
-	 * 
-	 * @return whether the brick is destroyed
+	 * removes the brick from the game
 	 */
-    public void setDestroyed(boolean isDestroyed) {
-        this.isDestroyed = isDestroyed;
+    public void Destroy() {
+        this.isDestroyed = true;
+		this.getRepresentation().destroy();
     }
 
 	/**
@@ -139,6 +134,7 @@ public class Brick extends Entity {
 	 */
 	public void haveCollision(){
 		this.lifespan--;
+		this.isDestroyed(); //checks if the brick has to be destroyed
 	}
 
 
@@ -162,13 +158,25 @@ public class Brick extends Entity {
         this.dropBonus = dropBonus;
     }
 
+
 	public void updater(){ 
-		Timer collisionTimer = new Timer(5, (ActionEvent e)->{
+		final Timer[] timer = new Timer[2];  //timer[0] is the collision timer, and timer[1] is the deletion timer
+		timer[0] = new Timer(40, (ActionEvent e)->{ 
 			if(this.checkBallCollisions()){
 				((Ball)Breakout.currentInstance.getBall()).touchBrick();
+				this.haveCollision();
 			}
 		});
-		collisionTimer.start();
+
+		timer[1] = new Timer(50, (ActionEvent e)->{
+			if(this.isDestroyed){
+				timer[0].stop();
+				timer[1].stop();
+				return;
+			}
+		});
+		timer[0].start();
+		timer[1].start();
     }
 	/**
 	 * 
@@ -177,4 +185,6 @@ public class Brick extends Entity {
 	private boolean checkBallCollisions(){
 		return ((Shape)this.getRepresentation()).checkCollisions((Shape)Breakout.currentInstance.getBall().getRepresentation());
 	}
+
+	
 }

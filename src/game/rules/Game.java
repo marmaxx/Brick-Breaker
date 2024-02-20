@@ -3,6 +3,7 @@ package game.rules;
 import display.view.GamePanel;
 import game.breakout.Breakout;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -127,7 +128,9 @@ public abstract class Game{
 		int delay = 33; // Delay in milliseconds for 30 FPS
 		Timer timer = new Timer(delay, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Game.this.update();
+				EventQueue.invokeLater(()->{	
+					Game.this.update();
+				});
 			}
 		});
 		timer.start();
@@ -141,12 +144,14 @@ public abstract class Game{
 		// Calculate FPS
 		long currentTime = System.nanoTime();
 		long deltaTime = currentTime - this.getLastRenderTime();
-		this.setCurrentFPS((int) TimeUnit.SECONDS.toNanos(1) / (int) deltaTime);
-		this.setLastRenderTime(currentTime);
-
-		this.setRenderedFrames(this.getRenderedFrames() + 1);
-		this.getPanel().getFrame().setTitle(this.getName() + " - " + "(FPS: " + this.getCurrentFps() + ", Frame: " + this.getRenderedFrames() + ")");
-		this.render();
+		EventQueue.invokeLater(()->{	
+			this.setCurrentFPS((int) TimeUnit.SECONDS.toNanos(1) / (int) deltaTime);
+			this.setLastRenderTime(currentTime);
+	
+			this.setRenderedFrames(this.getRenderedFrames() + 1);
+			this.getPanel().getFrame().setTitle(this.getName() + " - " + "(FPS: " + this.getCurrentFps() + ", Frame: " + this.getRenderedFrames() + ")");
+			this.render();
+		});
 	}
 
 	/**
