@@ -54,7 +54,7 @@ Requis:
 Étape 1: Cloner le projet (avec les droits requis)
 
 ```bash
-git clone https://gaufre.informatique.univ-paris-diderot.fr/xun/todump.git
+git clone https://gaufre.informatique.univ-paris-diderot.fr/labbi/casse-brique-groupe-ad1a.git
 ```
 (marche également dans le terminal de Visual Studio Code)
 
@@ -77,7 +77,7 @@ git clone https://gaufre.informatique.univ-paris-diderot.fr/xun/todump.git
 
 ## Documentation
 
-### Comment l'application est structurée
+### Comment l'application est structurée (voir Structure.pdf)
 
 #### Configuration
 
@@ -120,17 +120,9 @@ functionName(type: arg1, objectType|null: arg2) : returnType1 | returnType2 // (
 }
 ```
 
-Un checkstyle avec le .xml correspondant se situant dans le dossier du projet a également été utilisé.
-
-
 # Rapports des Réunions
 
 ## Première Réunion
-
-TÂCHES COMMUNES :
-
-TÂCHES PERSONNELLES : 
-
 
 ## Deuxième Réunion
 
@@ -138,8 +130,6 @@ TÂCHES PERSONNELLES :
 ## Troisième Réunion
 
 ## Quatrième Réunion
-
-  - COMMUNE : Test + javadoc
 
 ## Cinquième Réunion
 
