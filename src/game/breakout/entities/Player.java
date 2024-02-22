@@ -3,13 +3,11 @@ package game.breakout.entities;
 import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.text.View;
 
-//import display.engine.images.PaddleImage;
-import display.engine.shapes.PaddleImage;
 import display.engine.shapes.Rectangle;
 import display.view.GamePanel;
 import game.breakout.entities.rules.Entity;
+
 
 public class Player extends Entity {
 	public static final Color DEFAULT_COLOR = Color.WHITE;

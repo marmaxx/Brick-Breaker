@@ -1,14 +1,11 @@
 package game.breakout.entities;
 import java.awt.Color;
-import display.engine.shapes.BallImage;
-import display.engine.shapes.rules.Collisions;
+
 import display.engine.rules.GraphicalObject;
-import game.breakout.Breakout;
-import game.breakout.entities.rules.Entity;
-import display.view.GamePanel;
 import display.engine.shapes.Circle;
-import display.engine.shapes.rules.*;
-import java.util.*;
+import display.view.GamePanel;
+import game.breakout.entities.rules.Entity;
+
 
 public class Ball extends Entity {
 	public static final Color DEFAULT_COLOR = Color.RED;
@@ -37,7 +34,7 @@ public class Ball extends Entity {
         int size,
 		Color color
     ) {
-		super(new Circle((int)posX, (int)posY, size, color));
+		super(new Circle(1, (int)posX, (int)posY, size, size,color));
         //super(new BallImage(posX, posY, size, size, color));
 		this.posX=posX;
 		this.posY=posY;
@@ -120,7 +117,8 @@ public class Ball extends Entity {
 
     // Method to check if the Ball is touching the Paddle 
     public boolean touchPaddle(Player paddle){ 
-        return ((Shape)this.getRepresentation()).checkCollisions((Shape)paddle.getRepresentation());
+        //return ((Shape)this.getRepresentation()).checkCollisions((Shape)paddle.getRepresentation());
+		return ((GraphicalObject)this.getRepresentation()).isColliding((GraphicalObject)paddle.getRepresentation());
     }
 
     /* Method to check if the Ball is touching a Brick */
@@ -146,11 +144,17 @@ public class Ball extends Entity {
     public void move(){
 		setPos(getNextX(), getNextY());
     }
+
+	public void String() {
+		((GraphicalObject)this.getRepresentation()).toString();
+	}
 	
 	public void update(Player player){ //actualisation des conditions physiques impactant la balle
 		Ball ball = this;
 		if (ball.touchPaddle(player)){
 			ball.paddleCollision();
+			System.out.println("Paddle collision");
+			ball.String();
 		}
 		if (ball.touchBrick()){
             ball.brickCollision();

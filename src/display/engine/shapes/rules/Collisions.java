@@ -1,16 +1,10 @@
 package display.engine.shapes.rules;
 
-import display.engine.shapes.BallImage;
-import display.engine.shapes.PaddleImage;
-import display.engine.rules.GraphicalObject;
 import display.engine.shapes.Circle;
 import display.engine.shapes.Rectangle;
 
 
 public interface Collisions {
-
-
-
 
 	/**
 	 * checks for collisions between 2 rectangles a and b
@@ -65,7 +59,8 @@ public interface Collisions {
      * 
      * @return true if a and b intersect, false otherwise
 	 */
-    public static boolean checkCollisions(BallImage a, PaddleImage b){   
+    
+    public static boolean checkCollisions(Rectangle a, Circle b){   
         // Find the closest point to the circle within the rectangle
         int closestX = clamp(a.getX(), b.getX(), b.getX() + b.getWidth());
         int closestY = clamp(a.getY(), b.getY(), b.getY() + b.getHeight());
@@ -78,6 +73,7 @@ public interface Collisions {
         int distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
         return distanceSquared < (a.getWidth()/2 * a.getWidth()/2);
     }
+    
 
     /**
 	 * checks for collisions between a circle and a rectangle

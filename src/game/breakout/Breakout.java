@@ -30,7 +30,7 @@ public class Breakout extends Game{
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.bricks = new ArrayList<Entity>();
 		this.setPlayer(new Player(630,700));
-		this.setBall(new Ball(630,700, 30, Color.CYAN));
+		this.setBall(new Ball(630,600, 20, Color.CYAN));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -167,9 +167,9 @@ public class Breakout extends Game{
 	public void start() {
 		super.start();
 		//for fun to see that initialisation can change for each level 
-		Random random = new Random();
-		int randomNumberOfBrick = random.nextInt(50 - 20) + 20;
-		this.bricksInitialisation(randomNumberOfBrick);
+		//Random random = new Random();
+		//int randomNumberOfBrick = random.nextInt(50 - 20) + 20;
+		this.bricksInitialisation(6);
 
 		// Add all entities to the game
 		for (Entity brick : this.getBricks()) {

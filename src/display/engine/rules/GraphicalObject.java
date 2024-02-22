@@ -5,18 +5,17 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-import display.engine.shapes.BallImage;
-import display.engine.shapes.PaddleImage;
-import display.engine.shapes.Circle;
-import display.engine.shapes.Rectangle;
-import display.engine.shapes.rules.Collisions;
-import display.engine.shapes.rules.Shape;
 
 public abstract class GraphicalObject extends JComponent {
 
     protected int posX, posY;
     protected int width, height;
 	protected Color color;
+
+	// Collision
+	public static enum Boundary {
+		MIN_X, MAX_X, MIN_Y, MAX_Y
+	}
     
 	/**
 	 * Instantiates a new GraphicalObject
@@ -129,7 +128,72 @@ public abstract class GraphicalObject extends JComponent {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+	/**
+	 * Récupérer les coordonnées des limites de cet objet
+	 * 
+	 * @return Les coordonnées des limites
+	 */
+	public float[] getBoundaries() {
+		float[] centerPosition = { this.getPosX(), this.getPosY()};
+		float[] size = { this.getWidth(), this.getHeight()};
+
+		float[] boundaryBox = new float[Boundary.values().length];
+
+		boundaryBox[Boundary.MAX_Y.ordinal()] = centerPosition[1] + size[1] / 2;
+		boundaryBox[Boundary.MIN_Y.ordinal()] = centerPosition[1] - size[1] / 2;
+		boundaryBox[Boundary.MIN_X.ordinal()] = centerPosition[0] - size[0] / 2;
+		boundaryBox[Boundary.MAX_X.ordinal()] = centerPosition[0] + size[0] / 2;
+
+		return boundaryBox;
+	}
 	
+	/**	
+	 * Récupérer la coordonnée d'une frontière de cet objet graphique
+	 * 
+	 * @param boundary La frontière à récupérer
+	 */
+	public float getBoundary(Boundary boundary) {
+		return this.getBoundaries()[boundary.ordinal()];
+	}
+
+	/**
+	 * Vérifier si cet objet graphique est en collision avec un autre objet
+	 * graphique
+	 * 
+	 * @param object L'objet graphique avec lequel vérifier la collision
+	 * 
+	 * @return true si les objets sont en collision, false sinon
+	 */
+	public boolean isColliding(GraphicalObject object) {
+		float[] thisBoundingBox = this.getBoundaries();
+		float[] objectBoundingBox = object.getBoundaries();
+
+		// Si le dessus de cet objet est plus haut que le dessous de l'autre objet
+		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+				// Si le dessous de cet objet est plus bas que le dessus de l'autre objet
+				&& thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+				// Si la gauche de cet objet est plus à gauche que la droite de l'autre objet
+				&& thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+				// Si la droite de cet objet est plus à droite que la gauche de l'autre objet
+				&& thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
+
+		return isColliding;
+	}
+
+	public String toString() {
+		return "GraphicalObject: " + "\n"
+				+ "\tType: " + this.getClass().getSimpleName() + "\n"
+				+ "\tPosition: X: " + this.getPosX() + ", Y: " + this.getPosY() + ", Z: " + "\n"
+				+ "\tScale: X: " + this.getWidth() + ", Y: " + this.getHeight() + ", Z: " + "\n"
+				+ "\tBoundingBox: " + "\n"
+				+ "\t\tDessus (MAX_Y): " + this.getBoundary(Boundary.MAX_Y) + "\n"
+				+ "\t\tGauche: (MIN_X): " + this.getBoundary(Boundary.MIN_X) + "\n"
+				+ "\t\tDroite: (MAX_X): " + this.getBoundary(Boundary.MAX_X) + "\n"
+				+ "\t\tDessous: (MIN_Y): " + this.getBoundary(Boundary.MIN_Y) + "\n";
+	}
+
+
 	/**
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
