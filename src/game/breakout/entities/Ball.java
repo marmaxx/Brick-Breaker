@@ -1,7 +1,6 @@
 package game.breakout.entities;
 import java.awt.Color;
 import display.engine.shapes.BallImage;
-import display.engine.shapes.rules.Collisions;
 import display.engine.rules.GraphicalObject;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
@@ -129,9 +128,10 @@ public class Ball extends Entity {
     }
     
     /* Method to handle wall collision */
-    public void wallCollision(){
-        // double y = -forceCoordinates.getY();
-        // forceCoordinates=new Coordinates(forceCoordinates.getX(), y);
+    public void handleWallCollision(){
+		if ((getX() >= 0 && getNextX() <= 0) || (getX() <= GamePanel.SCREEN_FULL_SIZE.getWidth() && getNextX() >= GamePanel.SCREEN_FULL_SIZE.getWidth())){
+			setForce(-forceX, forceY);
+		}
         setForce(forceX, -forceY);
     }
 
@@ -158,9 +158,10 @@ public class Ball extends Entity {
 		if (ball.touchLowerWall()){
 			ball.setPos(630, 0);
 		}
-        if (ball.touchWall()){
+        /*if (ball.touchWall()){
             ball.wallCollision();
-        }
+        }*/
+		handleWallCollision();
 		ball.move();    
     }
 
