@@ -115,6 +115,10 @@ public class Breakout extends Game{
 		this.ball = ball;
 	}
 
+	public static int getWallWidth(){
+		return WALL_WIDTH;
+	}
+
 	public Wall getEastWAll(){
 		return this.eastWall;
 	}

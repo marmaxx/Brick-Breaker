@@ -7,6 +7,7 @@ import game.breakout.entities.rules.Entity;
 import display.view.GamePanel;
 import display.engine.shapes.Circle;
 import display.engine.shapes.rules.*;
+import game.breakout.entities.Wall;
 import java.util.*;
 
 public class Ball extends Entity {
@@ -128,10 +129,10 @@ public class Ball extends Entity {
     
     /* Method to handle wall collision */
     public void handleWallCollision(){
-		if ((getX() >= 0 && getNextX() <= 0) || (getX() <= GamePanel.SCREEN_FULL_SIZE.getWidth() && getNextX() >= GamePanel.SCREEN_FULL_SIZE.getWidth())){
+		if ((getX() >= Breakout.getWallWidth() && getNextX() <= Breakout.getWallWidth()) || (getX() <= (GamePanel.SCREEN_FULL_SIZE.getWidth()-Breakout.getWallWidth()) && getNextX() >= (GamePanel.SCREEN_FULL_SIZE.getWidth()-Breakout.getWallWidth()))){
 			setForce(-forceX, forceY);
 		}
-		else if (getY() >= 0 && getNextY() <= 0){
+		else if (getY() >= Breakout.getWallWidth() && getNextY() <= Breakout.getWallWidth()){
 			setForce(forceX, -forceY);
 		}
     }
