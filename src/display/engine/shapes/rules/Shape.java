@@ -1,13 +1,14 @@
 package display.engine.shapes.rules;
 
 import java.awt.Color;
+import java.awt.Image;
 
 import display.engine.rules.GraphicalObject;
 import display.engine.shapes.Circle;
 import display.engine.shapes.Rectangle;
 
 public abstract class Shape extends GraphicalObject implements Collisions {
-	protected java.awt.Image image;
+	protected Image image;
 
 	/**
 	 * Instantiates a new Shape
@@ -36,13 +37,13 @@ public abstract class Shape extends GraphicalObject implements Collisions {
 	 * @param height the height of the graphical object
 	 * @param color The color of the graphical object (ignored but used to call the super constructor)
 	 */
-    public Shape(java.awt.Image image,
+    public Shape(Image image,
         int posX, int posY,
         int width, int height,
         Color color
     ) {
         super(posX, posY, width, height, color);
-		java.awt.Image scaledImage = image.getScaledInstance(getWidth(), getHeight(), java.awt.Image.SCALE_SMOOTH);
+		Image scaledImage = image.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
 		this.setImage(scaledImage);
     }
 
@@ -51,7 +52,7 @@ public abstract class Shape extends GraphicalObject implements Collisions {
 	 * 
 	 * @return The image to be displayed
 	 */
-	public java.awt.Image getImage() {
+	public Image getImage() {
 		return this.image;
 	}
 
@@ -60,7 +61,7 @@ public abstract class Shape extends GraphicalObject implements Collisions {
 	 * 
 	 * @param image The image to be displayed
 	 */
-	public void setImage(java.awt.Image image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 

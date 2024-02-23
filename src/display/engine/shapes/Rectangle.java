@@ -50,7 +50,7 @@ public class Rectangle extends Shape {
     }
 
 	/**
-	 * Instantiates a new PaddleImage
+	 * Instantiates a new Rectangle
 	 * 
 	 * @param posX The initial x position of the graphical object
 	 * @param posY The initial y position of the graphical object

@@ -12,7 +12,7 @@ public abstract class GraphicalObject extends JComponent {
     protected int width, height;
 	protected Color color;
 
-	// Collision
+	// Used to define the boundaries of the object (i.e collision detection)
 	public static enum Boundary {
 		MIN_X, MAX_X, MIN_Y, MAX_Y
 	}
@@ -36,7 +36,6 @@ public abstract class GraphicalObject extends JComponent {
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setColor(color);
-
     }
 
 	/**
@@ -130,9 +129,9 @@ public abstract class GraphicalObject extends JComponent {
 	}
 
 	/**
-	 * Récupérer les coordonnées des limites de cet objet
+	 * Get the coordinates of the boundaries from this object
 	 * 
-	 * @return Les coordonnées des limites
+	 * @return The coordinates of the boundaries
 	 */
 	public float[] getBoundaries() {
 		float[] centerPosition = { this.getPosX(), this.getPosY()};
@@ -149,33 +148,32 @@ public abstract class GraphicalObject extends JComponent {
 	}
 	
 	/**	
-	 * Récupérer la coordonnée d'une frontière de cet objet graphique
+	 * Get the coordinate of a boundary from this graphical object
 	 * 
-	 * @param boundary La frontière à récupérer
+	 * @param boundary The boundary to retrieve
 	 */
 	public float getBoundary(Boundary boundary) {
 		return this.getBoundaries()[boundary.ordinal()];
 	}
 
 	/**
-	 * Vérifier si cet objet graphique est en collision avec un autre objet
-	 * graphique
+	 * Check if this graphical object is colliding with another graphical object
 	 * 
-	 * @param object L'objet graphique avec lequel vérifier la collision
+	 * @param object The graphical object to check collision with
 	 * 
-	 * @return true si les objets sont en collision, false sinon
+	 * @return true if the objects are colliding, false otherwise
 	 */
 	public boolean isColliding(GraphicalObject object) {
 		float[] thisBoundingBox = this.getBoundaries();
 		float[] objectBoundingBox = object.getBoundaries();
 
-		// Si le dessus de cet objet est plus haut que le dessous de l'autre objet
+		// If the top of this object is higher than the bottom of the other object
 		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
-				// Si le dessous de cet objet est plus bas que le dessus de l'autre objet
+				// If the bottom of this object is lower than the top of the other object
 				&& thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
-				// Si la gauche de cet objet est plus à gauche que la droite de l'autre objet
+				// If the left of this object is more to the left than the right of the other object
 				&& thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
-				// Si la droite de cet objet est plus à droite que la gauche de l'autre objet
+				// If the right of this object is more to the right than the left of the other object
 				&& thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
 
 		return isColliding;
@@ -187,10 +185,10 @@ public abstract class GraphicalObject extends JComponent {
 				+ "\tPosition: X: " + this.getPosX() + ", Y: " + this.getPosY() + ", Z: " + "\n"
 				+ "\tScale: X: " + this.getWidth() + ", Y: " + this.getHeight() + ", Z: " + "\n"
 				+ "\tBoundingBox: " + "\n"
-				+ "\t\tDessus (MAX_Y): " + this.getBoundary(Boundary.MAX_Y) + "\n"
-				+ "\t\tGauche: (MIN_X): " + this.getBoundary(Boundary.MIN_X) + "\n"
-				+ "\t\tDroite: (MAX_X): " + this.getBoundary(Boundary.MAX_X) + "\n"
-				+ "\t\tDessous: (MIN_Y): " + this.getBoundary(Boundary.MIN_Y) + "\n";
+				+ "\t\tTop (MAX_Y): " + this.getBoundary(Boundary.MAX_Y) + "\n"
+				+ "\t\tLeft: (MIN_X): " + this.getBoundary(Boundary.MIN_X) + "\n"
+				+ "\t\tRight: (MAX_X): " + this.getBoundary(Boundary.MAX_X) + "\n"
+				+ "\t\tBottom: (MIN_Y): " + this.getBoundary(Boundary.MIN_Y) + "\n";
 	}
 
 
