@@ -129,7 +129,7 @@ public class Ball extends Entity {
     
     /* Method to handle wall collision */
     public void handleWallCollision(){
-		if ((getX() >= Breakout.getWallWidth() && getNextX() <= Breakout.getWallWidth()) || (getX() <= (GamePanel.SCREEN_FULL_SIZE.getWidth()-Breakout.getWallWidth()) && getNextX() >= (GamePanel.SCREEN_FULL_SIZE.getWidth()-Breakout.getWallWidth()))){
+		if ((getX() >= Breakout.getWallWidth() && getNextX() <= Breakout.getWallWidth()) || (getX() <= (GamePanel.SCREEN_FULL_SIZE.width-Breakout.getWallWidth()) && getNextX() >= (GamePanel.SCREEN_FULL_SIZE.width-Breakout.getWallWidth()))){
 			setForce(-forceX, forceY);
 		}
 		else if (getY() >= Breakout.getWallWidth() && getNextY() <= Breakout.getWallWidth()){
