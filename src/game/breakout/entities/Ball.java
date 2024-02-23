@@ -132,7 +132,9 @@ public class Ball extends Entity {
 		if ((getX() >= 0 && getNextX() <= 0) || (getX() <= GamePanel.SCREEN_FULL_SIZE.getWidth() && getNextX() >= GamePanel.SCREEN_FULL_SIZE.getWidth())){
 			setForce(-forceX, forceY);
 		}
-        setForce(forceX, -forceY);
+		else if (getY() >= 0 && getNextY() <= 0){
+			setForce(forceX, -forceY);
+		}
     }
 
     /* Method to handle paddle collision */
