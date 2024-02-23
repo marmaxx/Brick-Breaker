@@ -156,7 +156,7 @@ public class Ball extends Entity {
 			ball.paddleCollision();
 		}
 		if (collidingBrick){
-            ball.wallCollision();
+			setForce(forceX, -forceY);
 			collidingBrick=false; //resets the brick collision variable to false
         }
 		if (ball.touchLowerWall()){
