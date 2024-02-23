@@ -13,7 +13,7 @@ import game.breakout.entities.rules.Entity;
 
 public class Player extends Entity {
 	public static final Color DEFAULT_COLOR = Color.WHITE;
-	public static final int DEFAULT_SIZE = 150; //the size of the paddle image
+	public static final int DEFAULT_SIZE = 200; //the size of the paddle image
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
 	public static final int MOVE_STEP = 10;
