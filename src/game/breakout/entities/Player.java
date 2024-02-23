@@ -90,8 +90,8 @@ public class Player extends Entity {
     private void moveRight() {
         Dimension SCREEN_SIZE = GamePanel.SCREEN_FULL_SIZE; //to check if the paddle is going out of bounds (to the right of the screen)
         int newX = this.getRepresentation().getPosX() + MOVE_STEP;
-        if (newX > SCREEN_SIZE.width - Breakout.getWallWidth() - DEFAULT_SIZE) {
-            newX = SCREEN_SIZE.width - Breakout.getWallWidth() - DEFAULT_SIZE; // Prevent the paddle from moving off the screen
+        if (newX > SCREEN_SIZE.width - 2*Breakout.getWallWidth() - DEFAULT_SIZE) {
+            newX = SCREEN_SIZE.width - 2*Breakout.getWallWidth() - DEFAULT_SIZE; // Prevent the paddle from moving off the screen
         }
         this.getRepresentation().setPosX(newX);
     }
