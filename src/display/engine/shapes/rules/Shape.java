@@ -73,13 +73,21 @@ public abstract class Shape extends GraphicalObject implements Collisions {
      * @return boolean that is set to true if there is a collision, false otherwise or if there is a type missmatch
      */
     public boolean checkCollisions(Shape b){ 
-		if (this instanceof BallImage ball && b instanceof PaddleImage paddle){
+		Shape a =this;
+		if (a instanceof BallImage ball && b instanceof PaddleImage paddle){
             return Collisions.checkCollisions(ball, paddle);
         }
-        if (this instanceof Circle ball && b instanceof Rectangle rect){
+		if (a instanceof BallImage ball && b instanceof Rectangle rect){
+			System.out.println("checking ballimage and rect");
             return Collisions.checkCollisions(ball, rect);
         }
-        if (this instanceof Rectangle rect1&& b instanceof Rectangle rect2){
+		if (b instanceof Circle ball && a instanceof Rectangle rect){
+            return Collisions.checkCollisions(ball, rect);
+        }
+        if (a instanceof Circle ball && b instanceof Rectangle rect){
+            return Collisions.checkCollisions(ball, rect);
+        }
+        if (a instanceof Rectangle rect1&& b instanceof Rectangle rect2){
             return Collisions.checkCollisions(rect1, rect2);
         }
         return false;

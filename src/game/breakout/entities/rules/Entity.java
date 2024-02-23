@@ -31,4 +31,8 @@ public abstract class Entity {
     public void setRepresentation(GraphicalObject representation) {
         this.representation = representation;
     }
+
+	
+
+	
 }

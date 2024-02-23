@@ -18,10 +18,9 @@ public class Ball extends Entity {
 	private static final double DELTA_TIME = 1;
 	private static final double GRAVITY_CONSTANT = 9.81;
     private static final double MASS = 0.2;
-    // private static final double WEIGHTX = 0;
-	// private static final double WEIGHTY = MASS * GRAVITY_CONSTANT;
 	private double forceX = MASS * GRAVITY_CONSTANT / 3;
 	private double forceY = MASS * GRAVITY_CONSTANT / 3;
+	private boolean collidingBrick;
 
 	/**
 	 * Instantiates a new Ball
@@ -122,9 +121,9 @@ public class Ball extends Entity {
         return ((Shape)this.getRepresentation()).checkCollisions((Shape)paddle.getRepresentation());
     }
 
-    /* Method to check if the Ball is touching a Brick */
-    public boolean touchBrick(){
-        return false;
+    /* Method that sets collidingBrick to true. is called by bricks when they detect a collision with the ball */
+    public void touchBrick(){
+        collidingBrick=true;
     }
     
     /* Method to handle wall collision */
@@ -143,7 +142,9 @@ public class Ball extends Entity {
     }
 
     /* Method to handle brick collision */
-    public void brickCollision(){}
+    public void brickCollision(){
+		setForce(forceX, -forceY);
+	}
 
     public void move(){
 		setPos(getNextX(), getNextY());
@@ -154,8 +155,9 @@ public class Ball extends Entity {
 		if (ball.touchPaddle(player)){
 			ball.paddleCollision();
 		}
-		if (ball.touchBrick()){
-            ball.brickCollision();
+		if (collidingBrick){
+            ball.wallCollision();
+			collidingBrick=false; //resets the brick collision variable to false
         }
 		if (ball.touchLowerWall()){
 			ball.setPos(630, 0);

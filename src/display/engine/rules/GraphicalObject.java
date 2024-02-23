@@ -1,6 +1,7 @@
 package display.engine.rules;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -130,6 +131,18 @@ public abstract class GraphicalObject extends JComponent {
 		this.color = color;
 	}
 	
+	/**
+	 * removes the graphical object from the view
+	 */
+	public void destroy() {
+        Container parent = getParent();
+        if (parent != null) {
+            parent.remove(this);
+            parent.repaint(); // Ensure that the container repaints after removal
+        }
+    }
+
+
 	/**
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */

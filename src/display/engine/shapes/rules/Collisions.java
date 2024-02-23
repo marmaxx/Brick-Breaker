@@ -52,7 +52,7 @@ public interface Collisions {
 	}
 
     /**
-	 * checks for collisions between a BallImage and a rectangle
+	 * checks for collisions between a BallImage and the paddle
 	 * @param tw width of a
 	 * @param th height of a
      * @param rw widht of b
@@ -66,6 +66,34 @@ public interface Collisions {
      * @return true if a and b intersect, false otherwise
 	 */
     public static boolean checkCollisions(BallImage a, PaddleImage b){   
+        // Find the closest point to the circle within the rectangle
+        int closestX = clamp(a.getX(), b.getX(), b.getX() + b.getWidth());
+        int closestY = clamp(a.getY(), b.getY(), b.getY() + b.getHeight());
+
+        // Calculate the distance between the circle's center and this closest point
+        int distanceX = a.getX() - closestX;
+        int distanceY = a.getY() - closestY;
+
+        // If the distance is less than the circle's radius, an intersection occurs
+        int distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+        return distanceSquared < (a.getWidth()/2 * a.getWidth()/2);
+    }
+
+    /**
+	 * checks for collisions between a BallImage and a rectangle
+	 * @param tw width of a
+	 * @param th height of a
+     * @param rw widht of b
+     * @param rh height of b
+     * 
+     * @param tx x of a
+     * @param ty y of a
+     * @param rx x of b
+     * @param ry y of b
+     * 
+     * @return true if a and b intersect, false otherwise
+	 */
+    public static boolean checkCollisions(BallImage a, Rectangle b){   
         // Find the closest point to the circle within the rectangle
         int closestX = clamp(a.getX(), b.getX(), b.getX() + b.getWidth());
         int closestY = clamp(a.getY(), b.getY(), b.getY() + b.getHeight());
@@ -105,7 +133,7 @@ public interface Collisions {
 
         // If the distance is less than the circle's radius, an intersection occurs
         int distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-        return distanceSquared < (a.getWidth()/2 * a.getWidth()/2);
+        return distanceSquared < ((a.getWidth()) * (a.getWidth()));
     }
 
     public static int clamp(int val, int min, int max) {
