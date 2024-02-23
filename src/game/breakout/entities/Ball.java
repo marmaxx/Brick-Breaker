@@ -18,8 +18,8 @@ public class Ball extends Entity {
 	private static final double DELTA_TIME = 1;
 	private static final double GRAVITY_CONSTANT = 9.81;
     private static final double MASS = 0.2;
-	private double forceX = MASS * GRAVITY_CONSTANT / 3;
-	private double forceY = MASS * GRAVITY_CONSTANT / 3;
+	private double forceX = MASS * GRAVITY_CONSTANT;
+	private double forceY = MASS * GRAVITY_CONSTANT;
 	private boolean collidingBrick;
 
 	/**
