@@ -17,7 +17,7 @@ public class Player extends Entity {
 	public static final int DEFAULT_SIZE = 200; //the size of the paddle image
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
-	public static final int MOVE_STEP = 1000;
+	public static final int MOVE_STEP = 30;
 	private boolean moving_left;
 	private boolean moving_right;
 
