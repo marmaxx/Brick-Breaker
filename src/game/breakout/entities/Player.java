@@ -9,6 +9,7 @@ import javax.swing.text.View;
 import display.engine.shapes.PaddleImage;
 import display.engine.shapes.Rectangle;
 import display.view.GamePanel;
+import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
 public class Player extends Entity {
@@ -80,8 +81,8 @@ public class Player extends Entity {
 
     private void moveLeft() {
         int newX = this.getRepresentation().getPosX() - MOVE_STEP; //to check if the paddle is going to go out of bounds
-        if (newX < 0) {
-            newX = 0; // Prevent the paddle from moving off the screen
+        if (newX < Breakout.getWallWidth()) {
+            newX = Breakout.getWallWidth(); // Prevent the paddle from moving off the screen
         }
         this.getRepresentation().setPosX(newX);
     }
@@ -89,8 +90,8 @@ public class Player extends Entity {
     private void moveRight() {
         Dimension SCREEN_SIZE = GamePanel.SCREEN_FULL_SIZE; //to check if the paddle is going out of bounds (to the right of the screen)
         int newX = this.getRepresentation().getPosX() + MOVE_STEP;
-        if (newX > SCREEN_SIZE.width - DEFAULT_SIZE) {
-            newX = SCREEN_SIZE.width - DEFAULT_SIZE; // Prevent the paddle from moving off the screen
+        if (newX > SCREEN_SIZE.width - Breakout.getWallWidth() - DEFAULT_SIZE) {
+            newX = SCREEN_SIZE.width - Breakout.getWallWidth() - DEFAULT_SIZE; // Prevent the paddle from moving off the screen
         }
         this.getRepresentation().setPosX(newX);
     }
