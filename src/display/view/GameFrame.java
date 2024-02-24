@@ -53,13 +53,4 @@ public class GameFrame extends JFrame {
 	private void setGamePanel(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
 	}
-
-	/**
-	 * Set the background color of the game panel
-	 * 
-	 * @param color The color to set
-	 */
-	public void setGamePanelColor(Color color) {
-		this.getGamePanel().setBackground(color);
-	}
 }

@@ -1,31 +1,27 @@
 package display.engine.shapes.rules;
 
 import java.awt.Color;
+import java.awt.Image;
 
 import display.engine.rules.GraphicalObject;
-import display.engine.shapes.BallImage;
-import display.engine.shapes.Circle;
-import display.engine.shapes.PaddleImage;
-import display.engine.shapes.Rectangle;
 
-public abstract class Shape extends GraphicalObject implements Collisions {
-	protected java.awt.Image image;
+public abstract class Shape extends GraphicalObject {
+	protected Image image;
 
 	/**
 	 * Instantiates a new Shape
 	 * 
+	 * @param color the color of the graphical object
 	 * @param posX the initial x position of the graphical object
 	 * @param posY the initial y position of the graphical object
 	 * @param width the width of the graphical object
 	 * @param height the height of the graphical object
-	 * @param color the color of the graphical object (ignored if the graphical object is represented by an image)
 	 */
-    public Shape(
+    public Shape(Color color,
         int posX, int posY,
-        int width, int height,
-        Color color
+        int width, int height
     ) {
-        super(posX, posY, width, height, color);
+        super(color, posX, posY, width, height);
     }
 
 	/**
@@ -36,16 +32,12 @@ public abstract class Shape extends GraphicalObject implements Collisions {
 	 * @param posY the initial y position of the graphical object
 	 * @param width the width of the graphical object
 	 * @param height the height of the graphical object
-	 * @param color The color of the graphical object (ignored but used to call the super constructor)
 	 */
-    public Shape(java.awt.Image image,
+    public Shape(Image image,
         int posX, int posY,
-        int width, int height,
-        Color color
+        int width, int height
     ) {
-        super(posX, posY, width, height, color);
-		java.awt.Image scaledImage = image.getScaledInstance(getWidth(), getHeight(), java.awt.Image.SCALE_SMOOTH);
-		this.setImage(scaledImage);
+		super(image, posX, posY, width, height);
     }
 
 	/**
@@ -53,7 +45,7 @@ public abstract class Shape extends GraphicalObject implements Collisions {
 	 * 
 	 * @return The image to be displayed
 	 */
-	public java.awt.Image getImage() {
+	public Image getImage() {
 		return this.image;
 	}
 
@@ -62,29 +54,9 @@ public abstract class Shape extends GraphicalObject implements Collisions {
 	 * 
 	 * @param image The image to be displayed
 	 */
-	public void setImage(java.awt.Image image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
-
-	/**
-     * takes into argument two graphical objects and calls collision detection methods based on their type
-     * @param a graphical object 
-     * @param b graphical object
-     * @return boolean that is set to true if there is a collision, false otherwise or if there is a type missmatch
-     */
-    public boolean checkCollisions(Shape b){ 
-		if (this instanceof BallImage ball && b instanceof PaddleImage paddle){
-            return Collisions.checkCollisions(ball, paddle);
-        }
-        if (this instanceof Circle ball && b instanceof Rectangle rect){
-            return Collisions.checkCollisions(ball, rect);
-        }
-        if (this instanceof Rectangle rect1&& b instanceof Rectangle rect2){
-            return Collisions.checkCollisions(rect1, rect2);
-        }
-        return false;
-    }
-
 
 	/**
 	 * Paints the image on the screen
@@ -93,8 +65,6 @@ public abstract class Shape extends GraphicalObject implements Collisions {
 	 */
 	public void paintComponent(java.awt.Graphics g){
 		super.paintComponent(g);
-		g.drawImage(this.getImage(), 0, 0 , null);
-		
 	}
 
 }

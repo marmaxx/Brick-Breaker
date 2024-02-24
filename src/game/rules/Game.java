@@ -1,7 +1,6 @@
 package game.rules;
 
 import display.view.GamePanel;
-import game.breakout.Breakout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class Game{
     protected GamePanel panel;
 	protected String name;
+	protected boolean paused;
 	protected int renderedFrames;
 	protected int currentFPS;
 	protected long lastRenderTime;
@@ -124,13 +124,40 @@ public abstract class Game{
 	 * Start the game
 	 */
 	public void start() {
-		int delay = 20; // Delay in milliseconds for 30 FPS
+		// Set the game to run at 60 FPS (idk why it's 30 in windows)
+		int delay = 1000/60;
 		Timer timer = new Timer(delay, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(!Game.this.isPaused()){
 				Game.this.update();
+				}
 			}
 		});
 		timer.start();
+	}
+
+	/**
+	 * Pause the game
+	 */
+	public void pause() {
+		this.getPanel().getFrame().setTitle(this.getName() + " (Pause)");
+		this.paused = true;
+	}
+
+	/**
+	 * Resume the game
+	 */
+	public void resume() {
+		this.paused = false;
+	}
+
+	/**
+	 * Check if the game is paused
+	 * 
+	 * @return True if the game is paused, false otherwise
+	 */
+	public boolean isPaused() {
+		return this.paused;
 	}
 
 	/**
@@ -146,11 +173,14 @@ public abstract class Game{
 
 		this.setRenderedFrames(this.getRenderedFrames() + 1);
 		this.getPanel().getFrame().setTitle(this.getName() + " - " + "(FPS: " + this.getCurrentFps() + ", Frame: " + this.getRenderedFrames() + ")");
+
 		this.render();
 	}
 
 	/**
 	 * Render the game
 	 */
-	public abstract void render();
+	public void render(){
+		this.getPanel().repaint();
+	}
 }
