@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class Game{
     protected GamePanel panel;
 	protected String name;
+	protected boolean paused;
 	protected int renderedFrames;
 	protected int currentFPS;
 	protected long lastRenderTime;
@@ -126,10 +127,36 @@ public abstract class Game{
 		int delay = 30; // Delay in milliseconds for 30 FPS
 		Timer timer = new Timer(delay, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(!Game.this.isPaused()){
 				Game.this.update();
+				}
 			}
 		});
 		timer.start();
+	}
+
+	/**
+	 * Pause the game
+	 */
+	public void pause() {
+		this.getPanel().getFrame().setTitle(this.getName() + " (Pause)");
+		this.paused = true;
+	}
+
+	/**
+	 * Resume the game
+	 */
+	public void resume() {
+		this.paused = false;
+	}
+
+	/**
+	 * Check if the game is paused
+	 * 
+	 * @return True if the game is paused, false otherwise
+	 */
+	public boolean isPaused() {
+		return this.paused;
 	}
 
 	/**

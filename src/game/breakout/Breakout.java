@@ -46,6 +46,14 @@ public class Breakout extends Game{
 					case KeyEvent.VK_RIGHT:
 						Breakout.this.getPlayer().setDirection(Direction.RIGHT);
 						break;
+					case KeyEvent.VK_ESCAPE:
+						if(Breakout.this.isPaused()){
+							Breakout.this.resume();
+						}
+						else{
+							Breakout.this.pause();
+						}
+						break;
 				}
 			}
 
