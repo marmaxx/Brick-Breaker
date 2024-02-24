@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-	private static final Color GAME_BACKGROUND_COLOR = Color.GRAY;
+	private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	private GameFrame gameFrame;
     

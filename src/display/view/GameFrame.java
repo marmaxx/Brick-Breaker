@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
-	public static final Color INTERFACE_BACKGROUND = Color.BLUE;
+	public static final Color INTERFACE_BACKGROUND = Color.WHITE;
 
 	private GamePanel gamePanel;
     
