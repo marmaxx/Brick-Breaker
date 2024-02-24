@@ -124,7 +124,8 @@ public abstract class Game{
 	 * Start the game
 	 */
 	public void start() {
-		int delay = 30; // Delay in milliseconds for 30 FPS
+		// Set the game to run at 60 FPS (idk why it's 30 in windows)
+		int delay = 1000/60;
 		Timer timer = new Timer(delay, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!Game.this.isPaused()){

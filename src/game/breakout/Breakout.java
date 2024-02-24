@@ -169,7 +169,7 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(6, 4);
+		this.createBricks(6, 10);
 
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
@@ -186,6 +186,7 @@ public class Breakout extends Game{
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
 			this.getPlayer().move(Player.MOVE_SPEED);
+
 		}
 	}
 
