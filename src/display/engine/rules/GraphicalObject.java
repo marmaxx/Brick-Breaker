@@ -2,8 +2,11 @@ package display.engine.rules;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JComponent;
+
+import display.view.GamePanel;
 
 
 public abstract class GraphicalObject extends JComponent {
@@ -11,6 +14,7 @@ public abstract class GraphicalObject extends JComponent {
     protected int posX, posY;
     protected int width, height;
 	protected Color color;
+	protected Image image;
 
 	// Used to define the boundaries of the object (i.e collision detection)
 	public static enum Boundary {
@@ -20,22 +24,43 @@ public abstract class GraphicalObject extends JComponent {
 	/**
 	 * Instantiates a new GraphicalObject
 	 * 
+	 * @param image The image file representing the graphical object
 	 * @param posX the initial x position of the graphical object
 	 * @param posY the initial y position of the graphical object
 	 * @param width the width of the graphical object
 	 * @param height the height of the graphical object
-	 * @param color the color of the graphical object (ignored if the graphical object is represented by an image)
 	 */
-    public GraphicalObject(
+    public GraphicalObject(Image image,
         int posX, int posY,
-        int width, int height,
-		Color color
+        int width, int height
     ) {
+		this.setColor(null);
+		this.setImage(image);
 		this.setPosX(posX);
 		this.setPosY(posY);
 		this.setWidth(width);
 		this.setHeight(height);
+    }
+    
+	/**
+	 * Instantiates a new GraphicalObject
+	 * 
+	 * @param color The color of the graphical object
+	 * @param posX the initial x position of the graphical object
+	 * @param posY the initial y position of the graphical object
+	 * @param width the width of the graphical object
+	 * @param height the height of the graphical object
+	 */
+    public GraphicalObject(Color color, 
+		int posX, int posY,
+        int width, int height
+    ) {
 		this.setColor(color);
+		this.setImage(null);
+		this.setPosX(posX);
+		this.setPosY(posY);
+		this.setWidth(width);
+		this.setHeight(height);
     }
 
 	/**
@@ -129,20 +154,35 @@ public abstract class GraphicalObject extends JComponent {
 	}
 
 	/**
+	 * Sets the image representing the graphical object
+	 * 
+	 * @param image The image representing the graphical object
+	 */
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	/**
+	 * Gets the image representing the graphical object
+	 * 
+	 * @return The image representing the graphical object
+	 */
+	public Image getImage() {
+		return image;
+	}
+
+	/**
 	 * Get the coordinates of the boundaries from this object
 	 * 
 	 * @return The coordinates of the boundaries
 	 */
-	public float[] getBoundaries() {
-		float[] centerPosition = { this.getPosX(), this.getPosY()};
-		float[] size = { this.getWidth(), this.getHeight()};
+	public int[] getBoundaries() {
+		int[] boundaryBox = new int[Boundary.values().length];
 
-		float[] boundaryBox = new float[Boundary.values().length];
-
-		boundaryBox[Boundary.MAX_Y.ordinal()] = centerPosition[1] + size[1] / 2;
-		boundaryBox[Boundary.MIN_Y.ordinal()] = centerPosition[1] - size[1] / 2;
-		boundaryBox[Boundary.MIN_X.ordinal()] = centerPosition[0] - size[0] / 2;
-		boundaryBox[Boundary.MAX_X.ordinal()] = centerPosition[0] + size[0] / 2;
+		boundaryBox[Boundary.MAX_Y.ordinal()] = this.getPosY() + this.getHeight();
+		boundaryBox[Boundary.MIN_Y.ordinal()] = this.getPosY();
+		boundaryBox[Boundary.MIN_X.ordinal()] = this.getPosX();
+		boundaryBox[Boundary.MAX_X.ordinal()] = this.getPosX() + this.getWidth();
 
 		return boundaryBox;
 	}
@@ -157,6 +197,19 @@ public abstract class GraphicalObject extends JComponent {
 	}
 
 	/**
+	 * Checks if the object is within its panel boundaries
+	 * 
+	 * @param x the x position to check
+	 * @param y the y position to check
+	 * @param panel the panel in which the object is rendered
+	 * 
+	 * @return true if the object is within the panel boundaries, false otherwise
+	 */
+	public static boolean isOnScreen(int x, int y, GamePanel panel) {
+		return (x >= 0 && x <= panel.getWidth() && y >= 0 && y <= panel.getHeight());
+	}
+
+	/**
 	 * Check if this graphical object is colliding with another graphical object
 	 * 
 	 * @param object The graphical object to check collision with
@@ -164,8 +217,8 @@ public abstract class GraphicalObject extends JComponent {
 	 * @return true if the objects are colliding, false otherwise
 	 */
 	public boolean isColliding(GraphicalObject object) {
-		float[] thisBoundingBox = this.getBoundaries();
-		float[] objectBoundingBox = object.getBoundaries();
+		int[] thisBoundingBox = this.getBoundaries();
+		int[] objectBoundingBox = object.getBoundaries();
 
 		// If the top of this object is higher than the bottom of the other object
 		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
@@ -198,6 +251,9 @@ public abstract class GraphicalObject extends JComponent {
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		if (this.getImage() != null) {
+			g.drawImage(this.getImage(), 0, 0 , this.getWidth(), this.getHeight(), null);
+		}
         g.setColor(this.getColor());
 		this.setLocation(posX, posY);
 		this.setSize(width, height);

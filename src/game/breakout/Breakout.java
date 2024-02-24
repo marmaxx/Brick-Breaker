@@ -1,23 +1,25 @@
 package game.breakout;
 
-import java.util.ArrayList;
-import java.util.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.Color;
-import java.awt.Dimension; 
-import java.awt.Toolkit;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 import display.view.GameFrame;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
 import game.breakout.entities.Brick;
-import game.breakout.entities.rules.Entity;
+import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
 
 public class Breakout extends Game{
-	private ArrayList<Entity> bricks;
+	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
+	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
+
+	private ArrayList<Brick> bricks;
 	private Player player;
 	private Ball ball;
 
@@ -28,9 +30,9 @@ public class Breakout extends Game{
 	 */
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
-		this.bricks = new ArrayList<Entity>();
+		this.setBricks(new ArrayList<Brick>());
 		this.setPlayer(new Player(630,700));
-		this.setBall(new Ball(630,600, 20, Color.CYAN));
+		this.setBall(new Ball(Ball.DEFAULT_IMAGE, 630,600, 20));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -38,17 +40,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						getPlayer().startMovingLeft();
+						Breakout.this.getPlayer().setDirection(Direction.LEFT);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						getPlayer().startMovingRight();
-						break;
-					case KeyEvent.VK_SPACE:
-						System.out.println("Touche espace pressée");
-						break;
-					case KeyEvent.VK_ESCAPE:
-						System.out.println("Touche échap pressée");
+						Breakout.this.getPlayer().setDirection(Direction.RIGHT);
 						break;
 				}
 			}
@@ -56,11 +52,13 @@ public class Breakout extends Game{
 			@Override
 			public void keyReleased(KeyEvent e) {
 				switch (e.getKeyCode()) {
+					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						getPlayer().stopMovingLeft();
+						Breakout.this.getPlayer().setDirection(Direction.NONE);
 						break;
+					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						getPlayer().stopMovingRight();
+						Breakout.this.getPlayer().setDirection(Direction.NONE);
 						break;
 				}
 			}
@@ -80,7 +78,7 @@ public class Breakout extends Game{
 	 * 
 	 * @return The list of bricks
 	 */
-	public ArrayList<Entity> getBricks() {
+	public ArrayList<Brick> getBricks() {
 		return this.bricks;
 	}
 
@@ -89,7 +87,7 @@ public class Breakout extends Game{
 	 * 
 	 * @param bricks The list of bricks
 	 */
-	public void setBricks(ArrayList<Entity> bricks) {
+	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks = bricks;
 	}
 
@@ -132,33 +130,31 @@ public class Breakout extends Game{
 	/**
 	 * Initializes bricks in a level
 	 * 
-	 * @param numberOfBrick the number of bricks to initialize
+	 * @param rows The number of rows of bricks
+	 * @param columns The number of columns of bricks
 	 */
-	public void bricksInitialisation(int numberOfBrick){
-		int width = 100; //width of each bricks 
-		int height = 20; //height of each bricks
-		int verticalPos = 200; // Initial vertical position of the first brick in a row of bricks
-		int widthPos = 1; // initiali horizontal position of the first brick in a row of bricks
-		int spaceBeforeBorderScreenSide = 200;
+	public void createBricks(int rows, int columns){
+		// TODO: Prevent the amount of bricks from exceeding the panel's width and height
+		// See GraphicalObject#isOnScreen(x, y, panel)
 
-		// Get screen size 
-		 Toolkit toolkit = Toolkit.getDefaultToolkit();
-		 Dimension screenSize = toolkit.getScreenSize();
-		 int screenWidth = (int) screenSize.getWidth(); 
+		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
 
-		Random random = new Random(); // random generator for lifespans
+		// Start the bricks at the center of the panel
+		int initialXPos = (int) Math.floor(this.getPanel().getPreferredSize().getWidth()
+		/ 2 - (columns * BRICK_SPACING) / 2);
+		initialXPos -= 10;
 		
-		for(int i = 1; i < numberOfBrick+1; i++){
-			int randomLife = random.nextInt(4); // generate random number between 0 and 3
-			if (widthPos*110 >= screenWidth - spaceBeforeBorderScreenSide){ //check if the next brick will go beyon the screen size
-				verticalPos += 30; // Move to the next row 
-				widthPos = 1; //reset horizental pose to the next row
+		for(int row = 0; row < rows; row++){
+			for(int column = 0; column < columns; column++){
+				int verticalPos = 100 + row * (Brick.DEFAULT_HEIGHT + 10);
+				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
+
+				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, false));
 			}
-			this.bricks.add(new Brick(widthPos*110,verticalPos,width,height,randomLife,false)); //create new brick 
-			widthPos++; // Move to the next horizontal position for the next brick
 		}
 	}
-
 
 	/**
 	 * @see game.rules.Game#start()
@@ -166,17 +162,62 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		//for fun to see that initialisation can change for each level 
-		//Random random = new Random();
-		//int randomNumberOfBrick = random.nextInt(50 - 20) + 20;
-		this.bricksInitialisation(6);
+		this.createBricks(6, 4);
 
 		// Add all entities to the game
-		for (Entity brick : this.getBricks()) {
+		for (Brick brick : this.getBricks()) {
 			this.getPanel().add(brick.getRepresentation());
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
 		this.getPanel().add(this.getBall().getRepresentation());
+		this.getBall().setDirection(Direction.UP);
+	}
+
+	/**
+	 * Update the player entity
+	 */
+	public void updatePlayer() {
+		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
+			this.getPlayer().move(Player.MOVE_SPEED);
+		}
+	}
+
+	/**
+	 * Update the ball entity
+	 */
+	public void updateBall() {
+		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
+		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+			this.getBall().reverseDirection();
+		}
+		this.getBall().move(Ball.MOVE_SPEED);
+	}
+
+	/**
+	 * Update the bricks entities
+	 */
+	public void updateBricks() {
+		// Using an iterator to safely remove bricks from the collection
+		// Without getting the ConcurrentModificationException
+		Iterator<Brick> iterator = this.getBricks().iterator();
+
+		while (iterator.hasNext()) {
+			Brick brick = iterator.next();
+			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
+				this.getBall().reverseDirection();
+				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
+					this.getPanel().remove(brick.getRepresentation());
+					// Safely remove the brick from the collection
+					iterator.remove(); 
+				}
+				else{
+					brick.setLifespan(brick.getLifespan() - 1);
+				}
+				// Break the loop to prevent the ball from colliding with multiple bricks
+				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
+				break;
+			}
+		}
 	}
 
 	/**
@@ -185,28 +226,9 @@ public class Breakout extends Game{
 	@Override
 	public void update() {
 		super.update();
-		this.getPlayer().update();
-		this.getBall().update(player);
 
-		
-		// TODO Update game logic
-		for (Entity b : bricks){
-			if (b instanceof Brick && ((Brick)b).isDestroyed()){
-				this.bricks.remove(b);
-			}
-		}
-	}
-
-	/**
-	 * @see game.rules.Game#render()
-	 */
-	@Override
-	public void render() {
-		for (Entity brick : this.getBricks()) {
-			brick.getRepresentation().repaint();
-		}
-		
-		this.getPlayer().getRepresentation().repaint();
-		this.getBall().getRepresentation().repaint();
+		this.updatePlayer();
+		this.updateBall();
+		this.updateBricks();
 	}
 }

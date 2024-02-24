@@ -145,11 +145,14 @@ public abstract class Game{
 
 		this.setRenderedFrames(this.getRenderedFrames() + 1);
 		this.getPanel().getFrame().setTitle(this.getName() + " - " + "(FPS: " + this.getCurrentFps() + ", Frame: " + this.getRenderedFrames() + ")");
+
 		this.render();
 	}
 
 	/**
 	 * Render the game
 	 */
-	public abstract void render();
+	public void render(){
+		this.getPanel().repaint();
+	}
 }
