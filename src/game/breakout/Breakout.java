@@ -150,11 +150,10 @@ public class Breakout extends Game{
 		// Start the bricks at the center of the panel
 		int initialXPos = (int) Math.floor(this.getPanel().getPreferredSize().getWidth()
 		/ 2 - (columns * BRICK_SPACING) / 2);
-		initialXPos -= 10;
 		
 		for(int row = 0; row < rows; row++){
 			for(int column = 0; column < columns; column++){
-				int verticalPos = 100 + row * (Brick.DEFAULT_HEIGHT + 10);
+				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
 				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
 
 				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,

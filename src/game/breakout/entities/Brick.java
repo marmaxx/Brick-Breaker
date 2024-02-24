@@ -12,7 +12,7 @@ public class Brick extends Entity {
     protected int lifespan;
 
 	public static final int DEFAULT_POS_X = 1;
-	public static final int DEFAULT_POS_Y = 200;
+	public static final int DEFAULT_POS_Y = 100;
 	public static final int DEFAULT_WIDTH = 100;
 	public static final int DEFAULT_HEIGHT = 20;
 
