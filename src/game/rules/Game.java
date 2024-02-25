@@ -18,7 +18,7 @@ public abstract class Game{
 	protected long lastRenderTime;
 	protected boolean vSync;
 
-	public final int DEFAULT_FPS = 30;
+	public final int DEFAULT_FPS = 60;
 
 	/**
 	 * Initialize a new game
@@ -170,7 +170,7 @@ public abstract class Game{
 	 */
 	public void start() {
 		long second;
-		Thread gameThread = null;
+		Thread gameThread;
 
 		// For some reason, the timer makes the game capped
 		// at either 60 or 30 FPS
@@ -181,7 +181,7 @@ public abstract class Game{
 
 			// Adding 3 to the maxFPS prevents the game from
 			// running at a lower FPS than the actual maxFPS
-			int updateTime = (int) (1000 / (this.getMaxFPS()+3));
+			int updateTime = (int) (second / (this.getMaxFPS()+3));
 
 			gameThread = new Thread(() -> {
 				Timer gameTimer = new Timer(updateTime, new ActionListener() {
