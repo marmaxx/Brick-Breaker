@@ -148,7 +148,7 @@ public class Breakout extends Game{
 		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
 
 		// Start the bricks at the center of the panel
-		int initialXPos = (int) Math.floor(this.getPanel().getPreferredSize().getWidth()
+		int initialXPos = (int) Math.floor(this.getPanel().getGameZone().getPreferredSize().getWidth()
 		/ 2 - (columns * BRICK_SPACING) / 2);
 		
 		for(int row = 0; row < rows; row++){
@@ -173,10 +173,10 @@ public class Breakout extends Game{
 
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
-			this.getPanel().add(brick.getRepresentation());
+			this.getPanel().getGameZone().add(brick.getRepresentation());
 		}
-		this.getPanel().add(this.getPlayer().getRepresentation());
-		this.getPanel().add(this.getBall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 		this.getBall().setDirection(Direction.UP);
 	}
 
@@ -214,7 +214,7 @@ public class Breakout extends Game{
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
 				this.getBall().reverseDirection();
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
-					this.getPanel().remove(brick.getRepresentation());
+					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					// Safely remove the brick from the collection
 					iterator.remove(); 
 				}
