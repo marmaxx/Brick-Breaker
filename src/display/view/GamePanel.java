@@ -1,15 +1,19 @@
 package display.view;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import java.awt.*;
 
 public class GamePanel extends JPanel {
 	private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+	
 	private GameFrame gameFrame;
-	private JPanel gameZone = new JPanel();
-	private JPanel statZone = new JPanel();
+    private JPanel gameZone = new JPanel();
+    private JPanel statZone = new JPanel();
+	private JLabel score = new JLabel();
+	private JLabel life = new JLabel();
+	private JLabel nbBricks = new JLabel();
     
 	/**
 	 * Instantiates a new GamePanel
@@ -18,18 +22,26 @@ public class GamePanel extends JPanel {
 	 * @param color The background color of the panel
 	 */
     public GamePanel(GameFrame gameFrame, Color color) {
-
 		this.setFrame(gameFrame);
 		this.setBackground(color);
 		this.setLayout(new FlowLayout());
 		//this.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.height, SCREEN_FULL_SIZE.width/2));
 		this.setPreferredSize(SCREEN_FULL_SIZE);
 
-		gameZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width/2, SCREEN_FULL_SIZE.height));
-		gameZone.setBackground(Color.BLACK);
+		this.gameZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width, SCREEN_FULL_SIZE.height*9/10));
+		this.gameZone.setBackground(Color.BLACK);
 
-		statZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10));
-		statZone.setBackground(Color.WHITE);
+		this.statZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10));
+		this.statZone.setBackground(Color.WHITE);
+		this.statZone.setLayout(new FlowLayout());
+
+		this.score.setPreferredSize(new Dimension(200,100));
+		this.life.setPreferredSize(new Dimension(200,100));
+		this.nbBricks.setPreferredSize(new Dimension(200,100));
+
+		this.statZone.add(this.score);
+		this.statZone.add(this.life);
+		this.statZone.add(this.nbBricks); 
 
 		this.add(statZone);
 		this.add(gameZone);
@@ -69,5 +81,11 @@ public class GamePanel extends JPanel {
 	 */
 	public JPanel getGameZone(){
 		return this.gameZone;
+	}
+
+	public void updateStat(int score, int life, int Bricks){
+		this.score.setText("Score : " + score);
+		this.life.setText("Life : " + life); 
+		this.nbBricks.setText("Bricks : " + Bricks);
 	}
 }

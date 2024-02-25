@@ -22,6 +22,9 @@ public class Breakout extends Game{
 	private ArrayList<Brick> bricks;
 	private Player player;
 	private Ball ball;
+	private int nbBricks;
+	private int score = 0; 
+	private int life = 3;
 
 	/**
 	 * Instantiates a new Breakout game
@@ -136,6 +139,33 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * Get the score number in the game.
+	 * 
+	 * @return The score number
+	 */
+	public int getScore(){
+		return this.score;
+	}
+
+	/**
+	 * Get the bricks number in the game.
+	 * 
+	 * @return The bricks number 
+	 */
+	public int getNbBricks(){
+		return this.nbBricks;
+	}
+
+	/**
+	 * Get the life in the game.
+	 * 
+	 * @return The life
+	 */
+	public int getLife(){
+		return 	this.life;
+	}
+
+	/**
 	 * Initializes bricks in a level
 	 * 
 	 * @param rows The number of rows of bricks
@@ -170,6 +200,7 @@ public class Breakout extends Game{
 	public void start() {
 		super.start();
 		this.createBricks(6, 10);
+		this.nbBricks = this.bricks.size();
 
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
@@ -215,11 +246,14 @@ public class Breakout extends Game{
 				this.getBall().reverseDirection();
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
+					this.nbBricks--;
+					this.score += 100;
 					// Safely remove the brick from the collection
 					iterator.remove(); 
 				}
 				else{
 					brick.setLifespan(brick.getLifespan() - 1);
+					this.score += 10;
 				}
 				// Break the loop to prevent the ball from colliding with multiple bricks
 				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
@@ -236,5 +270,6 @@ public class Breakout extends Game{
 		this.updatePlayer();
 		this.updateBall();
 		this.updateBricks();
+		this.getPanel().updateStat(this.score, this.life, this.nbBricks);	
 	}
 }
