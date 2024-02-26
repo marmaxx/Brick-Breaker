@@ -36,8 +36,8 @@ public class Breakout extends Game{
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
-		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,600, 30));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE));
+		this.setBall(new Ball(Ball.DEFAULT_COLOR, 565,668, 30));
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		this.setWestWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
@@ -48,11 +48,16 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().setDirection(Direction.LEFT);
+						if (Breakout.this.getBall().getStart()){
+							Breakout.this.getPlayer().setDirection(Direction.LEFT);
+						}
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().setDirection(Direction.RIGHT);
+						System.out.println(Breakout.this.getPlayer().getRepresentation().getPosY()-Breakout.this.getPlayer().getRepresentation().getHeight());
+						if (Breakout.this.getBall().getStart()){
+							Breakout.this.getPlayer().setDirection(Direction.RIGHT);
+						}
 						break;
 					case KeyEvent.VK_ESCAPE:
 						if(Breakout.this.isPaused()){
@@ -62,6 +67,8 @@ public class Breakout extends Game{
 							Breakout.this.pause();
 						}
 						break;
+					case KeyEvent.VK_ENTER:
+						if (!Breakout.this.getBall().getStart()) Breakout.this.getBall().setStart(true);
 				}
 			}
 
@@ -261,18 +268,21 @@ public class Breakout extends Game{
 	 * Update the ball entity
 	 */
 	public void updateBall() {
-		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
-		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-			this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+		if (this.getBall().getStart()){
+			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
+			|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+			}
+			else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+				// the ball respawn for the moment 
+				this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);
+				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight());
+				this.getBall().setStart(false);
+				this.life--;
+			}
+			this.getBall().move(Ball.MOVE_SPEED);
 		}
-		else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
-			// the ball respawn for the moment 
-			this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
-			this.getBall().getRepresentation().setPosX(630);
-			this.getBall().getRepresentation().setPosY(600);
-			this.life--;
-		}
-		this.getBall().move(Ball.MOVE_SPEED);
 	}
 
 	/**
