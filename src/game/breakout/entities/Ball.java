@@ -130,13 +130,13 @@ public class Ball extends Entity {
 		int[] boundaries = this.getRepresentation().getBoundaries();
 		switch (this.getDirectionBall()) {
 			case UP_LEFT:
-				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < 0) || (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0);
+				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
 			case UP_RIGHT:
-				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < 0) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth());
+				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()- WALL_WIDTH);
 			case DOWN_LEFT:
-				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight()) || (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0);
+				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight() - WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
 			case DOWN_RIGHT: 
-				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight()) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth());
+				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight() - WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth() - WALL_WIDTH);
 			default:
 				return false;
 		}
