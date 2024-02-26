@@ -31,6 +31,7 @@ public class Rectangle extends Shape {
 		super(image, posX, posY, width, height);
     }
 	
+	
 	/**
 	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
 	 */

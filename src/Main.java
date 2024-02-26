@@ -1,5 +1,4 @@
 import javax.swing.SwingUtilities;
-
 import display.view.GameFrame;
 import game.breakout.Breakout;
 import game.rules.Game;

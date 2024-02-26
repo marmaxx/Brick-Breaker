@@ -9,8 +9,12 @@ import java.util.Iterator;
 import java.util.Random;
 
 import display.view.GameFrame;
+import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
+import game.breakout.entities.Ball.DirectionBall;
+import game.breakout.entities.Wall;
+
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
@@ -22,6 +26,8 @@ public class Breakout extends Game{
 	private ArrayList<Brick> bricks;
 	private Player player;
 	private Ball ball;
+	private Wall eastWall, northWall, westWall;
+	private static final int WALL_WIDTH = 20;
 
 	/**
 	 * Instantiates a new Breakout game
@@ -31,8 +37,11 @@ public class Breakout extends Game{
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(630,700));
-		this.setBall(new Ball(Ball.DEFAULT_IMAGE, 630,600, 20));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
+		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,600, 30));
+		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
+		this.setWestWall(new Wall((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
+		this.setNorthWall(new Wall(0, 0, (int)GamePanel.SCREEN_FULL_SIZE.getWidth(), WALL_WIDTH));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -135,6 +144,34 @@ public class Breakout extends Game{
 		this.ball = ball;
 	}
 
+	public static int getWallWidth(){
+		return WALL_WIDTH;
+	}
+
+	public Wall getEastWAll(){
+		return this.eastWall;
+	}
+
+	public void setEastWall (Wall wall){
+		this.eastWall = wall;
+	}
+
+	public Wall getWestWall(){
+		return this.westWall;
+	}
+
+	public void setWestWall(Wall wall){
+			this.westWall = wall;
+	}
+
+	public Wall getNorthWall(){
+		return this.northWall;
+	}
+
+	public void setNorthWall(Wall wall){
+		this.northWall =  wall;
+	}
+
 	/**
 	 * Initializes bricks in a level
 	 * 
@@ -177,7 +214,10 @@ public class Breakout extends Game{
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
 		this.getPanel().add(this.getBall().getRepresentation());
-		this.getBall().setDirection(Direction.UP);
+		this.getPanel().add(this.getEastWAll().getRepresentation());
+		this.getPanel().add(this.getWestWall().getRepresentation());
+		this.getPanel().add(this.getNorthWall().getRepresentation());
+		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
 	}
 
 	/**
@@ -196,7 +236,13 @@ public class Breakout extends Game{
 	public void updateBall() {
 		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
 		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-			this.getBall().reverseDirection();
+			this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+		}
+		else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+			// the ball respawn for the moment 
+			this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+			this.getBall().getRepresentation().setPosX(630);
+			this.getBall().getRepresentation().setPosY(600);
 		}
 		this.getBall().move(Ball.MOVE_SPEED);
 	}
@@ -212,7 +258,7 @@ public class Breakout extends Game{
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				this.getBall().reverseDirection();
+				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().remove(brick.getRepresentation());
 					// Safely remove the brick from the collection
