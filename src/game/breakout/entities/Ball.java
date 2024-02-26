@@ -20,7 +20,7 @@ public class Ball extends Entity {
 	public static final int DEFAULT_POS_Y = 0;
 	public static final int MOVE_SPEED = 7;
 	public DirectionBall direction;
-	public int angle;
+	public int angle; // it will be used later
 
 	public enum DirectionBall{
 		UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
