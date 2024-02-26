@@ -2,6 +2,10 @@ package game.rules;
 
 import display.view.GamePanel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 import java.util.concurrent.TimeUnit;
 
 public abstract class Game{
@@ -12,6 +16,7 @@ public abstract class Game{
 	protected int currentFPS;
 	protected int maxFPS;
 	protected long lastRenderTime;
+	protected boolean vSync;
 
 	public final int DEFAULT_FPS = 60;
 
@@ -28,6 +33,7 @@ public abstract class Game{
 		this.setRenderedFrames(0);
 		this.setCurrentFPS(0);
 		this.setMaxFPS(DEFAULT_FPS);
+		this.setVSync(true);
     }
 
 	/**
@@ -139,30 +145,70 @@ public abstract class Game{
 	}
 
 	/**
+	 * Get the VSync state
+	 * 
+	 * @return The VSync state
+	 */
+	public boolean isVSync() {
+		return this.vSync;
+	}
+
+	/**
+	 * Set the VSync state
+	 * 
+	 * @param vSync The VSync state to set
+	 */
+	public void setVSync(boolean vSync) {
+		this.vSync = vSync;
+	}
+
+	/**
 	 * Start the game<br>
 	 * This method starts a new thread that updates the game<br>
 	 * Note: This method has to be Overridden to start your custom game
 	 * (using super.start() to keep the update loop running)
 	 */
 	public void start() {
-		Thread gameThread = new Thread(() -> {
-			// Calculate the time between each update
-			long second = TimeUnit.SECONDS.toNanos(1);
+		long second;
+		Thread gameThread;
+
+		// For some reason, the timer makes the game capped
+		// at either 60 or 30 FPS
+		// To make it into a feature, we use two different threads
+		// depending on the VSync state
+		if(this.isVSync()) {
+			second = TimeUnit.SECONDS.toMillis(1);
+
+			// Adding 3 to the maxFPS prevents the game from
+			// running at a lower FPS than the actual maxFPS
+			int updateTime = (int) (second / (this.getMaxFPS()+3));
+
+			gameThread = new Thread(() -> {
+				Timer gameTimer = new Timer(updateTime, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(!Game.this.isPaused()){
+							Game.this.update();
+						}
+					}
+				});
+				gameTimer.start();
+			});
+		} else {
+			second = TimeUnit.SECONDS.toNanos(1);
 			double updateTime = second / this.getMaxFPS();
-		
-			while (true) {
-				long now = System.nanoTime();
-				double timeSpent = now - this.getLastRenderTime();
-		
-				if(timeSpent > updateTime && !Game.this.isPaused()) {
-					Game.this.update();
-		
-					// Calculate FPS
-					this.setCurrentFPS((int) (second / timeSpent));
-					this.setLastRenderTime(now);
+
+			gameThread = new Thread(() -> {			
+				while (true) {
+					long now = System.nanoTime();
+					double timeSpent = now - this.getLastRenderTime();
+			
+					if(timeSpent > updateTime && !Game.this.isPaused()) {
+						Game.this.update();
+					}
 				}
-			}
-		});
+			});
+		}
+
 		gameThread.start();
 	}
 
@@ -196,21 +242,28 @@ public abstract class Game{
 	 * (using super.update() to keep the informations & rendering correct)
 	 */
 	public void update() {
-		this.setRenderedFrames(this.getRenderedFrames() + 1);
 		this.render();
-
-		this.getPanel().getFrame().setTitle(this.getName() + " - " + "(FPS: " + this.getCurrentFps() + ")"
-		+ ", Frame: " + this.getRenderedFrames() + ")"
-		// NOTE: The panel size depends on your system's DPI settings (scaling factor, ex: 125%,...)
-		// The size displayed might not be the same as the actual number of pixels occupied by the window
-		+ " [" + this.getPanel().getFrame().getSize().width + "x" + this.getPanel().getFrame().getSize().height + "]");
-
 	}
 
 	/**
 	 * Render the game
 	 */
 	public void render(){
+		// Calculate maxFPS
+		long second = TimeUnit.SECONDS.toNanos(1);
+		long now = System.nanoTime();
+		long timeSpent = now - this.getLastRenderTime();
+		this.setLastRenderTime(now);
+
+		// Calculate FPS
+		this.setCurrentFPS((int) (second / timeSpent));
+		this.setRenderedFrames(this.getRenderedFrames() + 1);
 		this.getPanel().repaint();
+		
+		this.getPanel().getFrame().setTitle(this.getName() + " - " + "(FPS: " + this.getCurrentFps() + ")"
+		+ ", Frame: " + this.getRenderedFrames() + ")"
+		// NOTE: The panel size depends on your system's DPI settings (scaling factor, ex: 125%,...)
+		// The size displayed might not be the same as the actual number of pixels occupied by the window
+		+ " [" + this.getPanel().getFrame().getSize().width + "x" + this.getPanel().getFrame().getSize().height + "]");
 	}
 }
