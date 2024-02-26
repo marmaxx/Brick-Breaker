@@ -4,9 +4,7 @@ import java.awt.Color;
 import display.engine.shapes.BallImage;
 import display.engine.rules.GraphicalObject;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
-
 import display.engine.shapes.Circle;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
