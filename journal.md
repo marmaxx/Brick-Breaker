@@ -105,3 +105,38 @@ Ce qu'il faut faire:
 - Continuer le projet physiques en parallèle (TODOs)
 - Améliration de la fenêtre de jeu
 - Gérer les collisions briques/balle
+
+## Semaine 5
+
+.Ce qui a été fait:
+
+- 25-implementer-collision-balle-brique (Noaym):
+    .Il nous manquait lacollision entre la balle et les briques, la voici.
+    .La vie d'une brique se met bien à jour si la balle la touche.
+    .Il reste des petits détails à regler pour que cela soit parfait (gérer les coins par exemple).
+
+- 24-Restructuration_Et_Refactorisation_collision (Nic):
+    .Un travail de restructuration a été réalisé et les collisions ont été déplacées dans un autre ficher.
+    .C'est sensé être le dernier "gros" travail de restructuration
+
+- 30-27-physicsLaws (Lucas):
+    .Migration du projet "physiques" au sein du projet "cassebrique".
+    .Implémentation de concepts/formules scientifiques.
+
+- 29_Start_Menu (Maxime):
+    .Implémentation d'un menu quand le programme se lance.
+    .On dispose maintenant d'une zone de jeu qui ne fait plus toute la fenêtre.
+    .Il y a l'affichage des vies et des points du joueur ainsi que le nombre de briques restantes (maj de l'affichage).
+
+- fusion_26_27:
+    .Implémentation de murs en haut, à droite et à gauche pour pouvoir gérer les collisions que entre objets.
+    .On a désormais un rebond assez basique mais qui fonctionne très bien.
+    .La balle réapparait à sa position initiale si elle sort de la fenêtre par le bas.
+
+Ce qu'il y a à faire:
+
+- GRADLE 
+- mise en mouvement de la balle que si on touche sur une touche 
+- continuation de la physique en parallèle
+- win condition et gameover
+- amélioration menu?
