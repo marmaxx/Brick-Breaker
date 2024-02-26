@@ -77,9 +77,9 @@ public class Ball extends Entity {
 	}
 
 	/**
-	 * Sets the direction of the entity
+	 * Sets the direction of the ball
 	 * 
-	 * @param direction the new direction of the entity
+	 * @param direction the new direction of the ball
 	 */
 	public void setDirectionBall(DirectionBall direction) {
 		this.direction = direction;
@@ -92,6 +92,9 @@ public class Ball extends Entity {
 		return this.direction;
 	}
 
+	/**
+	 * Reverse the direction of the ball
+	 */
 	public void reverseDirectionBall(GamePanel panel, int speed){
 		int[] boundaries = this.getRepresentation().getBoundaries();
 		switch (this.getDirectionBall()) {
