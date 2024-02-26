@@ -1,6 +1,7 @@
 package display.engine.rules;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -243,6 +244,18 @@ public abstract class GraphicalObject extends JComponent {
 				+ "\t\tRight: (MAX_X): " + this.getBoundary(Boundary.MAX_X) + "\n"
 				+ "\t\tBottom: (MIN_Y): " + this.getBoundary(Boundary.MIN_Y) + "\n";
 	}
+
+
+	/**
+	 * removes the graphical object from the view
+	 */
+	public void destroy() {
+        Container parent = getParent();
+        if (parent != null) {
+            parent.remove(this);
+            parent.repaint(); // Ensure that the container repaints after removal
+        }
+    }
 
 
 	/**
