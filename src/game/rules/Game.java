@@ -237,16 +237,21 @@ public abstract class Game{
 	}
 
 	/**
-	 * This method is called every frame to update the game.<br>
-	 * It natively calculates the FPS and updates the window title but should be overridden to update the game logic
-	 * (using super.update() to keep the informations & rendering correct)
+	 * This method is called every frame to update the game.
+	 * It refreshes both the logic and the rendering of the game
 	 */
 	public void update() {
 		this.render();
+		this.onUpdate();
 	}
 
 	/**
-	 * Render the game
+	 * This method is called every frame to update the game logic
+	 */
+	public abstract void onUpdate();
+
+	/**
+	 * Render the game and calculate the FPS
 	 */
 	public void render(){
 		// Calculate maxFPS

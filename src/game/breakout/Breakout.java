@@ -275,12 +275,10 @@ public class Breakout extends Game{
 	}
 
 	/**
-	 * @see game.rules.Game#update()
+	 * @see game.rules.Game#onUpdate()
 	 */
 	@Override
-	public void update() {
-		super.update();
-
+	public void onUpdate() {
 		this.updatePlayer();
 		this.updateBall();
 		this.updateBricks();
