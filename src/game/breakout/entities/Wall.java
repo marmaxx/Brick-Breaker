@@ -7,6 +7,9 @@ import game.breakout.entities.rules.Entity;
 public class Wall extends Entity {
     public static final Color DEFAULT_COLOR = Color.GRAY;
 
+    /**
+     * Instantiates a new wall
+     */
     public Wall(int posX, int posY, int width, int height){
         super(new Rectangle(DEFAULT_COLOR, posX, posY, width, height));
     }
