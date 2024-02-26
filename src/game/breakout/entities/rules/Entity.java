@@ -98,11 +98,11 @@ public abstract class Entity {
 			case UP:
 				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < 0);
 			case DOWN:
-				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight());
+				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight());
 			case LEFT:
 				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0);
 			case RIGHT:
-				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth());
+				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth());
 			case NONE:
 				return false;
 			default:

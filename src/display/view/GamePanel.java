@@ -24,20 +24,22 @@ public class GamePanel extends JPanel {
     public GamePanel(GameFrame gameFrame, Color color) {
 		this.setFrame(gameFrame);
 		this.setBackground(color);
-		this.setLayout(new FlowLayout());
-		//this.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.height, SCREEN_FULL_SIZE.width/2));
+		this.setLayout(new FlowLayout()); //set GamePanel to FlowLayout
 		this.setPreferredSize(SCREEN_FULL_SIZE);
 
-		this.gameZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width, SCREEN_FULL_SIZE.height*9/10));
+		this.gameZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width*2/3, SCREEN_FULL_SIZE.height*9/10));
 		this.gameZone.setBackground(Color.BLACK);
 
 		this.statZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10));
-		this.statZone.setBackground(Color.WHITE);
-		this.statZone.setLayout(new FlowLayout());
+		this.statZone.setBackground(new Color(30,30,30));
+		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout
 
 		this.score.setPreferredSize(new Dimension(200,100));
+		this.score.setForeground(Color.WHITE); //set color of the text 
 		this.life.setPreferredSize(new Dimension(200,100));
+		this.life.setForeground(Color.WHITE); //set color of the text 
 		this.nbBricks.setPreferredSize(new Dimension(200,100));
+		this.nbBricks.setForeground(Color.WHITE); //set color of the text 
 
 		this.statZone.add(this.score);
 		this.statZone.add(this.life);
@@ -83,9 +85,15 @@ public class GamePanel extends JPanel {
 		return this.gameZone;
 	}
 
-	public void updateStat(int score, int life, int Bricks){
+	/** 
+	 * update game statistics in JLabel
+	 * @param score The score in game
+	 * @param life The Life in game
+	 * @param bricks The number of brick in game
+	*/
+	public void updateStat(int score, int life, int bricks){
 		this.score.setText("Score : " + score);
 		this.life.setText("Life : " + life); 
-		this.nbBricks.setText("Bricks : " + Bricks);
+		this.nbBricks.setText("Bricks : " + bricks);
 	}
 }

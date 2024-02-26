@@ -23,8 +23,8 @@ public class Breakout extends Game{
 	private Player player;
 	private Ball ball;
 	private int nbBricks;
-	private int score = 0; 
-	private int life = 3;
+	private int score = 0;
+	private int life = 3; // number of hearths when the game starts
 
 	/**
 	 * Instantiates a new Breakout game
@@ -199,8 +199,8 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(6, 10);
-		this.nbBricks = this.bricks.size();
+		this.createBricks(4, 8);
+		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
@@ -246,14 +246,14 @@ public class Breakout extends Game{
 				this.getBall().reverseDirection();
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
-					this.nbBricks--;
-					this.score += 100;
+					this.nbBricks--; // Decrement the count of brick when the brick is broken
+					this.score += 100; // Incremen the score when the brick is broken
 					// Safely remove the brick from the collection
 					iterator.remove(); 
 				}
 				else{
 					brick.setLifespan(brick.getLifespan() - 1);
-					this.score += 10;
+					this.score += 10; // Increment the score when the brick is touched
 				}
 				// Break the loop to prevent the ball from colliding with multiple bricks
 				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
@@ -270,6 +270,6 @@ public class Breakout extends Game{
 		this.updatePlayer();
 		this.updateBall();
 		this.updateBricks();
-		this.getPanel().updateStat(this.score, this.life, this.nbBricks);	
+		this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 	}
 }

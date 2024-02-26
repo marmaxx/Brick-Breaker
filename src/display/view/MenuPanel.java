@@ -6,10 +6,9 @@ import game.breakout.Breakout;
 import game.rules.Game;
 
 public class MenuPanel extends JPanel {
-    //private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100);
+    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    JButton QuickGame = new JButton("Quick Game");
+    JButton QuickGame = new JButton("Quick Game"); //button to start quick game
 
     public MenuPanel(GameFrame gameFrame){
         this.setLayout(new FlowLayout());
@@ -17,12 +16,12 @@ public class MenuPanel extends JPanel {
 
 
         QuickGame.setPreferredSize(BUTTON_SIZE);
-        QuickGame.setBackground(Color.RED);
 
+        //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel");
-            Game game = new Breakout(gameFrame);
-			game.start();
+            gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel"); // switching the card layout
+            Game game = new Breakout(gameFrame); //created instance of Breakout
+			game.start(); //starting the game 
         });
 
 

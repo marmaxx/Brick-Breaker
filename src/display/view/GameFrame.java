@@ -26,9 +26,8 @@ public class GameFrame extends JFrame {
 
 		this.getContentPane().setBackground(GameFrame.INTERFACE_BACKGROUND);
 
-		this.cardLayout = new CardLayout();
-		this.container = new JPanel(cardLayout);
-		//this.container.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.height, SCREEN_FULL_SIZE.width/2));
+		this.cardLayout = new CardLayout(); //set new cardLayout
+		this.container = new JPanel(cardLayout); //creat containers for managing panel in the frame 
 
 		this.setGamePanel(new GamePanel(this));
 		this.container.add(this.gamePanel, "gamePanel");
@@ -72,25 +71,33 @@ public class GameFrame extends JFrame {
 		return this.container;
 	}
 
-	/**
-	 * set the container panel attach the the frame
-	 * 
-	 * @param JPanel The container panel to attach to the frame
-	 */
-	private void setContainer(JPanel container){
-		this.container = container;
-	}
 
+	/**
+	 * Get the cardLayout used for managing panel in the frame
+	 * 
+	 * @return The CardLayout
+	 */
 	public CardLayout getCardlayout(){
 		return this.cardLayout;
 	}
 
 
+	/**
+	 * Add MenuPanel to the Container
+	 * 
+	 * @param MenuPanel The menu panel to add
+	 */
 	public void addMenu(MenuPanel menu){
 		this.container.add(menu, "menuPanel");
 		this.menuPanel = menu;
 	}
 
+
+	/**
+	 * Get the menu panel attach to the containers
+	 * 
+	 * @return The menu Panel
+	 */
 	public MenuPanel getMenuPanel(){
 		return this.menuPanel;
 	}
