@@ -219,6 +219,54 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * Update the player entity
+	 */
+	public void updatePlayer() {
+		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
+			this.getPlayer().move(Player.MOVE_SPEED);
+
+		}
+	}
+
+	/**
+	 * Update the ball entity
+	 */
+	public void updateBall() {
+		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
+		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+			this.getBall().reverseDirection();
+		}
+		this.getBall().move(Ball.MOVE_SPEED);
+	}
+
+	/**
+	 * Update the bricks entities
+	 */
+	public void updateBricks() {
+		// Using an iterator to safely remove bricks from the collection
+		// Without getting the ConcurrentModificationException
+		Iterator<Brick> iterator = this.getBricks().iterator();
+
+		while (iterator.hasNext()) {
+			Brick brick = iterator.next();
+			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
+				this.getBall().reverseDirection();
+				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
+					this.getPanel().remove(brick.getRepresentation());
+					// Safely remove the brick from the collection
+					iterator.remove(); 
+				}
+				else{
+					brick.setLifespan(brick.getLifespan() - 1);
+				}
+				// Break the loop to prevent the ball from colliding with multiple bricks
+				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
+				break;
+			}
+		}
+	}
+
+	/**
 	 * @see game.rules.Game#update()
 	 */
 	@Override
