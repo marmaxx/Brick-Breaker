@@ -237,7 +237,12 @@ public class Breakout extends Game{
 		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
 		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
 			this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
-			System.out.println(this.getBall().getDirectionBall());
+		}
+		else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+			// the ball respawn for the moment 
+			this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+			this.getBall().getRepresentation().setPosX(630);
+			this.getBall().getRepresentation().setPosY(600);
 		}
 		this.getBall().move(Ball.MOVE_SPEED);
 	}

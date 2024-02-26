@@ -131,12 +131,17 @@ public class Ball extends Entity {
 			case UP_RIGHT:
 				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()- WALL_WIDTH);
 			case DOWN_LEFT:
-				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight() - WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
+				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
 			case DOWN_RIGHT: 
-				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight() - WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth() - WALL_WIDTH);
+				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth() - WALL_WIDTH);
 			default:
 				return false;
 		}
+	}
+
+	public boolean willLoose(GamePanel panel, int speed){
+		int [] boundaries = this.getRepresentation().getBoundaries();
+		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight();
 	}
 
 	/**
