@@ -12,7 +12,9 @@ import display.view.GameFrame;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
+import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Wall;
+
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
@@ -215,7 +217,7 @@ public class Breakout extends Game{
 		this.getPanel().add(this.getEastWAll().getRepresentation());
 		this.getPanel().add(this.getWestWall().getRepresentation());
 		this.getPanel().add(this.getNorthWall().getRepresentation());
-		this.getBall().setDirection(Direction.UP);
+		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
 	}
 
 	/**
@@ -234,7 +236,8 @@ public class Breakout extends Game{
 	public void updateBall() {
 		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
 		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-			this.getBall().reverseDirection();
+			this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+			System.out.println(this.getBall().getDirectionBall());
 		}
 		this.getBall().move(Ball.MOVE_SPEED);
 	}
@@ -250,7 +253,7 @@ public class Breakout extends Game{
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				this.getBall().reverseDirection();
+				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().remove(brick.getRepresentation());
 					// Safely remove the brick from the collection
