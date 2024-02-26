@@ -3,6 +3,7 @@ package display.engine.shapes;
 import java.awt.Color;
 import java.awt.Graphics;
 import display.engine.shapes.rules.Shape;
+import java.awt.Image;
 
 public class Rectangle extends Shape {
 	/**

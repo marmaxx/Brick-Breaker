@@ -61,8 +61,6 @@ public class Brick extends Entity {
 
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
-		this.updater(); //takes care of updating the brick
-
     }
 
 	/**

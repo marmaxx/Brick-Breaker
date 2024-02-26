@@ -13,6 +13,7 @@ import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
+import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
