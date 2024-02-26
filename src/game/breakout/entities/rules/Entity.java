@@ -7,6 +7,7 @@ import display.view.GamePanel;
 public abstract class Entity {
     protected GraphicalObject representation;
 	protected Direction direction;
+	protected final static int WALL_WIDTH = 20;
 
 	public enum Direction {
 		NONE, UP, DOWN, LEFT, RIGHT
@@ -96,13 +97,13 @@ public abstract class Entity {
 
 		switch (this.getDirection()) {
 			case UP:
-				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < 0);
+				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH);
 			case DOWN:
 				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight());
 			case LEFT:
-				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0);
+				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
 			case RIGHT:
-				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth());
+				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()-WALL_WIDTH);
 			case NONE:
 				return false;
 			default:

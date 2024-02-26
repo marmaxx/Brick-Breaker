@@ -19,6 +19,7 @@ public class Ball extends Entity {
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
 	public static final int MOVE_SPEED = 7;
+	public static final int WALL_WIDTH = 20;
 	public DirectionBall direction;
 	public int angle;
 
@@ -96,19 +97,19 @@ public class Ball extends Entity {
 		int[] boundaries = this.getRepresentation().getBoundaries();
 		switch (this.getDirectionBall()) {
 			case UP_LEFT:
-				if ((boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0)) this.setDirectionBall(DirectionBall.UP_RIGHT);
+				if ((boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH)) this.setDirectionBall(DirectionBall.UP_RIGHT);
 				else this.setDirectionBall(DirectionBall.DOWN_LEFT);
 				break;
 			case UP_RIGHT:
-				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth())) this.setDirectionBall(DirectionBall.UP_LEFT);
+				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.UP_LEFT);
 				else this.setDirectionBall(DirectionBall.DOWN_RIGHT);
 				break;
 			case DOWN_LEFT:
-				if ((boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0)) this.setDirectionBall(DirectionBall.DOWN_RIGHT);
+				if ((boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH)) this.setDirectionBall(DirectionBall.DOWN_RIGHT);
 				else this.setDirectionBall(DirectionBall.UP_LEFT);
 				break;
 			case DOWN_RIGHT:
-				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth())) this.setDirectionBall(DirectionBall.DOWN_LEFT);
+				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.DOWN_LEFT);
 				else this.setDirectionBall(DirectionBall.UP_RIGHT);
 				break;
 			default:
