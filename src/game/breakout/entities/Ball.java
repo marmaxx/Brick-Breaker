@@ -96,13 +96,11 @@ public class Ball extends Entity {
 		int[] boundaries = this.getRepresentation().getBoundaries();
 		switch (this.getDirectionBall()) {
 			case UP_LEFT:
-				if ((boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < 0) 
-				|| (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0)) this.setDirectionBall(DirectionBall.UP_RIGHT);
+				if ((boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < 0)) this.setDirectionBall(DirectionBall.UP_RIGHT);
 				else this.setDirectionBall(DirectionBall.DOWN_LEFT);
 				break;
 			case UP_RIGHT:
-				if ((boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < 0) 
-				|| (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth())) this.setDirectionBall(DirectionBall.UP_LEFT);
+				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth())) this.setDirectionBall(DirectionBall.UP_LEFT);
 				else this.setDirectionBall(DirectionBall.DOWN_RIGHT);
 				break;
 			case DOWN_LEFT:
