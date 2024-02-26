@@ -11,6 +11,7 @@ import java.util.Random;
 import display.view.GameFrame;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
+import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
@@ -31,8 +32,8 @@ public class Breakout extends Game{
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(630,700));
-		this.setBall(new Ball(Ball.DEFAULT_IMAGE, 630,600, 20));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
+		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,600, 20));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -177,7 +178,7 @@ public class Breakout extends Game{
 		}
 		this.getPanel().add(this.getPlayer().getRepresentation());
 		this.getPanel().add(this.getBall().getRepresentation());
-		this.getBall().setDirection(Direction.UP);
+		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
 	}
 
 	/**
@@ -196,7 +197,8 @@ public class Breakout extends Game{
 	public void updateBall() {
 		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
 		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-			this.getBall().reverseDirection();
+			this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+			System.out.println(this.getBall().getDirectionBall());
 		}
 		this.getBall().move(Ball.MOVE_SPEED);
 	}
@@ -212,7 +214,7 @@ public class Breakout extends Game{
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				this.getBall().reverseDirection();
+				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().remove(brick.getRepresentation());
 					// Safely remove the brick from the collection
