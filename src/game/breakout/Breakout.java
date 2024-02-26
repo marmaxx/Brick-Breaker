@@ -35,7 +35,7 @@ public class Breakout extends Game{
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(630,700));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,600, 30));
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
 		this.setWestWall(new Wall((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));

@@ -2,17 +2,10 @@ package game.breakout.entities;
 
 import java.awt.Color;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
-
 import display.engine.shapes.Circle;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
-import display.view.GamePanel;
-import display.engine.shapes.Circle;
-import display.engine.shapes.rules.*;
-import game.breakout.entities.Wall;
-import java.util.*;
 
 public class Ball extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
