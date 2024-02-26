@@ -103,7 +103,7 @@ public abstract class Entity {
 			case LEFT:
 				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
 			case RIGHT:
-				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()-WALL_WIDTH);
+				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH);
 			case NONE:
 				return false;
 			default:

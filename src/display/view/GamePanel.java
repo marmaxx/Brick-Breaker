@@ -7,6 +7,7 @@ import java.awt.*;
 public class GamePanel extends JPanel {
 	private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final Dimension GAME_ZONE_SIZE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10); 
 	
 	private GameFrame gameFrame;
     private JPanel gameZone = new JPanel();
@@ -27,7 +28,7 @@ public class GamePanel extends JPanel {
 		this.setLayout(new FlowLayout()); //set GamePanel to FlowLayout
 		this.setPreferredSize(SCREEN_FULL_SIZE);
 
-		this.gameZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width*2/3, SCREEN_FULL_SIZE.height*9/10));
+		this.gameZone.setPreferredSize(GAME_ZONE_SIZE);
 		this.gameZone.setBackground(Color.BLACK);
 
 		this.statZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10));
