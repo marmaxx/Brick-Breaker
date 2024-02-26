@@ -16,7 +16,7 @@ public class Ball extends Entity {
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
-	public static final int MOVE_SPEED = 10;
+	public static final int MOVE_SPEED = 7;
 	public DirectionBall direction;
 	public int angle;
 
