@@ -103,7 +103,7 @@ Ce qu'il faut faire:
 - Implémenter la logique des briques (modification de la vie, destruction, bonus...)
 - Mettre en place Gradle
 - Continuer le projet physiques en parallèle (TODOs)
-- Améliration de la fenêtre de jeu
+- Amélioration de la fenêtre de jeu
 - Gérer les collisions briques/balle
 
 ## Semaine 5
@@ -128,7 +128,7 @@ Ce qu'il faut faire:
     .On dispose maintenant d'une zone de jeu qui ne fait plus toute la fenêtre.
     .Il y a l'affichage des vies et des points du joueur ainsi que le nombre de briques restantes (maj de l'affichage).
 
-- fusion_26_27:
+- fusion_26_27: (Marius)
     .Implémentation de murs en haut, à droite et à gauche pour pouvoir gérer les collisions que entre objets.
     .On a désormais un rebond assez basique mais qui fonctionne très bien.
     .La balle réapparait à sa position initiale si elle sort de la fenêtre par le bas.
@@ -140,3 +140,17 @@ Ce qu'il y a à faire:
 - continuation de la physique en parallèle
 - win condition et gameover
 - amélioration menu?
+
+### Absent
+
+Lucas
+
+### À faire
+
+- passer à un modèle de collision avec "biais" (calculer la normale plutôt que d'essayer de déterminer si on est dans le cas vertical ou horizontal -> une seule façon de traiter tous les cas)
+- collision avec transmission de mouvement (prendre en compte coefficient de frottement de la surface et de la balle), ajouter propriété vitesse angulaire à la balle
+- considérer objets-collision (contient: point d'impact, normale, mouvement transmis = coefficient de frottement * vitesse relative des objets en collision)
+- gradle
+- bonus
+- physique (continuer étude biblio [https://femto-physique.fr/mecanique/physique-des-collisions.php])
+- point sur l'architecture (préparer documents, on fera le point lors de la séance)
