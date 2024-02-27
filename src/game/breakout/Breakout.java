@@ -16,8 +16,11 @@ import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Wall;
 
 import game.breakout.entities.Brick;
+import game.breakout.entities.rules.Entity;
 import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
+import src.main.java.physics.PhysicalObject;
+import src.main.java.physics.PhysicsEngine;
 
 public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
@@ -28,6 +31,14 @@ public class Breakout extends Game{
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 20;
+	private PhysicalObject<Ball> physicalBall;
+	private PhysicalObject<Player> physicalPlayer;
+	private PhysicalObject<Wall> physicalEastWall;
+	private PhysicalObject<Wall> physicalNorthWall;
+	private PhysicalObject<Wall> physicalWestWall;
+	private PhysicsEngine<Entity> physicEngine;
+
+
 
 	/**
 	 * Instantiates a new Breakout game
@@ -279,8 +290,9 @@ public class Breakout extends Game{
 	 */
 	@Override
 	public void onUpdate() {
-		this.updatePlayer();
+		/*this.updatePlayer();
 		this.updateBall();
-		this.updateBricks();
+		this.updateBricks();*/
+
 	}
 }
