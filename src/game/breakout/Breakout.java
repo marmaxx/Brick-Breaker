@@ -38,9 +38,9 @@ public class Breakout extends Game{
 		this.setBricks(new ArrayList<Brick>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,600, 30));
-		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
-		this.setWestWall(new Wall((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
-		this.setNorthWall(new Wall(0, 0, (int)GamePanel.SCREEN_FULL_SIZE.getWidth(), WALL_WIDTH));
+		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		this.setWestWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -239,11 +239,11 @@ public class Breakout extends Game{
 		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
 		}
-		this.getPanel().add(this.getPlayer().getRepresentation());
-		this.getPanel().add(this.getBall().getRepresentation());
-		this.getPanel().add(this.getEastWAll().getRepresentation());
-		this.getPanel().add(this.getWestWall().getRepresentation());
-		this.getPanel().add(this.getNorthWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
 	}
 
