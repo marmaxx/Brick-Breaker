@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import display.view.GameFrame;
 import display.view.GamePanel;
-import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;

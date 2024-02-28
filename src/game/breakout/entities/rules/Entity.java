@@ -8,7 +8,6 @@ public abstract class Entity {
     protected GraphicalObject representation;
 	protected Direction direction;
 	protected final static int WALL_WIDTH = 20;
-	protected final static int WALL_WIDTH = 20;
 
 	public enum Direction {
 		NONE, UP, DOWN, LEFT, RIGHT
