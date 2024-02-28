@@ -48,16 +48,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						if (Breakout.this.getBall().getStart()){
-							Breakout.this.getPlayer().setDirection(Direction.LEFT);
-						}
+						Breakout.this.getPlayer().setDirection(Direction.LEFT);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						System.out.println(Breakout.this.getPlayer().getRepresentation().getPosY()-Breakout.this.getPlayer().getRepresentation().getHeight());
-						if (Breakout.this.getBall().getStart()){
-							Breakout.this.getPlayer().setDirection(Direction.RIGHT);
-						}
+						Breakout.this.getPlayer().setDirection(Direction.RIGHT);
 						break;
 					case KeyEvent.VK_ESCAPE:
 						if(Breakout.this.isPaused()){
@@ -67,7 +62,7 @@ public class Breakout extends Game{
 							Breakout.this.pause();
 						}
 						break;
-					case KeyEvent.VK_ENTER:
+					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().getStart()) Breakout.this.getBall().setStart(true);
 				}
 			}
@@ -259,8 +254,19 @@ public class Breakout extends Game{
 	 */
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
+			if (!this.getBall().getStart()){
+				switch(this.getPlayer().getDirection()){
+					case LEFT:
+						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
+						break;
+					case RIGHT:
+						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+Player.MOVE_SPEED);
+						break;
+					default: 
+						break;
+				}
+			}
 			this.getPlayer().move(Player.MOVE_SPEED);
-
 		}
 	}
 
