@@ -313,6 +313,6 @@ public class Breakout extends Game{
 		this.updatePlayer();
 		this.updateBall();
 		this.updateBricks();
-		this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
+		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 	}
 }
