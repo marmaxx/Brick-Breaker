@@ -19,8 +19,8 @@ import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
-import src.main.java.physics.PhysicalObject;
-import src.main.java.physics.PhysicsEngine;
+import src.main.java.physics.*;
+import src.main.java.utils.*;
 
 public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
