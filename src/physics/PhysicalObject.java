@@ -6,9 +6,9 @@ import physics.utils.*;
 public class PhysicalObject<T> {
     private T object;
     private double mass;
-    private Vector2D position;
-    private Vector2D speed;
-    private Vector2D acceleration;
+    private Vector2D position ;
+    private Vector2D speed = new Vector2D(0, 0);
+    private Vector2D acceleration = new Vector2D(0, 0);
     private boolean movable; //indicates if the object can move, if its position is influenced by collisions or frictions 
     //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     private GraphicalObject representation;
