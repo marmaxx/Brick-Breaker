@@ -38,7 +38,7 @@ public class Breakout extends Game{
 	private PhysicalObject<Entity> physicalNorthWall;
 	private PhysicalObject<Entity> physicalWestWall;
 	private ArrayList<PhysicalObject<Entity>> physicalBricks;
-	private PhysicsEngine<Entity> physicEngine;
+	private PhysicsEngine<Entity> physicEngine = new PhysicsEngine<>();
 
 
 
