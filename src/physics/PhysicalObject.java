@@ -64,19 +64,18 @@ public class PhysicalObject<T> {
     public void resolveCollision(PhysicalObject<T> objectA) {
         //TODO: penser à l'élasticité : regarder formules physiques
         double massA = objectA.getMass();
-        if (isMovable()){
-            if (objectA.isMovable()){
-                Vector2D x = objectA.getSpeed().multiply(2*massA/(massA+this.mass));
-                Vector2D y = this.speed.multiply((this.mass-massA)/massA+this.mass);
-                this.speed=x.add(y);
-                Vector2D z = this.speed.multiply(2*this.mass/(massA+this.mass));
-                Vector2D t = objectA.getSpeed().multiply((massA-this.mass)/massA+this.mass);
-                objectA.setSpeed(z.add(t));
-            }
-            else{
-                this.speed.multiply(-1);
-            }
+        if (objectA.isMovable()){
+            Vector2D x = objectA.getSpeed().multiply(2*massA/(massA+this.mass));
+            Vector2D y = this.speed.multiply((this.mass-massA)/massA+this.mass);
+            this.speed=x.add(y);
+            Vector2D z = this.speed.multiply(2*this.mass/(massA+this.mass));
+            Vector2D t = objectA.getSpeed().multiply((massA-this.mass)/massA+this.mass);
+            objectA.setSpeed(z.add(t));
         }
+        else{
+            this.speed.multiply(-1);
+        }
+        
     }
 
     

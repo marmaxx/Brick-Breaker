@@ -32,7 +32,7 @@ public class PhysicsEngine<T> {
        
             // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {
-            object.updateVelocity(deltaTime);
+            object.updateVelocity(deltaTime); System.out.println(object.getSpeed());
             object.updatePosition(deltaTime);
         }
     }
@@ -65,9 +65,12 @@ public class PhysicsEngine<T> {
     private void applyFriction(double frictionCoefficient) {
         
         for (PhysicalObject<T> object : physicalObjects) {
-            Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
-            object.applyForce(frictionForce);
+            if (object.isMovable()){
+                Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
+                object.applyForce(frictionForce);
+            }
         }
     }
+
 
 }

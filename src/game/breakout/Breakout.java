@@ -224,7 +224,7 @@ public class Breakout extends Game{
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
 				randomLifespan, false);
 				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 0, brickVectPos, false, brick.getRepresentation());
+				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
 				this.physicalBricks.add(physicalBrick);
 			}
 		}
