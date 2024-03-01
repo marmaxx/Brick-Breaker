@@ -34,6 +34,13 @@ public class PhysicalObject<T> {
     public boolean isMovable(){
         return this.movable;
     }
+    public GraphicalObject getRepresentation(){
+        return this.representation;
+    }
+
+    public Vector2D getPosition(){
+        return this.position;
+    }
 
     public void setSpeed(Vector2D newSpeed){
         this.speed=newSpeed;
@@ -51,7 +58,8 @@ public class PhysicalObject<T> {
 
     // applying force to an object; its acceleration is modified
     public void applyForce(Vector2D force) {
-        this.acceleration = this.acceleration.add(force.multiply(1.0 / mass));
+        if(isMovable())
+            this.acceleration = this.acceleration.add(force.multiply(1.0 / mass));
     }
 
     // checking if a collision happened
