@@ -27,15 +27,14 @@ public class PhysicsEngine<T> {
     public void update(double deltaTime) {
     
         applyGravity(deltaTime);
-
-        // updating objects position relatively to the time spent
-        for (PhysicalObject<T> object : physicalObjects) {
+        handleCollisions();
+        applyFriction(FRICTION_COEFFICIENT);
+       
+            // updating objects position relatively to the time spent
+         for (PhysicalObject<T> object : physicalObjects) {
+            object.updateVelocity(deltaTime);
             object.updatePosition(deltaTime);
         }
-
-        handleCollisions();
-
-        applyFriction(FRICTION_COEFFICIENT);
     }
 
     // detecting and resolving collisions between objects
