@@ -63,7 +63,7 @@ public class Breakout extends Game{
 						}
 						break;
 					case KeyEvent.VK_SPACE:
-						if (!Breakout.this.getBall().getStart()) Breakout.this.getBall().setStart(true);
+						if (!Breakout.this.getBall().getIsMoving()) Breakout.this.getBall().setIsMoving(true);
 				}
 			}
 
@@ -254,7 +254,7 @@ public class Breakout extends Game{
 	 */
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
-			if (!this.getBall().getStart()){
+			if (!this.getBall().getIsMoving()){
 				switch(this.getPlayer().getDirection()){
 					case LEFT:
 						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
@@ -274,7 +274,7 @@ public class Breakout extends Game{
 	 * Update the ball entity
 	 */
 	public void updateBall() {
-		if (this.getBall().getStart()){
+		if (this.getBall().getIsMoving()){
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
 			|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
 				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
@@ -284,7 +284,7 @@ public class Breakout extends Game{
 				this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
 				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);
 				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight());
-				this.getBall().setStart(false);
+				this.getBall().setIsMoving(false);
 				this.life--;
 			}
 			this.getBall().move(Ball.MOVE_SPEED);

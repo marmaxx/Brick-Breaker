@@ -1,8 +1,6 @@
 import javax.swing.SwingUtilities;
 import display.view.GameFrame;
 import display.view.MenuPanel;
-import game.breakout.Breakout;
-import game.rules.Game;
 
 public class Main {
     public static void main(String [] args){

@@ -18,7 +18,7 @@ public class Ball extends Entity {
 	public static final int MOVE_SPEED = 7;
 	public DirectionBall direction;
 	public int angle; // it will be used later
-	public boolean start;
+	public boolean isMoving;
 
 	public enum DirectionBall{
 		UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
@@ -90,12 +90,12 @@ public class Ball extends Entity {
 		return this.direction;
 	}
 
-	public boolean getStart(){
-		return this.start;
+	public boolean getIsMoving(){
+		return this.isMoving;
 	}
 
-	public void setStart(boolean b){
-		this.start = b;
+	public void setIsMoving(boolean b){
+		this.isMoving = b;
 	}
 
 	/**
