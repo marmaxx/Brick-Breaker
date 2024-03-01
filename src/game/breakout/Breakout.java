@@ -19,8 +19,9 @@ import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
-import physics.*;
-import physics.utils.*;
+import physics.PhysicsEngine;
+import physics.PhysicalObject;
+import physics.utils.Vector2D;
 
 public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
@@ -31,11 +32,12 @@ public class Breakout extends Game{
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 20;
-	private PhysicalObject<Ball> physicalBall;
-	private PhysicalObject<Player> physicalPlayer;
-	private PhysicalObject<Wall> physicalEastWall;
-	private PhysicalObject<Wall> physicalNorthWall;
-	private PhysicalObject<Wall> physicalWestWall;
+	private PhysicalObject<Entity> physicalBall;
+	private PhysicalObject<Entity> physicalPlayer;
+	private PhysicalObject<Entity> physicalEastWall;
+	private PhysicalObject<Entity> physicalNorthWall;
+	private PhysicalObject<Entity> physicalWestWall;
+	private ArrayList<PhysicalObject<Entity>> physicalBricks;
 	private PhysicsEngine<Entity> physicEngine;
 
 
@@ -49,10 +51,21 @@ public class Breakout extends Game{
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.setBricks(new ArrayList<Brick>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
+		Vector2D playerVectPos = new Vector2D(630, 700);
+		this.physicalPlayer = new PhysicalObject<Entity>(player, 5, playerVectPos, false, player.getRepresentation());
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,600, 30));
+		Vector2D ballVectPos = new Vector2D(630, 600);
+		this.physicalBall = new PhysicalObject<Entity>(ball, 2, ballVectPos, true, ball.getRepresentation());
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
+		Vector2D VectEastWallPos = new Vector2D(0, 0);
+		this.physicalEastWall = new PhysicalObject<Entity>(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
 		this.setWestWall(new Wall((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.SCREEN_FULL_SIZE.getHeight()));
+		Vector2D VectWestWallPos = new Vector2D((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0);
+		this.physicalWestWall = new PhysicalObject<Entity>(eastWall, 100, VectWestWallPos, false, westWall.getRepresentation());
 		this.setNorthWall(new Wall(0, 0, (int)GamePanel.SCREEN_FULL_SIZE.getWidth(), WALL_WIDTH));
+		this.physicalNorthWall = new PhysicalObject<Entity>(eastWall, 100, VectEastWallPos, false, northWall.getRepresentation());
+		this.physicEngine.getPhysicalObjects().add(physicalBall);
+
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -207,8 +220,17 @@ public class Breakout extends Game{
 				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
 				randomLifespan, false));
+				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, false);
+				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
+				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 0, brickVectPos, false, brick.getRepresentation());
+				this.physicalBricks.add(physicalBrick);
 			}
 		}
+		for (PhysicalObject<Entity> brick:physicalBricks){
+			this.physicEngine.getPhysicalObjects().add(brick);
+		} 
 	}
 
 	/**
@@ -289,10 +311,11 @@ public class Breakout extends Game{
 	 * @see game.rules.Game#onUpdate()
 	 */
 	@Override
-	public void onUpdate() {
-		/*this.updatePlayer();
-		this.updateBall();
-		this.updateBricks();*/
+	public void onUpdate(double deltaTime) {
+		this.updatePlayer();
+		//this.updateBall();
+		this.updateBricks();
+		this.physicEngine.update(deltaTime);
 
 	}
 }

@@ -187,7 +187,7 @@ public abstract class Game{
 				Timer gameTimer = new Timer(updateTime, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(!Game.this.isPaused()){
-							Game.this.update();
+							Game.this.update(updateTime);
 						}
 					}
 				});
@@ -203,7 +203,7 @@ public abstract class Game{
 					double timeSpent = now - this.getLastRenderTime();
 			
 					if(timeSpent > updateTime && !Game.this.isPaused()) {
-						Game.this.update();
+						Game.this.update(updateTime);
 					}
 				}
 			});
@@ -240,15 +240,15 @@ public abstract class Game{
 	 * This method is called every frame to update the game.
 	 * It refreshes both the logic and the rendering of the game
 	 */
-	public void update() {
+	public void update(double deltaTime) {
 		this.render();
-		this.onUpdate();
+		this.onUpdate(deltaTime);
 	}
 
 	/**
 	 * This method is called every frame to update the game logic
 	 */
-	public abstract void onUpdate();
+	public abstract void onUpdate(double deltaTime);
 
 	/**
 	 * Render the game and calculate the FPS

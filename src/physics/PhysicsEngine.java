@@ -14,6 +14,10 @@ public class PhysicsEngine<T> {
         this.physicalObjects = new ArrayList<>();
     }
 
+    public List<PhysicalObject<T>> getPhysicalObjects(){
+        return this.physicalObjects;
+    }
+
     // adding a physical object 
     public void addPhysicalObject(PhysicalObject<T> object) {
         physicalObjects.add(object);
