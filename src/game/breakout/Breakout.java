@@ -275,11 +275,21 @@ public class Breakout extends Game{
 	 */
 	public void updateBall() {
 		if (this.getBall().getIsMoving()){
-			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
-			|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+			System.out.println(this.getPlayer().getRepresentation().getWidth());
+			if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+				
+				if (this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() 
+					|| this.getBall().getRepresentation().getPosX() > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
+						this.getBall().paddleWall(panel, Ball.MOVE_SPEED);
+				}else{
+					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+				}
+
 			}
-			else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+
+			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
+					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
 				// the ball respawn for the moment 
 				this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
 				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);

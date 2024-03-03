@@ -15,7 +15,7 @@ public class Ball extends Entity {
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
-	public static final int MOVE_SPEED = 7;
+	public static final int MOVE_SPEED = 2;
 	public DirectionBall direction;
 	public int angle; // it will be used later
 	public boolean isMoving;
@@ -125,6 +125,20 @@ public class Ball extends Entity {
 		}
 	}
 
+	public void paddleWall(GamePanel panel, int speed){
+		switch (this.getDirectionBall()) {
+			case UP_LEFT: System.out.println("hitting the ball while going up left");this.setDirectionBall(DirectionBall.UP_RIGHT);
+				break;
+			case UP_RIGHT: System.out.println("hitting the ball while going up right");this.setDirectionBall(DirectionBall.UP_LEFT);
+				break;
+			case DOWN_LEFT: System.out.println("hitting the ball while going down left");this.setDirectionBall(DirectionBall.DOWN_RIGHT);
+				break;
+			case DOWN_RIGHT: System.out.println("hitting the ball while going down right");this.setDirectionBall(DirectionBall.DOWN_LEFT);
+				break;
+			default:
+				break;
+		}
+	}
 	/**
 	 * Checks if the ball will be off the screen if it moves in a given direction
 	 * 
