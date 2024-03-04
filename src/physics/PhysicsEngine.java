@@ -50,9 +50,9 @@ public class PhysicsEngine<T> {
     private void handleCollisions() {
         for (int i = 0; i < physicalObjects.size(); i++) {
             PhysicalObject<T> objectA = physicalObjects.get(i);
-            for (int j = i + 1; j < physicalObjects.size(); j++) {
+            for (int j = 0; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
-                if (objectA.collidesWith(objectB)) {
+                if (objectA.collidesWith(objectB) && objectA!=objectB) {
                     System.out.println("COLLISION");
                     // resolving collision between A and B
                     objectA.resolveCollision(objectB);
