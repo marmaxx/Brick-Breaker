@@ -7,13 +7,14 @@ import display.view.GamePanel;
 
 public abstract class Entity {
     protected GraphicalObject representation;
-	protected Direction direction;
 	protected final static int WALL_WIDTH = 20;
 	protected int DEFAULT_SPEED = 3;
 
-	public enum Direction {
-		NONE, UP, DOWN, LEFT, RIGHT
-	}
+	public boolean UP;
+	public boolean DOWN;
+	public boolean LEFT;
+	public boolean RIGHT;
+
     
 	/**
 	 * Instantiates a new Entity
@@ -22,7 +23,7 @@ public abstract class Entity {
 	 */
     public Entity(GraphicalObject representation) {
 		this.setRepresentation(representation);
-		this.setDirection(Direction.NONE);    
+		 
     }
 
 	/**
@@ -42,49 +43,45 @@ public abstract class Entity {
     public void setRepresentation(GraphicalObject representation) {
         this.representation = representation;
     }
-
 	/**
-	 * Sets the direction of the entity
-	 * 
-	 * @param direction the new direction of the entity
+	 * TODO: Add comments for all this
 	 */
-	public void setDirection(Direction direction) {
-		this.direction = direction;
+	public boolean movingUp(){
+		return UP;
+	}
+	public boolean movingDown(){
+		return DOWN;
+	}public boolean movingLeft(){
+		return LEFT;
+	}public boolean movingRight(){
+		return RIGHT;
 	}
 
-	/**
-	 * Gets the direction of the entity
-	 * 
-	 * @return the direction of the entity
-	 */
-	public Direction getDirection() {
-		return this.direction;
-	}
 
-	/**
-	 * Reverse the direction of the entity
-	 */
-	public void reverseDirection() {
-		switch (this.getDirection()) {
-			case UP:
-				this.setDirection(Direction.DOWN);
-				break;
-			case DOWN:
-				this.setDirection(Direction.UP);
-				break;
-			case LEFT:
-				this.setDirection(Direction.RIGHT);
-				break;
-			case RIGHT:
-				this.setDirection(Direction.LEFT);
-				break;
-			case NONE:
-				break;
-			default:
-				break;
-		}
+	public void moveUp(){
+		UP=true;
 	}
-	
+	public void moveDown(){
+		DOWN=true;
+	}
+	public void moveLeft(){
+		LEFT=true;
+	}
+	public void moveRight(){
+		RIGHT=true;
+	}
+	public void stopUp(){
+		UP=false;
+	}
+	public void stopDown(){
+		DOWN=false;
+	}
+	public void stopLeft(){
+		LEFT=false;
+	}
+	public void stopRight(){
+		RIGHT=false;
+	}
 
 	/**
 	 * Checks if the entity will be off the screen if it moves in a given direction
@@ -96,21 +93,36 @@ public abstract class Entity {
 	 */
 	public boolean willBeOffScreen(GamePanel panel, int speed) {
 		int[] boundaries = this.getRepresentation().getBoundaries();
-
-		switch (this.getDirection()) {
-			case UP:
-				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH);
-			case DOWN:
-				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight());
-			case LEFT:
-				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
-			case RIGHT:
-				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH);
-			case NONE:
-				return false;
-			default:
-				return false;
+		if(UP){
+			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH){
+				return true;
+			}
 		}
+		if(DOWN){
+			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight()){
+				return true;
+			}
+		}
+		if(LEFT){
+			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH){
+				return true;
+			}
+		}
+		if(RIGHT){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void reverseVerticalMomentum(){
+		UP=!UP;
+		DOWN=!DOWN;
+	}
+	public void reverseHorizontalMomentum(){
+		RIGHT=!RIGHT;
+		LEFT=!LEFT;
 	}
 
 	/**
@@ -118,24 +130,18 @@ public abstract class Entity {
 	 * 
 	 * @param speed the number of pixels the entity will move
 	 */
-	public void move(int speed) {
-		switch (this.getDirection()) {
-			case UP:
-				this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
-				break;
-			case DOWN:
-				this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
-				break;
-			case LEFT:
-				this.getRepresentation().setPosX(this.getRepresentation().getPosX() - speed);
-				break;
-			case RIGHT:
-				this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
-				break;
-			case NONE:
-				break;
-			default:
-				break;
+	public void move(int speed){
+		if(UP){
+			this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
+		}
+		if(DOWN){
+			this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
+		}
+		if(LEFT){
+			this.getRepresentation().setPosX(this.getRepresentation().getPosX() - speed);
+		}
+		if(RIGHT){
+			this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
 		}
 	}
 	/**
@@ -144,20 +150,20 @@ public abstract class Entity {
 	 * @return a list containing the next positions of the ball. first element in the list is X and second is Y
 	 */
 	public int[] getNextPos(int speed){
-		
-		switch (this.getDirection()) {
-			case UP:    return new int[]{this.getRepresentation().getPosX(), this.getRepresentation().getPosY()-speed};
-
-			case DOWN:  return new int[]{this.getRepresentation().getPosX(), this.getRepresentation().getPosY()+speed};
-
-			case LEFT:  return new int[]{this.getRepresentation().getPosX()-speed, this.getRepresentation().getPosY()};
-
-			case RIGHT: return new int[]{this.getRepresentation().getPosX()+speed, this.getRepresentation().getPosY()};
-
-			case NONE:  return new int[]{this.getRepresentation().getPosX(),this.getRepresentation().getPosY()};
-
-			default:    return new int[]{};
+		int[] rep= new int[2];
+		if(UP){
+			rep[0] =  this.getRepresentation().getPosY() - speed;
 		}
+		if(DOWN){
+			rep[0] =  this.getRepresentation().getPosY() + speed;
+		}
+		if(LEFT){
+			rep[1] =  this.getRepresentation().getPosX() - speed;
+		}
+		if(RIGHT){
+			rep[1] =  this.getRepresentation().getPosX() + speed;
+		}
+		return rep;
 	}
 
 

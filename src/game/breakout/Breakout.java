@@ -10,9 +10,7 @@ import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
-import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Brick;
-import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
 
 public class Breakout extends Game{
@@ -48,11 +46,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().setDirection(Direction.LEFT);
+						Breakout.this.getPlayer().moveLeft();
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().setDirection(Direction.RIGHT);
+						Breakout.this.getPlayer().moveRight();
 						break;
 					case KeyEvent.VK_ESCAPE:
 						if(Breakout.this.isPaused()){
@@ -72,11 +70,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().setDirection(Direction.NONE);
+						Breakout.this.getPlayer().stopLeft();
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().setDirection(Direction.NONE);
+						Breakout.this.getPlayer().stopRight();
 						break;
 				}
 			}
@@ -246,7 +244,8 @@ public class Breakout extends Game{
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
-		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+		this.getBall().moveUp();
+		this.getBall().moveRight();
 	}
 
 	/**
@@ -255,15 +254,14 @@ public class Breakout extends Game{
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
 			if (!this.getBall().getIsMoving()){
-				switch(this.getPlayer().getDirection()){
-					case LEFT:
-						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
-						break;
-					case RIGHT:
-						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+Player.MOVE_SPEED);
-						break;
-					default: 
-						break;
+				if(this.getPlayer().movingLeft()){
+
+					this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
+
+				}else if(this.getPlayer().movingRight()){
+
+					this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+Player.MOVE_SPEED);
+
 				}
 			}
 			this.getPlayer().move(Player.MOVE_SPEED);
@@ -280,10 +278,8 @@ public class Breakout extends Game{
 			int[] ballNextPos = this.getBall().getNextPos(Ball.MOVE_SPEED);
 			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
 			
-			//System.out.println(ballNextPos[0] +"  " + playerNextPos[0]+this.getPlayer().getRepresentation().getWidth());
 
-			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
-
+			/*if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
 
 				/*if (ballCurrPos[1]>=playerCurrPos[1] && ballNextPos[0] <= playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() && ballNextPos[1]>=playerNextPos[1]){
 					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.UP);
@@ -296,55 +292,37 @@ public class Breakout extends Game{
 				}
 				else if (ballNextPos[1]<=playerNextPos[1] && ballNextPos[0] <= playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() && ballNextPos[1]>=playerNextPos[1]){
 					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.DOWN);
-				}*/
-
-					if (ballcurrPos[1] < playerCurrPos[1]) {
-						ball.reverseVerticalMomentum();
-		
-						/*
-						 * Zone One is the leftmost part of the paddle, zone two 
-						 * is the middle left part of the paddle, zone three middle right
-						 * and lastly the rightmost part of the paddle
-						 */
-						int zoneWidth = paddle.getWidth() / 4;
-						int zoneOne = paddle.getX() + zoneWidth;
-						int zoneTwo = zoneOne + zoneWidth;
-						int zoneThree = zoneTwo + zoneWidth;
-		
-						if (ball.getX() < zoneOne) {
-							ball.setDx(-8);
-						} else if (ball.getX() < zoneTwo) {
-							ball.setDx(-5);
-						} else if (ball.getX() < zoneThree) {
-							ball.setDx(5);
-						} else {
-							ball.setDx(8);
-						}
-		
-					} else {
-						ball.reverseHorizontalMomentum();
-					}
+				}
+				if (ballNextPos[1] > playerNextPos[1]) {
+					this.getBall().reverseVerticalMomentum();
+				}
+	
+				// Collision with left or right of the player rectangle
+				if (ballNextPos[0] < playerNextPos[0] || ballNextPos[0] > playerNextPos[0]) {
+					this.getBall().reverseHorizontalMomentum();
+				}
 
 				
 				
-			}
+			}*/ 
 
-			/*if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+			if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
 
 				if (this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() 
 					|| this.getBall().getRepresentation().getPosX()+Ball.MOVE_SPEED > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
-						this.getBall().paddleWall(panel, Ball.MOVE_SPEED);
+						this.getBall().reverseHorizontalMomentum();
 				}else{
-					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+					this.getBall().reverseVerticalMomentum();
 				}
 
-			}*/
+			}
 
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
-					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+					this.getBall().reverseHorizontalMomentum();
 			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
 				// the ball respawn for the moment 
-				this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+				this.getBall().moveUp();
+				this.getBall().moveRight();
 				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);
 				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight());
 				this.getBall().setIsMoving(false);
@@ -365,7 +343,8 @@ public class Breakout extends Game{
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+				//this.getBall().reverseHorizontalMomentum();
+				this.getBall().reverseVerticalMomentum();
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
