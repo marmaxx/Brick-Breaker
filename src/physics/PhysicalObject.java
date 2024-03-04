@@ -94,7 +94,7 @@ public class PhysicalObject<T> {
             }
             else{
                 //System.out.println(this.acceleration);
-                this.position.add(new Vector2D(0, -100));
+                this.position=this.position.add(new Vector2D(0, -50));
                 this.acceleration=this.acceleration.multiply(-1); 
                 //System.out.println(this.acceleration); 
                 //System.out.println(this.speed);
