@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.breakout.entities.Ball;
+import game.breakout.entities.Wall;
 import physics.utils.*;
 //TODO: java docs
 public class PhysicsEngine<T> {
@@ -52,9 +53,10 @@ public class PhysicsEngine<T> {
             PhysicalObject<T> objectA = physicalObjects.get(i);
             for (int j = 0; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
-                if (objectA.collidesWith(objectB) && objectA!=objectB) {
+                if (objectA.collidesWith(objectB) && objectA!=objectB && !(objectA.getObject() instanceof Wall) && !(objectB.getObject() instanceof Wall)) {
                     //System.out.println("COLLISION");
-                    System.out.println(objectB.getMass());
+                    //System.out.println(objectB.getPosition());
+                    if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
                     // resolving collision between A and B
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
