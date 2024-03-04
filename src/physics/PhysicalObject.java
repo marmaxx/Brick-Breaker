@@ -91,7 +91,8 @@ public class PhysicalObject<T> {
             }
             else{
                 //System.out.println(this.acceleration);
-                this.acceleration=this.acceleration.multiply(-1); //System.out.println(this.acceleration); 
+                this.acceleration=this.acceleration.multiply(-1); 
+                //System.out.println(this.acceleration); 
                 //System.out.println(this.speed);
                 //System.out.println(this.position);
             }
