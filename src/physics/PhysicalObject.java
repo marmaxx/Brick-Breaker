@@ -90,7 +90,10 @@ public class PhysicalObject<T> {
             objectA.setSpeed(z.add(t));
             }
             else{
-                this.acceleration.multiply(-1);
+                //System.out.println(this.acceleration);
+                this.acceleration=this.acceleration.multiply(-1); //System.out.println(this.acceleration); 
+                //System.out.println(this.speed);
+                //System.out.println(this.position);
             }
         }
     }
