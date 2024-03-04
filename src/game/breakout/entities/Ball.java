@@ -15,10 +15,16 @@ public class Ball extends Entity {
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
-	public static final int MOVE_SPEED = 5;
+	public static final int MOVE_SPEED = 2;
 	public DirectionBall direction;
 	public int angle; // it will be used later
 	public boolean isMoving;
+	public boolean UP;
+	public boolean DOWN;
+	public boolean LEFT;
+	public boolean RIGHT;
+
+
 
 	public enum DirectionBall{
 		UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
@@ -125,7 +131,34 @@ public class Ball extends Entity {
 		}
 	}
 
-	public void paddleWall(GamePanel panel, int speed){
+	/**
+	 * handles taking care of collisions based on which side the ball was hit from
+	 */
+	public void DirectionalCollision(GamePanel panel, int speed ,Direction hitPosition){
+		switch (hitPosition) {
+			case UP:
+				this.reverseDirectionBall(panel, speed);
+				break;
+			case LEFT:
+				this.sideCollision(panel, speed);
+				break;
+			case RIGHT:
+				this.sideCollision(panel, speed);
+				break;
+			case DOWN:
+				this.reverseDirectionBall(panel, speed);
+				break;
+			default:
+				break;
+		}
+	}
+
+	/**
+	 * handles when the ball is hit from its side
+	 * @param panel
+	 * @param speed
+	 */
+	public void sideCollision(GamePanel panel, int speed){
 		switch (this.getDirectionBall()) {
 			case UP_LEFT: this.setDirectionBall(DirectionBall.UP_RIGHT);
 				break;

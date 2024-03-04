@@ -275,21 +275,61 @@ public class Breakout extends Game{
 	 */
 	public void updateBall() {
 		if (this.getBall().getIsMoving()){
+			int[] ballCurrPos = {this.getBall().getRepresentation().getPosX(),this.getBall().getRepresentation().getPosY()};
+			int[] playerCurrPos = {this.getPlayer().getRepresentation().getPosX(),this.getPlayer().getRepresentation().getPosY()};
 			int[] ballNextPos = this.getBall().getNextPos(Ball.MOVE_SPEED);
 			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
 			
+			//System.out.println(ballNextPos[0] +"  " + playerNextPos[0]+this.getPlayer().getRepresentation().getWidth());
+
 			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
 
-				if (ballNextPos[0] < playerNextPos[0] 
-					|| ballNextPos[0]+Ball.MOVE_SPEED > playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
-						this.getBall().paddleWall(panel, Ball.MOVE_SPEED);
-				}else{
-					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+
+				/*if (ballCurrPos[1]>=playerCurrPos[1] && ballNextPos[0] <= playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() && ballNextPos[1]>=playerNextPos[1]){
+					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.UP);
 				}
+				else if ( this.getBall().getRepresentation().getPosX()+Ball.MOVE_SPEED > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth()) { 
+					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.RIGHT);
+				}
+				else if	(this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() ){
+					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.LEFT);
+				}
+				else if (ballNextPos[1]<=playerNextPos[1] && ballNextPos[0] <= playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() && ballNextPos[1]>=playerNextPos[1]){
+					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.DOWN);
+				}*/
+
+					if (ballcurrPos[1] < playerCurrPos[1]) {
+						ball.reverseVerticalMomentum();
+		
+						/*
+						 * Zone One is the leftmost part of the paddle, zone two 
+						 * is the middle left part of the paddle, zone three middle right
+						 * and lastly the rightmost part of the paddle
+						 */
+						int zoneWidth = paddle.getWidth() / 4;
+						int zoneOne = paddle.getX() + zoneWidth;
+						int zoneTwo = zoneOne + zoneWidth;
+						int zoneThree = zoneTwo + zoneWidth;
+		
+						if (ball.getX() < zoneOne) {
+							ball.setDx(-8);
+						} else if (ball.getX() < zoneTwo) {
+							ball.setDx(-5);
+						} else if (ball.getX() < zoneThree) {
+							ball.setDx(5);
+						} else {
+							ball.setDx(8);
+						}
+		
+					} else {
+						ball.reverseHorizontalMomentum();
+					}
+
+				
 				
 			}
 
-			if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+			/*if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
 
 				if (this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() 
 					|| this.getBall().getRepresentation().getPosX()+Ball.MOVE_SPEED > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
@@ -298,7 +338,7 @@ public class Breakout extends Game{
 					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 				}
 
-			}
+			}*/
 
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
 					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
