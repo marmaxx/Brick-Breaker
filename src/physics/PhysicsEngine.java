@@ -35,9 +35,9 @@ public class PhysicsEngine<T> {
          for (PhysicalObject<T> object : physicalObjects) {
             object.updateVelocity(deltaTime); 
             if (object.getObject() instanceof Ball){
-                System.out.println("vitesse: "+object.getSpeed());
-                System.out.println("acceleration: "+object.getAcceleration());
-                System.out.println("DeltaTime: "+deltaTime);
+                //System.out.println("vitesse: "+object.getSpeed());
+                //System.out.println("acceleration: "+object.getAcceleration());
+                //System.out.println("DeltaTime: "+deltaTime);
             }
             object.updatePosition(deltaTime);
             object.getRepresentation().setPosX((int)object.getPosition().getX());
@@ -52,6 +52,7 @@ public class PhysicsEngine<T> {
             for (int j = i + 1; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
                 if (objectA.collidesWith(objectB)) {
+                    System.out.println("COLLISION");
                     // resolving collision between A and B
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
