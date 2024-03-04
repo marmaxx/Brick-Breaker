@@ -20,6 +20,7 @@ public class PhysicalObject<T> {
         this.position=position;
         this.movable=movable;
         this.representation=representation;
+
     }
 
     // Getters et setters
@@ -53,6 +54,8 @@ public class PhysicalObject<T> {
     public void setSpeed(Vector2D newSpeed){
         this.speed=newSpeed;
     }
+
+
     // updating the position thanks to the speed and time spent
     public void updatePosition(double deltaTime) {
         Vector2D displacement = speed.multiply(deltaTime);
@@ -91,6 +94,7 @@ public class PhysicalObject<T> {
             }
             else{
                 //System.out.println(this.acceleration);
+                this.position.add(new Vector2D(0, -100));
                 this.acceleration=this.acceleration.multiply(-1); 
                 //System.out.println(this.acceleration); 
                 //System.out.println(this.speed);
