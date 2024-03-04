@@ -8,12 +8,10 @@ import display.view.GamePanel;
 public abstract class Entity {
     protected GraphicalObject representation;
 	protected final static int WALL_WIDTH = 20;
-	protected int DEFAULT_SPEED = 3;
 
-	public boolean UP;
-	public boolean DOWN;
-	public boolean LEFT;
-	public boolean RIGHT;
+	public double forceX;
+	public double forceY;
+
 
     
 	/**
@@ -47,40 +45,49 @@ public abstract class Entity {
 	 * TODO: Add comments for all this
 	 */
 	public boolean movingUp(){
-		return UP;
+		return forceY>0;
 	}
 	public boolean movingDown(){
-		return DOWN;
+		return forceY<0;
 	}public boolean movingLeft(){
-		return LEFT;
+		return forceX<0;
 	}public boolean movingRight(){
-		return RIGHT;
+		return forceX>0;
 	}
 
 
 	public void moveUp(){
-		UP=true;
+		forceY=1;
 	}
 	public void moveDown(){
-		DOWN=true;
+		forceY=-1;
 	}
 	public void moveLeft(){
-		LEFT=true;
+		forceX=-1;
 	}
 	public void moveRight(){
-		RIGHT=true;
+		forceX=1;
 	}
-	public void stopUp(){
-		UP=false;
-	}
-	public void stopDown(){
-		DOWN=false;
+	
+	public void stopRight(){
+		if(forceX>0){
+			forceX=0;
+		}
 	}
 	public void stopLeft(){
-		LEFT=false;
+		if(forceX<0){
+			forceX=0;
+		}
 	}
-	public void stopRight(){
-		RIGHT=false;
+	public void stopUp(){
+		if(forceY>0){
+			forceY=0;
+		}
+	}
+	public void stopDown(){
+		if(forceY<0){
+			forceY=0;
+		}
 	}
 
 	/**
@@ -91,25 +98,25 @@ public abstract class Entity {
 	 * 
 	 * @return true if the entity will be off the screen, false otherwise
 	 */
-	public boolean willBeOffScreen(GamePanel panel, int speed) {
+	public boolean willBeOffScreen(GamePanel panel,int speed) {
 		int[] boundaries = this.getRepresentation().getBoundaries();
-		if(UP){
-			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH){
+		if(forceY>0){
+			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - forceY*speed < WALL_WIDTH){
 				return true;
 			}
 		}
-		if(DOWN){
-			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight()){
+		if(forceY<0){
+			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + forceY*speed > panel.getGameZone().getHeight()){
 				return true;
 			}
 		}
-		if(LEFT){
-			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH){
+		if(forceX<0){
+			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - forceX*speed < WALL_WIDTH){
 				return true;
 			}
 		}
-		if(RIGHT){
-			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+		if(forceX>0){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
 				return true;
 			}
 		}
@@ -117,12 +124,10 @@ public abstract class Entity {
 	}
 
 	public void reverseVerticalMomentum(){
-		UP=!UP;
-		DOWN=!DOWN;
+		forceY=-forceY;
 	}
 	public void reverseHorizontalMomentum(){
-		RIGHT=!RIGHT;
-		LEFT=!LEFT;
+		forceX=-forceX;
 	}
 
 	/**
@@ -131,18 +136,13 @@ public abstract class Entity {
 	 * @param speed the number of pixels the entity will move
 	 */
 	public void move(int speed){
-		if(UP){
-			this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
-		}
-		if(DOWN){
-			this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
-		}
-		if(LEFT){
-			this.getRepresentation().setPosX(this.getRepresentation().getPosX() - speed);
-		}
-		if(RIGHT){
-			this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
-		}
+		System.out.println(forceX);
+		System.out.println(forceY);
+		System.out.println();
+
+
+		this.getRepresentation().setPosY(this.getRepresentation().getPosY() - (int)forceY*speed);
+		this.getRepresentation().setPosX(this.getRepresentation().getPosX() + (int)forceX*speed);
 	}
 	/**
 	 *
@@ -151,18 +151,8 @@ public abstract class Entity {
 	 */
 	public int[] getNextPos(int speed){
 		int[] rep= new int[2];
-		if(UP){
-			rep[0] =  this.getRepresentation().getPosY() - speed;
-		}
-		if(DOWN){
-			rep[0] =  this.getRepresentation().getPosY() + speed;
-		}
-		if(LEFT){
-			rep[1] =  this.getRepresentation().getPosX() - speed;
-		}
-		if(RIGHT){
-			rep[1] =  this.getRepresentation().getPosX() + speed;
-		}
+		rep[0] =  this.getRepresentation().getPosY() - (int)forceY*speed;
+		rep[1] =  this.getRepresentation().getPosX() + (int)forceX*speed;
 		return rep;
 	}
 

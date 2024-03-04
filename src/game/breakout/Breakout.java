@@ -277,7 +277,6 @@ public class Breakout extends Game{
 			int[] playerCurrPos = {this.getPlayer().getRepresentation().getPosX(),this.getPlayer().getRepresentation().getPosY()};
 			int[] ballNextPos = this.getBall().getNextPos(Ball.MOVE_SPEED);
 			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
-			
 
 			/*if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
 
@@ -307,13 +306,34 @@ public class Breakout extends Game{
 			}*/ 
 
 			if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+			// Create vector from paddle to ball
+			double dx = ballNextPos[0] - playerNextPos[0];
+			double dy = ballNextPos[1] - playerNextPos[1];
 
-				if (this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() 
+			// Normalize the vector
+			double magnitude = Math.sqrt(dx * dx + dy * dy);
+			dx /= magnitude;
+			dy /= magnitude;
+
+			// Dot product with paddle's normal vector (0, -1) for top surface
+			double dotProduct = dx * 0 + dy * 1;
+				System.out.println(dotProduct);
+			// Check collision side
+			if (dotProduct == 1) {
+    			// Collision with top of the paddle
+				this.getBall().reverseVerticalMomentum();
+ 			   System.out.println("Collision with top of the paddle");
+			} else {
+    			// Collision with side of the paddle
+				this.getBall().reverseHorizontalMomentum();
+    			System.out.println("Collision with side of the paddle");
+			}
+				/*if (this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() 
 					|| this.getBall().getRepresentation().getPosX()+Ball.MOVE_SPEED > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
 						this.getBall().reverseHorizontalMomentum();
 				}else{
 					this.getBall().reverseVerticalMomentum();
-				}
+				}*/
 
 			}
 
@@ -344,7 +364,7 @@ public class Breakout extends Game{
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
 				//this.getBall().reverseHorizontalMomentum();
-				this.getBall().reverseVerticalMomentum();
+				this.getBall().reverseVerticalMomentum();          
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
