@@ -31,6 +31,10 @@ public class PhysicalObject<T> {
         return this.speed;
     }
 
+    public Vector2D getAcceleration(){
+        return this.acceleration;
+    }
+
     public T getObject(){
         return this.object;
     }
@@ -57,7 +61,7 @@ public class PhysicalObject<T> {
 
     // updating speed thanks to the acceleration and time spent
     public void updateVelocity(double deltaTime) {
-        this.speed = this.speed.add(acceleration.multiply(deltaTime));
+        this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
     }
 
     // applying force to an object; its acceleration is modified

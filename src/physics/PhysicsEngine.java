@@ -34,7 +34,11 @@ public class PhysicsEngine<T> {
             // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {
             object.updateVelocity(deltaTime); 
-            if (object.getObject() instanceof Ball) System.out.println(object.getSpeed());
+            if (object.getObject() instanceof Ball){
+                System.out.println("vitesse: "+object.getSpeed());
+                System.out.println("acceleration: "+object.getAcceleration());
+                System.out.println("DeltaTime: "+deltaTime);
+            }
             object.updatePosition(deltaTime);
             object.getRepresentation().setPosX((int)object.getPosition().getX());
             object.getRepresentation().setPosY((int)object.getPosition().getY());

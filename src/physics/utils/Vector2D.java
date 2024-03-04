@@ -46,7 +46,8 @@ public class Vector2D {
      */
     public Vector2D normalize() {
         double magnitude = magnitude();
-        return new Vector2D(x / magnitude, y / magnitude);
+        if (magnitude!=0) return new Vector2D(x / magnitude, y / magnitude);
+        else return this;
     }
 
     /**
