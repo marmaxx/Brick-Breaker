@@ -154,3 +154,18 @@ Lucas
 - bonus
 - physique (continuer étude biblio [https://femto-physique.fr/mecanique/physique-des-collisions.php])
 - point sur l'architecture (préparer documents, on fera le point lors de la séance)
+
+Ce qui a été fait:
+
+- start_ball (Marius):
+    .Au début de la partie, la balle est immobile sur le paddle.
+    .On peut déplacer le paddle et la balle reste sur le paddle.
+    .Dès que la touche ESPACE est pressée, la balle se met en mouvement et la partie commence.
+    .Si l'on fait tomber la balle, elle réapparait sur le paddle et redevient immobile.
+
+- 30-27-physicsLaws (Lucas et Marius):
+    .Pas mal de choses ont été implémenté pour la physique.
+    .Cependant, on aimerait vraiment comprendre comment s'y prendre (utiliser la physique
+    seulement pour gérer les collisions ou aussi pour le mouvement de la balle avec 
+    une position, vitesse, accelération).
+    .La physique n'est pas encore testable dans le jeu malgré les améliorations.
