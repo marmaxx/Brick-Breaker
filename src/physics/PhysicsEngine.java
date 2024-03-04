@@ -3,6 +3,7 @@ package physics;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.breakout.entities.Ball;
 import physics.utils.*;
 //TODO: java docs
 public class PhysicsEngine<T> {
@@ -32,7 +33,8 @@ public class PhysicsEngine<T> {
        
             // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {
-            object.updateVelocity(deltaTime); System.out.println(object.getSpeed());
+            object.updateVelocity(deltaTime); 
+            if (object.getObject() instanceof Ball) System.out.println(object.getSpeed());
             object.updatePosition(deltaTime);
             object.getRepresentation().setPosX((int)object.getPosition().getX());
             object.getRepresentation().setPosY((int)object.getPosition().getY());

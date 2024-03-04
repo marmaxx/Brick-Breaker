@@ -31,6 +31,10 @@ public class PhysicalObject<T> {
         return this.speed;
     }
 
+    public T getObject(){
+        return this.object;
+    }
+
     public boolean isMovable(){
         return this.movable;
     }
@@ -81,7 +85,7 @@ public class PhysicalObject<T> {
             objectA.setSpeed(z.add(t));
         }
         else{
-            this.speed.multiply(-1);
+            this.acceleration.multiply(-1);
         }
         
     }
