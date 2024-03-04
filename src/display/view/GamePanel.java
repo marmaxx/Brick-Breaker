@@ -13,8 +13,8 @@ public class GamePanel extends JPanel {
     private JPanel gameZone = new JPanel();
     private JPanel statZone = new JPanel();
 	private JLabel score = new JLabel();
-	private JLabel life = new JLabel();
-	private JLabel nbBricks = new JLabel();
+    private JLabel life = new JLabel();
+    private JLabel nbBricks = new JLabel();
     
 	/**
 	 * Instantiates a new GamePanel
@@ -33,18 +33,18 @@ public class GamePanel extends JPanel {
 
 		this.statZone.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10));
 		this.statZone.setBackground(new Color(30,30,30));
-		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout
+		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout 
 
-		this.score.setPreferredSize(new Dimension(200,100));
-		this.score.setForeground(Color.WHITE); //set color of the text 
-		this.life.setPreferredSize(new Dimension(200,100));
-		this.life.setForeground(Color.WHITE); //set color of the text 
-		this.nbBricks.setPreferredSize(new Dimension(200,100));
-		this.nbBricks.setForeground(Color.WHITE); //set color of the text 
+		this.score.setPreferredSize(new Dimension(200, 100));
+        this.score.setForeground(Color.WHITE); // set color of the text
+        this.life.setPreferredSize(new Dimension(200, 100));
+        this.life.setForeground(Color.WHITE); // set color of the text
+        this.nbBricks.setPreferredSize(new Dimension(200, 100));
+        this.nbBricks.setForeground(Color.WHITE); // set color of the text
 
 		this.statZone.add(this.score);
-		this.statZone.add(this.life);
-		this.statZone.add(this.nbBricks); 
+        this.statZone.add(this.life);
+        this.statZone.add(this.nbBricks);
 
 		this.add(statZone);
 		this.add(gameZone);
@@ -87,14 +87,28 @@ public class GamePanel extends JPanel {
 	}
 
 	/** 
-	 * update game statistics in JLabel
-	 * @param score The score in game
+	 * update game life in JLabel
 	 * @param life The Life in game
 	 * @param bricks The number of brick in game
 	*/
-	public void updateStat(int score, int life, int bricks){
+	public void updateLife(int life){
+		this.life.setText("Life : " + life);
+		this.statZone.repaint(); // Redraw the statZone
+	}
+
+	/**
+	 * update game score and number of bricks in JLabel
+	 * @param score The score in game
+	 * @param bricks The number of bricks 
+	 */
+	public void updateScore(int score, int bricks){
 		this.score.setText("Score : " + score);
-		this.life.setText("Life : " + life); 
 		this.nbBricks.setText("Bricks : " + bricks);
+		this.statZone.repaint(); // Redraw the statZone
+	}
+
+	@Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 	}
 }

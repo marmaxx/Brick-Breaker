@@ -19,6 +19,8 @@ public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
 
+	GameFrame gameframe;
+
 	private ArrayList<Brick> bricks;
 	private Player player;
 	private Ball ball;
@@ -35,6 +37,7 @@ public class Breakout extends Game{
 	 */
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
+		this.gameframe = gameFrame;
 		this.setBricks(new ArrayList<Brick>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE));
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 565,668, 30));
@@ -247,6 +250,9 @@ public class Breakout extends Game{
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+
+		this.getPanel().updateScore(this.score, this.nbBricks);
+		this.getPanel().updateLife(this.life);
 	}
 
 	/**
@@ -280,12 +286,16 @@ public class Breakout extends Game{
 				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 			}
 			else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+				if( this.getLife() == 1 && this.getNbBricks() > 0){
+					this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
+				}
 				// the ball respawn for the moment 
 				this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
 				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);
 				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight());
 				this.getBall().setIsMoving(false);
 				this.life--;
+				this.getPanel().updateLife(this.life);
 			}
 			this.getBall().move(Ball.MOVE_SPEED);
 		}
@@ -299,6 +309,10 @@ public class Breakout extends Game{
 		// Without getting the ConcurrentModificationException
 		Iterator<Brick> iterator = this.getBricks().iterator();
 
+		if (this.nbBricks == 0 && this.life >= 0){
+			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
+		}
+
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
@@ -308,11 +322,11 @@ public class Breakout extends Game{
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
 					this.score += 100; // Incremen the score when the brick is broken
 					// Safely remove the brick from the collection
-					iterator.remove(); 
+					iterator.remove();
+					this.getPanel().updateScore(this.score, this.nbBricks);
 				}
 				else{
 					brick.setLifespan(brick.getLifespan() - 1);
-					this.score += 10; // Increment the score when the brick is touched
 				}
 				// Break the loop to prevent the ball from colliding with multiple bricks
 				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
@@ -328,7 +342,6 @@ public class Breakout extends Game{
 	public void onUpdate() {
 		this.updatePlayer();
 		this.updateBall();
-		this.updateBricks();
-		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
+		this.updateBricks(); 
 	}
 }
