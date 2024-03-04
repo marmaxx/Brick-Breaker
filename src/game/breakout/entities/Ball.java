@@ -15,7 +15,7 @@ public class Ball extends Entity {
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
-	public static final int MOVE_SPEED = 2;
+	public static final int MOVE_SPEED = 5;
 	public DirectionBall direction;
 	public int angle; // it will be used later
 	public boolean isMoving;
@@ -127,13 +127,13 @@ public class Ball extends Entity {
 
 	public void paddleWall(GamePanel panel, int speed){
 		switch (this.getDirectionBall()) {
-			case UP_LEFT: System.out.println("hitting the ball while going up left");this.setDirectionBall(DirectionBall.UP_RIGHT);
+			case UP_LEFT: this.setDirectionBall(DirectionBall.UP_RIGHT);
 				break;
-			case UP_RIGHT: System.out.println("hitting the ball while going up right");this.setDirectionBall(DirectionBall.UP_LEFT);
+			case UP_RIGHT: this.setDirectionBall(DirectionBall.UP_LEFT);
 				break;
-			case DOWN_LEFT: System.out.println("hitting the ball while going down left");this.setDirectionBall(DirectionBall.DOWN_RIGHT);
+			case DOWN_LEFT: this.setDirectionBall(DirectionBall.DOWN_RIGHT);
 				break;
-			case DOWN_RIGHT: System.out.println("hitting the ball while going down right");this.setDirectionBall(DirectionBall.DOWN_LEFT);
+			case DOWN_RIGHT: this.setDirectionBall(DirectionBall.DOWN_LEFT);
 				break;
 			default:
 				break;
@@ -169,6 +169,7 @@ public class Ball extends Entity {
 		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight();
 	}
 
+	
 	/**
 	 * Move the ball in its current direction
 	 * 
@@ -198,4 +199,27 @@ public class Ball extends Entity {
 		}
 
 	}
+
+	/**
+	 *
+	 * @param speed the number of pixels the entity will move
+	 * @return a list containing the next positions of the ball. first element in the list is X and second is Y
+	 */
+	@Override 
+	public int[] getNextPos(int speed){
+		switch(this.getDirectionBall()){
+			case UP_LEFT:    return new int[]{this.getRepresentation().getPosX() - speed, this.getRepresentation().getPosY() - speed};
+
+			case UP_RIGHT:   return new int[]{this.getRepresentation().getPosX() + speed, this.getRepresentation().getPosY() - speed};
+
+			case DOWN_LEFT:  return new int[]{this.getRepresentation().getPosX() - speed, this.getRepresentation().getPosY() + speed};
+
+			case DOWN_RIGHT: return new int[]{this.getRepresentation().getPosX() + speed, this.getRepresentation().getPosY() + speed};
+			
+			default:         return new int[]{};
+		}
+
+	}
+
+	
 }

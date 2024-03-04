@@ -1,6 +1,7 @@
 package game.breakout.entities.rules;
 
 import display.engine.rules.GraphicalObject;
+import display.engine.rules.GraphicalObject.Boundary;
 import display.view.GamePanel;
 
 
@@ -8,6 +9,7 @@ public abstract class Entity {
     protected GraphicalObject representation;
 	protected Direction direction;
 	protected final static int WALL_WIDTH = 20;
+	protected int DEFAULT_SPEED = 3;
 
 	public enum Direction {
 		NONE, UP, DOWN, LEFT, RIGHT
@@ -136,4 +138,28 @@ public abstract class Entity {
 				break;
 		}
 	}
+	/**
+	 *
+	 * @param speed the number of pixels the entity will move
+	 * @return a list containing the next positions of the ball. first element in the list is X and second is Y
+	 */
+	public int[] getNextPos(int speed){
+		
+		switch (this.getDirection()) {
+			case UP:    return new int[]{this.getRepresentation().getPosX(), this.getRepresentation().getPosY()-speed};
+
+			case DOWN:  return new int[]{this.getRepresentation().getPosX(), this.getRepresentation().getPosY()+speed};
+
+			case LEFT:  return new int[]{this.getRepresentation().getPosX()-speed, this.getRepresentation().getPosY()};
+
+			case RIGHT: return new int[]{this.getRepresentation().getPosX()+speed, this.getRepresentation().getPosY()};
+
+			case NONE:  return new int[]{this.getRepresentation().getPosX(),this.getRepresentation().getPosY()};
+
+			default:    return new int[]{};
+		}
+	}
+
+
+	
 }

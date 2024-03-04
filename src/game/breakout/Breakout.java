@@ -274,14 +274,23 @@ public class Breakout extends Game{
 	 * Update the ball entity
 	 */
 	public void updateBall() {
-		//System.out.println(this.getPlayer().getRepresentation().getPosX() + this.getPlayer().getRepresentation().getWidth());
-		//System.out.println(this.getBall().getRepresentation().getPosX());
-		///System.out.println(this.getBall().getRepresentation().getPosX() > this.getPlayer().getRepresentation().getPosX() + this.getPlayer().getRepresentation().getWidth());
-		///System.out.println();
 		if (this.getBall().getIsMoving()){
+			int[] ballNextPos = this.getBall().getNextPos(Ball.MOVE_SPEED);
+			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
+			
+			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
+
+				if (ballNextPos[0] < playerNextPos[0] 
+					|| ballNextPos[0]+Ball.MOVE_SPEED > playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
+						this.getBall().paddleWall(panel, Ball.MOVE_SPEED);
+				}else{
+					this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+				}
+				
+			}
 
 			if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-				System.out.println(this.getBall().getRepresentation().getPosX() >= this.getPlayer().getRepresentation().getPosX() + this.getPlayer().getRepresentation().getWidth());
+
 				if (this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() 
 					|| this.getBall().getRepresentation().getPosX()+Ball.MOVE_SPEED > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
 						this.getBall().paddleWall(panel, Ball.MOVE_SPEED);

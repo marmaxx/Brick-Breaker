@@ -187,7 +187,7 @@ public abstract class GraphicalObject extends JComponent {
 
 		return boundaryBox;
 	}
-	
+
 	/**	
 	 * Get the coordinate of a boundary from this graphical object
 	 * 
@@ -196,6 +196,33 @@ public abstract class GraphicalObject extends JComponent {
 	public float getBoundary(Boundary boundary) {
 		return this.getBoundaries()[boundary.ordinal()];
 	}
+
+	/**
+	 * Get the next coordinates of the boundaries from this object
+	 * 
+	 * @return The coordinates of the boundaries
+	 */
+	public int[] getNextBoundaries(int[] nextPos) {
+		int[] boundaryBox = new int[Boundary.values().length];
+
+		boundaryBox[Boundary.MAX_Y.ordinal()] = nextPos[1] + this.getHeight();
+		boundaryBox[Boundary.MIN_Y.ordinal()] = nextPos[1];
+		boundaryBox[Boundary.MIN_X.ordinal()] = nextPos[0];
+		boundaryBox[Boundary.MAX_X.ordinal()] = nextPos[0] + this.getWidth();
+
+		return boundaryBox;
+	}
+	
+	/**	
+	 * Get the next coordinates of a boundary from this graphical object
+	 * 
+	 * @param boundary The boundary to retrieve
+	 */
+	public float getNextBoundary(Boundary boundary,int[] nextPos) {
+		return this.getNextBoundaries(nextPos)[boundary.ordinal()];
+	}
+
+
 
 	/**
 	 * Checks if the object is within its panel boundaries
@@ -209,6 +236,7 @@ public abstract class GraphicalObject extends JComponent {
 	public static boolean isOnScreen(int x, int y, GamePanel panel) {
 		return (x >= 0 && x <= panel.getWidth() && y >= 0 && y <= panel.getHeight());
 	}
+
 
 	/**
 	 * Check if this graphical object is colliding with another graphical object
@@ -232,6 +260,32 @@ public abstract class GraphicalObject extends JComponent {
 
 		return isColliding;
 	}
+
+
+	/**
+	 * check if this is going to collide with an object on the next tick
+	 * @param object the object we want to check collisions with
+	 * @param myNextPos my next coordinates 
+	 * @param objectNextPos their next coordinates
+	 * @return true if we are going to collide, false otherwise
+	 */
+	public boolean isGoingToCollide(GraphicalObject object, int[] myNextPos, int[]objectNextPos) {
+		int[] thisBoundingBox = this.getNextBoundaries(myNextPos);
+		int[] objectBoundingBox = object.getNextBoundaries(objectNextPos);
+
+		// If the top of this object is higher than the bottom of the other object
+		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+				// If the bottom of this object is lower than the top of the other object
+				&& thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+				// If the left of this object is more to the left than the right of the other object
+				&& thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+				// If the right of this object is more to the right than the left of the other object
+				&& thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
+
+		return isColliding;
+	}
+
+
 
 	public String toString() {
 		return "GraphicalObject: " + "\n"
