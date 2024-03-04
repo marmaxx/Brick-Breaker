@@ -53,7 +53,8 @@ public class PhysicsEngine<T> {
             for (int j = 0; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
                 if (objectA.collidesWith(objectB) && objectA!=objectB) {
-                    System.out.println("COLLISION");
+                    //System.out.println("COLLISION");
+                    System.out.println(objectB.getMass());
                     // resolving collision between A and B
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
