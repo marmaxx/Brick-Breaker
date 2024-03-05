@@ -1,10 +1,9 @@
 package game.breakout.entities;
 
 import java.awt.Color;
+import display.engine.rules.GraphicalObject;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-
-import display.engine.rules.GraphicalObject;
 import display.engine.shapes.Circle;
 import display.view.GamePanel;
 import game.breakout.Breakout;
@@ -19,6 +18,7 @@ public class Ball extends Entity {
 	public static final int MOVE_SPEED = 7;
 	public DirectionBall direction;
 	public int angle; // it will be used later
+	public boolean isMoving;
 
 	public enum DirectionBall{
 		UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
@@ -90,6 +90,14 @@ public class Ball extends Entity {
 		return this.direction;
 	}
 
+	public boolean getIsMoving(){
+		return this.isMoving;
+	}
+
+	public void setIsMoving(boolean b){
+		this.isMoving = b;
+	}
+
 	/**
 	 * Reverse the direction of the ball
 	 */
@@ -101,7 +109,7 @@ public class Ball extends Entity {
 				else this.setDirectionBall(DirectionBall.DOWN_LEFT);
 				break;
 			case UP_RIGHT:
-				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.UP_LEFT);
+				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.UP_LEFT);
 				else this.setDirectionBall(DirectionBall.DOWN_RIGHT);
 				break;
 			case DOWN_LEFT:
@@ -109,7 +117,7 @@ public class Ball extends Entity {
 				else this.setDirectionBall(DirectionBall.UP_LEFT);
 				break;
 			case DOWN_RIGHT:
-				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.DOWN_LEFT);
+				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.DOWN_LEFT);
 				else this.setDirectionBall(DirectionBall.UP_RIGHT);
 				break;
 			default:
@@ -132,11 +140,11 @@ public class Ball extends Entity {
 			case UP_LEFT:
 				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
 			case UP_RIGHT:
-				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth()- WALL_WIDTH);
+				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH) || (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()- WALL_WIDTH);
 			case DOWN_LEFT:
 				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
 			case DOWN_RIGHT: 
-				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getWidth() - WALL_WIDTH);
+				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth() - WALL_WIDTH);
 			default:
 				return false;
 		}
@@ -144,7 +152,7 @@ public class Ball extends Entity {
 
 	public boolean willLoose(GamePanel panel, int speed){
 		int [] boundaries = this.getRepresentation().getBoundaries();
-		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getHeight();
+		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight();
 	}
 
 	/**

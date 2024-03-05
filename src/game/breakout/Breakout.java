@@ -1,20 +1,16 @@
 package game.breakout;
 
+import java.util.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-
 import display.view.GameFrame;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
-import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Wall;
-
+import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.breakout.entities.rules.Entity.Direction;
@@ -27,11 +23,16 @@ public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
 
+	GameFrame gameframe;
+
 	private ArrayList<Brick> bricks;
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 20;
+	private int nbBricks;
+	private int score = 0;
+	private int life = 3; // number of hearths when the game starts
 	private PhysicalObject<Entity> physicalBall;
 	private PhysicalObject<Entity> physicalPlayer;
 	private PhysicalObject<Entity> physicalEastWall;
@@ -49,6 +50,7 @@ public class Breakout extends Game{
 	 */
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
+		this.gameframe = gameFrame;
 		this.setBricks(new ArrayList<Brick>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
 		Vector2D playerVectPos = new Vector2D(630, 700);
@@ -92,6 +94,8 @@ public class Breakout extends Game{
 							Breakout.this.pause();
 						}
 						break;
+					case KeyEvent.VK_SPACE:
+						if (!Breakout.this.getBall().getIsMoving()) Breakout.this.getBall().setIsMoving(true);
 				}
 			}
 
@@ -202,6 +206,33 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * Get the score number in the game.
+	 * 
+	 * @return The score number
+	 */
+	public int getScore(){
+		return this.score;
+	}
+
+	/**
+	 * Get the bricks number in the game.
+	 * 
+	 * @return The bricks number 
+	 */
+	public int getNbBricks(){
+		return this.nbBricks;
+	}
+
+	/**
+	 * Get the life in the game.
+	 * 
+	 * @return The life
+	 */
+	public int getLife(){
+		return 	this.life;
+	}
+
+	/**
 	 * Initializes bricks in a level
 	 * 
 	 * @param rows The number of rows of bricks
@@ -214,7 +245,7 @@ public class Breakout extends Game{
 		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
 
 		// Start the bricks at the center of the panel
-		int initialXPos = (int) Math.floor(this.getPanel().getPreferredSize().getWidth()
+		int initialXPos = (int) Math.floor(this.getPanel().getGameZone().getPreferredSize().getWidth()
 		/ 2 - (columns * BRICK_SPACING) / 2);
 		
 		for(int row = 0; row < rows; row++){
@@ -244,18 +275,22 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(6, 10);
+		this.createBricks(4, 8);
+		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
-			this.getPanel().add(brick.getRepresentation());
+			this.getPanel().getGameZone().add(brick.getRepresentation());
 		}
-		this.getPanel().add(this.getPlayer().getRepresentation());
-		this.getPanel().add(this.getBall().getRepresentation());
-		this.getPanel().add(this.getEastWAll().getRepresentation());
-		this.getPanel().add(this.getWestWall().getRepresentation());
-		this.getPanel().add(this.getNorthWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+
+		this.getPanel().updateScore(this.score, this.nbBricks);
+		this.getPanel().updateLife(this.life);
 	}
 
 	/**
@@ -263,8 +298,19 @@ public class Breakout extends Game{
 	 */
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
+			if (!this.getBall().getIsMoving()){
+				switch(this.getPlayer().getDirection()){
+					case LEFT:
+						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
+						break;
+					case RIGHT:
+						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+Player.MOVE_SPEED);
+						break;
+					default: 
+						break;
+				}
+			}
 			this.getPlayer().move(Player.MOVE_SPEED);
-
 		}
 	}
 
@@ -272,17 +318,25 @@ public class Breakout extends Game{
 	 * Update the ball entity
 	 */
 	public void updateBall() {
-		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
-		|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-			this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+		if (this.getBall().getIsMoving()){
+			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
+			|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+			}
+			else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+				if( this.getLife() == 1 && this.getNbBricks() > 0){
+					this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
+				}
+				// the ball respawn for the moment 
+				this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);
+				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight());
+				this.getBall().setIsMoving(false);
+				this.life--;
+				this.getPanel().updateLife(this.life);
+			}
+			this.getBall().move(Ball.MOVE_SPEED);
 		}
-		else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
-			// the ball respawn for the moment 
-			this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
-			this.getBall().getRepresentation().setPosX(630);
-			this.getBall().getRepresentation().setPosY(600);
-		}
-		this.getBall().move(Ball.MOVE_SPEED);
 	}
 
 	/**
@@ -293,14 +347,21 @@ public class Breakout extends Game{
 		// Without getting the ConcurrentModificationException
 		Iterator<Brick> iterator = this.getBricks().iterator();
 
+		if (this.nbBricks == 0 && this.life >= 0){
+			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
+		}
+
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
 				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
-					this.getPanel().remove(brick.getRepresentation());
+					this.getPanel().getGameZone().remove(brick.getRepresentation());
+					this.nbBricks--; // Decrement the count of brick when the brick is broken
+					this.score += 100; // Incremen the score when the brick is broken
 					// Safely remove the brick from the collection
-					iterator.remove(); 
+					iterator.remove();
+					this.getPanel().updateScore(this.score, this.nbBricks);
 				}
 				else{
 					brick.setLifespan(brick.getLifespan() - 1);

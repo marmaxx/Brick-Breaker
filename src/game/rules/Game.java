@@ -239,6 +239,8 @@ public abstract class Game{
 	/**
 	 * This method is called every frame to update the game.
 	 * It refreshes both the logic and the rendering of the game
+	 * This method is called every frame to update the game.
+	 * It refreshes both the logic and the rendering of the game
 	 */
 	public void update(double deltaTime) {
 		this.render();
