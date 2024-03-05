@@ -278,63 +278,20 @@ public class Breakout extends Game{
 			int[] ballNextPos = this.getBall().getNextPos(Ball.MOVE_SPEED);
 			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
 
-			/*if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
-
-				/*if (ballCurrPos[1]>=playerCurrPos[1] && ballNextPos[0] <= playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() && ballNextPos[1]>=playerNextPos[1]){
-					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.UP);
-				}
-				else if ( this.getBall().getRepresentation().getPosX()+Ball.MOVE_SPEED > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth()) { 
-					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.RIGHT);
-				}
-				else if	(this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() ){
-					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.LEFT);
-				}
-				else if (ballNextPos[1]<=playerNextPos[1] && ballNextPos[0] <= playerNextPos[0]+this.getPlayer().getRepresentation().getWidth() && ballNextPos[1]>=playerNextPos[1]){
-					this.getBall().DirectionalCollision(panel, Ball.MOVE_SPEED, Direction.DOWN);
-				}
-				if (ballNextPos[1] > playerNextPos[1]) {
+			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
+				int[] vector = {ballCurrPos[0]  - (playerNextPos[0] + this.getPlayer().getRepresentation().getWidth()/2), (playerNextPos[1] + this.getPlayer().getRepresentation().getWidth()/2) -   ballCurrPos[1] };
+				double angle = Math.atan2(vector[1], vector[0]);
+				double angleInDegrees = Math.toDegrees(angle);
+				System.out.println(angleInDegrees);
+				if ((int)(angleInDegrees) > 60) {
 					this.getBall().reverseVerticalMomentum();
-				}
-	
-				// Collision with left or right of the player rectangle
-				if (ballNextPos[0] < playerNextPos[0] || ballNextPos[0] > playerNextPos[0]) {
+					System.out.println("Collision with top of the paddle");
+				} else {    
 					this.getBall().reverseHorizontalMomentum();
+					this.getPlayer().stopRight();
+					this.getPlayer().stopLeft();
+					System.out.println("Collision with side of the paddle");
 				}
-
-				
-				
-			}*/ 
-
-			if(this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-			// Create vector from paddle to ball
-			double dx = ballNextPos[0] - playerNextPos[0];
-			double dy = ballNextPos[1] - playerNextPos[1];
-
-			// Normalize the vector
-			double magnitude = Math.sqrt(dx * dx + dy * dy);
-			dx /= magnitude;
-			dy /= magnitude;
-
-			// Dot product with paddle's normal vector (0, -1) for top surface
-			double dotProduct = dx * 0 + dy * 1;
-				System.out.println(dotProduct);
-			// Check collision side
-			if (dotProduct == 1) {
-    			// Collision with top of the paddle
-				this.getBall().reverseVerticalMomentum();
- 			   System.out.println("Collision with top of the paddle");
-			} else {
-    			// Collision with side of the paddle
-				this.getBall().reverseHorizontalMomentum();
-    			System.out.println("Collision with side of the paddle");
-			}
-				/*if (this.getBall().getRepresentation().getPosX() < this.getPlayer().getRepresentation().getPosX() 
-					|| this.getBall().getRepresentation().getPosX()+Ball.MOVE_SPEED > this.getPlayer().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getWidth() ) { // check if the paddle's side walls are colliding with the ball
-						this.getBall().reverseHorizontalMomentum();
-				}else{
-					this.getBall().reverseVerticalMomentum();
-				}*/
-
 			}
 
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){

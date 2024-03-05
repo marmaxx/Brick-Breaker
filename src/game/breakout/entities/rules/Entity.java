@@ -106,7 +106,7 @@ public abstract class Entity {
 			}
 		}
 		if(forceY<0){
-			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + forceY*speed > panel.getGameZone().getHeight()){
+			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] - forceY*speed > panel.getGameZone().getHeight()){
 				return true;
 			}
 		}
@@ -116,7 +116,7 @@ public abstract class Entity {
 			}
 		}
 		if(forceX>0){
-			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] - forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
 				return true;
 			}
 		}
@@ -136,11 +136,6 @@ public abstract class Entity {
 	 * @param speed the number of pixels the entity will move
 	 */
 	public void move(int speed){
-		System.out.println(forceX);
-		System.out.println(forceY);
-		System.out.println();
-
-
 		this.getRepresentation().setPosY(this.getRepresentation().getPosY() - (int)forceY*speed);
 		this.getRepresentation().setPosX(this.getRepresentation().getPosX() + (int)forceX*speed);
 	}
@@ -151,8 +146,8 @@ public abstract class Entity {
 	 */
 	public int[] getNextPos(int speed){
 		int[] rep= new int[2];
-		rep[0] =  this.getRepresentation().getPosY() - (int)forceY*speed;
-		rep[1] =  this.getRepresentation().getPosX() + (int)forceX*speed;
+		rep[1] =  this.getRepresentation().getPosY() - (int)forceY*speed;
+		rep[0] =  this.getRepresentation().getPosX() + (int)forceX*speed;
 		return rep;
 	}
 
