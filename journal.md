@@ -169,3 +169,9 @@ Ce qui a été fait:
     seulement pour gérer les collisions ou aussi pour le mouvement de la balle avec 
     une position, vitesse, accelération).
     .La physique n'est pas encore testable dans le jeu malgré les améliorations.
+
+
+- 36-win-lose (Maxime)
+    .Création d'un GameOver et Win panel. 
+    .Win condition et lose condition en place. 
+    .Correction de bug graphique.
