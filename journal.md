@@ -1,4 +1,4 @@
-## Semaine 1
+## Semaine 1 (30/04/2024)
 
 Tout le monde est là.
 
@@ -8,7 +8,7 @@ Tout le monde est là.
 - projet exécutable minimal dans fenêtre graphique swing
 - 
 
-## Semaine 2 (29/01/2024)
+## Semaine 2 (06/02/2024)
 
 ### (Récupéré depuis google docs et remanié)
 
@@ -41,7 +41,7 @@ Grosse restructuration et adaptation des pushes sur la nouvelle structure, l’o
 
 ### Objectifs semaine suivante 
 
-## Semaine 3
+## Semaine 3 (13/02/2024)
 
 Ce qui a été fait:
 
@@ -70,7 +70,7 @@ Ce qu'il faut faire:
 - Peut-être un respawn de la balle si elle sort de la fenêtre en bas.
 - Mettre en place GRADLE (débuté mais pas convaincant)
 
-## Semaine 4
+## Semaine 4 (20/02/2024)
 
 .Ce qui a été fait:
 
@@ -106,7 +106,7 @@ Ce qu'il faut faire:
 - Amélioration de la fenêtre de jeu
 - Gérer les collisions briques/balle
 
-## Semaine 5
+## Semaine 5 (27/02/2024)
 
 .Ce qui a été fait:
 
@@ -155,7 +155,9 @@ Lucas
 - physique (continuer étude biblio [https://femto-physique.fr/mecanique/physique-des-collisions.php])
 - point sur l'architecture (préparer documents, on fera le point lors de la séance)
 
-Ce qui a été fait:
+## Semaine 6 (05/02/2024)
+
+### Ce qui a été fait
 
 - start_ball (Marius):
     .Au début de la partie, la balle est immobile sur le paddle.
@@ -181,3 +183,7 @@ Ce qui a été fait:
     .refactoring du mouvement des entites en fonction de forceX et forceY
     .implementation de methode qui rendent la position au next frame update des entites
     .implementer dans GraphicalObject des methodes permettant de checkCollisions on next frame update
+
+### À faire...
+
+(complétez)
