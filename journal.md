@@ -177,7 +177,7 @@ Ce qui a été fait:
     .Correction de bug graphique.
 
 - 33-fixer-le-probleme-de-collision-sur-les-bords (Noaym)
-    .Debut de l'implementation de collision basee sur la phyisque
+    .Debut de l'implementation de collision basee sur la phyisque (collision basee sur des angles)
     .refactoring du mouvement des entites en fonction de forceX et forceY
     .implementation de methode qui rendent la position au next frame update des entites
     .implementer dans GraphicalObject des methodes permettant de checkCollisions on next frame update
