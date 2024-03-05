@@ -8,6 +8,7 @@ import java.io.File;
 import display.view.GameFrame;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
+import game.breakout.entities.Bonus;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Ball.DirectionBall;
@@ -20,6 +21,7 @@ public class Breakout extends Game{
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
 
 	private ArrayList<Brick> bricks;
+	private ArrayList<Bonus> bonuses;
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
@@ -36,6 +38,7 @@ public class Breakout extends Game{
 	public Breakout(GameFrame gameFrame) {
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.setBricks(new ArrayList<Brick>());
+		this.setBonuses(new ArrayList<Bonus>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE));
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 565,668, 30));
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
@@ -107,6 +110,24 @@ public class Breakout extends Game{
 	 */
 	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks = bricks;
+	}
+
+	/**
+	 * Get the list of bonuses in the game.
+	 * 
+	 * @return The list of bonuses
+	 */
+	public ArrayList<Bonus> getBonuses(){
+		return this.bonuses;
+	}
+
+	/**
+	 *  Set the list of bonuses in the game.
+	 * 
+	 *  @param bonuses The list of bonuses
+	 */
+	public void setBonuses(ArrayList<Bonus> bonuses){
+		this.bonuses=bonuses;
 	}
 
 	/**
@@ -221,10 +242,25 @@ public class Breakout extends Game{
 				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
 				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
 
+				// Generate a random number between 1 and 10
+				int randomNumber = new Random().nextInt(1) + 1;
+				boolean dropBonus = (randomNumber == 1);
+	
 				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, false));
+				randomLifespan, dropBonus));
 			}
+		}
+	}
+
+	public void createBonus(int posX, int posY){
+		
+		/*
+		i'll add a way to place the ball at the x center of the brick later 
+		*/
+		this.getBonuses().add(new Bonus(posX, posY, Bonus.DEFAULT_SIZE, 1));
+		for (Bonus bonus : this.getBonuses()) {
+			this.getPanel().getGameZone().add(bonus.getRepresentation());
 		}
 	}
 
@@ -292,6 +328,13 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * Update the bonus entity
+	 */
+	public void updateBonus(){
+		// TODO : update the bonus
+	}
+
+	/*=xx
 	 * Update the bricks entities
 	 */
 	public void updateBricks() {
@@ -304,6 +347,9 @@ public class Breakout extends Game{
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
 				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
+					if (brick.doesDropBonus()){
+						createBonus(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY());
+					}
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
 					this.score += 100; // Incremen the score when the brick is broken
