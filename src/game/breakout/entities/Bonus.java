@@ -2,26 +2,35 @@ package game.breakout.entities;
 
 import java.awt.Color;
 import java.util.HashMap;
+
+import javax.swing.ImageIcon;
+
 import java.util.Collections;
+import java.awt.Image;
 
 import display.engine.shapes.Circle;
+import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
 public class Bonus extends Entity {
+	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+
     protected boolean isDestroyed;
     protected int bonusType;
 
 	public static final int DEFAULT_POS_X = 100;
 	public static final int DEFAULT_POS_Y = 100;
 	public static final int DEFAULT_SIZE = 30;
+	public static final int MOVE_SPEED = 2;
 
-	public static final HashMap<Integer, Color> bonusTypes = new HashMap<Integer, Color>() {
+
+	public static final HashMap<Integer, Image> bonusTypes = new HashMap<Integer, Image>() {
 		// TODO : has to be HashMap <Ingeter, ImageIcon>() as bonuses will be images and not just a colored circle
 		{
-			put(0, Color.RED);
-			put(1, Color.ORANGE);
-			put(2, Color.YELLOW);
-			put(3, Color.GREEN);
+			put(0, DEFAULT_IMAGE);
+			put(1, DEFAULT_IMAGE);
+			put(2, DEFAULT_IMAGE);
+			put(3, DEFAULT_IMAGE);
 		}
 	};
 
@@ -55,6 +64,26 @@ public class Bonus extends Entity {
 			throw new IllegalArgumentException("la taille d'un bonus doit être positive !");
 		}
 		if (!bonusTypes.containsValue(color) || color == null) {
+			throw new IllegalArgumentException("L'image du bonus est invalide !");
+		}
+
+        this.setbonusType(bonusType);
+    }
+
+	public Bonus(
+		Image image,
+        int posX, int posY,
+        int size,
+        int bonusType
+    ) {
+        super(new Circle(bonusTypes.get(bonusType), posX, posY, size, size));
+		if (!bonusTypes.containsKey(bonusType)) {
+			throw new IllegalArgumentException("La valeur donnée doit être entre  0 à x !");
+		}
+		if (size <= 0 || size <= 0) {
+			throw new IllegalArgumentException("la taille d'un bonus doit être positive !");
+		}
+		if (!bonusTypes.containsValue(image) || image == null) {
 			throw new IllegalArgumentException("L'image du bonus est invalide !");
 		}
 
@@ -117,7 +146,12 @@ public class Bonus extends Entity {
 			return false;
 		}
 		this.bonusType = bonusType;
-		this.getRepresentation().setColor(bonusTypes.get(bonusType));
+		this.getRepresentation().setImage(bonusTypes.get(bonusType));
 		return true;
     }
+
+	@Override
+	public void move (int speed) {
+		this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
+	}
 }

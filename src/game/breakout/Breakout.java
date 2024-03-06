@@ -333,13 +333,6 @@ public class Breakout extends Game{
 	}
 
 	/**
-	 * Update the bonus entity
-	 */
-	public void updateBonus(){
-		// TODO : update the bonus
-	}
-
-	/*=xx
 	 * Update the bricks entities
 	 */
 	public void updateBricks() {
@@ -374,6 +367,52 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * Update the bonus entity
+	 */
+	public void updateBonus(){
+		
+		Iterator<Bonus> iterator = this.getBonuses().iterator();
+		
+		while(iterator.hasNext()){
+			Bonus bonus = iterator.next();
+			if (bonus.getRepresentation().isColliding(this.getPlayer().getRepresentation())){
+				applyBonus(Breakout.this.getBonuses().get(0).getbonusType());
+				this.getPanel().getGameZone().remove(bonus.getRepresentation());
+				iterator.remove();
+			}
+			else if (bonus.willBeOffScreen(this.getPanel(), Bonus.MOVE_SPEED)){
+				this.getPanel().getGameZone().remove(bonus.getRepresentation());
+				iterator.remove();
+			}
+			else{
+				bonus.move(Bonus.MOVE_SPEED);
+			}
+		}
+	}
+
+	/**
+	 * Apply the bonus to the game state, given a specific type of bonus
+	 */
+	public void applyBonus(int bonusType){
+		switch(bonusType){
+			case 0:
+				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
+				break;
+			case 1:
+				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
+				break;
+			case 2:
+				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
+				break;
+			case 3:
+				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
+				break;
+			default:
+				break;
+		}
+	}
+
+	/**
 	 * @see game.rules.Game#onUpdate()
 	 */
 	@Override
@@ -381,6 +420,7 @@ public class Breakout extends Game{
 		this.updatePlayer();
 		this.updateBall();
 		this.updateBricks();
+		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 	}
 }
