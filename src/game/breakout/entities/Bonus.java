@@ -50,6 +50,7 @@ public class Bonus extends Entity {
 	 * @throws IllegalArgumentException if the size or size is less than or equal to 0
 	 * @throws IllegalArgumentException if the color is not in the hashmap
 	 */
+	/* 
 	public Bonus(
 		Color color,
         int posX, int posY,
@@ -69,6 +70,7 @@ public class Bonus extends Entity {
 
         this.setbonusType(bonusType);
     }
+	*/
 
 	public Bonus(
 		Image image,
