@@ -285,17 +285,17 @@ public class Breakout extends Game{
 				System.out.println(angleInDegrees);
 				if ((int)(angleInDegrees) > 60) {
 					this.getBall().reverseVerticalMomentum();
-					System.out.println("Collision with top of the paddle");
+
 				} else {    
 					this.getBall().reverseHorizontalMomentum();
 					this.getPlayer().stopRight();
 					this.getPlayer().stopLeft();
-					System.out.println("Collision with side of the paddle");
+
 				}
 			}
 
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
-					this.getBall().reverseHorizontalMomentum();
+					
 			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
 				// the ball respawn for the moment 
 				this.getBall().moveUp();

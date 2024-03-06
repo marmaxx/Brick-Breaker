@@ -157,6 +157,43 @@ public class Ball extends Entity {
 	}
 
 
+	/**
+	 * Checks if the entity will be off the screen if it moves in a given direction
+	 * 
+	 * @param speed the number of pixels the entity will move
+	 * @param direction the direction in which the entity will move
+	 * 
+	 * @return true if the entity will be off the screen, false otherwise
+	 */
+	@Override
+	public boolean willBeOffScreen(GamePanel panel,int speed) {
+		int[] boundaries = this.getRepresentation().getBoundaries();
+		if(forceY<0){
+			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - forceY*speed < WALL_WIDTH){
+				reverseVerticalMomentum();
+				return true;
+			}
+		}
+		if(forceY>0){
+			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + forceY*speed > panel.getGameZone().getHeight()){
+				reverseVerticalMomentum();
+				return true;
+			}
+		}
+		if(forceX<0){
+			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] + forceX*speed < WALL_WIDTH){
+				reverseHorizontalMomentum();
+				return true;
+			}
+		}
+		if(forceX>0){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+				reverseHorizontalMomentum();
+				return true;
+			}
+		}
+		return false;
+	}
 
 	
 }
