@@ -253,12 +253,17 @@ public class Breakout extends Game{
 		}
 	}
 
+	/**
+	 * Create a bonus at a given position (posX is the center of the bonus, however y is the top)
+	 * 
+	 * @param posX
+	 * @param posY
+	 */
 	public void createBonus(int posX, int posY){
-		
-		/*
-		i'll add a way to place the ball at the x center of the brick later 
-		*/
-		this.getBonuses().add(new Bonus(posX, posY, Bonus.DEFAULT_SIZE, 1));
+	
+		// Get a random between 0 and the last number of the hashmap 
+		int randomBonusType = new Random().nextInt(Bonus.MAX_BONUSTYPE);
+		this.getBonuses().add(new Bonus(posX - Bonus.DEFAULT_SIZE/2, posY, Bonus.DEFAULT_SIZE, randomBonusType));
 		for (Bonus bonus : this.getBonuses()) {
 			this.getPanel().getGameZone().add(bonus.getRepresentation());
 		}
@@ -348,7 +353,8 @@ public class Breakout extends Game{
 				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					if (brick.doesDropBonus()){
-						createBonus(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY());
+						// store the size of the brick
+						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					this.nbBricks--; // Decrement the count of brick when the brick is broken

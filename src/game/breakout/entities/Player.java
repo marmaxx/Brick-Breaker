@@ -12,7 +12,7 @@ import game.breakout.entities.rules.Entity;
 public class Player extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();
 	public static final Color DEFAULT_COLOR = Color.WHITE;
-	public static final int DEFAULT_SIZE = 100;
+	public static final int DEFAULT_SIZE = 150;
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
 	public static final int MOVE_SPEED = 10;
@@ -30,7 +30,7 @@ public class Player extends Entity {
         int posX, int posY,
         int size
     ) {
-		super(new Rectangle(color, posX, posY, size, size/4));
+		super(new Rectangle(color, posX, posY, size, 10));
     }
 
 	/**

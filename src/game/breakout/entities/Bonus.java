@@ -16,6 +16,7 @@ public class Bonus extends Entity {
 	public static final int DEFAULT_SIZE = 30;
 
 	public static final HashMap<Integer, Color> bonusTypes = new HashMap<Integer, Color>() {
+		// TODO : has to be HashMap <Ingeter, ImageIcon>() as bonuses will be images and not just a colored circle
 		{
 			put(0, Color.RED);
 			put(1, Color.ORANGE);
@@ -48,13 +49,13 @@ public class Bonus extends Entity {
     ) {
         super(new Circle(bonusTypes.get(bonusType), posX, posY, size, size));
 		if (!bonusTypes.containsKey(bonusType)) {
-			throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
+			throw new IllegalArgumentException("La valeur donnée doit être entre  0 à x !");
 		}
 		if (size <= 0 || size <= 0) {
-			throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
+			throw new IllegalArgumentException("la taille d'un bonus doit être positive !");
 		}
 		if (!bonusTypes.containsValue(color) || color == null) {
-			throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
+			throw new IllegalArgumentException("L'image du bonus est invalide !");
 		}
 
         this.setbonusType(bonusType);
