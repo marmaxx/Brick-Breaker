@@ -112,8 +112,6 @@ public class Vector2D {
         return angle;
     }
 
-    
-
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
