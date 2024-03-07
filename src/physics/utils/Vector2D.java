@@ -32,6 +32,14 @@ public class Vector2D {
     public double getY() {
         return y;
     }
+
+    public void setX(double x) {
+        this.x=x;
+    }
+
+    public void setY(double y) {
+        this.y=y;
+    }
     
     /**
      * @return the magnitude of the vector.
@@ -92,9 +100,22 @@ public class Vector2D {
         return Math.acos(dotProduct / magnitudeProduct);
     }
 
+        /**
+     * @param other represents another vector.
+     * @return the angle in radians from the this vector to the 'other' vector.
+     */
+    public double angleFromTo(Vector2D other) {
+        double dotProduct = this.x * other.getX() + this.y * other.getY();
+        double determinant = this.x * other.getY() - this.y * other.getX();
+        double angle = Math.atan2(determinant, dotProduct);
+    
+        return angle;
+    }
+
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
     }
+
 }
 

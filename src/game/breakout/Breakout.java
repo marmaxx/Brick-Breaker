@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-import display.engine.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
@@ -15,7 +14,6 @@ import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
-import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
 import physics.PhysicsEngine;
 import physics.PhysicalObject;
