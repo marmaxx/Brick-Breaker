@@ -287,22 +287,23 @@ public class Breakout extends Game{
 			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
 
 
-			Vector2D paddleToBallVector = this.getBall().getRepresentation().vectorCenterToCoordinates(playerNextPos[0], playerNextPos[1]);
+			Vector2D paddleToBallVector = this.getPlayer().getRepresentation().vectorFromCenterToCenter(this.getBall().getRepresentation());
 			Vector2D paddleToTopLeftCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0], playerCurrPos[1]); //the vector from the paddle's center to its top left corner
-			//Vector2D padleToTopRightCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(, DEFAULT_FPS)
-
+			Vector2D paddleToTopRightCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0]+this.getPlayer().getRepresentation().getWidth(), playerCurrPos[1]);
+			
+			
 			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(),
 			 this.getBall().getNextPos(Ball.MOVE_SPEED),
 			  this.getPlayer().getNextPos(Player.MOVE_SPEED))){
 
-				if (paddleToTopLeftCornerVector.angleBetween(paddleToBallVector)>0) {
+				if (paddleToTopLeftCornerVector.angleBetween(paddleToBallVector)<0 && paddleToTopRightCornerVector.angleBetween(paddleToBallVector)>0) {
 					this.getBall().reverseVerticalMomentum();
 
 				} else {    
 					this.getBall().reverseHorizontalMomentum();
 					this.getPlayer().stopRight();
 					this.getPlayer().stopLeft();
-
+					
 				}
 			}
 
