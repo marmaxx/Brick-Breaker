@@ -100,23 +100,23 @@ public abstract class Entity {
 	 */
 	public boolean willBeOffScreen(GamePanel panel,int speed) {
 		int[] boundaries = this.getRepresentation().getBoundaries();
-		if(forceY<0){
+		if(forceY>0){
 			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - forceY*speed < WALL_WIDTH){
 				return true;
 			}
 		}
-		if(forceY>0){
+		if(forceY<0){
 			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] - forceY*speed > panel.getGameZone().getHeight()){
 				return true;
 			}
 		}
 		if(forceX<0){
-			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - forceX*speed < WALL_WIDTH){
+			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] + forceX*speed < WALL_WIDTH){
 				return true;
 			}
 		}
 		if(forceX>0){
-			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] - forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
 				return true;
 			}
 		}

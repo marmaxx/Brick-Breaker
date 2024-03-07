@@ -280,18 +280,48 @@ public class Breakout extends Game{
 	 * Update the ball entity
 	 */
 	public void updateBall() {
+		
+
+
 		if (this.getBall().getIsMoving()){
 			int[] ballCurrPos = {this.getBall().getRepresentation().getPosX(),this.getBall().getRepresentation().getPosY()};
 			int[] playerCurrPos = {this.getPlayer().getRepresentation().getPosX(),this.getPlayer().getRepresentation().getPosY()};
 			int[] ballNextPos = this.getBall().getNextPos(Ball.MOVE_SPEED);
 			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
 
+			int ballCenterX = ballCurrPos[0] +this.getBall().getRepresentation().getWidth() / 2 ;
+			int ballCenterY = ballCurrPos[1] + this.getBall().getRepresentation().getHeight() / 2;
+			int paddleCenterX = playerNextPos[0] + this.getPlayer().getRepresentation().getWidth() / 2 ;
+			int paddleCenterY = playerNextPos[1] + this.getPlayer().getRepresentation().getHeight() / 2;
+
+
+
+			int ballVectorX = ballCenterX - paddleCenterX;
+			int ballVectorY = -(ballCenterY - paddleCenterY);
+
+			double ballAngle = Math.atan2(ballVectorY, ballVectorX);
+			double ballAngDeg = Math.toDegrees(ballAngle);
+
+			int paddleTopRightX = playerNextPos[0] + this.getPlayer().getRepresentation().getWidth();
+			int paddleTopRightY = playerNextPos[1];
+			int paddleVectorX = paddleTopRightX - paddleCenterX;
+			int paddleVectorY = paddleCenterY - paddleTopRightY;
+			double paddleAngle = Math.atan2(paddleVectorY, paddleVectorX);
+			double paddleAngDeg = Math.toDegrees(paddleAngle);
+
+			System.out.println(ballAngle);
+			System.out.println(paddleAngDeg);
+			System.out.println();
 			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(), ballNextPos, playerNextPos)){
-				int[] vector = {ballCurrPos[0]  - (playerNextPos[0] + this.getPlayer().getRepresentation().getWidth()/2), (playerNextPos[1] + this.getPlayer().getRepresentation().getWidth()/2) -   ballCurrPos[1] };
-				double angle = Math.atan2(vector[1], vector[0]);
-				double angleInDegrees = Math.toDegrees(angle);
-				System.out.println(angleInDegrees);
-				if ((int)(angleInDegrees) > 60) {
+				
+
+
+
+
+				
+				
+
+				if (ballAngDeg > paddleAngDeg && (ballAngDeg < 180 - paddleAngDeg)) {
 					this.getBall().reverseVerticalMomentum();
 
 				} else {    
@@ -310,10 +340,11 @@ public class Breakout extends Game{
 				}
 
 				// the ball respawn for the moment 
+				
+				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+(this.getPlayer().getRepresentation().getWidth()/2));
+				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight() -(this.getBall().getRepresentation().getHeight()/2));
 				this.getBall().moveUp();
 				this.getBall().moveRight();
-				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);
-				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight());
 				this.getBall().setIsMoving(false);
 				this.life--;
 				this.getPanel().updateLife(this.life);

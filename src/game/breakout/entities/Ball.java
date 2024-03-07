@@ -81,79 +81,12 @@ public class Ball extends Entity {
 		this.isMoving = b;
 	}
 
-	/**
-	 * Reverse the direction of the ball
-	 *
-	public void reverseDirectionBall(GamePanel panel, int speed){
-		int[] boundaries = this.getRepresentation().getBoundaries();
-		switch (this.getDirectionBall()) {
-			case UP_LEFT:
-				if ((boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH)) this.setDirectionBall(DirectionBall.UP_RIGHT);
-				else this.setDirectionBall(DirectionBall.DOWN_LEFT);
-				break;
-			case UP_RIGHT:
-				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.UP_LEFT);
-				else this.setDirectionBall(DirectionBall.DOWN_RIGHT);
-				break;
-			case DOWN_LEFT:
-				if ((boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH)) this.setDirectionBall(DirectionBall.DOWN_RIGHT);
-				else this.setDirectionBall(DirectionBall.UP_LEFT);
-				break;
-			case DOWN_RIGHT:
-				if ((boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH)) this.setDirectionBall(DirectionBall.DOWN_LEFT);
-				else this.setDirectionBall(DirectionBall.UP_RIGHT);
-				break;
-			default:
-				break;
-		}
-	}*/
 
-	/**
-	 * handles taking care of collisions based on which side the ball was hit from
-	 *
-	public void DirectionalCollision(GamePanel panel, int speed ,Direction hitPosition){
-		switch (hitPosition) {
-			case UP:
-				this.reverseVerticalMomentum();
-				break;
-			case LEFT:
-				this.reverseHorizontalMomentum();
-				break;
-			case RIGHT:
-				this.reverseHorizontalMomentum();
-				break;
-			case DOWN:
-				this.reverseVerticalMomentum();
-				break;
-			default:
-				break;
-		}
-	}*/
-
-	/**
-	 * handles when the ball is hit from its side
-	 * @param panel
-	 * @param speed
-	 *
-	public void sideCollision(GamePanel panel, int speed){
-		switch (this.getDirectionBall()) {
-			case UP_LEFT: this.setDirectionBall(DirectionBall.UP_RIGHT);
-				break;
-			case UP_RIGHT: this.setDirectionBall(DirectionBall.UP_LEFT);
-				break;
-			case DOWN_LEFT: this.setDirectionBall(DirectionBall.DOWN_RIGHT);
-				break;
-			case DOWN_RIGHT: this.setDirectionBall(DirectionBall.DOWN_LEFT);
-				break;
-			default:
-				break;
-		}
-	}*/
 
 
 	public boolean willLoose(GamePanel panel, int speed){
-		int [] boundaries = this.getRepresentation().getBoundaries();
-		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight();
+		int [] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
+		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed  > panel.getGameZone().getHeight();
 	}
 
 
@@ -167,27 +100,27 @@ public class Ball extends Entity {
 	 */
 	@Override
 	public boolean willBeOffScreen(GamePanel panel,int speed) {
-		int[] boundaries = this.getRepresentation().getBoundaries();
-		if(forceY<0){
-			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - forceY*speed < WALL_WIDTH){
+		int[] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
+		if(forceY>0){
+			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()]  < WALL_WIDTH){
 				reverseVerticalMomentum();
 				return true;
 			}
 		}
-		if(forceY>0){
-			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + forceY*speed > panel.getGameZone().getHeight()){
+		if(forceY<0){
+			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] > panel.getGameZone().getHeight()){
 				reverseVerticalMomentum();
 				return true;
 			}
 		}
 		if(forceX<0){
-			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] + forceX*speed < WALL_WIDTH){
+			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] < WALL_WIDTH){
 				reverseHorizontalMomentum();
 				return true;
 			}
 		}
 		if(forceX>0){
-			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] > panel.getGameZone().getWidth()-WALL_WIDTH){
 				reverseHorizontalMomentum();
 				return true;
 			}

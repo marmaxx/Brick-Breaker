@@ -14,7 +14,7 @@ public class Player extends Entity {
 	public static final Color DEFAULT_COLOR = Color.WHITE;
 	public static final int DEFAULT_SIZE = 100;
 	public static final int DEFAULT_POS_X = 300;
-	public static final int DEFAULT_POS_Y = 300;
+	public static final int DEFAULT_POS_Y = 700;
 	public static final int MOVE_SPEED = 10;
 
 	/**

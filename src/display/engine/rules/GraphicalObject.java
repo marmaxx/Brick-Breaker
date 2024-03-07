@@ -8,6 +8,8 @@ import java.awt.Image;
 import javax.swing.JComponent;
 
 import display.view.GamePanel;
+import game.breakout.entities.Player;
+import game.breakout.entities.rules.Entity;
 
 
 public abstract class GraphicalObject extends JComponent {
@@ -41,6 +43,7 @@ public abstract class GraphicalObject extends JComponent {
 		this.setPosY(posY);
 		this.setWidth(width);
 		this.setHeight(height);
+		
     }
     
 	/**
@@ -62,6 +65,7 @@ public abstract class GraphicalObject extends JComponent {
 		this.setPosY(posY);
 		this.setWidth(width);
 		this.setHeight(height);
+	
     }
 
 	/**
