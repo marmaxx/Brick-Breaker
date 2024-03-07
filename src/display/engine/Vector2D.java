@@ -93,14 +93,12 @@ package display.engine;
 
     /**
      * @param other represents another vector.
-     * @return the angle in radians from the positive x-axis to the 'other' vector.
+     * @return the angle in radians from the this vector to the 'other' vector.
      */
     public double angleBetween(Vector2D other) {
         double dotProduct = this.x * other.getX() + this.y * other.getY();
         double determinant = this.x * other.getY() - this.y * other.getX();
         double angle = Math.atan2(determinant, dotProduct);
-    
-
     
         return angle;
     }

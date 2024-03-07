@@ -284,8 +284,6 @@ public class Breakout extends Game{
 	public void updateBall() {
 		if (this.getBall().getIsMoving()){
 			int[] playerCurrPos = this.getPlayer().getCurrPos(Player.MOVE_SPEED);
-			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
-
 
 			Vector2D paddleToBallVector = this.getPlayer().getRepresentation().vectorFromCenterToCenter(this.getBall().getRepresentation());
 			Vector2D paddleToTopLeftCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0], playerCurrPos[1]); //the vector from the paddle's center to its top left corner

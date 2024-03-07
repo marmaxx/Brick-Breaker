@@ -1,7 +1,6 @@
 package game.breakout.entities.rules;
 
 import display.engine.rules.GraphicalObject;
-import display.engine.rules.GraphicalObject.Boundary;
 import display.view.GamePanel;
 
 
@@ -41,9 +40,8 @@ public abstract class Entity {
     public void setRepresentation(GraphicalObject representation) {
         this.representation = representation;
     }
-	/**
-	 * TODO: Add comments for all this
-	 */
+
+
 	public boolean movingUp(){
 		return forceY>0;
 	}
@@ -69,6 +67,8 @@ public abstract class Entity {
 		forceX=1;
 	}
 	
+
+
 	public void stopRight(){
 		if(forceX>0){
 			forceX=0;
