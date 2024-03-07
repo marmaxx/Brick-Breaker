@@ -141,10 +141,26 @@ public abstract class Entity {
 		this.getRepresentation().setPosY(this.getRepresentation().getPosY() - (int)forceY*speed);
 		this.getRepresentation().setPosX(this.getRepresentation().getPosX() + (int)forceX*speed);
 	}
+
+
+
+	/**
+	 * 
+	 * @param speed the number of pixels the entity will move
+	 * @return a list containing the current position of the entity. first element in the list is X and second is Y
+	 */
+	public int[] getCurrPos(int speed){
+		int[] rep= new int[2];
+		rep[1] =  this.getRepresentation().getPosY();
+		rep[0] =  this.getRepresentation().getPosX();
+		return rep;
+	}
+
+
 	/**
 	 *
 	 * @param speed the number of pixels the entity will move
-	 * @return a list containing the next positions of the ball. first element in the list is X and second is Y
+	 * @return a list containing the next position of the entity. first element in the list is X and second is Y
 	 */
 	public int[] getNextPos(int speed){
 		int[] rep= new int[2];

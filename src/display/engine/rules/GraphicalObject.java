@@ -7,9 +7,8 @@ import java.awt.Image;
 
 import javax.swing.JComponent;
 
+import display.engine.Vector2D;
 import display.view.GamePanel;
-import game.breakout.entities.Player;
-import game.breakout.entities.rules.Entity;
 
 
 public abstract class GraphicalObject extends JComponent {
@@ -78,6 +77,15 @@ public abstract class GraphicalObject extends JComponent {
 	}
 
 	/**
+	 * Gets the x position of the center of the graphical object
+	 * 
+	 * @return The x position of the center of the graphical object
+	 */
+	public int getCenterX() {
+		return (posX+(width/2));
+	}
+
+	/**
 	 * Sets the x position of the graphical object
 	 * 
 	 * @param posX The x position of the graphical object
@@ -93,6 +101,15 @@ public abstract class GraphicalObject extends JComponent {
 	 */
     public int getPosY() {
         return posY;
+    }
+
+	/**
+	 * Gets the y position of the graphical object
+	 * 
+	 * @return The y position of the graphical object
+	 */
+    public int getCenterY() {
+        return (posY+(height/2));
     }
 
 	/**
@@ -289,6 +306,31 @@ public abstract class GraphicalObject extends JComponent {
 		return isColliding;
 	}
 
+	/**
+	 *  
+	 * @param object the object we want our vector to point to
+	 * @return a vector that goes from this object's center to object in argument
+	 */
+	public Vector2D vectorFromCenterToCenter(GraphicalObject object){
+		Vector2D rep = new Vector2D(0, 0);
+		rep.setX(object.getCenterX() - this.getCenterX());
+		rep.setY(-(object.getCenterY()- this.getCenterY()));  // negated because of how y coordinates are handled by java
+		return rep;
+	}
+
+	/**
+	 * 
+	 * @param x 
+	 * @param y
+	 * @return a vector from this object's center to (x,y)
+	 */
+	public Vector2D vectorCenterToCoordinates(double x, double y){
+		Vector2D rep = new Vector2D(0, 0);
+		rep.setX(x - this.getCenterX());
+		rep.setY(-(y-this.getCenterY()));  // negated because of how y coordinates are handled by java
+		return rep;
+	}
+	
 
 
 	public String toString() {
