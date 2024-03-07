@@ -10,6 +10,8 @@ public class GameFrame extends JFrame {
 	private GamePanel gamePanel;
 	private MenuPanel menuPanel;
 	private JPanel container;
+	private GameOver game_over; 
+	private WinPanel game_win;
 	private CardLayout cardLayout;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     
@@ -30,7 +32,12 @@ public class GameFrame extends JFrame {
 		this.container = new JPanel(cardLayout); //creat containers for managing panel in the frame 
 
 		this.setGamePanel(new GamePanel(this));
+		this.game_over = new GameOver();
+		this.game_win = new WinPanel();
+
 		this.container.add(this.gamePanel, "gamePanel");
+		this.container.add(this.game_over, "gameOver"); 
+		this.container.add(this.game_win, "winPanel");
 
 		this.add(this.container);
 		this.pack();
@@ -100,5 +107,23 @@ public class GameFrame extends JFrame {
 	 */
 	public MenuPanel getMenuPanel(){
 		return this.menuPanel;
+	}
+	
+	/**
+	 * Get the game over panel attach to the containers
+	 * 
+	 * @return The game over Panel
+	 */
+	public GameOver getGameOverPanel(){
+		return this.game_over;
+	}
+
+	/**
+	 * Get the win panel attach to the containers
+	 * 
+	 * @return The win Panel
+	 */
+	public WinPanel getWinPanel(){
+		return this.game_win;
 	}
 }
