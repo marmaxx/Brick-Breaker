@@ -13,7 +13,12 @@ import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
+import game.breakout.entities.rules.Entity;
+import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
+import physics.PhysicsEngine;
+import physics.PhysicalObject;
+import physics.utils.Vector2D;
 
 public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
@@ -29,6 +34,15 @@ public class Breakout extends Game{
 	private int nbBricks;
 	private int score = 0;
 	private int life = 3; // number of hearths when the game starts
+	private PhysicalObject<Entity> physicalBall;
+	private PhysicalObject<Entity> physicalPlayer;
+	private PhysicalObject<Entity> physicalEastWall;
+	private PhysicalObject<Entity> physicalNorthWall;
+	private PhysicalObject<Entity> physicalWestWall;
+	private ArrayList<PhysicalObject<Entity>> physicalBricks = new ArrayList<>();
+	private PhysicsEngine<Entity> physicEngine = new PhysicsEngine<>();
+
+
 
 	/**
 	 * Instantiates a new Breakout game
@@ -39,11 +53,26 @@ public class Breakout extends Game{
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.gameframe = gameFrame;
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE));
-		this.setBall(new Ball(Ball.DEFAULT_COLOR, 565,668, 30));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
+		Vector2D playerVectPos = new Vector2D(630, 700);
+		this.physicalPlayer = new PhysicalObject<Entity>(player, 50, playerVectPos, false, player.getRepresentation());
+		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,600, 30));
+		Vector2D ballVectPos = new Vector2D(630, 600);
+		this.physicalBall = new PhysicalObject<Entity>(ball, 50, ballVectPos, true, ball.getRepresentation());
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		Vector2D VectEastWallPos = new Vector2D(0, 0);
+		this.physicalEastWall = new PhysicalObject<Entity>(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
 		this.setWestWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		Vector2D VectWestWallPos = new Vector2D((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0);
+		this.physicalWestWall = new PhysicalObject<Entity>(westWall, 100, VectWestWallPos, false, westWall.getRepresentation());
 		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
+		this.physicalNorthWall = new PhysicalObject<Entity>(northWall, 100, VectEastWallPos, false, northWall.getRepresentation());
+		this.physicEngine.getPhysicalObjects().add(physicalBall);
+		this.physicEngine.getPhysicalObjects().add(physicalPlayer);
+		this.physicEngine.getPhysicalObjects().add(physicalEastWall);
+		this.physicEngine.getPhysicalObjects().add(physicalWestWall);
+		this.physicEngine.getPhysicalObjects().add(physicalNorthWall);		
+
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -227,8 +256,17 @@ public class Breakout extends Game{
 				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
 				randomLifespan, false));
+				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, false);
+				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
+				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
+				this.physicalBricks.add(physicalBrick);
 			}
 		}
+		for (PhysicalObject<Entity> brick:physicalBricks){
+			this.physicEngine.getPhysicalObjects().add(brick);
+		} 
 	}
 
 	/**
@@ -365,9 +403,11 @@ public class Breakout extends Game{
 	 * @see game.rules.Game#onUpdate()
 	 */
 	@Override
-	public void onUpdate() {
+	public void onUpdate(double deltaTime) {
 		this.updatePlayer();
-		this.updateBall();
-		this.updateBricks(); 
+		//this.updateBall();
+		this.updateBricks();
+		this.physicEngine.update(deltaTime);
+
 	}
 }
