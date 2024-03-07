@@ -1,17 +1,18 @@
 package game.breakout.entities.rules;
 
 import display.engine.rules.GraphicalObject;
+import display.engine.rules.GraphicalObject.Boundary;
 import display.view.GamePanel;
 
 
 public abstract class Entity {
     protected GraphicalObject representation;
-	protected Direction direction;
 	protected final static int WALL_WIDTH = 20;
 
-	public enum Direction {
-		NONE, UP, DOWN, LEFT, RIGHT
-	}
+	public double forceX;
+	public double forceY;
+
+
     
 	/**
 	 * Instantiates a new Entity
@@ -20,7 +21,7 @@ public abstract class Entity {
 	 */
     public Entity(GraphicalObject representation) {
 		this.setRepresentation(representation);
-		this.setDirection(Direction.NONE);    
+		 
     }
 
 	/**
@@ -40,49 +41,54 @@ public abstract class Entity {
     public void setRepresentation(GraphicalObject representation) {
         this.representation = representation;
     }
-
 	/**
-	 * Sets the direction of the entity
-	 * 
-	 * @param direction the new direction of the entity
+	 * TODO: Add comments for all this
 	 */
-	public void setDirection(Direction direction) {
-		this.direction = direction;
+	public boolean movingUp(){
+		return forceY>0;
+	}
+	public boolean movingDown(){
+		return forceY<0;
+	}public boolean movingLeft(){
+		return forceX<0;
+	}public boolean movingRight(){
+		return forceX>0;
 	}
 
-	/**
-	 * Gets the direction of the entity
-	 * 
-	 * @return the direction of the entity
-	 */
-	public Direction getDirection() {
-		return this.direction;
-	}
 
-	/**
-	 * Reverse the direction of the entity
-	 */
-	public void reverseDirection() {
-		switch (this.getDirection()) {
-			case UP:
-				this.setDirection(Direction.DOWN);
-				break;
-			case DOWN:
-				this.setDirection(Direction.UP);
-				break;
-			case LEFT:
-				this.setDirection(Direction.RIGHT);
-				break;
-			case RIGHT:
-				this.setDirection(Direction.LEFT);
-				break;
-			case NONE:
-				break;
-			default:
-				break;
-		}
+	public void moveUp(){
+		forceY=1;
+	}
+	public void moveDown(){
+		forceY=-1;
+	}
+	public void moveLeft(){
+		forceX=-1;
+	}
+	public void moveRight(){
+		forceX=1;
 	}
 	
+	public void stopRight(){
+		if(forceX>0){
+			forceX=0;
+		}
+	}
+	public void stopLeft(){
+		if(forceX<0){
+			forceX=0;
+		}
+	}
+	public void stopUp(){
+		if(forceY>0){
+			forceY=0;
+		}
+	}
+	public void stopDown(){
+		if(forceY<0){
+			forceY=0;
+		}
+	}
 
 	/**
 	 * Checks if the entity will be off the screen if it moves in a given direction
@@ -92,23 +98,38 @@ public abstract class Entity {
 	 * 
 	 * @return true if the entity will be off the screen, false otherwise
 	 */
-	public boolean willBeOffScreen(GamePanel panel, int speed) {
+	public boolean willBeOffScreen(GamePanel panel,int speed) {
 		int[] boundaries = this.getRepresentation().getBoundaries();
-
-		switch (this.getDirection()) {
-			case UP:
-				return (boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH);
-			case DOWN:
-				return (boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight());
-			case LEFT:
-				return (boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH);
-			case RIGHT:
-				return (boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH);
-			case NONE:
-				return false;
-			default:
-				return false;
+		if(forceY>0){
+			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - forceY*speed < WALL_WIDTH){
+				return true;
+			}
 		}
+		if(forceY<0){
+			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] - forceY*speed > panel.getGameZone().getHeight()){
+				return true;
+			}
+		}
+		if(forceX<0){
+			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] + forceX*speed < WALL_WIDTH){
+				return true;
+			}
+		}
+		if(forceX>0){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + forceX*speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
+	public void reverseVerticalMomentum(){
+		forceY=-forceY;
+	}
+	public void reverseHorizontalMomentum(){
+		forceX=-forceX;
 	}
 
 	/**
@@ -116,24 +137,38 @@ public abstract class Entity {
 	 * 
 	 * @param speed the number of pixels the entity will move
 	 */
-	public void move(int speed) {
-		switch (this.getDirection()) {
-			case UP:
-				this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
-				break;
-			case DOWN:
-				this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
-				break;
-			case LEFT:
-				this.getRepresentation().setPosX(this.getRepresentation().getPosX() - speed);
-				break;
-			case RIGHT:
-				this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
-				break;
-			case NONE:
-				break;
-			default:
-				break;
-		}
+	public void move(int speed){
+		this.getRepresentation().setPosY(this.getRepresentation().getPosY() - (int)forceY*speed);
+		this.getRepresentation().setPosX(this.getRepresentation().getPosX() + (int)forceX*speed);
 	}
+
+
+
+	/**
+	 * 
+	 * @param speed the number of pixels the entity will move
+	 * @return a list containing the current position of the entity. first element in the list is X and second is Y
+	 */
+	public int[] getCurrPos(int speed){
+		int[] rep= new int[2];
+		rep[1] =  this.getRepresentation().getPosY();
+		rep[0] =  this.getRepresentation().getPosX();
+		return rep;
+	}
+
+
+	/**
+	 *
+	 * @param speed the number of pixels the entity will move
+	 * @return a list containing the next position of the entity. first element in the list is X and second is Y
+	 */
+	public int[] getNextPos(int speed){
+		int[] rep= new int[2];
+		rep[1] =  this.getRepresentation().getPosY() - (int)forceY*speed;
+		rep[0] =  this.getRepresentation().getPosX() + (int)forceX*speed;
+		return rep;
+	}
+
+
+	
 }

@@ -93,7 +93,7 @@ public class GamePanel extends JPanel {
 	*/
 	public void updateLife(int life){
 		this.life.setText("Life : " + life);
-		this.statZone.repaint(); // Redraw the statZone
+		//this.statZone.repaint(); // Redraw the statZone
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel {
 	public void updateScore(int score, int bricks){
 		//this.score.setText("Score : " + score);
 		//this.nbBricks.setText("Bricks : " + bricks);
-		this.statZone.repaint(); // Redraw the statZone
+		//this.statZone.repaint(); // Redraw the statZone
 	}
 
 	@Override

@@ -5,14 +5,14 @@ import java.util.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+
+import display.engine.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
-import game.breakout.entities.Ball.DirectionBall;
 import game.breakout.entities.Brick;
-import game.breakout.entities.rules.Entity.Direction;
 import game.rules.Game;
 
 public class Breakout extends Game{
@@ -51,11 +51,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().setDirection(Direction.LEFT);
+						Breakout.this.getPlayer().moveLeft();
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().setDirection(Direction.RIGHT);
+						Breakout.this.getPlayer().moveRight();
 						break;
 					case KeyEvent.VK_ESCAPE:
 						if(Breakout.this.isPaused()){
@@ -75,11 +75,11 @@ public class Breakout extends Game{
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().setDirection(Direction.NONE);
+						Breakout.this.getPlayer().stopLeft();
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().setDirection(Direction.NONE);
+						Breakout.this.getPlayer().stopRight();
 						break;
 				}
 			}
@@ -249,10 +249,13 @@ public class Breakout extends Game{
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
-		this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
+
+		this.getBall().moveUp();
+		this.getBall().moveRight();
 
 		this.getPanel().updateScore(this.score, this.nbBricks);
 		this.getPanel().updateLife(this.life);
+
 	}
 
 	/**
@@ -261,15 +264,14 @@ public class Breakout extends Game{
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
 			if (!this.getBall().getIsMoving()){
-				switch(this.getPlayer().getDirection()){
-					case LEFT:
-						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
-						break;
-					case RIGHT:
-						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+Player.MOVE_SPEED);
-						break;
-					default: 
-						break;
+				if(this.getPlayer().movingLeft()){
+
+					this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
+
+				}else if(this.getPlayer().movingRight()){
+
+					this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+Player.MOVE_SPEED);
+
 				}
 			}
 			this.getPlayer().move(Player.MOVE_SPEED);
@@ -281,18 +283,43 @@ public class Breakout extends Game{
 	 */
 	public void updateBall() {
 		if (this.getBall().getIsMoving()){
-			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)
-			|| this.getBall().getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+			int[] playerCurrPos = this.getPlayer().getCurrPos(Player.MOVE_SPEED);
+			int[] playerNextPos = this.getPlayer().getNextPos(Player.MOVE_SPEED);
+
+
+			Vector2D paddleToBallVector = this.getPlayer().getRepresentation().vectorFromCenterToCenter(this.getBall().getRepresentation());
+			Vector2D paddleToTopLeftCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0], playerCurrPos[1]); //the vector from the paddle's center to its top left corner
+			Vector2D paddleToTopRightCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0]+this.getPlayer().getRepresentation().getWidth(), playerCurrPos[1]);
+			
+			
+			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(),
+			 this.getBall().getNextPos(Ball.MOVE_SPEED),
+			  this.getPlayer().getNextPos(Player.MOVE_SPEED))){
+
+				if (paddleToTopLeftCornerVector.angleBetween(paddleToBallVector)<0 && paddleToTopRightCornerVector.angleBetween(paddleToBallVector)>0) {
+					this.getBall().reverseVerticalMomentum();
+
+				} else {    
+					this.getBall().reverseHorizontalMomentum();
+					this.getPlayer().stopRight();
+					this.getPlayer().stopLeft();
+					
+				}
 			}
-			else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+
+			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
+					
+			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
 				if( this.getLife() == 1 && this.getNbBricks() > 0){
 					this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
 				}
+
 				// the ball respawn for the moment 
-				this.getBall().setDirectionBall(DirectionBall.UP_RIGHT);
-				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+30);
-				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight());
+				
+				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+(this.getPlayer().getRepresentation().getWidth()/2));
+				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight() -(this.getBall().getRepresentation().getHeight()/2));
+				this.getBall().moveUp();
+				this.getBall().moveRight();
 				this.getBall().setIsMoving(false);
 				this.life--;
 				this.getPanel().updateLife(this.life);
@@ -316,7 +343,8 @@ public class Breakout extends Game{
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				this.getBall().reverseDirectionBall(this.getPanel(), Ball.MOVE_SPEED);
+				//this.getBall().reverseHorizontalMomentum();
+				this.getBall().reverseVerticalMomentum();          
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
