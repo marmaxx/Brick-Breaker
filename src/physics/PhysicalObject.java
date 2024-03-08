@@ -80,6 +80,16 @@ public class PhysicalObject<T> {
         return this.representation.isColliding(objectB.representation);
     }
 
+    public boolean isGoingToCollide(PhysicalObject<T> objectB){
+        int [] thisNextPos = new int [2];
+        int [] BNextPos = new int [2];
+        thisNextPos[0]=(int)this.getPosition().getX();
+        thisNextPos[1]=(int)this.getPosition().getY();
+        BNextPos[0]=(int)objectB.getPosition().getX();
+        BNextPos[1]=(int)objectB.getPosition().getY();
+        return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
+    }
+
     public Vector2D getImpactPoint(PhysicalObject<T> objectA){
         if (objectA.getObject() instanceof Player || objectA.getObject() instanceof Brick){
             System.out.println("balle posx: "+this.getPosition().getX()+this.getRepresentation().getWidth()/2);
