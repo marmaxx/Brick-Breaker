@@ -40,10 +40,11 @@ public class PhysicsEngine<T> {
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
                 object.updatePosition(deltaTime); //System.out.println(object.getPosition());
+                object.getRepresentation().setPosX((int)object.getPosition().getX());
+            object.getRepresentation().setPosY((int)object.getPosition().getY());
             }
             
-            object.getRepresentation().setPosX((int)object.getPosition().getX());
-            object.getRepresentation().setPosY((int)object.getPosition().getY());
+            
         }
     }
 
@@ -55,12 +56,12 @@ public class PhysicsEngine<T> {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
                 if (objectA.collidesWith(objectB) && objectA!=objectB && !(objectA.getObject() instanceof Wall) && !(objectB.getObject() instanceof Wall)) {
                     
-                    System.out.println("COLLISION");
+                    //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
                     // resolving collision between A and B+-
-                    System.out.println("A= "+objectA.getMass());
-                    System.out.println("B= "+objectB.getMass());
+                    //System.out.println("A= "+objectA.getMass());
+                    //System.out.println("B= "+objectB.getMass());
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
                 }
