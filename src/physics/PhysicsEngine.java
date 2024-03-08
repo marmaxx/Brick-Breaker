@@ -48,7 +48,7 @@ public class PhysicsEngine<T> {
                 //System.out.println("DeltaTime: "+deltaTime);
                 object.updatePosition(deltaTime); //System.out.println(object.getPosition());
                 object.getRepresentation().setPosX((int)object.getPosition().getX());
-            object.getRepresentation().setPosY((int)object.getPosition().getY());
+                object.getRepresentation().setPosY((int)object.getPosition().getY());
             }
             
             
