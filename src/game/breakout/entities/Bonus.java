@@ -27,12 +27,13 @@ public class Bonus extends Entity {
 
 
 	public static final HashMap<Integer, Image> bonusTypes = new HashMap<Integer, Image>() {
-		// TODO : has to be HashMap <Ingeter, ImageIcon>() as bonuses will be images and not just a colored circle
-		{
-			put(0, new ImageIcon(path + "BonusTime.png").getImage());
+		{	
+			put(0, new ImageIcon(path + "BonusSize.png").getImage());
 			put(1, new ImageIcon(path + "MalusSize.png").getImage());
-			put(2, new ImageIcon(path + "BonusSize.png").getImage());
-			put(3, DEFAULT_IMAGE);
+			put(2, new ImageIcon(path + "BonusSpeed.png").getImage());
+			put(3, new ImageIcon(path + "MalusSpeed.png").getImage());
+			put(4, new ImageIcon(path + "BonusTime.png").getImage());
+			put(5, DEFAULT_IMAGE);
 		}
 	};
 

@@ -16,12 +16,14 @@ public abstract class Shape extends GraphicalObject {
 	 * @param posY the initial y position of the graphical object
 	 * @param width the width of the graphical object
 	 * @param height the height of the graphical object
+	 * @param speed the speed of the graphical object
 	 */
     public Shape(Color color,
         int posX, int posY,
-        int width, int height
+        int width, int height,
+		int speed
     ) {
-        super(color, posX, posY, width, height);
+        super(color, posX, posY, width, height, speed);
     }
 
 	/**
@@ -32,12 +34,14 @@ public abstract class Shape extends GraphicalObject {
 	 * @param posY the initial y position of the graphical object
 	 * @param width the width of the graphical object
 	 * @param height the height of the graphical object
+	 * @param speed the speed of the graphical object
 	 */
     public Shape(Image image,
         int posX, int posY,
-        int width, int height
+        int width, int height,
+		int speed
     ) {
-		super(image, posX, posY, width, height);
+		super(image, posX, posY, width, height, speed);
     }
 
 	/**

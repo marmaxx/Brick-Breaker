@@ -6,6 +6,33 @@ import display.engine.shapes.rules.Shape;
 import java.awt.Image;
 
 public class Rectangle extends Shape {
+
+	/**
+	 * Instantiates a new Rectangle
+	 * 
+	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int, int)
+	 */
+	public Rectangle(Color color,
+		int posX, int posY,
+		int width, int height,
+		int speed
+	) {
+		super(color, posX, posY, width, height, speed);
+	}
+
+	/**
+	 * Instantiates a new Rectangle
+	 * 
+	 * @see display.engine.shapes.rules.Shape#Shape(Image, int, int, int, int, int)
+	 */
+	public Rectangle(Image image,
+		int posX, int posY,
+		int width, int height,
+		int speed
+	) {
+		super(image, posX, posY, width, height, speed);
+	}
+
 	/**
 	 * Instantiates a new Rectangle
 	 * 
@@ -15,7 +42,7 @@ public class Rectangle extends Shape {
         int posX, int posY,
         int width, int height
     ) {
-        super(color, posX, posY, width, height);
+        this(color, posX, posY, width, height, 0);
     }
 
 	/**
@@ -27,7 +54,7 @@ public class Rectangle extends Shape {
         int posX, int posY,
         int width, int height
     ) {
-		super(image, posX, posY, width, height);
+		this(image, posX, posY, width, height, 0);
     }
 	
 	

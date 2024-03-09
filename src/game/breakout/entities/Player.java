@@ -12,10 +12,14 @@ import game.breakout.entities.rules.Entity;
 public class Player extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();
 	public static final Color DEFAULT_COLOR = Color.WHITE;
-	public static final int DEFAULT_SIZE = 150;
+	public static final int DEFAULT_SIZE = 100;
+	public static final int MIN_SIZE = DEFAULT_SIZE - (int)(0.2f * DEFAULT_SIZE);
+	public static final int MAX_SIZE = DEFAULT_SIZE + (int)(0.3f * DEFAULT_SIZE);
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
-	public static final int MOVE_SPEED = 10;
+	public static final int DEFAULT_SPEED = 10;
+	public static final int MIN_SPEED = DEFAULT_SPEED - (int)(0.5f * DEFAULT_SPEED);
+	public static final int MAX_SPEED = DEFAULT_SPEED + (int)(1.0f * DEFAULT_SPEED);
 
 	/**
 	 * Instantiates a new Player
@@ -28,9 +32,10 @@ public class Player extends Entity {
     public Player(
 		Color color,
         int posX, int posY,
-        int size
+        int size,
+		int speed
     ) {
-		super(new Rectangle(color, posX, posY, size, 10));
+		super(new Rectangle(color, posX, posY, size, 10, speed));
     }
 
 	/**
@@ -44,9 +49,10 @@ public class Player extends Entity {
     public Player(
 		Image image,
         int posX, int posY,
-        int size
+        int size,
+		int speed
     ) {
-		super(new Rectangle(image, posX, posY, size, size/4));
+		super(new Rectangle(image, posX, posY, size, size/4, speed));
     }
 
 	/**
@@ -57,7 +63,7 @@ public class Player extends Entity {
 	 * @param size the size of the player
 	 */
 	public Player(int posX, int posY, int size) {
-		this(DEFAULT_IMAGE, posX, posY, size);
+		this(DEFAULT_IMAGE, posX, posY, size, DEFAULT_SPEED);
 	}
 
 	/**
@@ -67,13 +73,27 @@ public class Player extends Entity {
 	 * @param posY the initial y position of the player
 	 */
 	public Player(int posX, int posY) {
-		this(DEFAULT_IMAGE, posX, posY, DEFAULT_SIZE);
+		this(DEFAULT_IMAGE, posX, posY, DEFAULT_SIZE, DEFAULT_SPEED);
 	}
 
 	/**
 	 * Instantiates a new Player
 	 */
 	public Player() {
-		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE);
+		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE, DEFAULT_SPEED);
 	}
+
+	// getters for the different variations of speed
+	public int getMoveSpeed() {
+		return this.getRepresentation().getSpeed();
+	}
+
+	public int getMinSpeed() {
+		return MIN_SPEED;
+	}
+
+	public int getMaxSpeed() {
+		return MAX_SPEED;
+	}
+
 }

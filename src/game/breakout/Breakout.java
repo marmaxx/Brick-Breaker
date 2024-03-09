@@ -39,7 +39,7 @@ public class Breakout extends Game{
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 565,668, 30));
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		this.setWestWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
@@ -242,7 +242,7 @@ public class Breakout extends Game{
 				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
 				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
 
-				// Generate a random number between 1 and 10
+				// Generate a random number between 1 and 5
 				int randomNumber = new Random().nextInt(1) + 1;
 				boolean dropBonus = (randomNumber == 1);
 	
@@ -294,20 +294,20 @@ public class Breakout extends Game{
 	 * Update the player entity
 	 */
 	public void updatePlayer() {
-		if(!this.getPlayer().willBeOffScreen(this.getPanel(), Player.MOVE_SPEED)){
+		if(!this.getPlayer().willBeOffScreen(this.getPanel(), this.getPlayer().getRepresentation().getSpeed())){
 			if (!this.getBall().getIsMoving()){
 				switch(this.getPlayer().getDirection()){
 					case LEFT:
-						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-Player.MOVE_SPEED);
+						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()-this.getPlayer().getRepresentation().getSpeed());
 						break;
 					case RIGHT:
-						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+Player.MOVE_SPEED);
+						this.getBall().getRepresentation().setPosX(this.getBall().getRepresentation().getPosX()+this.getPlayer().getRepresentation().getSpeed());
 						break;
 					default: 
 						break;
 				}
 			}
-			this.getPlayer().move(Player.MOVE_SPEED);
+			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
 		}
 	}
 
@@ -376,7 +376,7 @@ public class Breakout extends Game{
 		while(iterator.hasNext()){
 			Bonus bonus = iterator.next();
 			if (bonus.getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-				applyBonus(Breakout.this.getBonuses().get(0).getbonusType());
+				applyBonus(bonus.getbonusType());
 				this.getPanel().getGameZone().remove(bonus.getRepresentation());
 				iterator.remove();
 			}
@@ -396,16 +396,32 @@ public class Breakout extends Game{
 	public void applyBonus(int bonusType){
 		switch(bonusType){
 			case 0:
-				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
-				break;
+				if (Breakout.this.getPlayer().getRepresentation().getWidth() + (int)(0.1f*Player.DEFAULT_SIZE) <= Player.MAX_SIZE) {
+					Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth() + (int)(0.1f*Player.DEFAULT_SIZE));
+				}
+				break; 
 			case 1:
-				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
+				if (Breakout.this.getPlayer().getRepresentation().getWidth() - (int)(0.1f*Player.DEFAULT_SIZE) >= Player.MIN_SIZE) {
+					Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth() - (int)(0.1f*Player.DEFAULT_SIZE));
+				}
 				break;
 			case 2:
-				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
+				if (Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
+					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
+					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+				}
 				break;
 			case 3:
-				Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth()+20);
+				if (Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
+					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
+					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+				}
+				break;
+			case 4:
+				// TODO : once the timer is implemented after a graphical fix
+				break;
+			case 5:
+				// default image
 				break;
 			default:
 				break;
