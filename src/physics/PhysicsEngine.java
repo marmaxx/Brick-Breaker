@@ -8,7 +8,7 @@ import game.breakout.entities.Wall;
 import physics.utils.*;
 //TODO: java docs
 public class PhysicsEngine<T> {
-    private static final double GRAVITY_CONSTANT=9.81; 
+    private static final double GRAVITY_CONSTANT=3; 
     private static final double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject<T>> physicalObjects;
 
