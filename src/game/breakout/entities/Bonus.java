@@ -13,7 +13,8 @@ import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
 public class Bonus extends Entity {
-	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+	public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
+	public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
 
     protected boolean isDestroyed;
     protected int bonusType;
@@ -22,14 +23,15 @@ public class Bonus extends Entity {
 	public static final int DEFAULT_POS_Y = 100;
 	public static final int DEFAULT_SIZE = 30;
 	public static final int MOVE_SPEED = 2;
+	private float bonusTime = 30.0f;
 
 
 	public static final HashMap<Integer, Image> bonusTypes = new HashMap<Integer, Image>() {
 		// TODO : has to be HashMap <Ingeter, ImageIcon>() as bonuses will be images and not just a colored circle
 		{
-			put(0, DEFAULT_IMAGE);
-			put(1, DEFAULT_IMAGE);
-			put(2, DEFAULT_IMAGE);
+			put(0, new ImageIcon(path + "BonusTime.png").getImage());
+			put(1, new ImageIcon(path + "MalusSize.png").getImage());
+			put(2, new ImageIcon(path + "BonusSize.png").getImage());
 			put(3, DEFAULT_IMAGE);
 		}
 	};
@@ -135,6 +137,15 @@ public class Bonus extends Entity {
     }
 
 	/**
+	 * Gets the duration of the Bonus
+	 * 
+	 * @return the bonusTime of the bonus
+	 */
+	public float getBonusTime() {
+		return this.bonusTime;
+	}
+
+	/**
 	 * Sets the bonusType of the Bonus
 	 * 
 	 * @param bonusType the bonusType of the Bonus
@@ -151,6 +162,21 @@ public class Bonus extends Entity {
 		this.getRepresentation().setImage(bonusTypes.get(bonusType));
 		return true;
     }
+
+	/**
+	 * Sets the duration of the Bonus
+	 * 	
+	 * @param bonusTime the duration of the Bonus
+	 * 	
+	 * @return whether the bonusTime was set
+	 */
+	public boolean setBonusTime(float bonusTime) {
+		if (bonusTime < 0) {
+			return false;
+		}
+		this.bonusTime = bonusTime;
+		return true;
+	}
 
 	@Override
 	public void move (int speed) {

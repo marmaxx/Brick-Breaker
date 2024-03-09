@@ -28,7 +28,7 @@ public class Breakout extends Game{
 	private static final int WALL_WIDTH = 20;
 	private int nbBricks;
 	private int score = 0;
-	private int life = 3; // number of hearths when the game starts
+	private int life = 3;
 
 	/**
 	 * Instantiates a new Breakout game
