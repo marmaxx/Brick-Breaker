@@ -1,6 +1,5 @@
 package game.breakout.entities;
 
-import java.awt.Color;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
