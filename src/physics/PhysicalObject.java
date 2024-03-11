@@ -79,7 +79,12 @@ public class PhysicalObject<T> {
 
     // updating speed thanks to the acceleration and time spent
     public void updateVelocity(double deltaTime) {
-        this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
+        if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
+        else{
+            this.speed =((((Player)this.object).getLastPos().add(this.position.multiply(-1))).multiply(1/deltaTime));
+            System.out.println(this.speed);
+        }
+
     }
 
     // applying force to an object; its acceleration is modified
