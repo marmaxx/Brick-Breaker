@@ -1,8 +1,10 @@
 package physics;
 
 import display.engine.rules.GraphicalObject;
+import game.breakout.entities.Ball;
 import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
+import game.breakout.entities.rules.Entity;
 import physics.utils.*;
 
 public class PhysicalObject<T> {
@@ -15,6 +17,11 @@ public class PhysicalObject<T> {
     //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     private GraphicalObject representation;
     private double elasticity;
+
+    private Vector2D normalVectorVB = new Vector2D(0, 1);
+    private Vector2D normalVectorVT = new Vector2D(0, -1);
+    private Vector2D normalVectorHL = new Vector2D(-1, 0);
+    private Vector2D normalVectorHR = new Vector2D(1, 0);
 
     public PhysicalObject(T obj, double mass, Vector2D position, boolean movable, GraphicalObject representation){
         this.object=obj;
@@ -38,6 +45,10 @@ public class PhysicalObject<T> {
         return this.acceleration;
     }
 
+    public void setAcceleration(Vector2D newAcceleration){
+        this.acceleration=newAcceleration;
+    }
+
     public T getObject(){
         return this.object;
     }
@@ -51,6 +62,10 @@ public class PhysicalObject<T> {
 
     public Vector2D getPosition(){
         return this.position;
+    }
+
+    public void setPosition(Vector2D newPos){
+        this.position=newPos;
     }
 
     public void setSpeed(Vector2D newSpeed){
@@ -71,8 +86,7 @@ public class PhysicalObject<T> {
 
     // applying force to an object; its acceleration is modified
     public void applyForce(Vector2D force) {
-        if(isMovable())
-            this.acceleration = this.acceleration.add(force.multiply(1.0 / mass));
+        if(isMovable()) this.acceleration = this.acceleration.add(force.multiply(1.0 / mass));
     }
 
     // checking if a collision happened
@@ -81,25 +95,29 @@ public class PhysicalObject<T> {
     }
 
     public boolean isGoingToCollide(PhysicalObject<T> objectB){
-        int [] thisNextPos = new int [2];
-        int [] BNextPos = new int [2];
-        thisNextPos[0]=(int)this.getPosition().getX();
-        thisNextPos[1]=(int)this.getPosition().getY();
-        BNextPos[0]=(int)objectB.getPosition().getX();
-        BNextPos[1]=(int)objectB.getPosition().getY();
-        return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
+        if (this.getObject() instanceof Ball && objectB.getObject() instanceof Player){
+            int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
+            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.MOVE_SPEED);
+            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
+        }
+        else if (this.getObject() instanceof Ball && objectB.getObject() instanceof Ball){
+            int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
+            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.MOVE_SPEED);
+            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
+        }
+        else{
+            int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
+            int [] BNextPos = ((Entity) objectB.object).getNextPos(0);
+            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
+        }
     }
 
     public Vector2D getImpactPoint(PhysicalObject<T> objectA){
         if (objectA.getObject() instanceof Player || objectA.getObject() instanceof Brick){
-            System.out.println("balle posx: "+this.getPosition().getX()+this.getRepresentation().getWidth()/2);
-            System.out.println("balle posy: "+this.getPosition().getY()+this.getRepresentation().getWidth()/2);
-            System.err.println("paddle posx :"+objectA.getPosition().getX());
-            System.err.println("paddle posy :"+objectA.getPosition().getY());
             Vector2D topRightPositionA = new Vector2D(objectA.getPosition().getX() + objectA.getRepresentation().getWidth(), objectA.getPosition().getY());
-            Vector2D bottomLeftPositionA = new Vector2D(objectA.getPosition().getX(), objectA.getPosition().getY() + objectA.getRepresentation().getHeight());
+            Vector2D bottomLeftPositionA = new Vector2D(objectA.getRepresentation().getX(), objectA.getRepresentation().getY() + objectA.getRepresentation().getHeight());
             // Vector2D bottomRightPositionA = new Vector2D(objectA.getPosition().getX() + objectA.getRepresentation().getWidth(), objectA.getPosition().getY() + objectA.getRepresentation().getHeight());
-            if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 > objectA.getPosition().getX() && this.getPosition().getX()+this.getRepresentation().getWidth()/2 <= topRightPositionA.getX()){
+            if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 >= objectA.getPosition().getX() && this.getPosition().getX()+this.getRepresentation().getWidth()/2 <= topRightPositionA.getX()){
                 if (this.getPosition().getY()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getY()){
                     // la balle est au dessus au dessus du rectangle
                     return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, this.getPosition().getY()+this.getRepresentation().getWidth()/2 + this.getRepresentation().getWidth()/2);
@@ -130,30 +148,49 @@ public class PhysicalObject<T> {
         return null;
     }
 
+    public Vector2D getNormalVector(Vector2D vect){
+        if (normalVectorHL.dotProduct(vect) == 0){
+            return normalVectorHL;
+        }
+        return normalVectorVB;
+    }
+
 
     // resolving collisions
     public void resolveCollision(PhysicalObject<T> objectA) {
         //TODO: penser à l'élasticité : regarder formules physiques
         double massA = objectA.getMass();
         if (isMovable()){
-            System.out.println(this.getImpactPoint(objectA));
+            //System.out.println(this.getImpactPoint(objectA));
             if (objectA.isMovable()){
-            Vector2D x = objectA.getSpeed().multiply(2*massA/(massA+this.mass));
-            Vector2D y = this.speed.multiply((this.mass-massA)/massA+this.mass);
-            this.speed=x.add(y);
-            Vector2D z = this.speed.multiply(2*this.mass/(massA+this.mass));
-            Vector2D t = objectA.getSpeed().multiply((massA-this.mass)/massA+this.mass);
-            objectA.setSpeed(z.add(t));
+                // TODO resolve collision when the two objects are moveable
             }
             else{
-                //System.out.println(this.acceleration);
-                this.acceleration=this.acceleration.multiply(-1); 
-                //System.out.println(this.acceleration); 
-                //System.out.println(this.speed);
-                //System.out.println(this.position);
+                Vector2D pointA = this.getImpactPoint(objectA);
+                Vector2D pointB;
+                if (pointA.getX() >= objectA.getPosition().getX() && pointA.getX() <= objectA.getPosition().getX()+objectA.getRepresentation().getWidth()){
+                    pointB = this.getImpactPoint(objectA).add(new Vector2D(1, 0));
+                }
+                else{
+                    pointB = this.getImpactPoint(objectA).add(new Vector2D(0, 1));
+                }
+                Vector2D ab = pointB.subtract(pointA);
+                Vector2D normal = getNormalVector(ab);
+                double angle = this.getSpeed().angleBetween(normal);
+                System.out.println(Math.toDegrees(angle));
+                if (angle == 0){
+                    this.setSpeed(new Vector2D(this.speed.getX(), -this.speed.getY()));
+                    this.applyForce(new Vector2D(0, -10000));
+                }
+                else if (angle > 0 && angle < 90){
+                    this.setSpeed(new Vector2D(this.speed.getX(), -this.speed.getY()));
+                    this.applyForce(new Vector2D(0, -10000));
+                }
+                else if (angle > 90 && angle < 180){
+                    this.setSpeed(new Vector2D(this.speed.getX(), this.speed.getY()));
+                    this.applyForce(new Vector2D(0, 10000));
+                }
             }
         }
     }
-
-    
 }

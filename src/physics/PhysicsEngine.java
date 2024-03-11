@@ -8,12 +8,16 @@ import game.breakout.entities.Wall;
 import physics.utils.*;
 //TODO: java docs
 public class PhysicsEngine<T> {
-    private static final double GRAVITY_CONSTANT=3; 
+    public static double GRAVITY_CONSTANT=1; 
     private static final double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject<T>> physicalObjects;
 
     public PhysicsEngine() {
         this.physicalObjects = new ArrayList<>();
+    }
+
+    public static void setGravityConstant (double scalar){
+        GRAVITY_CONSTANT*=scalar;
     }
 
     public List<PhysicalObject<T>> getPhysicalObjects(){
@@ -39,7 +43,8 @@ public class PhysicsEngine<T> {
                 //System.out.println("vitesse: "+object.getSpeed());
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
-                object.updatePosition(deltaTime); //System.out.println(object.getPosition());
+                //System.out.println(object.getPosition());
+                object.updatePosition(deltaTime);
                 object.getRepresentation().setPosX((int)object.getPosition().getX());
                 object.getRepresentation().setPosY((int)object.getPosition().getY());
             }

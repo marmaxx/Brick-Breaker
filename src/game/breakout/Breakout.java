@@ -41,6 +41,7 @@ public class Breakout extends Game{
 	private PhysicalObject<Entity> physicalWestWall;
 	private ArrayList<PhysicalObject<Entity>> physicalBricks = new ArrayList<>();
 	private PhysicsEngine<Entity> physicEngine = new PhysicsEngine<>();
+	private double forceX;
 
 
 
@@ -56,16 +57,17 @@ public class Breakout extends Game{
 		this.setBricks(new ArrayList<Brick>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
 		Vector2D playerVectPos = new Vector2D(630, 700);
-		this.physicalPlayer = new PhysicalObject<Entity>(player, 50, playerVectPos, false, player.getRepresentation());
-		this.setBall(new Ball(Ball.DEFAULT_COLOR, 630,400, 30));
-		Vector2D ballVectPos = new Vector2D(630, 400);
+		this.physicalPlayer = new PhysicalObject<Entity>(player, 51, playerVectPos, false, player.getRepresentation());
+		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
+		Vector2D ballVectPos = new Vector2D(350, 400);
 		this.physicalBall = new PhysicalObject<Entity>(ball, 50, ballVectPos, true, ball.getRepresentation());
-		this.physicalBall.applyForce(new Vector2D(0, 20));
+		Vector2D speed = new Vector2D(0.1, 0.1);
+		this.physicalBall.setSpeed(speed);
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		Vector2D VectEastWallPos = new Vector2D(0, 0);
 		this.physicalEastWall = new PhysicalObject<Entity>(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
 		this.setWestWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
-		Vector2D VectWestWallPos = new Vector2D((int)GamePanel.SCREEN_FULL_SIZE.getWidth()-WALL_WIDTH, 0);
+		Vector2D VectWestWallPos = new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0);
 		this.physicalWestWall = new PhysicalObject<Entity>(westWall, 100, VectWestWallPos, false, westWall.getRepresentation());
 		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
 		this.physicalNorthWall = new PhysicalObject<Entity>(northWall, 100, VectEastWallPos, false, northWall.getRepresentation());
@@ -83,10 +85,12 @@ public class Breakout extends Game{
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
 						Breakout.this.getPlayer().moveLeft();
+						forceX=-1;
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
 						Breakout.this.getPlayer().moveRight();
+						forceX=1;
 						break;
 					case KeyEvent.VK_ESCAPE:
 						if(Breakout.this.isPaused()){
@@ -353,7 +357,8 @@ public class Breakout extends Game{
 
 				}
 			}
-			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
+			this.getPlayer().move(Player.MOVE_SPEED);
+			this.physicalPlayer.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.MOVE_SPEED)[0], this.getPlayer().getCurrPos(Player.MOVE_SPEED)[1]));
 		}
 	}
 
@@ -412,13 +417,15 @@ public class Breakout extends Game{
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
 		Iterator<Brick> iterator = this.getBricks().iterator();
+		Iterator<PhysicalObject<Entity>> physicalIterator = physicalBricks.iterator();
 
 		if (this.nbBricks == 0 && this.life >= 0){
 			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
 		}
 
-		while (iterator.hasNext()) {
+		while (iterator.hasNext() && physicalIterator.hasNext()) {
 			Brick brick = iterator.next();
+			PhysicalObject<Entity> entity = physicalIterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
 				//this.getBall().reverseHorizontalMomentum();
 				this.getBall().reverseVerticalMomentum();          
@@ -428,10 +435,12 @@ public class Breakout extends Game{
 						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
+					this.getPanel().getGameZone().remove(entity.getRepresentation());
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
-					this.score += 100; // Incremen the score when the brick is broken
+					this.score += 100; // Increment the score when the brick is broken
 					// Safely remove the brick from the collection
 					iterator.remove();
+					physicalIterator.remove();
 					this.getPanel().updateScore(this.score, this.nbBricks);
 				}
 				else{

@@ -55,10 +55,10 @@ public abstract class Entity {
 
 
 	public void moveUp(){
-		forceY=1;
+		forceY=-1;
 	}
 	public void moveDown(){
-		forceY=-1;
+		forceY=1;
 	}
 	public void moveLeft(){
 		forceX=-1;
