@@ -117,7 +117,7 @@ Ce qu'il faut faire:
 
 - 24-Restructuration_Et_Refactorisation_collision (Nic):
     .Un travail de restructuration a été réalisé et les collisions ont été déplacées dans un autre ficher.
-    .C'est sensé être le dernier "gros" travail de restructuration
+    .C'est censé être le dernier "gros" travail de restructuration
 
 - 30-27-physicsLaws (Lucas):
     .Migration du projet "physiques" au sein du projet "cassebrique".
@@ -155,7 +155,7 @@ Lucas
 - physique (continuer étude biblio [https://femto-physique.fr/mecanique/physique-des-collisions.php])
 - point sur l'architecture (préparer documents, on fera le point lors de la séance)
 
-## Semaine 6 (05/02/2024)
+## Semaine 6 (05/03/2024)
 
 ### Ce qui a été fait
 
@@ -184,6 +184,25 @@ Lucas
     .implementation de methode qui rendent la position au next frame update des entites
     .implementer dans GraphicalObject des methodes permettant de checkCollisions on next frame update
 
+- Nic :
+    .Branche 34, implémentation du squelette pour les bonus
+    .Reconstruction d'une branche dû à un merge qui a inversé target et source branche
+    .Diagramme UML
+
 ### À faire...
+
+## Semaine 7 (12/03/2024)
+
+- Nic :
+    .Branche 34 :
+        - Réecriture de branche 34, les bonus sont maintenant dans une arrayList.
+        - Restructuration minimale (qui sera utile pour la physique également):
+            .Ajout de l'attribut speed pour les graphicalObject + get et setter correspondant
+            .Réecriture des constructeurs des entitées pour qu'ils prennent en compte la vitesse  
+            .misc
+    .Ajout d'images
+    .misc
+
+### Ce qui a été fait
 
 (complétez)
