@@ -13,7 +13,7 @@ import game.rules.Game;
 public class MenuPanel extends JPanel {
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    JButton QuickGame = new JButton("Quick Game"); //button to start quick game
+    JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
     private BufferedImage backgroundImage; // background image 
 
     public MenuPanel(GameFrame gameFrame){
@@ -37,6 +37,17 @@ public class MenuPanel extends JPanel {
 
         this.add(QuickGame);
     }
+
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setForeground(Color.WHITE);
+        button.setBackground(new Color(52, 152, 219)); // Bleu
+        button.setFocusPainted(false); 
+        button.setBorderPainted(false); 
+        return button;
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
