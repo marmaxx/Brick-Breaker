@@ -8,7 +8,8 @@ import game.breakout.entities.Wall;
 import physics.utils.*;
 //TODO: java docs
 public class PhysicsEngine<T> {
-    public static double GRAVITY_CONSTANT=1; 
+    public static double GRAVITY_CONSTANT=1;
+    public static final double rebondForce = 10000;
     private static final double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject<T>> physicalObjects;
 
@@ -59,9 +60,9 @@ public class PhysicsEngine<T> {
             PhysicalObject<T> objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB) && objectA!=objectB && !(objectA.getObject() instanceof Wall) && !(objectB.getObject() instanceof Wall)) {
+                if (objectA.isGoingToCollide(objectB) && objectA!=objectB) {
                     
-                    //System.out.println("COLLISION");
+                   //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
                     // resolving collision between A and B+-
