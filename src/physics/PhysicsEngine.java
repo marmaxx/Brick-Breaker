@@ -64,7 +64,7 @@ public class PhysicsEngine<T> {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
                 if (objectA.isGoingToCollide(objectB) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
                     
-                    //System.out.println("COLLISION");
+                   //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
                     // resolving collision between A and B+-

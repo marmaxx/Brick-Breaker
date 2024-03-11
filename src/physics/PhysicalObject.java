@@ -255,12 +255,14 @@ public class PhysicalObject<T> {
         return normalVectorVB;
     }
 
+    
+
+    
 
     // resolving collisions
     public void resolveCollision(PhysicalObject<T> objectA) {
         //TODO: penser à l'élasticité : regarder formules physiques
         if (isMovable()){
-            //System.out.println(this.getImpactPoint(objectA));
             if (objectA.isMovable()){
                 // TODO resolve collision when the two objects are moveable
             }
