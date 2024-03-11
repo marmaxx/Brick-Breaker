@@ -17,6 +17,8 @@ public class PhysicalObject<T> {
     //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     private GraphicalObject representation;
     private double elasticity;
+    private double rotationCoeff; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
+    //TODO: gérer la rotation 
 
     private Vector2D normalVectorVT = new Vector2D(0, 1);
     private Vector2D normalVectorHR = new Vector2D(-1, 0);
@@ -121,7 +123,7 @@ public class PhysicalObject<T> {
             Vector2D bottomLeftPositionA = new Vector2D(objectA.getRepresentation().getX(), objectA.getRepresentation().getY() + objectA.getRepresentation().getHeight());
             if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 >= objectA.getPosition().getX() && this.getPosition().getX()+this.getRepresentation().getWidth()/2 <= topRightPositionA.getX()){
                 if (this.getPosition().getY()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getY()){
-                    // la balle est au dessus au dessus du rectangle
+                    // la balle est au dessus du rectangle
                     return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, this.getPosition().getY()+this.getRepresentation().getWidth()/2 + this.getRepresentation().getWidth()/2);
                 } 
                 else{
