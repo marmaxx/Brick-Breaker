@@ -189,10 +189,10 @@ Lucas
     .Reconstruction d'une branche dû à un merge qui a inversé target et source branche
     .Diagramme UML
 
-- Noaym:
-*  Fin de l'implementation de la gestion balle paddle
-*  styling a un petit boutton du menu
-*  debut d'etude de la physique
+- Noaym :
+    .Fin de l'implementation de la gestion balle paddle
+    .styling a un petit boutton du menu
+    .debut d'etude de la physique
 
 ### À faire...
 
