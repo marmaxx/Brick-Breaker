@@ -1,12 +1,13 @@
 package display.view;
 
+import game.rules.Game;
 import javax.swing.*;
-
 import java.awt.*;
 
 public class GameFrame extends JFrame {
 	public static final Color INTERFACE_BACKGROUND = Color.WHITE;
 
+	private Game game;
 	private GamePanel gamePanel;
 	private MenuPanel menuPanel;
 	private JPanel container;
@@ -32,8 +33,8 @@ public class GameFrame extends JFrame {
 		this.container = new JPanel(cardLayout); //creat containers for managing panel in the frame 
 
 		this.setGamePanel(new GamePanel(this));
-		this.game_over = new GameOver();
-		this.game_win = new WinPanel();
+		this.game_over = new GameOver(this);
+		this.game_win = new WinPanel(this);
 
 		this.container.add(this.gamePanel, "gamePanel");
 		this.container.add(this.game_over, "gameOver"); 
@@ -125,5 +126,14 @@ public class GameFrame extends JFrame {
 	 */
 	public WinPanel getWinPanel(){
 		return this.game_win;
+	}
+
+
+	public void setGame(Game game){
+		this.game = game;
+	}
+
+	public Game getGame(){
+		return this.game;
 	}
 }

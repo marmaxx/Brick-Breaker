@@ -11,9 +11,10 @@ public class WinPanel extends JPanel{
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private JButton exit = new JButton(" EXIT ");
+    private JButton backToMenu = new JButton(" Back To Menu ");
     private BufferedImage backgroundImage; // background image 
 
-    public WinPanel(){
+    public WinPanel(GameFrame frame){
         this.setLayout(new FlowLayout());
         this.setPreferredSize(SCREEN_FULL_SIZE);
 
@@ -30,7 +31,18 @@ public class WinPanel extends JPanel{
         this.exit.addActionListener((event) ->{
             System.exit(0);
         });
+
+        //setting back to menu button
+        this.backToMenu.setPreferredSize(BUTTON_SIZE);
+        this.backToMenu.addActionListener(e -> {
+            frame.dispose();
+            GameFrame gameFrame = new GameFrame();
+			gameFrame.addMenu(new MenuPanel(gameFrame));
+			gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuPanel");
+        });
+
         this.add(this.exit);
+        this.add(this.backToMenu);
     }
 
 

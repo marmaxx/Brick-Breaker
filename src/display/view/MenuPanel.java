@@ -31,6 +31,7 @@ public class MenuPanel extends JPanel {
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel"); // switching the card layout
+            gameFrame.getContainer().add(this, "MenuPanel");
             Game game = new Breakout(gameFrame); //created instance of Breakout
 			game.start(); //starting the game 
         });
