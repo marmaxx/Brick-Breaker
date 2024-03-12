@@ -203,6 +203,10 @@ Lucas
     .Ajout d'images
     .misc
 
+- Maxime 
+    - Création d'un menu in game.
+    - Mise en pause de jeu quand on est dans le menu.
+    - restart du jeu après une win ou un lose. 
 ### Ce qui a été fait
 
 (complétez)
