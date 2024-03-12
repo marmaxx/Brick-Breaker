@@ -219,3 +219,10 @@ Lucas
     .Fin de l'implementation de la gestion balle paddle
     .styling a un petit boutton du menu
     .debut d'etude de la physique
+
+## À faire
+
+Focus sur :
+
+- refactoring objet
+- physique (commencer vérifier les corner cases, pour réduire les bugs dans ce qui est déjà géré)
