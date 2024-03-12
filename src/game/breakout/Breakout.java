@@ -61,7 +61,7 @@ public class Breakout extends Game{
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
 		Vector2D ballVectPos = new Vector2D(350, 400);
 		this.physicalBall = new PhysicalObject<Entity>(ball, 50, ballVectPos, true, ball.getRepresentation());
-		Vector2D speed = new Vector2D(0.5, 0.5);
+		Vector2D speed = new Vector2D(0.1, 0.1);
 		this.physicalBall.setSpeed(speed);
 		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		Vector2D VectEastWallPos = new Vector2D(0, 0);
