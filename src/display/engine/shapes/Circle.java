@@ -7,6 +7,33 @@ import java.awt.Image;
 import display.engine.shapes.rules.Shape;
 
 public class Circle extends Shape {	
+
+	/**
+	 * Instantiates a new Circle
+	 * 
+	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int, int)
+	 */
+	public Circle(Color color,
+		int posX, int posY,
+		int width, int height,
+		int speed
+	) {
+		super(color, posX, posY, width, height, speed);
+	}
+
+	/**
+	 * Instantiates a new Circle
+	 * 
+	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int, int)
+	 */
+	public Circle(Image image,
+		int posX, int posY,
+		int width, int height,
+		int speed
+	) {
+		super(image, posX, posY, width, height, speed);
+	}
+
 	/**
 	 * Instantiates a new Circle
 	 * 
@@ -16,7 +43,7 @@ public class Circle extends Shape {
         int posX, int posY,
         int width, int height
     ) {
-        super(color, posX, posY, width, height);
+        this(color, posX, posY, width, height, 0);
     }
 
 	/**
@@ -28,7 +55,7 @@ public class Circle extends Shape {
         int posX, int posY,
         int width, int height
     ) {
-		super(image, posX, posY, width, height);
+		this(image, posX, posY, width, height, 0);
     }
 
 	/**
