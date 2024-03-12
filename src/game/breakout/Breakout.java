@@ -326,7 +326,7 @@ public class Breakout extends Game{
 	 */
 	public void updateBall() {
 		if (this.getBall().getIsMoving()){
-			int[] playerCurrPos = this.getPlayer().getCurrPos(Player.MOVE_SPEED);
+			int[] playerCurrPos = this.getPlayer().getCurrPos(this.getPlayer().getRepresentation().getSpeed());
 
 			Vector2D paddleToBallVector = this.getPlayer().getRepresentation().vectorFromCenterToCenter(this.getBall().getRepresentation());
 			Vector2D paddleToTopLeftCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0], playerCurrPos[1]); //the vector from the paddle's center to its top left corner
@@ -334,8 +334,8 @@ public class Breakout extends Game{
 			
 			
 			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(),
-			 this.getBall().getNextPos(Ball.MOVE_SPEED),
-			  this.getPlayer().getNextPos(Player.MOVE_SPEED))){
+			 this.getBall().getNextPos(this.getBall().getRepresentation().getSpeed()),
+			  this.getPlayer().getNextPos(this.getPlayer().getRepresentation().getSpeed()))){
 
 				if (paddleToTopLeftCornerVector.angleBetween(paddleToBallVector)<0 && paddleToTopRightCornerVector.angleBetween(paddleToBallVector)>0) {
 					this.getBall().reverseVerticalMomentum();
