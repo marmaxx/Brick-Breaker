@@ -189,14 +189,11 @@ Lucas
     .Reconstruction d'une branche dû à un merge qui a inversé target et source branche
     .Diagramme UML
 
-- Noaym :
-    .Fin de l'implementation de la gestion balle paddle
-    .styling a un petit boutton du menu
-    .debut d'etude de la physique
-
 ### À faire...
 
 ## Semaine 7 (12/03/2024)
+
+### Ce qui a été fait
 
 - Nic :
     .Branche 34 :
@@ -212,6 +209,13 @@ Lucas
     - Création d'un menu in game.
     - Mise en pause de jeu quand on est dans le menu.
     - restart du jeu après une win ou un lose. 
-### Ce qui a été fait
 
-(complétez)
+- Lucas et Marius:
+    - Calcul du point d'impact
+    - Detremination de la vitesse du paddle en cours
+    - rebond classique quasi pres a etre implémentésur develop (rebond rélaisé uniquement avec la physique)
+
+- Noaym :
+    .Fin de l'implementation de la gestion balle paddle
+    .styling a un petit boutton du menu
+    .debut d'etude de la physique
