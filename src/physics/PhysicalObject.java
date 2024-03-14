@@ -1,9 +1,12 @@
 package physics;
 
+import java.util.Vector;
+
 import display.engine.rules.GraphicalObject;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
+import game.breakout.entities.Wall;
 import game.breakout.entities.rules.Entity;
 import physics.utils.*;
 
@@ -24,6 +27,7 @@ public class PhysicalObject<T> {
     private Vector2D normalVectorVB = new Vector2D(0, -1);
     private Vector2D normalVectorHR = new Vector2D(1, 0);
     private Vector2D normalVectorHL = new Vector2D(-1, 0);
+    private Slop slop;
 
     public PhysicalObject(T obj, double mass, Vector2D position, boolean movable, GraphicalObject representation){
         this.object=obj;
@@ -32,6 +36,18 @@ public class PhysicalObject<T> {
         this.movable=movable;
         this.representation=representation;
 
+    }
+
+    public enum Slop {
+        VERTICAL, HORIZONTAL, OTHER
+    }
+
+    public Slop getSlop(){
+        return this.slop;
+    }
+
+    public void setSlop (Slop otherSlop){
+        this.slop=otherSlop;
     }
 
     // Getters et setters
@@ -120,40 +136,51 @@ public class PhysicalObject<T> {
     }
 
     public Vector2D getImpactPoint(PhysicalObject<T> objectA){
-        if (objectA.getObject() instanceof Player || objectA.getObject() instanceof Brick){
+        if (!(objectA.getObject() instanceof Ball)){
             Vector2D topRightPositionA = new Vector2D(objectA.getPosition().getX() + objectA.getRepresentation().getWidth(), objectA.getPosition().getY());
             Vector2D bottomLeftPositionA = new Vector2D(objectA.getRepresentation().getX(), objectA.getRepresentation().getY() + objectA.getRepresentation().getHeight());
             Vector2D bottomRightPositionA = new Vector2D(objectA.getRepresentation().getX() + objectA.getRepresentation().getWidth(), objectA.getRepresentation().getY() + objectA.getRepresentation().getHeight());
-            if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getX() && this.getPosition().getY()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getY()){
+            /*if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getX() && this.getPosition().getY()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getY()){
+                System.out.println("coin haut gauche");
                 return objectA.getPosition();
             }
             else if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getX() && this.getPosition().getY()+this.getRepresentation().getWidth()/2 > objectA.getPosition().getY()){
+                System.out.println("coin bas gauche");
                 return bottomLeftPositionA;
             }
             else if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 > objectA.getPosition().getX() && this.getPosition().getY()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getY()){
+                System.out.println("coin haut droit");
                 return topRightPositionA;
             }
             else if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 > objectA.getPosition().getX() && this.getPosition().getY()+this.getRepresentation().getWidth()/2 > objectA.getPosition().getY()){
+                System.out.println("coin bas droit");
                 return bottomRightPositionA;
-            }
-            else if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 >= objectA.getPosition().getX() && this.getPosition().getX()+this.getRepresentation().getWidth()/2 <= topRightPositionA.getX()){
+            }*/
+            System.out.println("ball pos: "+this.getPosition().toString());
+            System.out.println("wall pos: "+objectA.getPosition().toString());
+            System.out.println("wall haut droit pos: "+topRightPositionA.toString());
+            if (this.getPosition().getX() > objectA.getPosition().getX() && this.getPosition().getX() + this.getRepresentation().getWidth() < topRightPositionA.getX()){
                 if (this.getPosition().getY()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getY()){
                     // la balle est au dessus du rectangle
-                    return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, this.getPosition().getY()+this.getRepresentation().getWidth()/2 + this.getRepresentation().getWidth()/2);
+                    System.out.println("la balle est au dessus");
+                    return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, objectA.getPosition().getY());
                 } 
                 else{
                     // la balle est en dessous
-                    return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, this.getPosition().getY()+this.getRepresentation().getWidth()/2 - this.getRepresentation().getWidth()/2);
+                    System.out.println("la balle est en dessous");
+                    return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, objectA.getPosition().getY() + objectA.getRepresentation().getHeight());
                 }
             }
-            else if (this.getPosition().getY()+this.getRepresentation().getWidth()/2 > objectA.getPosition().getY() && this.getPosition().getY()+this.getRepresentation().getWidth()/2 < bottomLeftPositionA.getY()){
+            else if (this.getPosition().getY() > objectA.getPosition().getY() && this.getPosition().getY()+this.getRepresentation().getWidth() < bottomLeftPositionA.getY()){
                 if (this.getPosition().getX()+this.getRepresentation().getWidth()/2 < objectA.getPosition().getX()){
                     // la balle est a droite du rectangle
-                    return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2 + this.getRepresentation().getWidth()/2, this.getPosition().getY()+this.getRepresentation().getWidth()/2);
+                    System.out.println("la balle est a gauche");
+                    return new Vector2D(objectA.getPosition().getX(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
                 }
                 else{
                     // la balle est a gauche
-                    return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2 - this.getRepresentation().getWidth()/2, this.getPosition().getY()+this.getRepresentation().getWidth()/2);
+                    System.out.println("la balle est a droite");
+                    return new Vector2D(objectA.getPosition().getX() + objectA.getRepresentation().getWidth(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
                 }
             }
         }
@@ -165,6 +192,31 @@ public class PhysicalObject<T> {
             return vectorImpact.add(objectA.getPosition());
         }
         return null;
+    }
+
+    public Vector2D getNearestVertex(Vector2D point){
+        Vector2D topRightPositionA = new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY());
+        Vector2D bottomLeftPositionA = new Vector2D(this.getRepresentation().getX(), this.getRepresentation().getY() + this.getRepresentation().getHeight());
+        Vector2D bottomRightPositionA = new Vector2D(this.getRepresentation().getX() + this.getRepresentation().getWidth(), this.getRepresentation().getY() + this.getRepresentation().getHeight());
+        double distTL = Math.sqrt(Math.pow(point.getX() - this.getPosition().getX(), 2) + Math.pow(point.getY() - this.getPosition().getY(), 2));
+        double distTR = Math.sqrt(Math.pow(point.getX() - topRightPositionA.getX(), 2) + Math.pow(point.getY() - topRightPositionA.getY(), 2));
+        double distBL = Math.sqrt(Math.pow(point.getX() - bottomLeftPositionA.getX(), 2) + Math.pow(point.getY() - bottomLeftPositionA.getY(), 2));
+        double distBR = Math.sqrt(Math.pow(point.getX() - bottomRightPositionA.getX(), 2) + Math.pow(point.getY() - bottomRightPositionA.getY(), 2));
+        System.out.println("top right: "+topRightPositionA.toString());
+        System.out.println("bottom right: "+bottomRightPositionA.toString());
+        System.out.println("bottom left: "+bottomLeftPositionA.toString());
+
+        System.out.println("distTL: "+distTL);
+        System.out.println("distBL: "+distBL);
+        System.out.println("distTR: "+distTR);
+        System.out.println("distBR: "+distBR);
+        double dist1 = Math.min(distTL, distTR);
+        double dist2 = Math.min(distBL, distBR);
+        double dist = Math.min(dist1, dist2);
+        if (dist == distTL){System.out.println("TL"); return this.getPosition();}
+        else if (dist == distTR){ System.out.println("TR"); return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY());}
+        else if (dist == distBL){ System.out.println("BL"); return new Vector2D(this.getPosition().getX(), this.getPosition().getY() + this.getRepresentation().getHeight());}
+        else{ System.out.println("BR"); return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY()  + this.getRepresentation().getHeight());}
     }
 
     public Vector2D getNormalVector(Vector2D vect, PhysicalObject<T> objectA){
@@ -189,6 +241,38 @@ public class PhysicalObject<T> {
                 // TODO resolve collision when the two objects are moveable
             }
             else{
+                System.out.println("OBJECT: "+objectA.getObject().toString());
+                System.out.println("pos paddle: "+objectA.getPosition().toString());
+                System.out.println("width paddle: "+objectA.getRepresentation().getWidth());
+                System.out.println("height paddle: "+objectA.getRepresentation().getHeight());
+                Vector2D impact = this.getImpactPoint(objectA);
+                System.out.println("point impact: "+impact.toString());
+                Vector2D nearestVertex = objectA.getNearestVertex(impact);
+                System.out.println("nearest vertex: "+nearestVertex.toString());
+                Vector2D surfaceVector = new Vector2D(impact.getX() - nearestVertex.getX(), impact.getY() - nearestVertex.getY());
+                System.out.println("vecteur surface: "+surfaceVector.toString());
+                double slopeAngle = Math.atan2(surfaceVector.getY() - impact.getY(), surfaceVector.getX() - impact.getX());
+                double slopeDot = surfaceVector.dotProduct(normalVectorHR);
+                System.out.println("slope dot: "+slopeDot);
+                System.out.println("slope angle: "+slopeAngle);
+                if (slopeDot == 0) objectA.setSlop(Slop.VERTICAL);
+                else if (slopeDot == surfaceVector.getX()) objectA.setSlop(Slop.HORIZONTAL);
+                else objectA.setSlop(Slop.OTHER);
+                double incidenceAngle = Math.atan2(this.getSpeed().getY(),this.getSpeed().getX());
+                System.out.println("angle incidence: "+Math.toDegrees(incidenceAngle));
+                double reflexionAngle;
+                switch(objectA.getSlop()){
+                    case VERTICAL: reflexionAngle = Math.PI - incidenceAngle; break;
+                    case HORIZONTAL: reflexionAngle = - incidenceAngle; break;
+                    case OTHER: reflexionAngle = 0; break; // TODO handle a slope that is not vertical or horizontal
+                    default: reflexionAngle = 0; break;
+                }
+                System.out.println("angle reflexion: "+Math.toDegrees(reflexionAngle));
+                System.out.println("***********************************");
+                this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
+                
+                //System.exit(0);
+                /* 
                 Vector2D topRightPositionA = new Vector2D(objectA.getPosition().getX() + objectA.getRepresentation().getWidth(), objectA.getPosition().getY());
                 Vector2D bottomLeftPositionA = new Vector2D(objectA.getRepresentation().getX(), objectA.getRepresentation().getY() + objectA.getRepresentation().getHeight());
                 Vector2D bottomRightPositionA = new Vector2D(objectA.getRepresentation().getX() + objectA.getRepresentation().getWidth(), objectA.getRepresentation().getY() + objectA.getRepresentation().getHeight());
@@ -222,11 +306,11 @@ public class PhysicalObject<T> {
                             this.setSpeed(new Vector2D(this.speed.getX(), -this.speed.getY()));
                         }
                     }
-                    /*else if (Math.toDegrees(angle) > 90 && Math.toDegrees(angle) < 180){
+                    else if (Math.toDegrees(angle) > 90 && Math.toDegrees(angle) < 180){
                         this.setSpeed(new Vector2D(-this.speed.getX(), this.speed.getY()));
-                    }*/
+                    }
                     //this.applyForce(new Vector2D(0, 10000));
-                }
+                }*/
             }
         }
     }

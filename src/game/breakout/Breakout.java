@@ -61,16 +61,17 @@ public class Breakout extends Game{
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
 		Vector2D ballVectPos = new Vector2D(350, 400);
 		this.physicalBall = new PhysicalObject<Entity>(ball, 50, ballVectPos, true, ball.getRepresentation());
-		Vector2D speed = new Vector2D(0.1, 0.1);
+		Vector2D speed = new Vector2D(0.5, 0.5);
 		this.physicalBall.setSpeed(speed);
-		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
-		Vector2D VectEastWallPos = new Vector2D(0, 0);
+		this.setEastWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		Vector2D VectEastWallPos = new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0);
 		this.physicalEastWall = new PhysicalObject<Entity>(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
-		this.setWestWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
-		Vector2D VectWestWallPos = new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0);
+		this.setWestWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		Vector2D VectWestWallPos = new Vector2D(0, 0);
 		this.physicalWestWall = new PhysicalObject<Entity>(westWall, 100, VectWestWallPos, false, westWall.getRepresentation());
 		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
-		this.physicalNorthWall = new PhysicalObject<Entity>(northWall, 100, VectEastWallPos, false, northWall.getRepresentation());
+		Vector2D VectNorthWallPos = new Vector2D(0, 0);
+		this.physicalNorthWall = new PhysicalObject<Entity>(northWall, 100, VectNorthWallPos, false, northWall.getRepresentation());
 		this.physicEngine.getPhysicalObjects().add(physicalBall);
 		this.physicEngine.getPhysicalObjects().add(physicalPlayer);
 		this.physicEngine.getPhysicalObjects().add(physicalEastWall);
@@ -319,13 +320,13 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(4, 8);
+		//this.createBricks(4, 8);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
-		for (Brick brick : this.getBricks()) {
+		/*for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
-		}
+		}*/
 		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
 		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
@@ -393,9 +394,9 @@ public class Breakout extends Game{
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
 					
 			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
-				if( this.getLife() == 1 && this.getNbBricks() > 0){
+				/*if( this.getLife() == 1 && this.getNbBricks() > 0){
 					this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
-				}
+				}*/
 
 				// the ball respawn for the moment 
 				
@@ -420,9 +421,9 @@ public class Breakout extends Game{
 		Iterator<Brick> iterator = this.getBricks().iterator();
 		Iterator<PhysicalObject<Entity>> physicalIterator = physicalBricks.iterator();
 
-		if (this.nbBricks == 0 && this.life >= 0){
+		/*if (this.nbBricks == 0 && this.life >= 0){
 			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
-		}
+		}*/
 
 		while (iterator.hasNext() && physicalIterator.hasNext()) {
 			Brick brick = iterator.next();
