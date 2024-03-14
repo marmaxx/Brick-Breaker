@@ -1,7 +1,6 @@
 package physics;
 
 import java.util.Vector;
-
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
 import game.breakout.entities.Ball;
@@ -220,17 +219,28 @@ public class PhysicalObject<T> {
     }
 
     public Vector2D getNearestVertex(Vector2D point){
+        Vector2D topRightPositionA = new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY());
+        Vector2D bottomLeftPositionA = new Vector2D(this.getRepresentation().getX(), this.getRepresentation().getY() + this.getRepresentation().getHeight());
+        Vector2D bottomRightPositionA = new Vector2D(this.getRepresentation().getX() + this.getRepresentation().getWidth(), this.getRepresentation().getY() + this.getRepresentation().getHeight());
         double distTL = Math.sqrt(Math.pow(point.getX() - this.getPosition().getX(), 2) + Math.pow(point.getY() - this.getPosition().getY(), 2));
-        double distTR = Math.sqrt(Math.pow(point.getX() - this.getTopRightPosition().getX(), 2) + Math.pow(point.getY() - this.getTopRightPosition().getY(), 2));
-        double distBL = Math.sqrt(Math.pow(point.getX() - this.getBottomLeftPosition().getX(), 2) + Math.pow(point.getY() - this.getBottomLeftPosition().getY(), 2));
-        double distBR = Math.sqrt(Math.pow(point.getX() - this.getBottomRightPosition().getX(), 2) + Math.pow(point.getY() - this.getBottomRightPosition().getY(), 2));
+        double distTR = Math.sqrt(Math.pow(point.getX() - topRightPositionA.getX(), 2) + Math.pow(point.getY() - topRightPositionA.getY(), 2));
+        double distBL = Math.sqrt(Math.pow(point.getX() - bottomLeftPositionA.getX(), 2) + Math.pow(point.getY() - bottomLeftPositionA.getY(), 2));
+        double distBR = Math.sqrt(Math.pow(point.getX() - bottomRightPositionA.getX(), 2) + Math.pow(point.getY() - bottomRightPositionA.getY(), 2));
+        System.out.println("top right: "+topRightPositionA.toString());
+        System.out.println("bottom right: "+bottomRightPositionA.toString());
+        System.out.println("bottom left: "+bottomLeftPositionA.toString());
+
+        System.out.println("distTL: "+distTL);
+        System.out.println("distBL: "+distBL);
+        System.out.println("distTR: "+distTR);
+        System.out.println("distBR: "+distBR);
         double dist1 = Math.min(distTL, distTR);
         double dist2 = Math.min(distBL, distBR);
         double dist = Math.min(dist1, dist2);
-        if (dist == distTL){return this.getPosition();}
-        else if (dist == distTR){ return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY());}
-        else if (dist == distBL){ return new Vector2D(this.getPosition().getX(), this.getPosition().getY() + this.getRepresentation().getHeight());}
-        else{ return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY()  + this.getRepresentation().getHeight());}
+        if (dist == distTL){System.out.println("TL"); return this.getPosition();}
+        else if (dist == distTR){ System.out.println("TR"); return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY());}
+        else if (dist == distBL){ System.out.println("BL"); return new Vector2D(this.getPosition().getX(), this.getPosition().getY() + this.getRepresentation().getHeight());}
+        else{ System.out.println("BR"); return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth(), this.getPosition().getY()  + this.getRepresentation().getHeight());}
     }
 
     public Vector2D getNormalVector(Vector2D vect, PhysicalObject<T> objectA){
