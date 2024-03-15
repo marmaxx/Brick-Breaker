@@ -35,7 +35,7 @@ public class PhysicsEngine<T> {
     
         applyGravity(deltaTime);
         handleCollisions();
-        //applyFriction(FRICTION_COEFFICIENT);
+        applyFriction(FRICTION_COEFFICIENT);
        
             // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {

@@ -20,7 +20,7 @@ public class PhysicalObject<T> {
     //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     private GraphicalObject representation;
     private double elasticity;
-    private double rotationCoeff; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
+    private double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
 
     private Vector2D normalVectorVT = new Vector2D(0, 1);
@@ -116,7 +116,7 @@ public class PhysicalObject<T> {
     public void updateVelocity(double deltaTime) {
         if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
         else{
-            this.speed =((((Player)this.object).getLastPos().add(this.position.multiply(-1))).multiply(1/deltaTime));
+            this.speed =((this.position.add(((Player)this.object).getLastPos().multiply(-1))).multiply(1/deltaTime));
             //System.out.println(this.speed);
         }
 
@@ -225,6 +225,7 @@ public class PhysicalObject<T> {
                 // TODO resolve collision when the two objects are moveable
             }
             else{
+                
                 //System.out.println("OBJECT: "+objectA.getObject().toString());
                 //System.out.println("pos paddle: "+objectA.getPosition().toString());
                 //System.out.println("width paddle: "+objectA.getRepresentation().getWidth());
@@ -257,7 +258,12 @@ public class PhysicalObject<T> {
                     //System.out.println("angle reflexion: "+Math.toDegrees(reflexionAngle));
                     //System.out.println("***********************************");
                     this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
+                    if (this.object instanceof Ball && objectA.getObject() instanceof Player){
+                        this.speed = this.speed.add(objectA.getSpeed().multiply(rotationCoeff));
+                        System.out.println(objectA.getSpeed());
+                    }
                 }
+                
             }
         }
     }
