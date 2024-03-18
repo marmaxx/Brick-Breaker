@@ -226,3 +226,12 @@ Focus sur :
 
 - refactoring objet
 - physique (commencer vérifier les corner cases, pour réduire les bugs dans ce qui est déjà géré)
+
+## Semaine 8 :
+
+### Ce qui a été fait:
+
+- Marius: 
+    .collision entre la balle et les murs parfait avec la physique
+    .quelques cas critiques pour la collision balle paddle mais bien en général
+    .réussi grace au calcul d'angle de reflexion, de vecteur normal etc...
