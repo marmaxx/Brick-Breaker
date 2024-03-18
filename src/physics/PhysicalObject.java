@@ -23,6 +23,7 @@ public class PhysicalObject<T> {
     private double elasticity;
     private double rotationCoeff=0.8; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
+    private boolean active=true;
 
     private Vector2D normalVectorVT = new Vector2D(0, 1);
     private Vector2D normalVectorVB = new Vector2D(0, -1);
@@ -70,6 +71,16 @@ public class PhysicalObject<T> {
         return new Vector2D(this.getRepresentation().getX() + this.getRepresentation().getWidth(), this.getRepresentation().getY() + this.getRepresentation().getHeight());
     }
 
+    public boolean isActive(){
+        return active;
+    }
+    /**
+	 * deactivates the phyiscal object from the view
+	 */
+	public void destroy() {
+        active=false;
+        this.getRepresentation().destroy();
+    }
 
 
     // Getters et setters
@@ -150,9 +161,14 @@ public class PhysicalObject<T> {
             int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.MOVE_SPEED);
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
-        else{
+        else if(this.getObject() instanceof Ball){
             int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
             int [] BNextPos = ((Entity) objectB.object).getCurrPos(0);
+            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
+        }
+        else{
+            int [] BNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
+            int [] thisNextPos = ((Entity) objectB.object).getCurrPos(0);
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
     }
@@ -160,7 +176,7 @@ public class PhysicalObject<T> {
     public Vector2D getImpactPoint(PhysicalObject<T> objectA){
         
         if (!(objectA.getObject() instanceof Ball)){
-
+            System.out.println(objectA.getObject());
            Vector2D topRightPositionA = new Vector2D(objectA.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],objectA.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
            Vector2D topLeftPositionA = new Vector2D(objectA.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],objectA.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
            Vector2D bottomLeftPositionA = new Vector2D(objectA.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],objectA.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
@@ -176,18 +192,26 @@ public class PhysicalObject<T> {
             
             if (centerToTopLeftCornerVectorA.angleFromTo(objectAToBallVector)<0 && centerToTopRightCornerVectorA.angleFromTo(objectAToBallVector)>0){
                 // la balle est au dessus 
+                System.out.println("top");
+                System.out.println();
                 return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, objectA.getPosition().getY());
             } 
             else if(centerToBottomRightCornerVectorA.angleFromTo(objectAToBallVector)>0 && centerToTopRightCornerVectorA.angleFromTo(objectAToBallVector)<0){
                     // la balle est a droite
+                    System.out.println("right");
+                    System.out.println();
                     return new Vector2D(objectA.getPosition().getX(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
             }
             else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToBallVector)<0 && centerToTopLeftCornerVectorA.angleFromTo(objectAToBallVector)>0){
                 // la balle est a gauche 
+                System.out.println("left");
+                System.out.println();
                 return new Vector2D(objectA.getPosition().getX() + objectA.getRepresentation().getWidth(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
             }
             else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToBallVector)>0 && centerToBottomRightCornerVectorA.angleFromTo(objectAToBallVector)<0){
                 // la balle est en dessous
+                System.out.println("bottom");
+                System.out.println();
                 return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, objectA.getPosition().getY() + objectA.getRepresentation().getHeight());
             }
             else{

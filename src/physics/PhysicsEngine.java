@@ -42,7 +42,7 @@ public class PhysicsEngine<T> {
             // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {
             object.updateVelocity(deltaTime); 
-            if (object.getObject() instanceof Ball){
+            if (object.getObject() instanceof Ball && object.isActive()){
                 //System.out.println("vitesse: "+object.getSpeed());
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
@@ -62,7 +62,7 @@ public class PhysicsEngine<T> {
             PhysicalObject<T> objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB) && objectA!=objectB) {
+                if (objectA.isGoingToCollide(objectB) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
                     
                    //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
@@ -83,7 +83,7 @@ public class PhysicsEngine<T> {
         
         for (PhysicalObject<T> object : physicalObjects) {
             // applying acceleration due to gravity
-            object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
+            if(object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
         }
     }
 
@@ -91,8 +91,10 @@ public class PhysicsEngine<T> {
     private void applyFriction(double frictionCoefficient) {
         
         for (PhysicalObject<T> object : physicalObjects) {
+            if(object.isActive()){
                 Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
                 object.applyForce(frictionForce);
+            }   
         }
     }
 

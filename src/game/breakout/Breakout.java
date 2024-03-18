@@ -55,7 +55,7 @@ public class Breakout extends Game{
 		this.gameframe = gameFrame;
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, 500));
 		Vector2D playerVectPos = new Vector2D(630, 700);
 		this.physicalPlayer = new PhysicalObject<Entity>(player, 51, playerVectPos, false, player.getRepresentation());
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
@@ -321,7 +321,7 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		//this.createBricks(4, 8);
+		this.createBricks(4, 8);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
@@ -429,15 +429,14 @@ public class Breakout extends Game{
 		while (iterator.hasNext() && physicalIterator.hasNext()) {
 			Brick brick = iterator.next();
 			PhysicalObject<Entity> entity = physicalIterator.next();
-			if (brick.getRepresentation().isGoingToCollide(this.getBall().getRepresentation(),brick.getCurrPos(0),this.getBall().getNextPos(Ball.MOVE_SPEED))) {
-
+			if (physicalBall.isGoingToCollide(entity)) {
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					if (brick.doesDropBonus()){
 						// store the size of the brick
 						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
 					brick.getRepresentation().destroy();
-					entity.getRepresentation().destroy();
+					entity.destroy();
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
 					this.score += 100; // Increment the score when the brick is broken
 					// Safely remove the brick from the collection
@@ -447,7 +446,7 @@ public class Breakout extends Game{
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					this.getPanel().getGameZone().remove(entity.getRepresentation());
 					
-
+					
 					
 				}
 				else{
