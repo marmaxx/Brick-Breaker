@@ -320,13 +320,13 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		//this.createBricks(4, 8);
+		this.createBricks(4, 8);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
-		/*for (Brick brick : this.getBricks()) {
+		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
-		}*/
+		}
 		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
 		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
@@ -430,7 +430,7 @@ public class Breakout extends Game{
 			PhysicalObject<Entity> entity = physicalIterator.next();
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
 				//this.getBall().reverseHorizontalMomentum();
-				this.getBall().reverseVerticalMomentum();          
+				//this.getBall().reverseVerticalMomentum();          
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					if (brick.doesDropBonus()){
 						// store the size of the brick
@@ -442,7 +442,7 @@ public class Breakout extends Game{
 					this.score += 100; // Increment the score when the brick is broken
 					// Safely remove the brick from the collection
 					iterator.remove();
-					physicalIterator.remove();
+					physicalBricks.remove(entity);
 					this.getPanel().updateScore(this.score, this.nbBricks);
 				}
 				else{

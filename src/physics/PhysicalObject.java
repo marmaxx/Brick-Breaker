@@ -20,7 +20,7 @@ public class PhysicalObject<T> {
     //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     private GraphicalObject representation;
     private double elasticity;
-    private double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
+    private double rotationCoeff=0.8; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
 
     private Vector2D normalVectorVT = new Vector2D(0, 1);
@@ -248,19 +248,25 @@ public class PhysicalObject<T> {
                     else objectA.setSlop(Slop.OTHER);
                     double incidenceAngle = Math.atan2(this.getSpeed().getY(),this.getSpeed().getX());
                     //System.out.println("angle incidence: "+Math.toDegrees(incidenceAngle));
+                    //double objectAVelocityAngle = Math.atan2(objectA.getSpeed().getY(), objectA.getSpeed().getX());
+                    //double angleDifference = incidenceAngle - objectAVelocityAngle;
+                    double objectASpeed = objectA.getSpeed().magnitude();
+                    double rotationAngle = Math.atan2(objectASpeed, this.getSpeed().magnitude());
+                    //System.out.println("angle paddle: "+Math.toDegrees(objectAVelocityAngle));
                     double reflexionAngle;
                     switch(objectA.getSlop()){
-                        case VERTICAL: reflexionAngle = Math.PI - incidenceAngle; break;
-                        case HORIZONTAL: reflexionAngle = - incidenceAngle; break;
+                        case VERTICAL: reflexionAngle = Math.PI - incidenceAngle + rotationAngle; break;
+                        case HORIZONTAL: reflexionAngle = - incidenceAngle + rotationAngle; break;
                         case OTHER: reflexionAngle = 0; break; // TODO handle a slope that is not vertical or horizontal
                         default: reflexionAngle = 0; break;
-                    }
+                    }        
                     //System.out.println("angle reflexion: "+Math.toDegrees(reflexionAngle));
                     //System.out.println("***********************************");
                     this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
                     if (this.object instanceof Ball && objectA.getObject() instanceof Player){
-                        this.speed = this.speed.add(objectA.getSpeed().multiply(rotationCoeff));
-                        System.out.println(objectA.getSpeed());
+                        //this.speed = this.speed.add(objectA.getSpeed().multiply(rotationCoeff));
+                        //System.out.println(objectA.getSpeed());
+                        this.applyForce(new Vector2D(0, - 100 *PhysicsEngine.GRAVITY_CONSTANT * this.getMass()));
                     }
                 }
                 
