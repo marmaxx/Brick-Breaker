@@ -22,7 +22,7 @@ public class PhysicalObject<T> {
     private double elasticity;
     private double rotationCoeff=1;  //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
-    private boolean active=true;
+    private boolean active=true; 
 
     private Vector2D normalVectorVT = new Vector2D(0, 1);
     private Vector2D normalVectorVB = new Vector2D(0, -1);
@@ -190,18 +190,26 @@ public class PhysicalObject<T> {
             
             if (centerToTopLeftCornerVectorA.angleFromTo(objectAToBallVector)<0 && centerToTopRightCornerVectorA.angleFromTo(objectAToBallVector)>0){
                 // la balle est au dessus 
+                System.out.println("top");
+                System.out.println();
                 return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, objectA.getPosition().getY());
             } 
             else if(centerToBottomRightCornerVectorA.angleFromTo(objectAToBallVector)>0 && centerToTopRightCornerVectorA.angleFromTo(objectAToBallVector)<0){
                     // la balle est a droite
+                    System.out.println("right");
+                    System.out.println();
                     return new Vector2D(objectA.getPosition().getX(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
             }
             else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToBallVector)<0 && centerToTopLeftCornerVectorA.angleFromTo(objectAToBallVector)>0){
                 // la balle est a gauche 
+                System.out.println("left");
+                System.out.println();
                 return new Vector2D(objectA.getPosition().getX() + objectA.getRepresentation().getWidth(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
             }
             else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToBallVector)>0 && centerToBottomRightCornerVectorA.angleFromTo(objectAToBallVector)<0){
                 // la balle est en dessous
+                System.out.println("bottom");
+                System.out.println();
                 return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, objectA.getPosition().getY() + objectA.getRepresentation().getHeight());
             }
             else{
