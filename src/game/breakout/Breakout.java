@@ -291,7 +291,7 @@ public class Breakout extends Game{
 				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
 				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
 				this.physicalBricks.add(physicalBrick);
-				this.getPanel().getGameZone().add(physicalBrick.getRepresentation());
+				this.getPanel().getGameZone().add(physicalBrick.getRepresentation()); 
 			}
 		}
 		for (PhysicalObject<Entity> brick:physicalBricks){
@@ -321,7 +321,7 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(4, 8);
+		//this.createBricks(4, 8);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game

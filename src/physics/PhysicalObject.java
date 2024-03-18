@@ -2,7 +2,7 @@ package physics;
 
 import java.util.Vector;
 import display.engine.rules.GraphicalObject;
-import display.engine.rules.GraphicalObject.Boundary;
+import display.engine.rules.GraphicalObject.Boundary; 
 import game.breakout.entities.Ball;
 import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
@@ -203,10 +203,6 @@ public class PhysicalObject<T> {
             else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToBallVector)>0 && centerToBottomRightCornerVectorA.angleFromTo(objectAToBallVector)<0){
                 // la balle est en dessous
                 return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, objectA.getPosition().getY() + objectA.getRepresentation().getHeight());
-            }
-            else{
-                Vector2D nearestVertex = objectA.getNearestVertex(this.getPosition());
-                return nearestVertex;
             }
             else{
                 Vector2D nearestVertex = objectA.getNearestVertex(this.getPosition());
