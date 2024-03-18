@@ -21,7 +21,7 @@ public class PhysicalObject<T> {
     //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     private GraphicalObject representation;
     private double elasticity;
-    private double rotationCoeff=0.8; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
+    private double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
     private boolean active=true;
 
@@ -176,7 +176,6 @@ public class PhysicalObject<T> {
     public Vector2D getImpactPoint(PhysicalObject<T> objectA){
         
         if (!(objectA.getObject() instanceof Ball)){
-            System.out.println(objectA.getObject());
            Vector2D topRightPositionA = new Vector2D(objectA.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],objectA.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
            Vector2D topLeftPositionA = new Vector2D(objectA.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],objectA.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
            Vector2D bottomLeftPositionA = new Vector2D(objectA.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],objectA.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
