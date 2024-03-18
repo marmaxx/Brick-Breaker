@@ -21,6 +21,7 @@ public class MenuInGame extends JPanel{
 
         this.BackToMenuButton.addActionListener(e -> {
             frame.dispose();
+            frame.getGame().clearGameComponents();
             GameFrame gameFrame = new GameFrame();
 			gameFrame.addMenu(new MenuPanel(gameFrame));
 			gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuPanel");

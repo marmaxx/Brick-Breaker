@@ -31,14 +31,16 @@ public class Breakout extends Game{
 	private int nbBricks;
 	private int score = 0;
 	private int life = 3;
+	private int level = 0;
 
 	/**
 	 * Instantiates a new Breakout game
 	 * 
 	 * @param gameFrame The frame in which the game is displayed
 	 */
-	public Breakout(GameFrame gameFrame) {
+	public Breakout(GameFrame gameFrame, int level) {
 		super(gameFrame.getGamePanel(), "Breakout");
+		this.level = level;
 		this.gameframe = gameFrame;
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
@@ -226,35 +228,12 @@ public class Breakout extends Game{
 	}
 
 	/**
-	 * Initializes bricks in a level
+	 * Get the level in the game.
 	 * 
-	 * @param rows The number of rows of bricks
-	 * @param columns The number of columns of bricks
+	 * @return The level
 	 */
-	public void createBricks(int rows, int columns){
-		// TODO: Prevent the amount of bricks from exceeding the panel's width and height
-		// See GraphicalObject#isOnScreen(x, y, panel)
-
-		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
-
-		// Start the bricks at the center of the panel
-		int initialXPos = (int) Math.floor(this.getPanel().getGameZone().getPreferredSize().getWidth()
-		/ 2 - (columns * BRICK_SPACING) / 2);
-		
-		for(int row = 0; row < rows; row++){
-			for(int column = 0; column < columns; column++){
-				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
-				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
-
-				// Generate a random number between 1 and 3
-				int randomNumber = new Random().nextInt(4) + 1;
-				boolean dropBonus = (randomNumber == 1);
-	
-				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
-				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus));
-			}
-		}
+	public int getLevel(){
+		return 	this.level;
 	}
 
 	/**
@@ -279,8 +258,9 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(4, 8);
+		Level.level(this);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
+		System.out.println(this.nbBricks);
 
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
@@ -352,6 +332,7 @@ public class Breakout extends Game{
 					
 			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
 				if( this.getLife() == 1 && this.getNbBricks() > 0){
+					this.clearGameComponents();
 					this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
 				}
 
@@ -378,6 +359,7 @@ public class Breakout extends Game{
 		Iterator<Brick> iterator = this.getBricks().iterator();
 
 		if (this.nbBricks == 0 && this.life >= 0){
+			this.clearGameComponents();
 			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
 		}
 
@@ -392,10 +374,10 @@ public class Breakout extends Game{
 						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
+					iterator.remove();
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
 					this.score += 100; // Incremen the score when the brick is broken
 					// Safely remove the brick from the collection
-					iterator.remove();
 					this.getPanel().updateScore(this.score, this.nbBricks);
 				}
 				else{
@@ -481,5 +463,30 @@ public class Breakout extends Game{
 		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 
+	}
+
+	public void clearGameComponents() {
+		// Supprimer toutes les briques de la liste et de la zone de jeu
+		for (Brick brick : this.getBricks()) {
+			this.getPanel().getGameZone().remove(brick.getRepresentation());
+		}
+		this.getBricks().clear();
+	
+		// Supprimer tous les bonus de la liste et de la zone de jeu
+		for (Bonus bonus : this.getBonuses()) {
+			this.getPanel().getGameZone().remove(bonus.getRepresentation());
+		}
+		this.getBonuses().clear();
+	
+		// Supprimer le joueur de la zone de jeu
+		this.getPanel().getGameZone().remove(this.getPlayer().getRepresentation());
+	
+		// Supprimer la balle de la zone de jeu
+		this.getPanel().getGameZone().remove(this.getBall().getRepresentation());
+	
+		// Supprimer les murs de la zone de jeu
+		this.getPanel().getGameZone().remove(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().remove(this.getWestWall().getRepresentation());
+		this.getPanel().getGameZone().remove(this.getNorthWall().getRepresentation());
 	}
 }
