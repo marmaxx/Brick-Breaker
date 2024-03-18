@@ -55,7 +55,7 @@ public class Breakout extends Game{
 		this.gameframe = gameFrame;
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, 500));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
 		Vector2D playerVectPos = new Vector2D(630, 700);
 		this.physicalPlayer = new PhysicalObject<Entity>(player, 51, playerVectPos, false, player.getRepresentation());
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
