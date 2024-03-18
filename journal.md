@@ -235,3 +235,8 @@ Focus sur :
     .collision entre la balle et les murs parfait avec la physique
     .quelques cas critiques pour la collision balle paddle mais bien en général
     .réussi grace au calcul d'angle de reflexion, de vecteur normal etc...
+
+- Maxime: 
+    .Menu pour choisir le niveau.
+    .Création d'un fichier level pour créer les niveaux.
+    .Changement de la méthode start dans Breakout.
