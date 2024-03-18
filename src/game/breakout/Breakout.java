@@ -291,6 +291,7 @@ public class Breakout extends Game{
 				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
 				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
 				this.physicalBricks.add(physicalBrick);
+				this.getPanel().getGameZone().add(physicalBrick.getRepresentation());
 			}
 		}
 		for (PhysicalObject<Entity> brick:physicalBricks){
@@ -320,7 +321,7 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(4, 8);
+		//this.createBricks(4, 8);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
@@ -428,28 +429,30 @@ public class Breakout extends Game{
 		while (iterator.hasNext() && physicalIterator.hasNext()) {
 			Brick brick = iterator.next();
 			PhysicalObject<Entity> entity = physicalIterator.next();
-			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				//this.getBall().reverseHorizontalMomentum();
-				//this.getBall().reverseVerticalMomentum();          
+			if (brick.getRepresentation().isGoingToCollide(this.getBall().getRepresentation(),brick.getCurrPos(0),this.getBall().getNextPos(Ball.MOVE_SPEED))) {
+
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					if (brick.doesDropBonus()){
 						// store the size of the brick
 						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
-					this.getPanel().getGameZone().remove(brick.getRepresentation());
-					this.getPanel().getGameZone().remove(entity.getRepresentation());
+					brick.getRepresentation().destroy();
+					entity.getRepresentation().destroy();
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
 					this.score += 100; // Increment the score when the brick is broken
 					// Safely remove the brick from the collection
 					iterator.remove();
 					physicalBricks.remove(entity);
 					this.getPanel().updateScore(this.score, this.nbBricks);
+					this.getPanel().getGameZone().remove(brick.getRepresentation());
+					this.getPanel().getGameZone().remove(entity.getRepresentation());
+					
+
+					
 				}
 				else{
 					brick.setLifespan(brick.getLifespan() - 1);
 				}
-				// Break the loop to prevent the ball from colliding with multiple bricks
-				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
 				break;
 			}
 		}

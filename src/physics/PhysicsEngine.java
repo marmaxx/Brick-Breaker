@@ -3,7 +3,9 @@ package physics;
 import java.util.ArrayList;
 import java.util.List;
 
+import display.engine.rules.GraphicalObject.Boundary;
 import game.breakout.entities.Ball;
+import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
 import physics.utils.*;
 //TODO: java docs
@@ -74,6 +76,7 @@ public class PhysicsEngine<T> {
             }
         }
     }
+
 
     // applying gravity to all objects
     private void applyGravity(double deltaTime) {

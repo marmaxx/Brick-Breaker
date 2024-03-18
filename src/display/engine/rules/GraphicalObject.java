@@ -349,7 +349,7 @@ public abstract class GraphicalObject extends JComponent {
 	public Vector2D vectorCenterToCoordinates(double x, double y){
 		Vector2D rep = new Vector2D(0, 0);
 		rep.setX(x - this.getCenterX());
-		rep.setY(-(y-this.getCenterY()));  // negated because of how y coordinates are handled by java
+		rep.setY((y-this.getCenterY()));  // negated because of how y coordinates are handled by java
 		return rep;
 	}
 	
