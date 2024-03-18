@@ -321,13 +321,13 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		//this.createBricks(4, 8);
+		this.createBricks(4, 8);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
-		/*for (Brick brick : this.getBricks()) {
+		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
-		}*/
+		}
 		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
 		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
