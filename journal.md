@@ -240,3 +240,6 @@ Focus sur :
     .Menu pour choisir le niveau.
     .Création d'un fichier level pour créer les niveaux.
     .Changement de la méthode start dans Breakout.
+- Noaym:
+    .Amélioration de la méthode getImpactPoint (elle est maintenant précise grace a l'utilisation des angles)
+    .Début de la réparation de la collision balle brique (fix d'un bug qui causait les briques de continuer de collisioner même après disparition)
