@@ -227,7 +227,7 @@ Focus sur :
 - refactoring objet
 - physique (commencer vérifier les corner cases, pour réduire les bugs dans ce qui est déjà géré)
 
-## Semaine 8 :
+## Semaine 8 (19/3/2024)
 
 ### Ce qui a été fait:
 
@@ -243,3 +243,17 @@ Focus sur :
 - Noaym:
     .Amélioration de la méthode getImpactPoint (elle est maintenant précise grace a l'utilisation des angles)
     .Début de la réparation de la collision balle brique (fix d'un bug qui causait les briques de continuer de collisioner même après disparition)
+- Lucas:
+  - prise en compte vitesse du paddle pour effet
+
+### Absent
+
+Nic JDC
+
+### À faire
+
+- plus de niveaux
+- rebonds sur surfaces en biais
+- merge branche physique
+- quelques bugs de rebonds à corriger (entre 2 briques) -> penser à écrire des tests exécutables
+- rotation (vitesse angulaire) de la balle (effets)
