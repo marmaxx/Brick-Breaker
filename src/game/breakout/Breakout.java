@@ -260,7 +260,6 @@ public class Breakout extends Game{
 		super.start();
 		Level.level(this);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
-		System.out.println(this.nbBricks);
 
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
@@ -396,7 +395,7 @@ public class Breakout extends Game{
 	public void updateBonus(){
 		
 		Iterator<Bonus> iterator = this.getBonuses().iterator();
-		
+
 		while(iterator.hasNext()){
 			Bonus bonus = iterator.next();
 			if (bonus.getRepresentation().isColliding(this.getPlayer().getRepresentation())){
@@ -462,7 +461,7 @@ public class Breakout extends Game{
 		this.updateBricks();
 		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
-
+		
 	}
 
 	public void clearGameComponents() {

@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
+import game.breakout.Breakout;
+
 public class MenuInGame extends JPanel{
 
     private JPanel menuInGameSquarePane = new JPanel(new BorderLayout());;
@@ -22,9 +24,15 @@ public class MenuInGame extends JPanel{
         this.BackToMenuButton.addActionListener(e -> {
             frame.dispose();
             frame.getGame().clearGameComponents();
-            GameFrame gameFrame = new GameFrame();
-			gameFrame.addMenu(new MenuPanel(gameFrame));
-			gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuPanel");
+            pane.removeAll();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    GameFrame gameFrame = new GameFrame();
+                    gameFrame.addMenu(new MenuPanel(gameFrame));
+                    gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuPanel");
+                }
+            });
+            this.removeAll();
         });
 
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
