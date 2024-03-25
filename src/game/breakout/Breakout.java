@@ -261,7 +261,6 @@ public class Breakout extends Game{
 	/**
 	 * handles the bricks in marathon mode
 	 * 
-	 * 
 	 */
 	public void createMarathonBricks(int rows, int columns){
 
@@ -279,10 +278,12 @@ public class Breakout extends Game{
 				// Generate a random number between 1 and 3
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
-	
-				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				
+				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus));
+				randomLifespan, dropBonus);
+				brick.moveRight();
+				this.getBricks().add(brick);
 			}
 		}
 	}
@@ -313,7 +314,7 @@ public class Breakout extends Game{
 			this.createQuickGameBricks(4, 8);
 		}
 		else{
-
+			this.createMarathonBricks(4, 8);
 		}
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
@@ -407,7 +408,7 @@ public class Breakout extends Game{
 	/**
 	 * Update the bricks entities
 	 */
-	public void updateBricks() {
+	public void updateQuickGameBricks() {
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
 		Iterator<Brick> iterator = this.getBricks().iterator();
@@ -442,6 +443,58 @@ public class Breakout extends Game{
 			}
 		}
 	}
+
+
+	/**
+	 * Update the bricks entities in the marathon game mode
+	 */
+	public void updateMarathonBricks() {
+		// Using an iterator to safely remove bricks from the collection
+		// Without getting the ConcurrentModificationException
+		Iterator<Brick> iterator = this.getBricks().iterator();
+		Random random = new Random();
+
+		
+		if (this.nbBricks == 0 && this.life >= 0){
+			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
+		}
+
+		while (iterator.hasNext()) {
+			Brick brick = iterator.next();
+			if(brick.willBeOffScreen(this.getPanel(), 0)){
+				brick.getRepresentation().setPosY(brick.getRepresentation().getPosY()+30);
+				if(brick.movingRight()){
+					brick.moveLeft();
+				}else{
+					brick.moveRight();
+				}
+			}
+			brick.move(1);
+			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
+				//this.getBall().reverseHorizontalMomentum();
+				this.getBall().reverseVerticalMomentum();          
+				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
+					if (brick.doesDropBonus()){
+						// store the size of the brick
+						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
+					}
+					this.getPanel().getGameZone().remove(brick.getRepresentation());
+					this.nbBricks--; // Decrement the count of brick when the brick is broken
+					this.score += 100; // Incremen the score when the brick is broken
+					// Safely remove the brick from the collection
+					iterator.remove();
+					this.getPanel().updateScore(this.score, this.nbBricks);
+				}
+				else{
+					brick.setLifespan(brick.getLifespan() - 1);
+				}
+				// Break the loop to prevent the ball from colliding with multiple bricks
+				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
+				break;
+			}
+		}
+	}
+
 
 	/**
 	 * Update the bonus entity
@@ -512,7 +565,11 @@ public class Breakout extends Game{
 	public void onUpdate() {
 		this.updatePlayer();
 		this.updateBall();
-		this.updateBricks();
+		if(mode==0){
+			this.updateQuickGameBricks();
+		}else{
+		this.updateMarathonBricks();
+		}
 		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 
