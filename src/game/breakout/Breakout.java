@@ -359,9 +359,9 @@ public class Breakout extends Game{
 
 				}
 			}
-			this.getPlayer().move(Player.MOVE_SPEED);
+			this.getPlayer().move(Player.DEFAULT_SPEED);
 			((Player)this.physicalPlayer.getObject()).setLastPos(this.physicalPlayer.getPosition());
-			this.physicalPlayer.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.MOVE_SPEED)[0], this.getPlayer().getCurrPos(Player.MOVE_SPEED)[1]));
+			this.physicalPlayer.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[0], this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[1]));
 		}
 	}
 

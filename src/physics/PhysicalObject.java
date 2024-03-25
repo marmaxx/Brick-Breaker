@@ -4,9 +4,9 @@ import java.util.Vector;
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary; 
 import game.breakout.entities.Ball;
-import game.breakout.entities.Brick;
+//import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
-import game.breakout.entities.Wall;
+//import game.breakout.entities.Wall;
 import game.breakout.entities.rules.Entity;
 import physics.utils.*;
 
@@ -29,9 +29,9 @@ public class PhysicalObject<T> {
     private Vector2D normalVectorHR = new Vector2D(1, 0);
     private Vector2D normalVectorHL = new Vector2D(-1, 0);
     private Slop slop;
-    private Vector2D topRightPosition;
-    private Vector2D bottomLeftPosition;
-    private Vector2D bottomRightPosition;
+    //private Vector2D topRightPosition;
+    //private Vector2D bottomLeftPosition;
+    //private Vector2D bottomRightPosition;
 
     public PhysicalObject(T obj, double mass, Vector2D position, boolean movable, GraphicalObject representation){
         this.object=obj;
@@ -152,12 +152,12 @@ public class PhysicalObject<T> {
     public boolean isGoingToCollide(PhysicalObject<T> objectB){
         if (this.getObject() instanceof Ball && objectB.getObject() instanceof Player){
             int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.MOVE_SPEED);
+            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.DEFAULT_SPEED);
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
         else if (this.getObject() instanceof Ball && objectB.getObject() instanceof Ball){
             int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.MOVE_SPEED);
+            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.DEFAULT_SPEED);
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
         else if(this.getObject() instanceof Ball){
