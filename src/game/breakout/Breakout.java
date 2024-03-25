@@ -411,7 +411,7 @@ public class Breakout extends Game{
 	public void updateQuickGameBricks() {
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
-		Iterator<Brick> iterator = this.getBricks().iterator();
+		ListIterator<Brick> iterator = this.getBricks().listIterator();
 
 		if (this.nbBricks == 0 && this.life >= 0){
 			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
@@ -451,16 +451,39 @@ public class Breakout extends Game{
 	public void updateMarathonBricks() {
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
-		Iterator<Brick> iterator = this.getBricks().iterator();
-		Random random = new Random();
+		ListIterator<Brick> iterator = this.getBricks().listIterator();
 
+		if(this.nbBricks <30){ // has to be here to not cause conflict with the iterator
+			final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+			// Start the bricks at the center of the panel
+			int initialXPos = (int) Math.floor(this.getPanel().getGameZone().getPreferredSize().getWidth()
+			/ 2 - (10 * BRICK_SPACING) / 2);
 		
-		if (this.nbBricks == 0 && this.life >= 0){
-			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
+			for(int column = 0; column < 10; column++){
+				int verticalPos = Brick.DEFAULT_POS_Y + 1 * (Brick.DEFAULT_HEIGHT + 10);
+				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
+
+				// Generate a random number between 1 and 3
+				int randomNumber = new Random().nextInt(4) + 1;
+				boolean dropBonus = (randomNumber == 1);
+				
+				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus);
+				brick.moveRight();
+				iterator.add(brick);
+				this.getPanel().getGameZone().add(brick.getRepresentation());
+				
+			}
+			this.nbBricks+=10;
 		}
 
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
+			if (brick.getRepresentation().getPosY()>this.getPlayer().getRepresentation().getPosY()){
+				this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
+			}
 			if(brick.willBeOffScreen(this.getPanel(), 0)){
 				brick.getRepresentation().setPosY(brick.getRepresentation().getPosY()+30);
 				if(brick.movingRight()){
