@@ -257,3 +257,21 @@ Nic JDC
 - merge branche physique
 - quelques bugs de rebonds à corriger (entre 2 briques) -> penser à écrire des tests exécutables
 - rotation (vitesse angulaire) de la balle (effets)
+- 
+
+## Semaine 9 (26/3/2024)
+
+### Ce qui a été fait:
+
+- Noaym, Lucas, Marius:
+    .Implémentation du mode marathon
+
+
+### À faire
+
+- plus de niveaux
+- rebonds sur surfaces en biais
+- merge branche physique
+- quelques bugs de rebonds à corriger (entre 2 briques) -> penser à écrire des tests exécutables
+- rotation (vitesse angulaire) de la balle (effets)
+- 
