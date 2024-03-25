@@ -296,7 +296,7 @@ public class PhysicalObject<T> {
                     if (this.object instanceof Ball && objectA.getObject() instanceof Player){
                         //this.speed = this.speed.add(objectA.getSpeed().multiply(rotationCoeff));
                         //System.out.println(objectA.getSpeed());
-                        this.applyForce(new Vector2D(0, - 100 *PhysicsEngine.GRAVITY_CONSTANT * this.getMass()));
+                        //this.applyForce(new Vector2D(0, - 100 *PhysicsEngine.GRAVITY_CONSTANT * this.getMass()));
                     }
                 }
                 
