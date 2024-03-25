@@ -31,16 +31,17 @@ public class Breakout extends Game{
 	private int nbBricks;
 	private int score = 0;
 	private int life = 3;
-
+	private int mode=0;
 	/**
 	 * Instantiates a new Breakout game
 	 * 
 	 * @param gameFrame The frame in which the game is displayed
 	 */
-	public Breakout(GameFrame gameFrame) {
+	public Breakout(GameFrame gameFrame, int mode) {
 		super(gameFrame.getGamePanel(), "Breakout");
 		this.gameframe = gameFrame;
 		this.gameframe.setGame(this);
+		this.mode =	mode;
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
@@ -231,9 +232,38 @@ public class Breakout extends Game{
 	 * @param rows The number of rows of bricks
 	 * @param columns The number of columns of bricks
 	 */
-	public void createBricks(int rows, int columns){
+	public void createQuickGameBricks(int rows, int columns){
 		// TODO: Prevent the amount of bricks from exceeding the panel's width and height
 		// See GraphicalObject#isOnScreen(x, y, panel)
+
+		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+		// Start the bricks at the center of the panel
+		int initialXPos = (int) Math.floor(this.getPanel().getGameZone().getPreferredSize().getWidth()
+		/ 2 - (columns * BRICK_SPACING) / 2);
+		
+		for(int row = 0; row < rows; row++){
+			for(int column = 0; column < columns; column++){
+				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
+
+				// Generate a random number between 1 and 3
+				int randomNumber = new Random().nextInt(4) + 1;
+				boolean dropBonus = (randomNumber == 1);
+	
+				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus));
+			}
+		}
+	}
+
+	/**
+	 * handles the bricks in marathon mode
+	 * 
+	 * 
+	 */
+	public void createMarathonBricks(int rows, int columns){
 
 		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
 
@@ -279,7 +309,12 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		this.createBricks(4, 8);
+		if (this.mode==0){
+			this.createQuickGameBricks(4, 8);
+		}
+		else{
+
+		}
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
