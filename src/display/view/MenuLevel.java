@@ -102,7 +102,7 @@ public class MenuLevel extends JPanel {
 
     private void addAction(int i, JButton b){
         b.addActionListener((event) -> {
-        startgame(1);
+        startgame(i);
         });
     }
 

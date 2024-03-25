@@ -16,7 +16,7 @@ public class Level {
 				createLevel1(b);
 				break;
 			case 2:
-				createLevel1(b);
+				createLevel2(b);
 				break;
 			case 3:
 				createLevel1(b);
@@ -61,6 +61,43 @@ public class Level {
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
 				randomLifespan, dropBonus));
 			}
+		}
+	}
+
+
+
+
+
+    public static void createLevel2(Breakout b) {
+
+        int columns = 8;
+        int rows = 4;
+        final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+        int initialXPos = (int) Math.floor(b.getPanel().getGameZone().getPreferredSize().getWidth()
+                / 2 - (columns * BRICK_SPACING) / 2);
+
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                if ((row % 2 == 0) && (column % 2 == 0) || (row % 2 == 1) && (column % 2 == 1)) {
+                    int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+                    int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
+
+                    int randomNumber = new Random().nextInt(4) + 1;
+                    boolean dropBonus = (randomNumber == 1);
+
+                    Brick brick = new Brick(initialXPos + column * BRICK_SPACING, verticalPos,
+                            Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT,
+                            randomLifespan, dropBonus);
+
+                    // Appliquer la rotation de 32 degrés sur les rectangles aux positions impaires
+                    if ((row % 2 == 1) && (column % 2 == 1)) {
+                        brick.rotate(Math.toRadians(32));
+                    }
+
+                    b.getBricks().add(brick);
+        		}
+    		}
 		}
 	}
 }
