@@ -14,6 +14,7 @@ public class MenuPanel extends JPanel {
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
     JButton Level = createStyledButton(" Level "); 
+    JButton Marathon  = createStyledButton("Marathon mode");
     private BufferedImage backgroundImage; // background image 
 
     public MenuPanel(GameFrame gameFrame){
@@ -27,7 +28,7 @@ public class MenuPanel extends JPanel {
         }
 
         QuickGame.setPreferredSize(BUTTON_SIZE);
-
+        Marathon.setPreferredSize(BUTTON_SIZE);
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel"); // switching the card layout
@@ -39,6 +40,15 @@ public class MenuPanel extends JPanel {
             gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuLevel");
         });
         
+            Game game = new Breakout(gameFrame,0); //creates an instance of QuickGame Breakout
+			game.start(); //starting the game 
+        });
+        Marathon.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel"); // switching the card layout
+            gameFrame.getContainer().add(this, "MenuPanel");
+            Game game = new Breakout(gameFrame,1); //creates an instance of the Marathon mode
+			game.start(); //starting the game 
+        });
 
         this.add(QuickGame);
         this.add(Level);
