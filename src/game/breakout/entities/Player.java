@@ -21,6 +21,7 @@ public class Player extends Entity {
 	public static final int DEFAULT_SPEED = 10;
 	public static final int MIN_SPEED = DEFAULT_SPEED - (int)(0.5f * DEFAULT_SPEED);
 	public static final int MAX_SPEED = DEFAULT_SPEED + (int)(1.0f * DEFAULT_SPEED);
+	private Vector2D lastPos = new Vector2D(630, 700);
 
 	/**
 	 * Instantiates a new Player
@@ -96,5 +97,13 @@ public class Player extends Entity {
 	public int getMaxSpeed() {
 		return MAX_SPEED;
 	}
+
+	public Vector2D getLastPos(){
+		return this.lastPos;
+	}
+	public void setLastPos(Vector2D vect){
+		this.lastPos = vect;
+	}
+
 
 }

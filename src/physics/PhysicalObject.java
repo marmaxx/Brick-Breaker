@@ -152,12 +152,12 @@ public class PhysicalObject<T> {
     public boolean isGoingToCollide(PhysicalObject<T> objectB){
         if (this.getObject() instanceof Ball && objectB.getObject() instanceof Player){
             int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.MOVE_SPEED);
+            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.DEFAULT_SPEED);
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
         else if (this.getObject() instanceof Ball && objectB.getObject() instanceof Ball){
             int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.MOVE_SPEED);
+            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.DEFAULT_SPEED);
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
         else if(this.getObject() instanceof Ball){

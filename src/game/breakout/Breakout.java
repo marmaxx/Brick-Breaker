@@ -55,7 +55,7 @@ public class Breakout extends Game{
 		this.gameframe = gameFrame;
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
 		Vector2D playerVectPos = new Vector2D(630, 700);
 		this.physicalPlayer = new PhysicalObject<Entity>(player, 51, playerVectPos, false, player.getRepresentation());
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
@@ -102,7 +102,11 @@ public class Breakout extends Game{
 						}
 						break;
 					case KeyEvent.VK_SPACE:
-						if (!Breakout.this.getBall().getIsMoving()) Breakout.this.getBall().setIsMoving(true);
+						if (!Breakout.this.getBall().getIsMoving()){
+							System.out.println(("espace"));
+							Breakout.this.getBall().setIsMoving(true);
+						}
+						
 				}
 			}
 
@@ -321,13 +325,13 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		//this.createBricks(4, 8);
+		this.createBricks(4, 8);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
 		// Add all entities to the game
-		/*for (Brick brick : this.getBricks()) {
+		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
-		}*/
+		}
 		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
 		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
@@ -359,9 +363,9 @@ public class Breakout extends Game{
 
 				}
 			}
-			this.getPlayer().move(Player.MOVE_SPEED);
+			this.getPlayer().move(Player.DEFAULT_SPEED);
 			((Player)this.physicalPlayer.getObject()).setLastPos(this.physicalPlayer.getPosition());
-			this.physicalPlayer.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.MOVE_SPEED)[0], this.getPlayer().getCurrPos(Player.MOVE_SPEED)[1]));
+			this.physicalPlayer.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[0], this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[1]));
 		}
 	}
 
@@ -525,7 +529,7 @@ public class Breakout extends Game{
 	@Override
 	public void onUpdate(double deltaTime) {
 		this.updatePlayer();
-		this.updateBall();
+		//this.updateBall();
 		this.updateBricks();
 		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
