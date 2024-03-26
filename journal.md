@@ -266,6 +266,11 @@ Nic JDC
 - Noaym, Lucas, Marius:
     .Implémentation du mode marathon
 
+- Maxime
+    .Création du niveau 2 avec une rotation de briques.
+    .Fusion de la structure de sélection de niveau et de création de partie.
+    .Adaptation du mode Marathon à cette nouvelle structure.
+
 
 ### À faire
 
