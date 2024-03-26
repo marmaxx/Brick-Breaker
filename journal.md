@@ -276,7 +276,7 @@ Nic JDC
 
 - plus de niveaux
 - rebonds sur surfaces en biais
-- merge branche physique
+- merge branche physique (URGENT)
 - quelques bugs de rebonds à corriger (entre 2 briques) -> penser à écrire des tests exécutables
 - rotation (vitesse angulaire) de la balle (effets)
 - 
