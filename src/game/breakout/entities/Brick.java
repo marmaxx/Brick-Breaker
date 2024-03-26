@@ -6,14 +6,11 @@ import java.util.Collections;
 
 import display.engine.shapes.Rectangle;
 import game.breakout.entities.rules.Entity;
-import java.awt.geom.AffineTransform;
 
 
 public class Brick extends Entity {
     protected boolean isDestroyed, dropBonus;
     protected int lifespan;
-	private int PosX; 
-	private int PosY;
 
 	public static final int DEFAULT_POS_X = 1;
 	public static final int DEFAULT_POS_Y = 100;
@@ -53,8 +50,6 @@ public class Brick extends Entity {
         int lifespan, boolean dropBonus
     ) {
         super(new Rectangle(lifespans.get(lifespan), posX, posY, width, height));
-		this.PosX = posX; 
-		this.PosY = posY;
 		if (!lifespans.containsKey(lifespan)) {
 			throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
 		}
@@ -152,27 +147,13 @@ public class Brick extends Entity {
         this.dropBonus = dropBonus;
     }
 
-	public void rotate(double angle) {
-    // Calculer le centre de la brique
-    double centerX = DEFAULT_POS_X + DEFAULT_WIDTH / 2;
-    double centerY = DEFAULT_POS_Y + DEFAULT_HEIGHT / 2;
 
-    // Calculer les nouvelles coordonnées des coins après rotation
-    double newX1 = centerX + (DEFAULT_POS_X - centerX) * Math.cos(angle) - (DEFAULT_POS_Y - centerY) * Math.sin(angle);
-    double newY1 = centerY + (DEFAULT_POS_X - centerX) * Math.sin(angle) + (DEFAULT_POS_Y - centerY) * Math.cos(angle);
-
-    double newX2 = centerX + (DEFAULT_POS_X + DEFAULT_WIDTH - centerX) * Math.cos(angle) - (DEFAULT_POS_Y - centerY) * Math.sin(angle);
-    double newY2 = centerY + (DEFAULT_POS_X + DEFAULT_WIDTH - centerX) * Math.sin(angle) + (DEFAULT_POS_Y - centerY) * Math.cos(angle);
-
-    double newX3 = centerX + (DEFAULT_POS_X + DEFAULT_WIDTH - centerX) * Math.cos(angle) - (DEFAULT_POS_Y + DEFAULT_HEIGHT - centerY) * Math.sin(angle);
-    double newY3 = centerY + (DEFAULT_POS_X + DEFAULT_WIDTH - centerX) * Math.sin(angle) + (DEFAULT_POS_Y + DEFAULT_HEIGHT - centerY) * Math.cos(angle);
-
-    double newX4 = centerX + (DEFAULT_POS_X - centerX) * Math.cos(angle) - (DEFAULT_POS_Y + DEFAULT_HEIGHT - centerY) * Math.sin(angle);
-    double newY4 = centerY + (DEFAULT_POS_X - centerX) * Math.sin(angle) + (DEFAULT_POS_Y + DEFAULT_HEIGHT - centerY) * Math.cos(angle);
-
-    // Mettre à jour les coordonnées de la brique
-	this.PosX = (int) Math.min(Math.min(newX1, newX2), Math.min(newX3, newX4));
-    this.PosY = (int) Math.min(Math.min(newY1, newY2), Math.min(newY3, newY4));
-}
-
+	/**
+ 	* Retrieves the Rectangle associated with the current brick.
+ 	* 
+ 	* @return the rectangle associated with the brick
+ 	*/
+	public Rectangle getRectangle() {
+    return ((Rectangle) this.getRepresentation());
+	}
 }

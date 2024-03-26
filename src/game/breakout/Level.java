@@ -1,12 +1,15 @@
 package game.breakout;
-
 import java.util.Random;
-
 import game.breakout.entities.Brick;
 
 
 public class Level {
     
+	/**
+     * Generates the bricks for the specified level.
+     * 
+     * @param b the Breakout game instance
+     */
     public static void level(Breakout b) {
 		switch (b.getLevel()) {
 			case 0:
@@ -36,7 +39,17 @@ public class Level {
 	}
 	
 
+	/**
+     * Generates the bricks for level 1.
+     * 
+     * <p>
+     * Bricks are created in a grid layout with random lifespans and optional bonus drops.
+     * </p>
+     * 
+     * @param b the Breakout game instance
+     */
 	public static void createLevel1(Breakout b){
+
 	// TODO: Prevent the amount of bricks from exceeding the panel's width and height
 		// See GraphicalObject#isOnScreen(x, y, panel)
 
@@ -68,6 +81,16 @@ public class Level {
 
 
 
+	 /**
+     * Generates the bricks for level 2.
+     * 
+     * 
+     * Bricks are created in a grid layout with random lifespans and optional bonus drops.
+     * Additionally, bricks at odd positions are rotated by -10 degrees.
+     * 
+     * 
+     * @param b the Breakout game instance
+     */
     public static void createLevel2(Breakout b) {
 
         int columns = 8;
@@ -90,9 +113,9 @@ public class Level {
                             Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT,
                             randomLifespan, dropBonus);
 
-                    // Appliquer la rotation de 32 degrés sur les rectangles aux positions impaires
+					// Apply rotation of -10 degrees to rectangles at odd positions
                     if ((row % 2 == 1) && (column % 2 == 1)) {
-                        brick.rotate(Math.toRadians(32));
+                        brick.getRectangle().setRotate(-10); 
                     }
 
                     b.getBricks().add(brick);
