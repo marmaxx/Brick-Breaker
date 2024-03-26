@@ -407,6 +407,7 @@ public class Breakout extends Game{
 		}
 	}
 
+
 	/**
 	 * Update the bonus entity
 	 */

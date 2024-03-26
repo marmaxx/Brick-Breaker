@@ -1,12 +1,12 @@
 package physics;
 import java.util.Vector;
+
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
-import display.engine.shapes.Circle;
 import game.breakout.entities.Ball;
-//import game.breakout.entities.Brick;
+import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
-//import game.breakout.entities.Wall;
+import game.breakout.entities.Wall;
 import game.breakout.entities.rules.Entity;
 import physics.utils.*;
 
@@ -20,17 +20,18 @@ public class PhysicalObject<T> {
     //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     private GraphicalObject representation;
     private double elasticity;
-    private double rotationCoeff=1;  //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
+    private double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
-    private boolean active=true;
+    private boolean active=true; 
+
     private Vector2D normalVectorVT = new Vector2D(0, 1);
     private Vector2D normalVectorVB = new Vector2D(0, -1);
     private Vector2D normalVectorHR = new Vector2D(1, 0);
     private Vector2D normalVectorHL = new Vector2D(-1, 0);
     private Slop slop;
-    //private Vector2D topRightPosition;
-    //private Vector2D bottomLeftPosition;
-    //private Vector2D bottomRightPosition;
+    private Vector2D topRightPosition;
+    private Vector2D bottomLeftPosition;
+    private Vector2D bottomRightPosition;
 
     public PhysicalObject(T obj, double mass, Vector2D position, boolean movable, GraphicalObject representation){
         this.object=obj;
@@ -133,6 +134,7 @@ public class PhysicalObject<T> {
         if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
         else{
             this.speed =((this.position.add(((Player)this.object).getLastPos().multiply(-1))).multiply(1/deltaTime));
+            //System.out.println(this.speed);
         }
 
     }
@@ -148,9 +150,9 @@ public class PhysicalObject<T> {
     }
 
     public boolean isGoingToCollide(PhysicalObject<T> objectB){
-        if (this.getObject() instanceof Ball && objectB.getObject() instanceof Player){
-            int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.DEFAULT_SPEED);
+        if (this.getObject() instanceof Ball ball && objectB.getObject() instanceof Player player){
+            int [] thisNextPos = ball.getNextPos(Ball.MOVE_SPEED);
+            int [] BNextPos = player.getNextPos( player.getMoveSpeed());
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
         else if (this.getObject() instanceof Ball && objectB.getObject() instanceof Ball){
@@ -164,6 +166,7 @@ public class PhysicalObject<T> {
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
         }
         else{
+            
             int [] BNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
             int [] thisNextPos = ((Entity) objectB.object).getCurrPos(0);
             return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
@@ -243,18 +246,6 @@ public class PhysicalObject<T> {
         return normalVectorVB;
     }
 
-    
-
-    public Vector2D getNormalVector(Vector2D vect){
-        if (normalVectorHL.dotProduct(vect) == 0){
-            return normalVectorHL;
-        }
-        return normalVectorVB;
-    }
-
-    
-
-    
 
     // resolving collisions
     public void resolveCollision(PhysicalObject<T> objectA) {
@@ -299,14 +290,8 @@ public class PhysicalObject<T> {
                         case OTHER: reflexionAngle = 0; break; // TODO handle a slope that is not vertical or horizontal
                         default: reflexionAngle = 0; break;
                     }        
-                    System.out.println("angle reflexion: "+Math.cos(reflexionAngle));
+                    //System.out.println("angle reflexion: "+Math.toDegrees(reflexionAngle));
                     //System.out.println("***********************************");
-                    if (this.getObject() instanceof Ball ball){
-                        //System.out.println(this.getSpeed().magnitude());
-                        //System.out.println(Math.cos(reflexionAngle));
-                        //System.out.println(Math.sin(reflexionAngle));
-                        //System.out.println();
-                    }
                     this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
                     if (this.object instanceof Ball && objectA.getObject() instanceof Player){
                         //this.speed = this.speed.add(objectA.getSpeed().multiply(rotationCoeff));

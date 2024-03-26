@@ -2,10 +2,11 @@ package physics;
 
 import java.util.ArrayList;
 import java.util.List;
-//import display.engine.rules.GraphicalObject.Boundary;
+
+import display.engine.rules.GraphicalObject.Boundary;
 import game.breakout.entities.Ball;
-//import game.breakout.entities.Player;
-//import game.breakout.entities.Wall;
+import game.breakout.entities.Player;
+import game.breakout.entities.Wall;
 import physics.utils.*;
 //TODO: java docs
 public class PhysicsEngine<T> {
@@ -33,11 +34,12 @@ public class PhysicsEngine<T> {
 
     // updating the objects state relatively to the time spent
     public void update(double deltaTime) {
+    
         applyGravity(deltaTime);
         handleCollisions();
-        //applyFriction(FRICTION_COEFFICIENT);
+        applyFriction(FRICTION_COEFFICIENT);
        
-        // updating objects position relatively to the time spent
+            // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {
             object.updateVelocity(deltaTime); 
             if (object.getObject() instanceof Ball && object.isActive()){
@@ -49,6 +51,8 @@ public class PhysicsEngine<T> {
                 object.getRepresentation().setPosX((int)object.getPosition().getX());
                 object.getRepresentation().setPosY((int)object.getPosition().getY());
             }
+            
+            
         }
     }
 
@@ -64,8 +68,6 @@ public class PhysicsEngine<T> {
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
                     // resolving collision between A and B+-
-                    //System.out.println("A= "+objectA.getMass());
-                    //System.out.println("B= "+objectB.getMass());
                     //System.out.println("A= "+objectA.getMass());
                     //System.out.println("B= "+objectB.getMass());
                     objectA.resolveCollision(objectB);
