@@ -33,6 +33,9 @@ public class Level {
 			case 6:
 				createLevel1(b);
 				break;
+			case -1: 
+				createLevelMarathon(b);
+				break;
 			default:
 				break;
 		}
@@ -121,6 +124,38 @@ public class Level {
                     b.getBricks().add(brick);
         		}
     		}
+		}
+	}
+
+
+	/**
+	 * handles the bricks in marathon mode
+	 * 
+	 */
+	public static void createLevelMarathon(Breakout b){
+		int columns = 8;
+        int rows = 4;
+		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+		// Start the bricks at the center of the panel
+		int initialXPos = (int) Math.floor(b.getPanel().getGameZone().getPreferredSize().getWidth()
+		/ 2 - (columns * BRICK_SPACING) / 2);
+		
+		for(int row = 0; row < rows; row++){
+			for(int column = 0; column < columns; column++){
+				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
+
+				// Generate a random number between 1 and 3
+				int randomNumber = new Random().nextInt(4) + 1;
+				boolean dropBonus = (randomNumber == 1);
+				
+				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus);
+				brick.moveRight();
+				b.getBricks().add(brick);
+			}
 		}
 	}
 }

@@ -40,17 +40,14 @@ public class MenuPanel extends JPanel {
             gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuLevel");
         });
         
-            Game game = new Breakout(gameFrame,0); //creates an instance of QuickGame Breakout
-			game.start(); //starting the game 
-        });
         Marathon.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel"); // switching the card layout
             gameFrame.getContainer().add(this, "MenuPanel");
-            Game game = new Breakout(gameFrame,1); //creates an instance of the Marathon mode
-			game.start(); //starting the game 
+            gameFrame.startGame(-1);
         });
 
         this.add(QuickGame);
+        this.add(Marathon);
         this.add(Level);
     }
 
