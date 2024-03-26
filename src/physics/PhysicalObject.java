@@ -1,5 +1,4 @@
 package physics;
-
 import java.util.Vector;
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
@@ -23,8 +22,7 @@ public class PhysicalObject<T> {
     private double elasticity;
     private double rotationCoeff=1;  //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
-    private boolean active=true; 
-
+    private boolean active=true;
     private Vector2D normalVectorVT = new Vector2D(0, 1);
     private Vector2D normalVectorVB = new Vector2D(0, -1);
     private Vector2D normalVectorHR = new Vector2D(1, 0);

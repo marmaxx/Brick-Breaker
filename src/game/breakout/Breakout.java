@@ -476,10 +476,11 @@ public class Breakout extends Game{
 	public void onUpdate(double deltaTime) {
 		this.updatePlayer();
 		//this.updateBall();
+		this.physicEngine.update(deltaTime);
 		this.updateBricks();
 		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
-		this.physicEngine.update(deltaTime);
+		
 
 	}
 }
