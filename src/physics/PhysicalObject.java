@@ -125,16 +125,15 @@ public class PhysicalObject<T> {
 
     // updating the position thanks to the speed and time spent
     public void updatePosition(double deltaTime) {
-        Vector2D displacement = speed.multiply(deltaTime);
+        Vector2D displacement = speed.multiply(deltaTime/1000000000);
         position = position.add(displacement);
     }
 
     // updating speed thanks to the acceleration and time spent
     public void updateVelocity(double deltaTime) {
-        if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
+        if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000000));
         else{
             this.speed =((this.position.add(((Player)this.object).getLastPos().multiply(-1))).multiply(1/deltaTime));
-            //System.out.println(this.speed);
         }
 
     }

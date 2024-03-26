@@ -183,6 +183,7 @@ public abstract class Game{
 			// Adding 3 to the maxFPS prevents the game from
 			// running at a lower FPS than the actual maxFPS
 			int updateTime = (int) (second / (this.getMaxFPS()+3));
+			//System.out.println(updateTime);
 
 			gameThread = new Thread(() -> {
 				Timer gameTimer = new Timer(updateTime, new ActionListener() {

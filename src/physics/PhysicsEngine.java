@@ -33,25 +33,22 @@ public class PhysicsEngine<T> {
 
     // updating the objects state relatively to the time spent
     public void update(double deltaTime) {
-    
         applyGravity(deltaTime);
         handleCollisions();
-        applyFriction(FRICTION_COEFFICIENT);
+        //applyFriction(FRICTION_COEFFICIENT);
        
-            // updating objects position relatively to the time spent
+        // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {
             object.updateVelocity(deltaTime); 
             if (object.getObject() instanceof Ball && object.isActive()){
                 //System.out.println("vitesse: "+object.getSpeed());
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
-                //System.out.println(object.getPosition());
+                System.out.println(object.getPosition());
                 object.updatePosition(deltaTime);
                 object.getRepresentation().setPosX((int)object.getPosition().getX());
                 object.getRepresentation().setPosY((int)object.getPosition().getY());
             }
-            
-            
         }
     }
 

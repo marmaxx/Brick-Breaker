@@ -43,8 +43,6 @@ public class Breakout extends Game{
 	private PhysicsEngine<Entity> physicEngine = new PhysicsEngine<>();
 	private double forceX;
 
-
-
 	/**
 	 * Instantiates a new Breakout game
 	 * 
@@ -61,7 +59,7 @@ public class Breakout extends Game{
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
 		Vector2D ballVectPos = new Vector2D(350, 400);
 		this.physicalBall = new PhysicalObject<Entity>(ball, 50, ballVectPos, true, ball.getRepresentation());
-		Vector2D speed = new Vector2D(0.5, 0.5);
+		Vector2D speed = new Vector2D(10, 10);
 		this.physicalBall.setSpeed(speed);
 		this.setEastWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		Vector2D VectEastWallPos = new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0);
@@ -106,7 +104,6 @@ public class Breakout extends Game{
 							System.out.println(("espace"));
 							Breakout.this.getBall().setIsMoving(true);
 						}
-						
 				}
 			}
 
@@ -531,7 +528,7 @@ public class Breakout extends Game{
 		this.updatePlayer();
 		//this.updateBall();
 		this.updateBricks();
-		this.updateBonus();
+		//this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 		this.physicEngine.update(deltaTime);
 
