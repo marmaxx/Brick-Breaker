@@ -2,7 +2,8 @@ package physics;
 
 import java.util.Vector;
 import display.engine.rules.GraphicalObject;
-import display.engine.rules.GraphicalObject.Boundary; 
+import display.engine.rules.GraphicalObject.Boundary;
+import display.engine.shapes.Circle;
 import game.breakout.entities.Ball;
 //import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
@@ -302,6 +303,12 @@ public class PhysicalObject<T> {
                     }        
                     System.out.println("angle reflexion: "+Math.cos(reflexionAngle));
                     //System.out.println("***********************************");
+                    if (this.getObject() instanceof Ball ball){
+                        //System.out.println(this.getSpeed().magnitude());
+                        //System.out.println(Math.cos(reflexionAngle));
+                        //System.out.println(Math.sin(reflexionAngle));
+                        //System.out.println();
+                    }
                     this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
                     if (this.object instanceof Ball && objectA.getObject() instanceof Player){
                         //this.speed = this.speed.add(objectA.getSpeed().multiply(rotationCoeff));

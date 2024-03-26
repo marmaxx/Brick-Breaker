@@ -214,6 +214,8 @@ public abstract class Game{
 		gameThread.start();
 	}
 
+
+
 	/**
 	 * Pause the game
 	 */

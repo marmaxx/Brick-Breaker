@@ -41,7 +41,7 @@ public class Breakout extends Game{
 	private PhysicalObject<Entity> physicalWestWall;
 	private ArrayList<PhysicalObject<Entity>> physicalBricks = new ArrayList<>();
 	private PhysicsEngine<Entity> physicEngine = new PhysicsEngine<>();
-	private double forceX;
+
 
 	/**
 	 * Instantiates a new Breakout game
@@ -53,6 +53,7 @@ public class Breakout extends Game{
 		this.gameframe = gameFrame;
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
+		this.setBonuses(new ArrayList<Bonus>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
 		Vector2D playerVectPos = new Vector2D(630, 700);
 		this.physicalPlayer = new PhysicalObject<Entity>(player, 51, playerVectPos, false, player.getRepresentation());
@@ -84,12 +85,10 @@ public class Breakout extends Game{
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
 						Breakout.this.getPlayer().moveLeft();
-						forceX=-1;
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
 						Breakout.this.getPlayer().moveRight();
-						forceX=1;
 						break;
 					case KeyEvent.VK_ESCAPE:
 						if(Breakout.this.isPaused()){
@@ -283,12 +282,11 @@ public class Breakout extends Game{
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 	
-				this.getBricks().add(new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick brick =new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, false));
-				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
-				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, false);
+				randomLifespan, dropBonus);
+				this.getBricks().add(brick);
+
 				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
 				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
 				this.physicalBricks.add(physicalBrick);
@@ -335,8 +333,6 @@ public class Breakout extends Game{
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 
-		//this.getBall().moveUp();
-		//this.getBall().moveRight();
 
 		this.getPanel().updateScore(this.score, this.nbBricks);
 		this.getPanel().updateLife(this.life);
@@ -366,53 +362,6 @@ public class Breakout extends Game{
 		}
 	}
 
-	/**
-	 * Update the ball entity
-	 */
-	public void updateBall() {
-		if (this.getBall().getIsMoving()){
-			int[] playerCurrPos = this.getPlayer().getCurrPos(this.getPlayer().getRepresentation().getSpeed());
-
-			Vector2D paddleToBallVector = this.getPlayer().getRepresentation().vectorFromCenterToCenter(this.getBall().getRepresentation());
-			Vector2D paddleToTopLeftCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0], playerCurrPos[1]); //the vector from the paddle's center to its top left corner
-			Vector2D paddleToTopRightCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0]+this.getPlayer().getRepresentation().getWidth(), playerCurrPos[1]);
-			
-			
-			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(),
-			 this.getBall().getNextPos(this.getBall().getRepresentation().getSpeed()),
-			  this.getPlayer().getNextPos(this.getPlayer().getRepresentation().getSpeed()))){
-
-				if (paddleToTopLeftCornerVector.angleBetween(paddleToBallVector)<0 && paddleToTopRightCornerVector.angleBetween(paddleToBallVector)>0) {
-					this.getBall().reverseVerticalMomentum();
-
-				} else {    
-					this.getBall().reverseHorizontalMomentum();
-					this.getPlayer().stopRight();
-					this.getPlayer().stopLeft();
-					
-				}
-			}
-
-			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
-					
-			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
-				/*if( this.getLife() == 1 && this.getNbBricks() > 0){
-					this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
-				}*/
-
-				// the ball respawn for the moment 
-				
-				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+(this.getPlayer().getRepresentation().getWidth()/2));
-				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight() -(this.getBall().getRepresentation().getHeight()/2));
-				this.getBall().moveUp();
-				this.getBall().moveRight();
-				this.getBall().setIsMoving(false);
-				this.life--;
-				this.getPanel().updateLife(this.life);
-			}
-			this.getBall().move(Ball.MOVE_SPEED);
-		}
-	}
 
 	/**
 	 * Update the bricks entities
@@ -500,13 +449,13 @@ public class Breakout extends Game{
 			case 2:
 				if (Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
 					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+					//System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
 				}
 				break;
 			case 3:
 				if (Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
 					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+					//System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
 				}
 				break;
 			case 4:
@@ -528,7 +477,7 @@ public class Breakout extends Game{
 		this.updatePlayer();
 		//this.updateBall();
 		this.updateBricks();
-		//this.updateBonus();
+		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 		this.physicEngine.update(deltaTime);
 
