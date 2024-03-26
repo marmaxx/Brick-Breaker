@@ -125,13 +125,13 @@ public class PhysicalObject<T> {
 
     // updating the position thanks to the speed and time spent
     public void updatePosition(double deltaTime) {
-        Vector2D displacement = speed.multiply(deltaTime/1000000000);
+        Vector2D displacement = speed.multiply(deltaTime);
         position = position.add(displacement);
     }
 
     // updating speed thanks to the acceleration and time spent
     public void updateVelocity(double deltaTime) {
-        if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000000));
+        if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
         else{
             this.speed =((this.position.add(((Player)this.object).getLastPos().multiply(-1))).multiply(1/deltaTime));
         }
@@ -300,7 +300,7 @@ public class PhysicalObject<T> {
                         case OTHER: reflexionAngle = 0; break; // TODO handle a slope that is not vertical or horizontal
                         default: reflexionAngle = 0; break;
                     }        
-                    //System.out.println("angle reflexion: "+Math.toDegrees(reflexionAngle));
+                    System.out.println("angle reflexion: "+Math.cos(reflexionAngle));
                     //System.out.println("***********************************");
                     this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
                     if (this.object instanceof Ball && objectA.getObject() instanceof Player){

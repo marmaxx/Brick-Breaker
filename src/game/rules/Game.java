@@ -33,7 +33,7 @@ public abstract class Game{
 		this.setRenderedFrames(0);
 		this.setCurrentFPS(0);
 		this.setMaxFPS(DEFAULT_FPS);
-		this.setVSync(false);
+		this.setVSync(true);
 		// on peut mettre true mais ça n'a pas l'air d'être constant à 60 FPS
     }
 
