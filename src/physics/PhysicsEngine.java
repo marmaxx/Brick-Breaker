@@ -38,7 +38,7 @@ public class PhysicsEngine<T extends Entity> {
     public void update(double deltaTime) {
     
         applyGravity(deltaTime);
-        handleCollisions();
+        handleCollisions(deltaTime);
         applyFriction(FRICTION_COEFFICIENT);
        
             // updating objects position relatively to the time spent
@@ -61,12 +61,12 @@ public class PhysicsEngine<T extends Entity> {
     
 
     // detecting and resolving collisions between objects
-    private void handleCollisions() {
+    private void handleCollisions(double deltaTime) {
         for (int i = 0; i < physicalObjects.size(); i++) {
             PhysicalObject<T> objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB) && objectA!=objectB && objectA.getObject().isActive() &&objectB.getObject().isActive()) {
+                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.getObject().isActive() &&objectB.getObject().isActive()) {
                     objectA.getObject().collided();
                     objectB.getObject().collided();
                    //System.out.println("COLLISION");

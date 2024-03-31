@@ -155,9 +155,9 @@ public class PhysicalObject<T extends Entity> {
         return this.representation.isColliding(objectB.representation);
     }
 
-    public boolean isGoingToCollide(PhysicalObject<T> objectB){
-        int[] thisNextPos = this.getNextPos(1);
-        int[] BNextPos = objectB.getNextPos(1);
+    public boolean isGoingToCollide(PhysicalObject<T> objectB, double deltaTime){
+        int[] thisNextPos = this.getNextPos(deltaTime);
+        int[] BNextPos = objectB.getNextPos(deltaTime);
         return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
 
     }
