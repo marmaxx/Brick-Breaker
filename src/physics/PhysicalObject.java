@@ -120,6 +120,7 @@ public class PhysicalObject<T extends Entity> {
         position = position.add(displacement);
     }
 
+
     // updating speed thanks to the acceleration and time spent
     public void updateVelocity(double deltaTime) {
         if (!(this.object instanceof Player)) this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
@@ -135,33 +136,30 @@ public class PhysicalObject<T extends Entity> {
         if(isMovable()) this.acceleration = this.acceleration.add(force.multiply(1.0 / mass));
     }
 
+    /**
+     * 
+     * @param deltaTime
+     * @return the physical object next position [0] is x and [1] is y
+     */
+    public int[] getNextPos(double deltaTime){
+        int[] rep = new int[2];
+        Vector2D displacement = speed.multiply(deltaTime);
+        rep[0] = (int) (position.getX()+displacement.getX());
+        rep[1] = (int) (position.getY()+displacement.getY());
+        return rep;
+    }
+
+
     // checking if a collision happened
-    public boolean collidesWith(PhysicalObject<T> objectB) {
+    public boolean isColliding(PhysicalObject<T> objectB) {
         return this.representation.isColliding(objectB.representation);
     }
 
     public boolean isGoingToCollide(PhysicalObject<T> objectB){
-        if (this.getObject() instanceof Ball ball && objectB.getObject() instanceof Player player){
-            int [] thisNextPos = ball.getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = player.getNextPos( player.getMoveSpeed());
-            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
-        }
-        else if (this.getObject() instanceof Ball && objectB.getObject() instanceof Ball){
-            int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = ((Entity) objectB.object).getNextPos(Player.DEFAULT_SPEED);
-            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
-        }
-        else if(this.getObject() instanceof Ball){
-            int [] thisNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] BNextPos = ((Entity) objectB.object).getCurrPos(0);
-            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
-        }
-        else{
-            
-            int [] BNextPos = ((Entity) this.object).getNextPos(Ball.MOVE_SPEED);
-            int [] thisNextPos = ((Entity) objectB.object).getCurrPos(0);
-            return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
-        }
+        int[] thisNextPos = this.getNextPos(1);
+        int[] BNextPos = objectB.getNextPos(1);
+        return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
+
     }
 
     public Vector2D getImpactPoint(PhysicalObject<T> objectA){

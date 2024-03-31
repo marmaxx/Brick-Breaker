@@ -58,6 +58,8 @@ public class PhysicsEngine<T extends Entity> {
         }
     }
 
+    
+
     // detecting and resolving collisions between objects
     private void handleCollisions() {
         for (int i = 0; i < physicalObjects.size(); i++) {
