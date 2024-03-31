@@ -370,40 +370,28 @@ public class Breakout extends Game{
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
 		Iterator<Brick> iterator = this.getBricks().iterator();
-		Iterator<PhysicalObject<Entity>> physicalIterator = physicalBricks.iterator();
 
 		/*if (this.nbBricks == 0 && this.life >= 0){
 			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
 		}*/
 
-		while (iterator.hasNext() && physicalIterator.hasNext()) {
+		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
-			PhysicalObject<Entity> entity = physicalIterator.next();
-			if (physicalBall.isGoingToCollide(entity)) {
-				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
+				if (brick.getLifespan() < Brick.MIN_LIFESPAN) {
 					if (brick.doesDropBonus()){
 						// store the size of the brick
 						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
-					brick.getRepresentation().destroy();
-					entity.destroy();
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
 					this.score += 100; // Increment the score when the brick is broken
 					// Safely remove the brick from the collection
 					iterator.remove();
-					physicalBricks.remove(entity);
 					this.getPanel().updateScore(this.score, this.nbBricks);
-					this.getPanel().getGameZone().remove(brick.getRepresentation());
-					this.getPanel().getGameZone().remove(entity.getRepresentation());
-					
 					
 					
 				}
-				else{
-					brick.setLifespan(brick.getLifespan() - 1);
-				}
-				break;
-			}
+				
+			
 		}
 	}
 

@@ -10,7 +10,7 @@ import game.breakout.entities.Wall;
 import game.breakout.entities.rules.Entity;
 import physics.utils.*;
 
-public class PhysicalObject<T> {
+public class PhysicalObject<T extends Entity> {
     private T object;
     private double mass;
     private Vector2D position ;
@@ -22,7 +22,7 @@ public class PhysicalObject<T> {
     private double elasticity;
     private double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
     //TODO: gérer la rotation 
-    private boolean active=true; 
+
 
     private Vector2D normalVectorVT = new Vector2D(0, 1);
     private Vector2D normalVectorVB = new Vector2D(0, -1);
@@ -70,16 +70,7 @@ public class PhysicalObject<T> {
         return new Vector2D(this.getRepresentation().getX() + this.getRepresentation().getWidth(), this.getRepresentation().getY() + this.getRepresentation().getHeight());
     }
 
-    public boolean isActive(){
-        return active;
-    }
-    /**
-	 * deactivates the phyiscal object from the view
-	 */
-	public void destroy() {
-        active=false;
-        this.getRepresentation().destroy();
-    }
+
 
 
     // Getters et setters

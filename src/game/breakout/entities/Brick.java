@@ -145,4 +145,16 @@ public class Brick extends Entity {
     public void setDropBonus(boolean dropBonus) {
         this.dropBonus = dropBonus;
     }
+
+	@Override
+	public void collided(){
+		super.collided();
+		if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
+			this.getRepresentation().destroy();
+			this.destroy();
+		}
+		else{
+			this.setLifespan(this.getLifespan() - 1);
+		}
+	}
 }

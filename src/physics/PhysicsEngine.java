@@ -5,11 +5,13 @@ import java.util.List;
 
 import display.engine.rules.GraphicalObject.Boundary;
 import game.breakout.entities.Ball;
+import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
+import game.breakout.entities.rules.Entity;
 import physics.utils.*;
 //TODO: java docs
-public class PhysicsEngine<T> {
+public class PhysicsEngine<T extends Entity> {
     public static double GRAVITY_CONSTANT=1;
     public static final double rebondForce = 10000;
     private static final double FRICTION_COEFFICIENT = 0.5;
@@ -42,7 +44,7 @@ public class PhysicsEngine<T> {
             // updating objects position relatively to the time spent
          for (PhysicalObject<T> object : physicalObjects) {
             object.updateVelocity(deltaTime); 
-            if (object.getObject() instanceof Ball && object.isActive()){
+            if (object.getObject() instanceof Ball && object.getObject().isActive()){
                 //System.out.println("vitesse: "+object.getSpeed());
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
@@ -62,8 +64,9 @@ public class PhysicsEngine<T> {
             PhysicalObject<T> objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject<T> objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
-                    
+                if (objectA.isGoingToCollide(objectB) && objectA!=objectB && objectA.getObject().isActive() &&objectB.getObject().isActive()) {
+                    objectA.getObject().collided();
+                    objectB.getObject().collided();
                    //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
@@ -83,7 +86,7 @@ public class PhysicsEngine<T> {
         
         for (PhysicalObject<T> object : physicalObjects) {
             // applying acceleration due to gravity
-            if(object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
+            if(object.getObject().isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
         }
     }
 
@@ -91,7 +94,7 @@ public class PhysicsEngine<T> {
     private void applyFriction(double frictionCoefficient) {
         
         for (PhysicalObject<T> object : physicalObjects) {
-            if(object.isActive()){
+            if(object.getObject().isActive()){
                 Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
                 object.applyForce(frictionForce);
             }   
