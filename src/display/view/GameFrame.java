@@ -1,18 +1,21 @@
 package display.view;
 
-import game.rules.Game;
 import javax.swing.*;
 import java.awt.*;
+
+import game.breakout.Breakout;
+
 
 public class GameFrame extends JFrame {
 	public static final Color INTERFACE_BACKGROUND = Color.WHITE;
 
-	private Game game;
+	private Breakout game;
 	private GamePanel gamePanel;
 	private MenuPanel menuPanel;
 	private JPanel container;
 	private GameOver game_over; 
 	private WinPanel game_win;
+	private MenuLevel menu_level;
 	private CardLayout cardLayout;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     
@@ -35,10 +38,12 @@ public class GameFrame extends JFrame {
 		this.setGamePanel(new GamePanel(this));
 		this.game_over = new GameOver(this);
 		this.game_win = new WinPanel(this);
+		this.menu_level = new MenuLevel(this);
 
 		this.container.add(this.gamePanel, "gamePanel");
 		this.container.add(this.game_over, "gameOver"); 
 		this.container.add(this.game_win, "winPanel");
+		this.container.add(this.menu_level, "menuLevel");
 
 		this.add(this.container);
 		this.pack();
@@ -129,11 +134,17 @@ public class GameFrame extends JFrame {
 	}
 
 
-	public void setGame(Game game){
+	public void setGame(Breakout game){
 		this.game = game;
 	}
 
-	public Game getGame(){
+	public Breakout getGame(){
 		return this.game;
+	}
+
+	public void startGame(int level){
+		Breakout game = new Breakout(this, level); //created instance of Breakout
+		this.game = game;
+		game.start(); //starting the game 
 	}
 }

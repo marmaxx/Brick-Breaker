@@ -7,6 +7,7 @@ import java.util.Collections;
 import display.engine.shapes.Rectangle;
 import game.breakout.entities.rules.Entity;
 
+
 public class Brick extends Entity {
     protected boolean isDestroyed, dropBonus;
     protected int lifespan;
@@ -156,5 +157,13 @@ public class Brick extends Entity {
 		else{
 			this.setLifespan(this.getLifespan() - 1);
 		}
+
+	/**
+ 	* Retrieves the Rectangle associated with the current brick.
+ 	* 
+ 	* @return the rectangle associated with the brick
+ 	*/
+	public Rectangle getRectangle() {
+        return ((Rectangle) this.getRepresentation());
 	}
 }

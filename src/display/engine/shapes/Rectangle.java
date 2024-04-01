@@ -2,10 +2,13 @@ package display.engine.shapes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D; 
 import display.engine.shapes.rules.Shape;
 import java.awt.Image;
 
 public class Rectangle extends Shape {
+
+	private int angle = 0;
 
 	/**
 	 * Instantiates a new Rectangle
@@ -56,6 +59,15 @@ public class Rectangle extends Shape {
     ) {
 		this(image, posX, posY, width, height, 0);
     }
+
+	/**
+ 	* Sets the rotation angle.
+ 	* 
+ 	* @param a an integer representing the angle of rotation
+ 	*/
+	public void setRotate(int a){
+		this.angle = a;
+	}
 	
 	
 	/**
@@ -64,11 +76,25 @@ public class Rectangle extends Shape {
     @Override
 	public void paintComponent(Graphics g){
 		if (getImage() != null) {
-			super.paintComponent(g);
-			g.drawImage(this.getImage(), 0, 0 , this.getWidth(), this.getHeight(), null);
+			if(this.angle != 0){
+				Graphics2D g2D = (Graphics2D)g;
+				g2D.rotate(Math.toRadians(this.angle));
+				super.paintComponent(g2D);
+				g2D.drawImage(this.getImage(), 0, 0 , this.getWidth(), this.getHeight(), null);
+			} else {
+				super.paintComponent(g);
+				g.drawImage(this.getImage(), 0, 0 , this.getWidth(), this.getHeight(), null);
+			}
 		} else {
-			super.paintComponent(g);
-			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			if (this.angle != 0){
+				Graphics2D g2D = (Graphics2D)g;
+				g2D.rotate(Math.toRadians(this.angle));
+				super.paintComponent(g2D);
+				g2D.fillRect(0, 0 , this.getWidth(), this.getHeight());
+			} else {
+				super.paintComponent(g);
+				g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			}	
 		}
 	}
 }
