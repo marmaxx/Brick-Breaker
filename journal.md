@@ -6,7 +6,6 @@ Tout le monde est là.
 
 - mettre en place projet gradle
 - projet exécutable minimal dans fenêtre graphique swing
-- 
 
 ## Semaine 2 (06/02/2024)
 
@@ -280,3 +279,21 @@ Nic JDC
 - quelques bugs de rebonds à corriger (entre 2 briques) -> penser à écrire des tests exécutables
 - rotation (vitesse angulaire) de la balle (effets)
 - 
+
+
+## Semaine 10 (2/4/2024)
+
+### Ce qui a été fait:
+- Lucas, Marius, Noaym : merge physics et develop
+
+- Noaym :
+        -   (enfin) fix de la collision ball et tout objets 
+        -   amelioration de IsGoingToCollide avec la physique (elle est maintenant tres precise et consistente)
+        -   fin du merge physics develop (fixed conflicts with new levels implementation)
+
+### À faire
+- refactoring du code (faire que Entity extend PhysicalObject, permettra de clean up une grande partie du code)
+- plus de niveaux
+- rebonds sur surfaces en biais
+- penser à écrire des tests exécutables
+- rotation (vitesse angulaire) de la balle (effets)
