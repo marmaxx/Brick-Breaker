@@ -151,12 +151,11 @@ public class Brick extends Entity {
 	public void collided(){
 		super.collided();
 		if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
-			this.getRepresentation().destroy();
 			this.destroy();
 		}
-		else{
-			this.setLifespan(this.getLifespan() - 1);
-		}
+		this.setLifespan(this.getLifespan() - 1);
+
+	}
 
 	/**
  	* Retrieves the Rectangle associated with the current brick.
