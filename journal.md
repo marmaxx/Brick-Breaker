@@ -284,12 +284,21 @@ Nic JDC
 ## Semaine 10 (2/4/2024)
 
 ### Ce qui a été fait:
-- Lucas, Marius, Noaym : merge physics et develop
+
+- Le merge de physics et de develop etait un travaille conséquent, cette branche divergeait de develop depuis +4 semaines
+
+- Marius:
+    -   Merge de physics et de develop 
 
 - Noaym :
-        -   (enfin) fix de la collision ball et tout objets 
-        -   amelioration de IsGoingToCollide avec la physique (elle est maintenant tres precise et consistente)
-        -   fin du merge physics develop (fixed conflicts with new levels implementation)
+    -   (enfin) fix de la collision ball et tout objets 
+    -   grande amelioration de IsGoingToCollide avec la physique (maintenant tres precise et consistente)
+    -   Merge de physics et de develop
+
+- Lucas :
+    -   Merge de physics et de develop
+    -   implementation du respawn et de la vie de la balle
+
 
 ### À faire
 - refactoring du code (faire que Entity extend PhysicalObject, permettra de clean up une grande partie du code)
