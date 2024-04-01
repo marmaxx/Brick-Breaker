@@ -7,8 +7,8 @@ import java.awt.Image;
 
 import javax.swing.JComponent;
 
-import display.engine.Vector2D;
 import display.view.GamePanel;
+import physics.utils.Vector2D;
 
 
 public abstract class GraphicalObject extends JComponent {
@@ -349,7 +349,7 @@ public abstract class GraphicalObject extends JComponent {
 	public Vector2D vectorCenterToCoordinates(double x, double y){
 		Vector2D rep = new Vector2D(0, 0);
 		rep.setX(x - this.getCenterX());
-		rep.setY(-(y-this.getCenterY()));  // negated because of how y coordinates are handled by java
+		rep.setY((y-this.getCenterY()));  // negated because of how y coordinates are handled by java
 		return rep;
 	}
 	

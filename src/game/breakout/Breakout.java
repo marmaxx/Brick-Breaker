@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-import display.engine.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
@@ -14,7 +13,11 @@ import game.breakout.entities.Bonus;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
+import game.breakout.entities.rules.Entity;
 import game.rules.Game;
+import physics.PhysicsEngine;
+import physics.PhysicalObject;
+import physics.utils.Vector2D;
 
 public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
@@ -30,7 +33,27 @@ public class Breakout extends Game{
 	private static final int WALL_WIDTH = 20;
 	private int nbBricks;
 	private int score = 0;
-	private int life = 3;
+
+	private int life = 3; // number of hearths when the game starts
+	private PhysicalObject<Entity> physicalBall;
+	private PhysicalObject<Entity> physicalPlayer;
+	private PhysicalObject<Entity> physicalEastWall;
+	private PhysicalObject<Entity> physicalNorthWall;
+	private PhysicalObject<Entity> physicalWestWall;
+	private ArrayList<PhysicalObject<Entity>> physicalBricks = new ArrayList<>();
+
+	public ArrayList<PhysicalObject<Entity>> getPhysicalBricks() {
+		return physicalBricks;
+	}
+
+
+	public PhysicsEngine<Entity> getPhysicEngine() {
+		return physicEngine;
+	}
+
+
+	private PhysicsEngine<Entity> physicEngine = new PhysicsEngine<>();
+	
 	private int level = 0;
 
 	/**
@@ -45,11 +68,29 @@ public class Breakout extends Game{
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 530,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
-		this.setBall(new Ball(Ball.DEFAULT_COLOR, 565,668, 30));
-		this.setEastWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
-		this.setWestWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
+		Vector2D playerVectPos = new Vector2D(630, 700);
+		this.physicalPlayer = new PhysicalObject<Entity>(player, 51, playerVectPos, false, player.getRepresentation());
+		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
+		Vector2D ballVectPos = new Vector2D(350, 400);
+		this.physicalBall = new PhysicalObject<Entity>(ball, 50, ballVectPos, true, ball.getRepresentation());
+		Vector2D speed = new Vector2D(0.5, 0.5);
+		this.physicalBall.setSpeed(speed);
+		this.setEastWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		Vector2D VectEastWallPos = new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0);
+		this.physicalEastWall = new PhysicalObject<Entity>(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
+		this.setWestWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
+		Vector2D VectWestWallPos = new Vector2D(0, 0);
+		this.physicalWestWall = new PhysicalObject<Entity>(westWall, 100, VectWestWallPos, false, westWall.getRepresentation());
 		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
+		Vector2D VectNorthWallPos = new Vector2D(0, 0);
+		this.physicalNorthWall = new PhysicalObject<Entity>(northWall, 100, VectNorthWallPos, false, northWall.getRepresentation());
+		this.physicEngine.getPhysicalObjects().add(physicalBall);
+		this.physicEngine.getPhysicalObjects().add(physicalPlayer);
+		this.physicEngine.getPhysicalObjects().add(physicalEastWall);
+		this.physicEngine.getPhysicalObjects().add(physicalWestWall);
+		this.physicEngine.getPhysicalObjects().add(physicalNorthWall);		
+
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -72,7 +113,10 @@ public class Breakout extends Game{
 						}
 						break;
 					case KeyEvent.VK_SPACE:
-						if (!Breakout.this.getBall().getIsMoving()) Breakout.this.getBall().setIsMoving(true);
+						if (!Breakout.this.getBall().getIsMoving()){
+							System.out.println(("espace"));
+							Breakout.this.getBall().setIsMoving(true);
+						}
 				}
 			}
 
@@ -227,6 +271,42 @@ public class Breakout extends Game{
 		return 	this.life;
 	}
 
+	
+	public void createBricks(int rows, int columns){
+		// TODO: Prevent the amount of bricks from exceeding the panel's width and height
+		// See GraphicalObject#isOnScreen(x, y, panel)
+
+		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+		// Start the bricks at the center of the panel
+		int initialXPos = (int) Math.floor(this.getPanel().getGameZone().getPreferredSize().getWidth()
+		/ 2 - (columns * BRICK_SPACING) / 2);
+		
+		for(int row = 0; row < rows; row++){
+			for(int column = 0; column < columns; column++){
+				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
+
+				// Generate a random number between 1 and 3
+				int randomNumber = new Random().nextInt(4) + 1;
+				boolean dropBonus = (randomNumber == 1);
+	
+				Brick brick =new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus);
+				this.getBricks().add(brick);
+
+				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
+				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
+				this.physicalBricks.add(physicalBrick);
+				this.getPanel().getGameZone().add(physicalBrick.getRepresentation()); 
+			}
+		}
+		for (PhysicalObject<Entity> brick:physicalBricks){
+			this.physicEngine.getPhysicalObjects().add(brick);
+		}
+	}
+		
 	/**
 	 * Get the level in the game.
 	 * 
@@ -258,6 +338,7 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
+		//this.createBricks(4, 8);
 		Level.level(this);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 
@@ -271,8 +352,6 @@ public class Breakout extends Game{
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 
-		this.getBall().moveUp();
-		this.getBall().moveRight();
 
 		this.getPanel().updateScore(this.score, this.nbBricks);
 		this.getPanel().updateLife(this.life);
@@ -296,36 +375,16 @@ public class Breakout extends Game{
 
 				}
 			}
-			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
+			this.getPlayer().move(Player.DEFAULT_SPEED);
+			((Player)this.physicalPlayer.getObject()).setLastPos(this.physicalPlayer.getPosition());
+			this.physicalPlayer.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[0], this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[1]));
 		}
 	}
 
 	/**
 	 * Update the ball entity
-	 */
+	 *
 	public void updateBall() {
-		if (this.getBall().getIsMoving()){
-			int[] playerCurrPos = this.getPlayer().getCurrPos(this.getPlayer().getRepresentation().getSpeed());
-
-			Vector2D paddleToBallVector = this.getPlayer().getRepresentation().vectorFromCenterToCenter(this.getBall().getRepresentation());
-			Vector2D paddleToTopLeftCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0], playerCurrPos[1]); //the vector from the paddle's center to its top left corner
-			Vector2D paddleToTopRightCornerVector = this.getPlayer().getRepresentation().vectorCenterToCoordinates(playerCurrPos[0]+this.getPlayer().getRepresentation().getWidth(), playerCurrPos[1]);
-			
-			
-			if(this.getBall().getRepresentation().isGoingToCollide(this.getPlayer().getRepresentation(),
-			 this.getBall().getNextPos(this.getBall().getRepresentation().getSpeed()),
-			  this.getPlayer().getNextPos(this.getPlayer().getRepresentation().getSpeed()))){
-
-				if (paddleToTopLeftCornerVector.angleBetween(paddleToBallVector)<0 && paddleToTopRightCornerVector.angleBetween(paddleToBallVector)>0) {
-					this.getBall().reverseVerticalMomentum();
-
-				} else {    
-					this.getBall().reverseHorizontalMomentum();
-					this.getPlayer().stopRight();
-					this.getPlayer().stopLeft();
-					
-				}
-			}
 
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
 					
@@ -347,45 +406,38 @@ public class Breakout extends Game{
 			}
 			this.getBall().move(Ball.MOVE_SPEED);
 		}
-	}
+	}*/
+
 
 	/**
 	 * Update the bricks entities
 	 */
-	public void updateQuickGameBricks() {
+	public void updateBricks() {
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
-		ListIterator<Brick> iterator = this.getBricks().listIterator();
+		Iterator<Brick> iterator = this.getBricks().iterator();
 
-		if (this.nbBricks == 0 && this.life >= 0){
-			this.clearGameComponents();
+		if (this.nbBricks <= 0 && this.life >= 0){
 			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
 		}
 
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
-			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				//this.getBall().reverseHorizontalMomentum();
-				this.getBall().reverseVerticalMomentum();          
-				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
+				if (!brick.isActive()) {
 					if (brick.doesDropBonus()){
 						// store the size of the brick
 						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
-					this.getPanel().getGameZone().remove(brick.getRepresentation());
-					iterator.remove();
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
-					this.score += 100; // Incremen the score when the brick is broken
+					this.score += 100; // Increment the score when the brick is broken
 					// Safely remove the brick from the collection
+					iterator.remove();
 					this.getPanel().updateScore(this.score, this.nbBricks);
+					
+					
 				}
-				else{
-					brick.setLifespan(brick.getLifespan() - 1);
-				}
-				// Break the loop to prevent the ball from colliding with multiple bricks
-				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
-				break;
-			}
+				
+			
 		}
 	}
 	
@@ -439,7 +491,7 @@ public class Breakout extends Game{
 			}
 			brick.move(1);
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				//this.getBall().reverseHorizontalMomentum();
+				//this.getBall().reverseHorizontalMomentum
 				this.getBall().reverseVerticalMomentum();          
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					if (brick.doesDropBonus()){
@@ -448,18 +500,15 @@ public class Breakout extends Game{
 					}
 					this.getPanel().getGameZone().remove(brick.getRepresentation());
 					this.nbBricks--; // Decrement the count of brick when the brick is broken
-					this.score += 100; // Incremen the score when the brick is broken
+					this.score += 100; // Increment the score when the brick is broken
 					// Safely remove the brick from the collection
 					iterator.remove();
 					this.getPanel().updateScore(this.score, this.nbBricks);
+					
+					
 				}
-				else{
-					brick.setLifespan(brick.getLifespan() - 1);
-				}
-				// Break the loop to prevent the ball from colliding with multiple bricks
-				// and avoid the multiple reverseDirection() calls (making the ball continue in the same direction)
-				break;
-			}
+			}	
+			
 		}
 	}
 
@@ -506,13 +555,13 @@ public class Breakout extends Game{
 			case 2:
 				if (Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
 					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+					//System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
 				}
 				break;
 			case 3:
 				if (Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
 					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+					//System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
 				}
 				break;
 			case 4:
@@ -530,18 +579,19 @@ public class Breakout extends Game{
 	 * @see game.rules.Game#onUpdate()
 	 */
 	@Override
-	public void onUpdate() {
+	public void onUpdate(double deltaTime) {
 		this.updatePlayer();
-		this.updateBall();
+		//this.updateBall();
+		this.physicEngine.update(deltaTime);
 		if(this.level != -1 ){
-			this.updateQuickGameBricks();
+			this.updateBricks();
 		}else{
 		this.updateMarathonBricks();
 		}
 		this.updateBonus();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
-		
 	}
+
 
 	public void clearGameComponents() {
 		// Remove all bricks from the list and game zone

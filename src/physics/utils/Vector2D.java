@@ -1,11 +1,11 @@
-package display.engine;
+package physics.utils;
 
 /**
  * This class represents a two-dimensional vector.
  * It stores the x and the y coordinates of a point in space.
  */
 
- public class Vector2D {
+public class Vector2D {
     private double x; // x-coordinate of the vector
     private double y; // y-coordinate of the vector
 
@@ -33,7 +33,6 @@ package display.engine;
         return y;
     }
 
-
     public void setX(double x) {
         this.x=x;
     }
@@ -41,7 +40,7 @@ package display.engine;
     public void setY(double y) {
         this.y=y;
     }
-
+    
     /**
      * @return the magnitude of the vector.
      */
@@ -93,22 +92,32 @@ package display.engine;
 
     /**
      * @param other represents another vector.
-     * @return the angle in radians from the this vector to the 'other' vector.
+     * @return the angle between these two vectors.
      */
     public double angleBetween(Vector2D other) {
+        double dotProduct = dotProduct(other);
+        double magnitudeProduct = magnitude() * other.magnitude();
+        return Math.acos(dotProduct / magnitudeProduct);
+    }
+
+        /**
+     * @param other represents another vector.
+     * @return the angle in radians from the this vector to the 'other' vector.
+     */
+    public double angleFromTo(Vector2D other) {
         double dotProduct = this.x * other.getX() + this.y * other.getY();
         double determinant = this.x * other.getY() - this.y * other.getX();
         double angle = Math.atan2(determinant, dotProduct);
     
         return angle;
     }
+
     
-
-
-
 
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
     }
+
 }
+

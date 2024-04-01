@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import display.engine.shapes.Rectangle;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
+import physics.utils.Vector2D;
 
 public class Player extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();
@@ -20,6 +21,7 @@ public class Player extends Entity {
 	public static final int DEFAULT_SPEED = 10;
 	public static final int MIN_SPEED = DEFAULT_SPEED - (int)(0.5f * DEFAULT_SPEED);
 	public static final int MAX_SPEED = DEFAULT_SPEED + (int)(1.0f * DEFAULT_SPEED);
+	private Vector2D lastPos = new Vector2D(630, 700);
 
 	/**
 	 * Instantiates a new Player
@@ -35,7 +37,7 @@ public class Player extends Entity {
         int size,
 		int speed
     ) {
-		super(new Rectangle(color, posX, posY, size, 10, speed));
+		super(new Rectangle(color, posX, posY, size, size/4, speed));
     }
 
 	/**
@@ -95,5 +97,13 @@ public class Player extends Entity {
 	public int getMaxSpeed() {
 		return MAX_SPEED;
 	}
+
+	public Vector2D getLastPos(){
+		return this.lastPos;
+	}
+	public void setLastPos(Vector2D vect){
+		this.lastPos = vect;
+	}
+
 
 }

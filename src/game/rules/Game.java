@@ -33,7 +33,7 @@ public abstract class Game{
 		this.setRenderedFrames(0);
 		this.setCurrentFPS(0);
 		this.setMaxFPS(DEFAULT_FPS);
-		this.setVSync(false);
+		this.setVSync(true);
 		// on peut mettre true mais ça n'a pas l'air d'être constant à 60 FPS
     }
 
@@ -183,12 +183,13 @@ public abstract class Game{
 			// Adding 3 to the maxFPS prevents the game from
 			// running at a lower FPS than the actual maxFPS
 			int updateTime = (int) (second / (this.getMaxFPS()+3));
+			//System.out.println(updateTime);
 
 			gameThread = new Thread(() -> {
 				Timer gameTimer = new Timer(updateTime, new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(!Game.this.isPaused()){
-							Game.this.update();
+							Game.this.update(updateTime);
 						}
 					}
 				});
@@ -204,7 +205,7 @@ public abstract class Game{
 					double timeSpent = now - this.getLastRenderTime();
 			
 					if(timeSpent > updateTime && !Game.this.isPaused()) {
-						Game.this.update();
+						Game.this.update(updateTime);
 					}
 				}
 			});
@@ -212,6 +213,8 @@ public abstract class Game{
 
 		gameThread.start();
 	}
+
+
 
 	/**
 	 * Pause the game
@@ -240,16 +243,18 @@ public abstract class Game{
 	/**
 	 * This method is called every frame to update the game.
 	 * It refreshes both the logic and the rendering of the game
+	 * This method is called every frame to update the game.
+	 * It refreshes both the logic and the rendering of the game
 	 */
-	public void update() {
+	public void update(double deltaTime) {
 		this.render();
-		this.onUpdate();
+		this.onUpdate(deltaTime);
 	}
 
 	/**
 	 * This method is called every frame to update the game logic
 	 */
-	public abstract void onUpdate();
+	public abstract void onUpdate(double deltaTime);
 
 	/**
 	 * Render the game and calculate the FPS

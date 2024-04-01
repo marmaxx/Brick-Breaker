@@ -2,6 +2,7 @@ package game.breakout.entities.rules;
 
 import display.engine.rules.GraphicalObject;
 import display.view.GamePanel;
+import physics.utils.Vector2D;
 
 
 public abstract class Entity {
@@ -10,6 +11,8 @@ public abstract class Entity {
 
 	public double forceX;
 	public double forceY;
+
+	private boolean active=true; 
 
 
     
@@ -41,6 +44,17 @@ public abstract class Entity {
         this.representation = representation;
     }
 
+	public boolean isActive(){
+        return active;
+    }
+    /**
+	 * deactivates the phyiscal object from the view
+	 */
+	public void destroy() {
+        active=false;
+        this.getRepresentation().destroy();
+    }
+
 
 	public boolean movingUp(){
 		return forceY>0;
@@ -55,10 +69,10 @@ public abstract class Entity {
 
 
 	public void moveUp(){
-		forceY=1;
+		forceY=-1;
 	}
 	public void moveDown(){
-		forceY=-1;
+		forceY=1;
 	}
 	public void moveLeft(){
 		forceX=-1;
@@ -169,6 +183,9 @@ public abstract class Entity {
 		return rep;
 	}
 
+	public void collided(){
+		
+	}
 
 	
 }

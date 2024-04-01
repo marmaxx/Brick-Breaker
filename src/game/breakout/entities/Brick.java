@@ -147,6 +147,15 @@ public class Brick extends Entity {
         this.dropBonus = dropBonus;
     }
 
+	@Override
+	public void collided(){
+		super.collided();
+		if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
+			this.destroy();
+		}
+		this.setLifespan(this.getLifespan() - 1);
+
+	}
 
 	/**
  	* Retrieves the Rectangle associated with the current brick.
@@ -154,6 +163,6 @@ public class Brick extends Entity {
  	* @return the rectangle associated with the brick
  	*/
 	public Rectangle getRectangle() {
-    return ((Rectangle) this.getRepresentation());
+        return ((Rectangle) this.getRepresentation());
 	}
 }
