@@ -3,38 +3,54 @@ package physics;
 import java.util.ArrayList;
 import java.util.List;
 
-import display.engine.rules.GraphicalObject.Boundary;
 import game.breakout.entities.Ball;
-import game.breakout.entities.Brick;
-import game.breakout.entities.Player;
-import game.breakout.entities.Wall;
 import game.breakout.entities.rules.Entity;
 import physics.utils.*;
-//TODO: java docs
+
+/**
+ * PhysicsEngine
+ */
 public class PhysicsEngine<T extends Entity> {
     public static double GRAVITY_CONSTANT=0.5;
     public static final double rebondForce = 10000;
     private static final double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject<T>> physicalObjects;
 
+    /**
+     * Create a new PhysicsEngine
+     */
     public PhysicsEngine() {
         this.physicalObjects = new ArrayList<>();
     }
 
+    /**
+     * Set the gravity constant
+     */
     public static void setGravityConstant (double scalar){
         GRAVITY_CONSTANT*=scalar;
     }
 
+    /**
+     * Get the gravity constant
+     */
     public List<PhysicalObject<T>> getPhysicalObjects(){
         return this.physicalObjects;
     }
 
-    // adding a physical object 
+    /**
+     * Add a physical object to the physics engine
+     * 
+     * @param object The object to add
+     */
     public void addPhysicalObject(PhysicalObject<T> object) {
         physicalObjects.add(object);
     }
 
-    // updating the objects state relatively to the time spent
+    /**
+     * update the physics engine
+     * 
+     * @param deltaTime
+     */
     public void update(double deltaTime) {
     
         applyGravity(deltaTime);
@@ -60,7 +76,11 @@ public class PhysicsEngine<T extends Entity> {
 
     
 
-    // detecting and resolving collisions between objects
+    /**
+     * Handle collisions between objects
+     * 
+     * @param deltaTime
+     */
     private void handleCollisions(double deltaTime) {
         for (int i = 0; i < physicalObjects.size(); i++) {
             PhysicalObject<T> objectA = physicalObjects.get(i);
@@ -83,7 +103,11 @@ public class PhysicsEngine<T extends Entity> {
     }
 
 
-    // applying gravity to all objects
+    /**
+     * Apply gravity to all objects in a certain amount of time
+     * 
+     * @param deltaTime
+     */
     private void applyGravity(double deltaTime) {
         
         for (PhysicalObject<T> object : physicalObjects) {
@@ -92,7 +116,11 @@ public class PhysicsEngine<T extends Entity> {
         }
     }
 
-    // applying friction to an object
+    /**
+     * Apply friction to all objects depending on the friction coefficient
+     * 
+     * @param frictionCoefficient
+     */
     private void applyFriction(double frictionCoefficient) {
         
         for (PhysicalObject<T> object : physicalObjects) {

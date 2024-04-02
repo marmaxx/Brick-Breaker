@@ -80,7 +80,7 @@ public class GameFrame extends JFrame {
 	 * 
 	 * @return The container panel attached to the frame
 	 */
-	public JPanel getContainer() {
+	public JPanel getPanelContainer() {
 		return this.container;
 	}
 

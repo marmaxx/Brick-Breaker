@@ -31,18 +31,18 @@ public class MenuPanel extends JPanel {
         Marathon.setPreferredSize(BUTTON_SIZE);
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel"); // switching the card layout
-            gameFrame.getContainer().add(this, "MenuPanel");
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
+            gameFrame.getPanelContainer().add(this, "MenuPanel");
             gameFrame.startGame(0);
         });
 
         Level.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuLevel");
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuLevel");
         });
         
         Marathon.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getContainer(), "gamePanel"); // switching the card layout
-            gameFrame.getContainer().add(this, "MenuPanel");
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
+            gameFrame.getPanelContainer().add(this, "MenuPanel");
             gameFrame.startGame(-1);
         });
 

@@ -38,7 +38,7 @@ public class WinPanel extends JPanel{
             frame.dispose();
             GameFrame gameFrame = new GameFrame();
 			gameFrame.addMenu(new MenuPanel(gameFrame));
-			gameFrame.getCardlayout().show(gameFrame.getContainer(), "menuPanel");
+			gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
 
         this.add(this.exit);

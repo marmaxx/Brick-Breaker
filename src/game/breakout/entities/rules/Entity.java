@@ -2,7 +2,6 @@ package game.breakout.entities.rules;
 
 import display.engine.rules.GraphicalObject;
 import display.view.GamePanel;
-import physics.utils.Vector2D;
 
 
 public abstract class Entity {

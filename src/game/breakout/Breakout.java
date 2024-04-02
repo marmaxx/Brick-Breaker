@@ -391,7 +391,7 @@ public class Breakout extends Game{
 			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
 				if( this.getLife() == 1 && this.getNbBricks() > 0){
 					this.clearGameComponents();
-					this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
+					this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 				}
 
 				// the ball respawn for the moment 
@@ -418,7 +418,7 @@ public class Breakout extends Game{
 		Iterator<Brick> iterator = this.getBricks().iterator();
 
 		if (this.nbBricks <= 0 && this.life >= 0){
-			this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "winPanel");
+			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
 
 		while (iterator.hasNext()) {
@@ -479,7 +479,7 @@ public class Breakout extends Game{
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().getPosY()>this.getPlayer().getRepresentation().getPosY()){
-				this.gameframe.getCardlayout().show(this.gameframe.getContainer(), "gameOver");
+				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 			if(brick.willBeOffScreen(this.getPanel(), 0)){
 				brick.getRepresentation().setPosY(brick.getRepresentation().getPosY()+30);

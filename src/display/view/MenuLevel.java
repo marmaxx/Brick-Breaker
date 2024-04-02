@@ -34,7 +34,7 @@ public class MenuLevel extends JPanel {
         this.addLevel();
 
         this.menu.addActionListener((event) -> {
-            this.game_frame.getCardlayout().show(this.game_frame.getContainer(), "menuPanel");
+            this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "menuPanel");
         });
 
         this.add(menu);
@@ -94,8 +94,8 @@ public class MenuLevel extends JPanel {
     }
 
     private void startgame(int i){
-        game_frame.getCardlayout().show(game_frame.getContainer(), "gamePanel"); // switching the card layout
-        game_frame.getContainer().add(game_frame.getMenuPanel(), "MenuPanel");
+        game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel"); // switching the card layout
+        game_frame.getPanelContainer().add(game_frame.getMenuPanel(), "MenuPanel");
         Game game = new Breakout(game_frame,i); //created instance of Breakout
 		game.start(); //starting the game 
     }
