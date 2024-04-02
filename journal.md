@@ -297,7 +297,6 @@ Nic JDC
 
 - Lucas :
     -   Merge de physics et de develop
-    -   implementation du respawn et de la vie de la balle
 
 
 ### À faire
@@ -306,3 +305,4 @@ Nic JDC
 - rebonds sur surfaces en biais
 - penser à écrire des tests exécutables
 - rotation (vitesse angulaire) de la balle (effets)
+- implémenter le respawn de la balle et l'actualisation du nopmbre de vies
