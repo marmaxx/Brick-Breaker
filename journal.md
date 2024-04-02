@@ -270,6 +270,10 @@ Nic JDC
     .Fusion de la structure de sélection de niveau et de création de partie.
     .Adaptation du mode Marathon à cette nouvelle structure.
 
+- Nic :
+    .Légère restructuration du bonus 
+    .misc
+
 
 ### À faire
 
@@ -298,6 +302,10 @@ Nic JDC
 - Lucas :
     -   Merge de physics et de develop
 
+- Nic :
+    - Merge manuelle de certaines anciennes branches finies en cours pour éviter tout conflit depuis l'ajout de la physique
+    (La structuraction s'approche plus ou moins de sa forme finale, quelques modifications à faire suite au merge de la physique)
+
 
 ### À faire
 - refactoring du code (faire que Entity extend PhysicalObject, permettra de clean up une grande partie du code)
@@ -306,3 +314,5 @@ Nic JDC
 - penser à écrire des tests exécutables
 - rotation (vitesse angulaire) de la balle (effets)
 - implémenter le respawn de la balle et l'actualisation du nopmbre de vies
+- Pour Nic : Essayer de mettre chaque update de breakout des entités dans les classes respectives (En cours mais compliqué, et arrêté entre temps pour pas empiéter sur le merge de la physique) 
+- Finir certains TODO (oubliés car ils n'étaient pas des tâches essentielles) 
