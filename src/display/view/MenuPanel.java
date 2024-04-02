@@ -1,6 +1,9 @@
 package display.view;
 
 import javax.swing.*;
+
+import game.breakout.Breakout;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,7 +25,7 @@ public class MenuPanel extends JPanel {
         this.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.height, SCREEN_FULL_SIZE.width/2));
 
         try {
-            backgroundImage = ImageIO.read(new File("src/Menu.jpg")); // Chemin vers votre image
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Menu.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import game.breakout.Breakout;
+
 
 public class GameOver extends JPanel{
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
@@ -22,7 +24,7 @@ public class GameOver extends JPanel{
         
 
          try {
-            backgroundImage = ImageIO.read(new File("src/GameOver.jpg")); // Chemin vers votre image
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "GameOver.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }

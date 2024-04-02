@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import game.breakout.Breakout;
+
 public class WinPanel extends JPanel{
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -20,7 +22,7 @@ public class WinPanel extends JPanel{
 
 
         try {
-            backgroundImage = ImageIO.read(new File("src/Win.jpg")); // Chemin vers votre image
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Win.jpg")); 
         } catch (IOException e) {
             e.printStackTrace();
         }
