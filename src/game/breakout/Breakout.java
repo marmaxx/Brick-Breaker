@@ -360,16 +360,20 @@ public class Breakout extends Game{
 				}
 			}
 			
-			this.player.setLastPos(this.player.getPosition());
 			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
-			this.player.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[0], this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[1]));
+			this.player.setLastPos(this.player.getPosition());
+			
 		}
+		else{
+			this.getPlayer().stopLeft();
+			this.getPlayer().stopRight();
+		}
+		
 	}
 
 	/**
 	 * Update the ball entity
-	 *
-	public void updateBall() {
+	 *public void updateBall() {
 
 			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
 					
@@ -390,8 +394,8 @@ public class Breakout extends Game{
 				this.getPanel().updateLife(this.life);
 			}
 			this.getBall().move(Ball.MOVE_SPEED);
-		}
-	}*/
+		}*/
+	
 
 
 	/**

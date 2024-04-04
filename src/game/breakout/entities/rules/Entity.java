@@ -107,15 +107,19 @@ public abstract class Entity extends PhysicalObject {
 	public void move(int speed){
 		if(movingLeft()){
 			this.getRepresentation().setPosX(this.getRepresentation().getPosX() - speed);
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX() - speed, this.getRepresentation().getPosY()));
 		}
 		if(movingRight()){
 			this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX() + speed, this.getRepresentation().getPosY()));
 		}
 		if(movingUp()){
 			this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX(), this.getRepresentation().getPosY()-speed));
 		}
 		if(movingDown()){
 			this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX(), this.getRepresentation().getPosY() +speed));
 		}
 	}
 
@@ -131,23 +135,30 @@ public abstract class Entity extends PhysicalObject {
 	 */
 	public boolean willBeOffScreen(GamePanel panel,int speed) {
 		int[] boundaries = this.getRepresentation().getBoundaries();
-
-		if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH){
-			return true;
+		if(movingUp()){
+			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH){
+				return true;
+			}
 		}
-		
-		if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] - speed > panel.getGameZone().getHeight()){
-			return true;
-		}
-		
-		
-		if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] + speed < WALL_WIDTH){
-			return true;
+		if (movingRight()){
+			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+				return true;
+			}
 		}
 
-		if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH){
-			return true;
+		if(movingDown()){
+			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight()){
+				return true;
+			}
 		}
+		
+		if(movingLeft()){
+			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] - speed < WALL_WIDTH){
+				return true;
+			}
+		}
+
+		
 		
 		return false;
 	}
