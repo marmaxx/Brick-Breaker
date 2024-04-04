@@ -442,25 +442,27 @@ public class Breakout extends Game{
 		if(this.nbBricks <30){ // has to be here to not cause conflict with the iterator
 			final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
 
+			int rows =1;
+			int columns = 8;
 			// Start the bricks at the center of the panel
 			int initialXPos = (int) Math.floor(this.getPanel().getGameZone().getPreferredSize().getWidth()
 			/ 2 - (10 * BRICK_SPACING) / 2);
 		
-			for(int column = 0; column < 10; column++){
-				int verticalPos = Brick.DEFAULT_POS_Y + 1 * (Brick.DEFAULT_HEIGHT + 10);
-				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
-
-				// Generate a random number between 1 and 3
-				int randomNumber = new Random().nextInt(4) + 1;
-				boolean dropBonus = (randomNumber == 1);
-				
-				Brick brick = new Brick(
-				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,0,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
-				brick.moveRight();
-				iterator.add(brick);
-				this.getPanel().getGameZone().add(brick.getRepresentation());
-				
+			for(int row = 0; row < rows; row++){
+				for(int column = 0; column < columns; column++){
+					int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+					int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
+	
+					// Generate a random number between 1 and 3
+					int randomNumber = new Random().nextInt(4) + 1;
+					boolean dropBonus = (randomNumber == 1);
+		
+					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+					randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+					this.getBricks().add(brick);
+	
+					this.getPhysicEngine().getPhysicalObjects().add(brick);
+				}
 			}
 			this.nbBricks+=10;
 		}
@@ -470,11 +472,14 @@ public class Breakout extends Game{
 			if (brick.getRepresentation().getPosY()>this.getPlayer().getRepresentation().getPosY()){
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
-			if(brick.willBeOffScreen(this.getPanel(), 0)){
+			if(brick.willBeOffScreen(this.getPanel(),5)){
 				brick.getRepresentation().setPosY(brick.getRepresentation().getPosY()+30);
+				brick.setPosition(new Vector2D(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY()+30));
 				if(brick.movingRight()){
+					brick.stopRight();
 					brick.moveLeft();
 				}else{
+					brick.stopLeft();
 					brick.moveRight();
 				}
 			}

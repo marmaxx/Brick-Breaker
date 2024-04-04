@@ -163,10 +163,12 @@ public class Brick extends Entity {
 	@Override
 	public void collided(PhysicalObject object) {
 		super.collided();
-		if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
-			this.destroy();
+		if(object instanceof Ball){
+			if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
+				this.destroy();
+			}
+			this.setLifespan(this.getLifespan() - 1);
 		}
-		this.setLifespan(this.getLifespan() - 1);
 	}
 
 }
