@@ -2,9 +2,13 @@ package game.breakout.entities;
 
 import java.awt.Color;
 import display.engine.rules.GraphicalObject;
+import display.engine.rules.GraphicalObject.Boundary;
+import display.engine.rules.PhysicalObject;
+
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import display.engine.shapes.Circle;
+import display.engine.utils.Vector2D;
 import display.view.GamePanel;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
@@ -127,6 +131,14 @@ public class Ball extends Entity {
 		}
 		return false;
 	}
+
+    public Vector2D getImpactPoint(Ball ball){
+		double distanceX = Math.abs(this.getPosition().getX()+this.getRepresentation().getWidth()/2 - ball.getPosition().getX());
+        double distanceY = Math.abs(this.getPosition().getY()+this.getRepresentation().getWidth()/2 - ball.getPosition().getY());
+        Vector2D vectorImpact = new Vector2D(distanceX/2, distanceY/2);
+        return vectorImpact.add(ball.getPosition());
+	}
+
 
 	
 }

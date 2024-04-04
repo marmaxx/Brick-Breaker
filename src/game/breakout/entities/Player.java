@@ -106,4 +106,13 @@ public class Player extends Entity {
 	}
 
 
+
+	/**
+	 * updating speed using previous position and time 
+	 */
+	@Override
+	public void updateVelocity(double deltaTime) {
+			this.speed =((this.position.add(this.getLastPos().multiply(-1))).multiply(1/deltaTime));
+	}
+
 }
