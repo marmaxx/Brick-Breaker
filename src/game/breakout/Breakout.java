@@ -34,25 +34,23 @@ public class Breakout extends Game{
 	private int nbBricks;
 	private int score = 0;
 
-	private int life = 3; // number of hearths when the game starts
-	private PhysicalObject<Entity> physicalBall;
-	private PhysicalObject<Entity> physicalPlayer;
-	private PhysicalObject<Entity> physicalEastWall;
-	private PhysicalObject<Entity> physicalNorthWall;
-	private PhysicalObject<Entity> physicalWestWall;
-	private ArrayList<PhysicalObject<Entity>> physicalBricks = new ArrayList<>();
 
-	public ArrayList<PhysicalObject<Entity>> getPhysicalBricks() {
+	private int life = 3; // number of hearths when the game starts
+
+	private ArrayList<Entity> physicalBricks = new ArrayList<>();
+
+	public ArrayList<Entity> getPhysicalBricks() {
 		return physicalBricks;
 	}
 
 
-	public PhysicsEngine<Entity> getPhysicEngine() {
+	public PhysicsEngine getPhysicEngine() {
+
 		return physicEngine;
 	}
 
 
-	private PhysicsEngine<Entity> physicEngine = new PhysicsEngine<>();
+	private PhysicsEngine physicEngine = new PhysicsEngine();
 	
 	private int level = 0;
 
@@ -70,21 +68,21 @@ public class Breakout extends Game{
 		this.setBonuses(new ArrayList<Bonus>());
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
 		Vector2D playerVectPos = new Vector2D(630, 700);
-		this.physicalPlayer = new PhysicalObject<Entity>(player, 51, playerVectPos, false, player.getRepresentation());
+		this.physicalPlayer = new PhysicalObject(player, 51, playerVectPos, false, player.getRepresentation());
 		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
 		Vector2D ballVectPos = new Vector2D(350, 400);
-		this.physicalBall = new PhysicalObject<Entity>(ball, 50, ballVectPos, true, ball.getRepresentation());
+		this.physicalBall = new PhysicalObject(ball, 50, ballVectPos, true, ball.getRepresentation());
 		Vector2D speed = new Vector2D(0.5, 0.5);
 		this.physicalBall.setSpeed(speed);
 		this.setEastWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		Vector2D VectEastWallPos = new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0);
-		this.physicalEastWall = new PhysicalObject<Entity>(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
+		this.physicalEastWall = new PhysicalObject(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
 		this.setWestWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
 		Vector2D VectWestWallPos = new Vector2D(0, 0);
-		this.physicalWestWall = new PhysicalObject<Entity>(westWall, 100, VectWestWallPos, false, westWall.getRepresentation());
+		this.physicalWestWall = new PhysicalObject(westWall, 100, VectWestWallPos, false, westWall.getRepresentation());
 		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
 		Vector2D VectNorthWallPos = new Vector2D(0, 0);
-		this.physicalNorthWall = new PhysicalObject<Entity>(northWall, 100, VectNorthWallPos, false, northWall.getRepresentation());
+		this.physicalNorthWall = new PhysicalObject(northWall, 100, VectNorthWallPos, false, northWall.getRepresentation());
 		this.physicEngine.getPhysicalObjects().add(physicalBall);
 		this.physicEngine.getPhysicalObjects().add(physicalPlayer);
 		this.physicEngine.getPhysicalObjects().add(physicalEastWall);
@@ -297,12 +295,12 @@ public class Breakout extends Game{
 				this.getBricks().add(brick);
 
 				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
+				PhysicalObject physicalBrick = new PhysicalObject(brick, 10, brickVectPos, false, brick.getRepresentation());
 				this.physicalBricks.add(physicalBrick);
 				this.getPanel().getGameZone().add(physicalBrick.getRepresentation()); 
 			}
 		}
-		for (PhysicalObject<Entity> brick:physicalBricks){
+		for (PhysicalObject brick:physicalBricks){
 			this.physicEngine.getPhysicalObjects().add(brick);
 		}
 	}

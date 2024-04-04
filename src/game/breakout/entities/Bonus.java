@@ -9,6 +9,7 @@ import java.awt.Image;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
+import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
@@ -77,11 +78,11 @@ public class Bonus extends Entity {
 
 	public Bonus(
 		Image image,
-        int posX, int posY,
         int size,
-        int bonusType
+        int bonusType,
+		double mass, Vector2D position, boolean movable
     ) {
-        super(new Circle(bonusTypes.get(bonusType), posX, posY, size, size));
+        super(mass,position,movable, new Circle(bonusTypes.get(bonusType), (int)position.getX(),(int)position.getY(), size, size));
 		if (!bonusTypes.containsKey(bonusType)) {
 			throw new IllegalArgumentException("La valeur donnée doit être entre  0 à x !");
 		}
@@ -106,9 +107,10 @@ public class Bonus extends Entity {
     public Bonus(
         int posX, int posY,
         int size,
-        int bonusType
+        int bonusType,
+		double mass, Vector2D position, boolean movable
     ) {
-		this(bonusTypes.get(bonusType), posX, posY, size, bonusType);
+		this(bonusTypes.get(bonusType), size, bonusType,mass,position,movable);
     }
 
 	/**
@@ -121,10 +123,10 @@ public class Bonus extends Entity {
 	 * @param  whether the bonus drops a bonus when destroyed
 	 */
 	public Bonus(
-		int posX, int posY,
-		int size
+		int size,
+		double mass, Vector2D position, boolean movable
 	) {
-		this(bonusTypes.get(MAX_BONUSTYPE), posX, posY, size, MAX_BONUSTYPE);
+		this(bonusTypes.get(MAX_BONUSTYPE), size, MAX_BONUSTYPE,mass,position,movable);
 	}
 
 
@@ -179,10 +181,7 @@ public class Bonus extends Entity {
 		return true;
 	}
 
-	@Override
-	public void move (int speed) {
-		this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
-	}
+
 
 	@Override
 	public void collided(PhysicalObject object) {

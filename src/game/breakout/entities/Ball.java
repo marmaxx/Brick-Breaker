@@ -35,10 +35,10 @@ public class Ball extends Entity {
 	 */
     public Ball(
 		Color color,
-        int posX, int posY,
-        int size
+        int size,
+		double mass, Vector2D position, boolean movable
     ) {
-		super(new Circle(color, posX, posY, size, size));
+		super(mass,position,movable,new Circle(color, (int)position.getX(), (int)position.getY(), size, size));
     }
 
 	/**
@@ -51,10 +51,10 @@ public class Ball extends Entity {
 	 */
     public Ball(
 		Image image,
-        int posX, int posY,
-        int size
+        int size,
+		double mass, Vector2D position, boolean movable
     ) {
-		super(new Circle(image, posX, posY, size, size));
+		super(mass,position,movable,new Circle(image, (int)position.getX(), (int)position.getY(), size, size));
     }
 
 	/**
@@ -63,17 +63,11 @@ public class Ball extends Entity {
 	 * @param posX the initial x position of the ball
 	 * @param posY the initial y position of the ball
 	 */
-	public Ball(int posX, int posY) {
-		this(DEFAULT_IMAGE, posX, posY, DEFAULT_SIZE);
+	public Ball(double mass, Vector2D position, boolean movable) {
+		this(DEFAULT_IMAGE, DEFAULT_SIZE,mass,position,movable);
 
 	}
 
-	/**
-	 * Instantiates a new Ball
-	 */
-	public Ball() {
-		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE);
-	}
 
 
 
@@ -94,43 +88,7 @@ public class Ball extends Entity {
 	}
 
 
-	/**
-	 * Checks if the entity will be off the screen if it moves in a given direction
-	 * 
-	 * @param speed the number of pixels the entity will move
-	 * @param direction the direction in which the entity will move
-	 * 
-	 * @return true if the entity will be off the screen, false otherwise
-	 */
-	@Override
-	public boolean willBeOffScreen(GamePanel panel,int speed) {
-		int[] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
-		if(forceY>0){
-			if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()]  < WALL_WIDTH){
-				reverseVerticalMomentum();
-				return true;
-			}
-		}
-		if(forceY<0){
-			if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] > panel.getGameZone().getHeight()){
-				reverseVerticalMomentum();
-				return true;
-			}
-		}
-		if(forceX<0){
-			if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] < WALL_WIDTH){
-				reverseHorizontalMomentum();
-				return true;
-			}
-		}
-		if(forceX>0){
-			if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] > panel.getGameZone().getWidth()-WALL_WIDTH){
-				reverseHorizontalMomentum();
-				return true;
-			}
-		}
-		return false;
-	}
+
 
     public Vector2D getImpactPoint(Ball ball){
 		double distanceX = Math.abs(this.getPosition().getX()+this.getRepresentation().getWidth()/2 - ball.getPosition().getX());

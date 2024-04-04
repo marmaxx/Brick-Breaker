@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;
+import display.engine.utils.Vector2D;
 import game.breakout.entities.rules.Entity;
 
 
@@ -46,11 +47,11 @@ public class Brick extends Entity {
 	 */
 	public Brick(
 		Color color,
-        int posX, int posY,
         int width, int height,
-        int lifespan, boolean dropBonus
+        int lifespan, boolean dropBonus,
+		double mass, Vector2D position, boolean movable
     ) {
-        super(new Rectangle(lifespans.get(lifespan), posX, posY, width, height));
+        super(mass,position,movable,new Rectangle(lifespans.get(lifespan), (int)position.getX(), (int)position.getY(),  width, height));
 		if (!lifespans.containsKey(lifespan)) {
 			throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
 		}
@@ -78,9 +79,10 @@ public class Brick extends Entity {
     public Brick(
         int posX, int posY,
         int width, int height,
-        int lifespan, boolean dropBonus
+        int lifespan, boolean dropBonus,
+		double mass, Vector2D position, boolean movable
     ) {
-		this(lifespans.get(lifespan), posX, posY, width, height, lifespan, dropBonus);
+		this(lifespans.get(lifespan), width, height, lifespan, dropBonus, mass, position,movable);
     }
 
 	/**
@@ -95,9 +97,10 @@ public class Brick extends Entity {
 	public Brick(
 		int posX, int posY,
 		int width, int height,
-		boolean dropBonus
+		boolean dropBonus,
+		double mass, Vector2D position, boolean movable
 	) {
-		this(lifespans.get(MAX_LIFESPAN), posX, posY, width, height, MAX_LIFESPAN, dropBonus);
+		this(lifespans.get(MAX_LIFESPAN), width, height, MAX_LIFESPAN, dropBonus,mass,position,movable);
 	}
 
 

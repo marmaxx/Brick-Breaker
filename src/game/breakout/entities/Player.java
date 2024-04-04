@@ -34,11 +34,11 @@ public class Player extends Entity {
 	 */
     public Player(
 		Color color,
-        int posX, int posY,
         int size,
-		int speed
+		int speed,
+		double mass, Vector2D position, boolean movable
     ) {
-		super(new Rectangle(color, posX, posY, size, size/4, speed));
+		super(mass,position,movable,new Rectangle(color, (int)position.getX(), (int)position.getY(), size, size/4, speed));
     }
 
 	/**
@@ -51,11 +51,11 @@ public class Player extends Entity {
 	 */
     public Player(
 		Image image,
-        int posX, int posY,
         int size,
-		int speed
+		int speed,
+		double mass, Vector2D position, boolean movable
     ) {
-		super(new Rectangle(image, posX, posY, size, size/4, speed));
+		super(mass,position,movable,new Rectangle(image, (int)position.getX(), (int)position.getY(), size, size/4, speed));
     }
 
 	/**
@@ -65,8 +65,11 @@ public class Player extends Entity {
 	 * @param posY the initial y position of the player
 	 * @param size the size of the player
 	 */
-	public Player(int posX, int posY, int size) {
-		this(DEFAULT_IMAGE, posX, posY, size, DEFAULT_SPEED);
+	public Player(
+		 int size,
+		 double mass, Vector2D position, boolean movable
+	) {
+		this(DEFAULT_IMAGE, size, DEFAULT_SPEED,mass,position,movable);
 	}
 
 	/**
@@ -75,16 +78,10 @@ public class Player extends Entity {
 	 * @param posX the initial x position of the player
 	 * @param posY the initial y position of the player
 	 */
-	public Player(int posX, int posY) {
-		this(DEFAULT_IMAGE, posX, posY, DEFAULT_SIZE, DEFAULT_SPEED);
+	public Player(double mass, Vector2D position, boolean movable) {
+		this(DEFAULT_IMAGE,  DEFAULT_SIZE, DEFAULT_SPEED,mass,position,movable);
 	}
 
-	/**
-	 * Instantiates a new Player
-	 */
-	public Player() {
-		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE, DEFAULT_SPEED);
-	}
 
 	// getters for the different variations of speed
 	public int getMoveSpeed() {
