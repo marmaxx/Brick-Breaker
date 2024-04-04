@@ -37,11 +37,6 @@ public class Breakout extends Game{
 
 	private int life = 3; // number of hearths when the game starts
 
-	private ArrayList<Entity> physicalBricks = new ArrayList<>();
-
-	public ArrayList<Entity> getPhysicalBricks() {
-		return physicalBricks;
-	}
 
 
 	public PhysicsEngine getPhysicEngine() {
@@ -289,13 +284,11 @@ public class Breakout extends Game{
 				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
-				this.physicalBricks.add(brick);
+				this.physicEngine.getPhysicalObjects().add(brick);
 				this.getPanel().getGameZone().add(brick.getRepresentation()); 
 			}
 		}
-		for (PhysicalObject brick:physicalBricks){
-			this.physicEngine.getPhysicalObjects().add(brick);
-		}
+
 	}
 		
 	/**

@@ -82,12 +82,10 @@ public class Level {
 				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				b.getBricks().add(brick);
 
-				b.getPhysicalBricks().add(brick);
+				b.getPhysicEngine().getPhysicalObjects().add(brick);
 			}
 		}
-		for (Entity brick:b.getPhysicalBricks()){
-			b.getPhysicEngine().getPhysicalObjects().add(brick);
-		}
+
 	}
 
 
@@ -131,14 +129,11 @@ public class Level {
                         brick.getRectangle().setRotate(-10); 
                     }
 
-                    b.getBricks().add(brick);
+					b.getBricks().add(brick);
 
-					b.getPhysicalBricks().add(brick);
+					b.getPhysicEngine().getPhysicalObjects().add(brick);
         		}
     		}
-		}
-		for (Entity brick:b.getPhysicalBricks()){
-			b.getPhysicEngine().getPhysicalObjects().add(brick);
 		}
 	}
 
@@ -171,11 +166,8 @@ public class Level {
 				brick.moveRight();
 				b.getBricks().add(brick);
 
-				b.getPhysicalBricks().add(brick);
+				b.getPhysicEngine().getPhysicalObjects().add(brick);
 			}
-		}
-		for (Entity brick:b.getPhysicalBricks()){
-			b.getPhysicEngine().getPhysicalObjects().add(brick);
 		}
 	}
 }

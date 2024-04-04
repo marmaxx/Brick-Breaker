@@ -105,8 +105,18 @@ public abstract class Entity extends PhysicalObject {
 	}
 
 	public void move(int speed){
-		this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
-		this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
+		if(movingLeft()){
+			this.getRepresentation().setPosX(this.getRepresentation().getPosX() - speed);
+		}
+		if(movingRight()){
+			this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
+		}
+		if(movingUp()){
+			this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
+		}
+		if(movingDown()){
+			this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
+		}
 	}
 
 
@@ -121,7 +131,7 @@ public abstract class Entity extends PhysicalObject {
 	 */
 	public boolean willBeOffScreen(GamePanel panel,int speed) {
 		int[] boundaries = this.getRepresentation().getBoundaries();
-		
+
 		if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH){
 			return true;
 		}

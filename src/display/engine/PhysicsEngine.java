@@ -61,7 +61,7 @@ public class PhysicsEngine {
             // updating objects position relatively to the time spent
          for (PhysicalObject object : physicalObjects) {
             object.updateVelocity(deltaTime); 
-            if (object.isActive()){
+            if (object.isActive() && object.isMovable()){
                 //System.out.println("vitesse: "+object.getSpeed());
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
@@ -113,7 +113,7 @@ public class PhysicsEngine {
         
         for (PhysicalObject object : physicalObjects) {
             // applying acceleration due to gravity
-            if(object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
+            if(object.isMovable() &&object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
         }
     }
 
@@ -125,7 +125,7 @@ public class PhysicsEngine {
     private void applyFriction(double frictionCoefficient) {
         
         for (PhysicalObject object : physicalObjects) {
-            if(object.isActive()){
+            if(object.isMovable() &&object.isActive()){
                 Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
                 object.applyForce(frictionForce);
             }   
