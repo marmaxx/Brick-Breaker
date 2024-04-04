@@ -66,28 +66,24 @@ public class Breakout extends Game{
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, 630,700, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED));
-		Vector2D playerVectPos = new Vector2D(630, 700);
-		this.physicalPlayer = new PhysicalObject(player, 51, playerVectPos, false, player.getRepresentation());
-		this.setBall(new Ball(Ball.DEFAULT_COLOR, 350,400, 30));
-		Vector2D ballVectPos = new Vector2D(350, 400);
-		this.physicalBall = new PhysicalObject(ball, 50, ballVectPos, true, ball.getRepresentation());
+
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,51,new Vector2D(630, 700),false));
+
+		this.setBall(new Ball(Ball.DEFAULT_COLOR,  30,50,new Vector2D(350,400),true));
 		Vector2D speed = new Vector2D(0.5, 0.5);
-		this.physicalBall.setSpeed(speed);
-		this.setEastWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
-		Vector2D VectEastWallPos = new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0);
-		this.physicalEastWall = new PhysicalObject(eastWall, 100,VectEastWallPos , false, eastWall.getRepresentation());
-		this.setWestWall(new Wall(0, 0, WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight()));
-		Vector2D VectWestWallPos = new Vector2D(0, 0);
-		this.physicalWestWall = new PhysicalObject(westWall, 100, VectWestWallPos, false, westWall.getRepresentation());
-		this.setNorthWall(new Wall(0, 0, (int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH));
-		Vector2D VectNorthWallPos = new Vector2D(0, 0);
-		this.physicalNorthWall = new PhysicalObject(northWall, 100, VectNorthWallPos, false, northWall.getRepresentation());
-		this.physicEngine.getPhysicalObjects().add(physicalBall);
-		this.physicEngine.getPhysicalObjects().add(physicalPlayer);
-		this.physicEngine.getPhysicalObjects().add(physicalEastWall);
-		this.physicEngine.getPhysicalObjects().add(physicalWestWall);
-		this.physicEngine.getPhysicalObjects().add(physicalNorthWall);		
+		this.ball.setSpeed(speed);
+		
+		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
+
+		this.setWestWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(),100,new Vector2D(0, 0),false));
+
+		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 0),false));
+
+		this.physicEngine.getPhysicalObjects().add(ball);
+		this.physicEngine.getPhysicalObjects().add(player);
+		this.physicEngine.getPhysicalObjects().add(eastWall);
+		this.physicEngine.getPhysicalObjects().add(westWall);
+		this.physicEngine.getPhysicalObjects().add(northWall);		
 
 
 		KeyListener keyListener = new KeyListener() {
@@ -289,15 +285,12 @@ public class Breakout extends Game{
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 	
-				Brick brick =new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
-				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus);
+				Brick brick =new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
-				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-				PhysicalObject physicalBrick = new PhysicalObject(brick, 10, brickVectPos, false, brick.getRepresentation());
-				this.physicalBricks.add(physicalBrick);
-				this.getPanel().getGameZone().add(physicalBrick.getRepresentation()); 
+				this.physicalBricks.add(brick);
+				this.getPanel().getGameZone().add(brick.getRepresentation()); 
 			}
 		}
 		for (PhysicalObject brick:physicalBricks){
@@ -324,7 +317,7 @@ public class Breakout extends Game{
 	
 		// Get a random between 0 and the last number of the hashmap 
 		int randomBonusType = new Random().nextInt(Bonus.MAX_BONUSTYPE);
-		this.getBonuses().add(new Bonus(posX - Bonus.DEFAULT_SIZE/2, posY, Bonus.DEFAULT_SIZE, randomBonusType));
+		this.getBonuses().add(new Bonus( Bonus.DEFAULT_SIZE, randomBonusType,0,new Vector2D(posX - Bonus.DEFAULT_SIZE/2, posY),false));
 		for (Bonus bonus : this.getBonuses()) {
 			this.getPanel().getGameZone().add(bonus.getRepresentation());
 		}
@@ -373,9 +366,10 @@ public class Breakout extends Game{
 
 				}
 			}
-			this.getPlayer().move(Player.DEFAULT_SPEED);
-			((Player)this.physicalPlayer.getObject()).setLastPos(this.physicalPlayer.getPosition());
-			this.physicalPlayer.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[0], this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[1]));
+			
+			this.player.setLastPos(this.player.getPosition());
+			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
+			this.player.setPosition(new Vector2D(this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[0], this.getPlayer().getCurrPos(Player.DEFAULT_SPEED)[1]));
 		}
 	}
 
@@ -463,9 +457,9 @@ public class Breakout extends Game{
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 				
-				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
+				Brick brick = new Brick(
 				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus);
+				randomLifespan, dropBonus,0,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				brick.moveRight();
 				iterator.add(brick);
 				this.getPanel().getGameZone().add(brick.getRepresentation());
@@ -489,8 +483,7 @@ public class Breakout extends Game{
 			}
 			brick.move(1);
 			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				//this.getBall().reverseHorizontalMomentum
-				this.getBall().reverseVerticalMomentum();          
+				//this.getBall().reverseHorizontalMomentum         
 				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
 					if (brick.doesDropBonus()){
 						// store the size of the brick

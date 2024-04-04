@@ -7,6 +7,7 @@ import display.engine.utils.Vector2D;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
+import game.breakout.entities.Wall;
 
 
 public abstract class Entity extends PhysicalObject {
@@ -15,7 +16,10 @@ public abstract class Entity extends PhysicalObject {
 
 	private boolean active=true; 
 
-
+	private boolean movingLeft=false;
+	private boolean movingRight=false;
+	private boolean movingUp=false;
+	private boolean movingDown=false;
 
 
 	/**
@@ -60,11 +64,84 @@ public abstract class Entity extends PhysicalObject {
         return active;
 	}
 
-	
+	/**
+	 * basic movement used by some Entities, mainly the ones with movable=false  
+	 */
+	public void moveLeft(){
+		movingLeft=true;
+	}
+	public void moveRight(){
+		movingRight=true;
+	}
+	public void moveUp(){
+		movingUp=true;
+	}
+	public void moveDown(){
+		movingDown=true;
+	}
+	public void stopLeft(){
+		movingLeft=false;
+	}
+	public void stopRight(){
+		movingRight=false;
+	}
+	public void stopUp(){
+		movingUp=false;
+	}
+	public void stopDown(){
+		movingDown=false;
+	}
+	public boolean movingLeft(){
+		return movingLeft;
+	}
+	public boolean movingRight(){
+		return movingRight;
+	}
+	public boolean movingUp(){
+		return movingUp;
+	}
+	public boolean movingDown(){
+		return movingDown;
+	}
+
+	public void move(int speed){
+		this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
+		this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
+	}
 
 
 
-	
+	/**
+	 * Checks if the entity will be off the screen if it moves in a given direction
+	 * 
+	 * @param speed the number of pixels the entity will move
+	 * @param direction the direction in which the entity will move
+	 * 
+	 * @return true if the entity will be off the screen, false otherwise
+	 */
+	public boolean willBeOffScreen(GamePanel panel,int speed) {
+		int[] boundaries = this.getRepresentation().getBoundaries();
+		
+		if(boundaries[GraphicalObject.Boundary.MIN_Y.ordinal()] - speed < WALL_WIDTH){
+			return true;
+		}
+		
+		if(boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] - speed > panel.getGameZone().getHeight()){
+			return true;
+		}
+		
+		
+		if(boundaries[GraphicalObject.Boundary.MIN_X.ordinal()] + speed < WALL_WIDTH){
+			return true;
+		}
+
+		if(boundaries[GraphicalObject.Boundary.MAX_X.ordinal()] + speed > panel.getGameZone().getWidth()-WALL_WIDTH){
+			return true;
+		}
+		
+		return false;
+	}
+
 
 
 	/**

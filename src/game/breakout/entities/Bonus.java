@@ -105,7 +105,6 @@ public class Bonus extends Entity {
 	 * @param bonusType the bonusType of the bonus, see the bonusTypes hashmap
 	 */
     public Bonus(
-        int posX, int posY,
         int size,
         int bonusType,
 		double mass, Vector2D position, boolean movable

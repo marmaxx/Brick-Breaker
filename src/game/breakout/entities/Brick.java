@@ -77,7 +77,6 @@ public class Brick extends Entity {
 	 * @param dropBonus whether the brick drops a bonus when destroyed
 	 */
     public Brick(
-        int posX, int posY,
         int width, int height,
         int lifespan, boolean dropBonus,
 		double mass, Vector2D position, boolean movable
@@ -95,7 +94,6 @@ public class Brick extends Entity {
 	 * @param dropBonus whether the brick drops a bonus when destroyed
 	 */
 	public Brick(
-		int posX, int posY,
 		int width, int height,
 		boolean dropBonus,
 		double mass, Vector2D position, boolean movable
