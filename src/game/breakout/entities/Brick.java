@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Collections;
 
+import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;
 import game.breakout.entities.rules.Entity;
 
@@ -147,15 +148,7 @@ public class Brick extends Entity {
         this.dropBonus = dropBonus;
     }
 
-	@Override
-	public void collided(){
-		super.collided();
-		if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
-			this.destroy();
-		}
-		this.setLifespan(this.getLifespan() - 1);
 
-	}
 
 	/**
  	* Retrieves the Rectangle associated with the current brick.
@@ -165,4 +158,14 @@ public class Brick extends Entity {
 	public Rectangle getRectangle() {
         return ((Rectangle) this.getRepresentation());
 	}
+
+	@Override
+	public void collided(PhysicalObject object) {
+		super.collided();
+		if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
+			this.destroy();
+		}
+		this.setLifespan(this.getLifespan() - 1);
+	}
+
 }

@@ -53,6 +53,10 @@ public abstract class PhysicalObject {
         this.slope=otherSlop;
     }
 
+    /**
+     * handles non physics related collision implications (updating score etc)
+     * @param object
+     */
     public abstract void collided(PhysicalObject object);
 
     /**
@@ -194,6 +198,8 @@ public abstract class PhysicalObject {
     public boolean isActive() {
         return active;
     }
+
+    public abstract void resolveCollision(PhysicalObject objectB);
 
 
 

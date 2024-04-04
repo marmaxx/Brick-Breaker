@@ -205,41 +205,41 @@ public abstract class Entity extends PhysicalObject {
 
 	/**
 	 *  Returns a correct impact point for all non ball shaped Objects, for ball Objects there is a overloading done in each class
-	 * @param entity the entity we want to get the impact point of the collision with
+	 * @param object the entity we want to get the impact point of the collision with
 	 * @return	a vector representing the collision point
 	 */
-    public Vector2D getImpactPoint(Entity entity){
-           Vector2D topRightPositionA = new Vector2D(entity.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],entity.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
-           Vector2D topLeftPositionA = new Vector2D(entity.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],entity.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
-           Vector2D bottomLeftPositionA = new Vector2D(entity.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],entity.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
-           Vector2D bottomRightPositionA = new Vector2D(entity.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],entity.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
+    public Vector2D getImpactPoint(PhysicalObject object){
+           Vector2D topRightPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
+           Vector2D topLeftPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
+           Vector2D bottomLeftPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
+           Vector2D bottomRightPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
 
            
-           Vector2D centerToTopRightCornerVectorA = entity.getRepresentation().vectorCenterToCoordinates(topRightPositionA.getX(), topRightPositionA.getY()); //the vector from the paddle's center to its top left corner
-           Vector2D centerToTopLeftCornerVectorA = entity.getRepresentation().vectorCenterToCoordinates(topLeftPositionA.getX(), topLeftPositionA.getY());
-           Vector2D centerToBottomLeftCornerVectorA = entity.getRepresentation().vectorCenterToCoordinates(bottomLeftPositionA.getX(), bottomLeftPositionA.getY());
-           Vector2D centerToBottomRightCornerVectorA = entity.getRepresentation().vectorCenterToCoordinates(bottomRightPositionA.getX(), bottomRightPositionA.getY());
+           Vector2D centerToTopRightCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(topRightPositionA.getX(), topRightPositionA.getY()); //the vector from the paddle's center to its top left corner
+           Vector2D centerToTopLeftCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(topLeftPositionA.getX(), topLeftPositionA.getY());
+           Vector2D centerToBottomLeftCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(bottomLeftPositionA.getX(), bottomLeftPositionA.getY());
+           Vector2D centerToBottomRightCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(bottomRightPositionA.getX(), bottomRightPositionA.getY());
 
-           Vector2D objectAToEntityVector = entity.getRepresentation().vectorFromCenterToCenter(this.getRepresentation());
+           Vector2D objectAToEntityVector = object.getRepresentation().vectorFromCenterToCenter(this.getRepresentation());
             
             if (centerToTopLeftCornerVectorA.angleFromTo(objectAToEntityVector)<0 && centerToTopRightCornerVectorA.angleFromTo(objectAToEntityVector)>0){
                 // la balle est au dessus 
-                return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, entity.getPosition().getY());
+                return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, object.getPosition().getY());
             } 
             else if(centerToBottomRightCornerVectorA.angleFromTo(objectAToEntityVector)>0 && centerToTopRightCornerVectorA.angleFromTo(objectAToEntityVector)<0){
                     // la balle est a droite
-                    return new Vector2D(entity.getPosition().getX(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
+                    return new Vector2D(object.getPosition().getX(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
             }
             else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToEntityVector)<0 && centerToTopLeftCornerVectorA.angleFromTo(objectAToEntityVector)>0){
                 // la balle est a gauche 
-                return new Vector2D(entity.getPosition().getX() + entity.getRepresentation().getWidth(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
+                return new Vector2D(object.getPosition().getX() + object.getRepresentation().getWidth(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
             }
             else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToEntityVector)>0 && centerToBottomRightCornerVectorA.angleFromTo(objectAToEntityVector)<0){
                 // la balle est en dessous
-                return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, entity.getPosition().getY() + entity.getRepresentation().getHeight());
+                return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, object.getPosition().getY() + object.getRepresentation().getHeight());
             }
             else{
-                Vector2D nearestVertex = entity.getNearestVertex(this.getPosition());
+                Vector2D nearestVertex = object.getNearestVertex(this.getPosition());
                 return nearestVertex;
             }
         }
@@ -247,37 +247,37 @@ public abstract class Entity extends PhysicalObject {
 	
 	/**
 	 * resolves collisions between two Entities
-	 * @param entity the entity we want to resolve collisions with
+	 * @param object the entity we want to resolve collisions with
 	 */
-    public void resolveCollision(Entity entity) {
+    public void resolveCollision(PhysicalObject object) {
         //TODO: penser à l'élasticité : regarder formules physiques
         if (isMovable()){
-            if (entity.isMovable()){
+            if (object.isMovable()){
                 // TODO resolve collision when the two objects are moveable
             }else{
-                Vector2D impact = this.getImpactPoint(entity);
-                if (impact == entity.getTopLeftPosition() || impact == entity.getTopRightPosition() || impact == entity.getBottomLeftPosition() || impact == entity.getBottomRightPosition()){
+                Vector2D impact = this.getImpactPoint(object);
+                if (impact == object.getTopLeftPosition() || impact == object.getTopRightPosition() || impact == object.getBottomLeftPosition() || impact == object.getBottomRightPosition()){
                     this.setSpeed(new Vector2D(- this.getSpeed().getX(), - this.getSpeed().getY()));
                 }else{
-                    Vector2D nearestVertex = entity.getNearestVertex(impact);
+                    Vector2D nearestVertex = object.getNearestVertex(impact);
                     Vector2D surfaceVector = new Vector2D(impact.getX() - nearestVertex.getX(), impact.getY() - nearestVertex.getY());
                     double slopeDot = surfaceVector.dotProduct(normalVectorHR);
 
 
-                    if (slopeDot == 0) entity.setSlope(Slope.VERTICAL);
-                    else if (slopeDot == surfaceVector.getX()) entity.setSlope(Slope.HORIZONTAL);
-                    else entity.setSlope(Slope.OTHER);
+                    if (slopeDot == 0) object.setSlope(Slope.VERTICAL);
+                    else if (slopeDot == surfaceVector.getX()) object.setSlope(Slope.HORIZONTAL);
+                    else object.setSlope(Slope.OTHER);
 
 
                     double incidenceAngle = Math.atan2(this.getSpeed().getY(),this.getSpeed().getX());
                     //double objectAVelocityAngle = Math.atan2(objectA.getSpeed().getY(), objectA.getSpeed().getX());
                     //double angleDifference = incidenceAngle - objectAVelocityAngle;
-                    double objectASpeed = entity.getSpeed().magnitude();
+                    double objectASpeed = object.getSpeed().magnitude();
                     double rotationAngle = Math.atan2(objectASpeed, this.getSpeed().magnitude());
                     double reflexionAngle;
 
 
-                    switch(entity.getSlope()){
+                    switch(object.getSlope()){
                         case VERTICAL: reflexionAngle = Math.PI - incidenceAngle + rotationAngle; break;
                         case HORIZONTAL: reflexionAngle = - incidenceAngle + rotationAngle; break;
                         case OTHER: reflexionAngle = 0; break; // TODO handle a slope that is not vertical or horizontal

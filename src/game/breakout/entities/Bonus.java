@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import java.util.Collections;
 import java.awt.Image;
 
+import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
@@ -181,5 +182,10 @@ public class Bonus extends Entity {
 	@Override
 	public void move (int speed) {
 		this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
+	}
+
+	@Override
+	public void collided(PhysicalObject object) {
+		super.collided();
 	}
 }

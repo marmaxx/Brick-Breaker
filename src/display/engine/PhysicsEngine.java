@@ -87,9 +87,9 @@ public class PhysicsEngine {
             PhysicalObject objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.getObject().isActive() &&objectB.getObject().isActive()) {
-                    objectA.getObject().collided(PhysicalObject objectB);
-                    objectB.getObject().collided(PhysicalObject objectA);
+                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
+                    objectA.collided(objectB);
+                    objectB.collided(objectA);
                    //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
@@ -113,7 +113,7 @@ public class PhysicsEngine {
         
         for (PhysicalObject object : physicalObjects) {
             // applying acceleration due to gravity
-            if(object.getObject().isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
+            if(object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
         }
     }
 
@@ -125,7 +125,7 @@ public class PhysicsEngine {
     private void applyFriction(double frictionCoefficient) {
         
         for (PhysicalObject object : physicalObjects) {
-            if(object.getObject().isActive()){
+            if(object.isActive()){
                 Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
                 object.applyForce(frictionForce);
             }   

@@ -4,7 +4,7 @@ import java.util.Random;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.Vector2D;
 import game.breakout.entities.Brick;
-import game.breakout.entities.rules.Entity;
+import game.breakout.entities.rules.PhysicalObject;
 
 
 
@@ -84,11 +84,11 @@ public class Level {
 				b.getBricks().add(brick);
 
 				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
+				PhysicalObject<PhysicalObject> physicalBrick = new PhysicalObject<PhysicalObject>(brick, 10, brickVectPos, false, brick.getRepresentation());
 				b.getPhysicalBricks().add(physicalBrick);
 			}
 		}
-		for (PhysicalObject<Entity> brick:b.getPhysicalBricks()){
+		for (PhysicalObject<PhysicalObject> brick:b.getPhysicalBricks()){
 			b.getPhysicEngine().getPhysicalObjects().add(brick);
 		}
 	}
@@ -137,12 +137,12 @@ public class Level {
                     b.getBricks().add(brick);
 					
 					Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-					PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
+					PhysicalObject<PhysicalObject> physicalBrick = new PhysicalObject<PhysicalObject>(brick, 10, brickVectPos, false, brick.getRepresentation());
 					b.getPhysicalBricks().add(physicalBrick);
         		}
     		}
 		}
-		for (PhysicalObject<Entity> brick:b.getPhysicalBricks()){
+		for (PhysicalObject<PhysicalObject> brick:b.getPhysicalBricks()){
 			b.getPhysicEngine().getPhysicalObjects().add(brick);
 		}
 	}
@@ -177,11 +177,11 @@ public class Level {
 				b.getBricks().add(brick);
 
 				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
+				PhysicalObject<PhysicalObject> physicalBrick = new PhysicalObject<PhysicalObject>(brick, 10, brickVectPos, false, brick.getRepresentation());
 				b.getPhysicalBricks().add(physicalBrick);
 			}
 		}
-		for (PhysicalObject<Entity> brick:b.getPhysicalBricks()){
+		for (PhysicalObject<PhysicalObject> brick:b.getPhysicalBricks()){
 			b.getPhysicEngine().getPhysicalObjects().add(brick);
 		}
 	}

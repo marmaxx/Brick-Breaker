@@ -139,6 +139,11 @@ public class Ball extends Entity {
         return vectorImpact.add(ball.getPosition());
 	}
 
+	@Override
+	public void collided(PhysicalObject object) {
+		
+	}
+
 
 	
 }

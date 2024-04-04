@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;
 import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
@@ -113,6 +114,11 @@ public class Player extends Entity {
 	@Override
 	public void updateVelocity(double deltaTime) {
 			this.speed =((this.position.add(this.getLastPos().multiply(-1))).multiply(1/deltaTime));
+	}
+
+	@Override
+	public void collided(PhysicalObject object) {
+		super.collided();
 	}
 
 }
