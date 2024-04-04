@@ -6,9 +6,9 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import display.engine.shapes.Rectangle;
+import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
-import physics.utils.Vector2D;
 
 public class Player extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();

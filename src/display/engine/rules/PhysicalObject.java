@@ -1,14 +1,13 @@
-package physics;
+package display.engine.rules;
 import java.util.Vector;
 
-import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
+import display.engine.utils.*;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Brick;
 import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
 import game.breakout.entities.rules.Entity;
-import physics.utils.*;
 
 public class PhysicalObject<T extends Entity> {
     private T object;

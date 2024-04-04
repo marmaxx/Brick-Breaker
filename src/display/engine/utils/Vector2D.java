@@ -1,4 +1,4 @@
-package physics.utils;
+package display.engine.utils;
 
 /**
  * This class represents a two-dimensional vector.

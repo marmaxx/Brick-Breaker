@@ -1,9 +1,11 @@
 package game.breakout;
 import java.util.Random;
+
+import display.engine.rules.PhysicalObject;
+import display.engine.utils.Vector2D;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
-import physics.PhysicalObject;
-import physics.utils.Vector2D;
+
 
 
 public class Level {

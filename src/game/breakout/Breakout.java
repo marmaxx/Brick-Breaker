@@ -6,6 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
+import display.engine.PhysicsEngine;
+import display.engine.rules.PhysicalObject;
+import display.engine.utils.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
 import game.breakout.entities.Ball;
@@ -15,9 +18,6 @@ import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.rules.Game;
-import physics.PhysicsEngine;
-import physics.PhysicalObject;
-import physics.utils.Vector2D;
 
 public class Breakout extends Game{
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 

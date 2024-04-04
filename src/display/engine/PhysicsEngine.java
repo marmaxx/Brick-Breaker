@@ -1,11 +1,12 @@
-package physics;
+package display.engine;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import display.engine.rules.PhysicalObject;
+import display.engine.utils.*;
 import game.breakout.entities.Ball;
 import game.breakout.entities.rules.Entity;
-import physics.utils.*;
 
 /**
  * PhysicsEngine
