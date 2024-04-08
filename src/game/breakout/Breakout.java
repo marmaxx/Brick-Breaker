@@ -348,8 +348,9 @@ public class Breakout extends Game{
 	 */
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), this.getPlayer().getRepresentation().getSpeed())){
-			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
 			this.player.setLastPos(this.player.getPosition());
+			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
+			
 			if (!this.getBall().getIsMoving()){
 				this.ball.getRepresentation().setPosX(this.player.getRepresentation().getX() + this.player.getRepresentation().getWidth()/3);				
 			}

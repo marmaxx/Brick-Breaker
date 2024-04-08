@@ -107,19 +107,20 @@ public abstract class Entity extends PhysicalObject {
 	public void move(int speed){
 		if(movingLeft()){
 			this.getRepresentation().setPosX(this.getRepresentation().getPosX() - speed);
-			this.setPosition(new Vector2D(this.getRepresentation().getPosX() - speed, this.getRepresentation().getPosY()));
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX() , this.getRepresentation().getPosY()));
 		}
 		if(movingRight()){
 			this.getRepresentation().setPosX(this.getRepresentation().getPosX() + speed);
-			this.setPosition(new Vector2D(this.getRepresentation().getPosX() + speed, this.getRepresentation().getPosY()));
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX() , this.getRepresentation().getPosY()));
 		}
 		if(movingUp()){
 			this.getRepresentation().setPosY(this.getRepresentation().getPosY() - speed);
-			this.setPosition(new Vector2D(this.getRepresentation().getPosX(), this.getRepresentation().getPosY()-speed));
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX(), this.getRepresentation().getPosY()));
 		}
 		if(movingDown()){
 			this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
-			this.setPosition(new Vector2D(this.getRepresentation().getPosX(), this.getRepresentation().getPosY() +speed));
+			this.setPosition(new Vector2D(this.getRepresentation().getPosX(), this.getRepresentation().getPosY() ));
+			
 		}
 	}
 
