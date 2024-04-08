@@ -90,7 +90,6 @@ public class Breakout extends Game{
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
 						Breakout.this.getPlayer().moveRight();
-						System.out.println(Breakout.this.player.getPosition());
 						break;
 					case KeyEvent.VK_ESCAPE:
 						if(Breakout.this.isPaused()){
@@ -102,7 +101,6 @@ public class Breakout extends Game{
 						break;
 					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().getIsMoving()){
-							System.out.println(("espace"));
 							Breakout.this.getBall().setIsMoving(true);
 							Vector2D newPosition = new Vector2D(Breakout.this.ball.getRepresentation().getX(), Breakout.this.ball.getRepresentation().getY());
 							Breakout.this.ball.setPosition(newPosition);
@@ -350,28 +348,16 @@ public class Breakout extends Game{
 	 */
 	public void updatePlayer() {
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), this.getPlayer().getRepresentation().getSpeed())){
-			if (!this.getBall().getIsMoving()){
-
-				if(this.getPlayer().movingLeft()){
-
-					this.ball.getRepresentation().setPosX(this.ball.getRepresentation().getX() - this.player.getRepresentation().getSpeed());
-
-				}else if(this.getPlayer().movingRight()){
-
-					this.ball.getRepresentation().setPosX(this.ball.getRepresentation().getX() + this.player.getRepresentation().getSpeed());
-
-				}
-			}
-			
 			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
 			this.player.setLastPos(this.player.getPosition());
-			
+			if (!this.getBall().getIsMoving()){
+				this.ball.getRepresentation().setPosX(this.player.getRepresentation().getX() + this.player.getRepresentation().getWidth()/3);				
+			}
 		}
 		else{
 			this.getPlayer().stopLeft();
 			this.getPlayer().stopRight();
 		}
-		
 	}
 
 	/**
@@ -573,19 +559,15 @@ public class Breakout extends Game{
 
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
-			System.out.println("hors jeu");
-			this.ball.setIsMoving(false);
-			this.ball.setSpeed(new Vector2D(0, 0));
-			this.ball.setAcceleration(new Vector2D(0, 0));
+			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
-			this.ball.getRepresentation().setPosX(x);
-			this.ball.getRepresentation().setPosY(y);
-			this.ball.setPosition(new Vector2D(x, y));
-
-			System.out.println("ball pos: "+this.ball.getRepresentation().getPosX()+","+this.ball.getRepresentation().getPosY());
-			System.out.println("ball other pos: "+this.ball.getPosition());
-			
+			this.setBall(new Ball(Ball.DEFAULT_COLOR, 30, 50, new Vector2D(x, y), true));
+			this.getPanel().getGameZone().add(this.getBall().getRepresentation());
+			this.physicEngine.getPhysicalObjects().add(ball);
+			this.ball.setIsMoving(false);
+			this.life--;
+			this.getPanel().updateLife(this.life);
 		}
 	}
 
