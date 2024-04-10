@@ -11,6 +11,7 @@ import display.view.GamePanel;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Bonus;
 import game.breakout.entities.Player;
+import game.breakout.entities.Bonus.BonusType;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
@@ -31,7 +32,10 @@ public class Breakout extends Game{
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 20;
-	private int nbBricks;
+	// init at 1 because it takes time to initialize the list of bricks 
+	// and it would lead us to the win panel directly
+	private int nbBricks = 1; 
+
 	private int score = 0;
 
 	private int life = 3; // number of hearths when the game starts
@@ -163,6 +167,16 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 *  Set the life in the game.
+	 * 
+	 * @return life the life of the player
+	 */
+	public void setLife(int life){
+		this.life = life;
+	}
+
+
+	/**
 	 * Get the list of bonuses in the game.
 	 * 
 	 * @return The list of bonuses
@@ -170,6 +184,7 @@ public class Breakout extends Game{
 	public ArrayList<Bonus> getBonuses(){
 		return this.bonuses;
 	}
+	
 
 	/**
 	 *  Set the list of bonuses in the game.
@@ -271,6 +286,17 @@ public class Breakout extends Game{
 		return 	this.life;
 	}
 
+	/**
+	 * 
+	 * Get the GameFrame of the game 
+	 * 
+	 * @return The GameFrame
+	 */
+	public GameFrame getGameFrame(){
+		return this.gameframe;
+	}
+
+
 	
 	public void createBricks(int rows, int columns){
 		// TODO: Prevent the amount of bricks from exceeding the panel's width and height
@@ -326,7 +352,7 @@ public class Breakout extends Game{
 	
 		// Get a random between 0 and the last number of the hashmap 
 		int randomBonusType = new Random().nextInt(Bonus.MAX_BONUSTYPE);
-		this.getBonuses().add(new Bonus(posX - Bonus.DEFAULT_SIZE/2, posY, Bonus.DEFAULT_SIZE, randomBonusType));
+		this.getBonuses().add(new Bonus(Bonus.bonusTypes.get(BonusType.values()[randomBonusType]), posX, posY, Bonus.DEFAULT_SIZE, BonusType.values()[randomBonusType]));
 		for (Bonus bonus : this.getBonuses()) {
 			this.getPanel().getGameZone().add(bonus.getRepresentation());
 		}
@@ -383,31 +409,27 @@ public class Breakout extends Game{
 
 	/**
 	 * Update the ball entity
-	 *
+	 */
 	public void updateBall() {
-
-			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
+		if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
 					
-			} else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
-				if( this.getLife() == 1 && this.getNbBricks() > 0){
-					this.clearGameComponents();
-					this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
-				}
-
-				// the ball respawn for the moment 
-				
-				this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+(this.getPlayer().getRepresentation().getWidth()/2));
-				this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight() -(this.getBall().getRepresentation().getHeight()/2));
-				this.getBall().moveUp();
-				this.getBall().moveRight();
-				this.getBall().setIsMoving(false);
-				this.life--;
-				this.getPanel().updateLife(this.life);
+		} 
+		else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
+			if( this.getLife() == 1 && this.getNbBricks() > 0){
+				this.clearGameComponents();
+				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
-			this.getBall().move(Ball.MOVE_SPEED);
+			// the ball respawn for the moment 
+			this.getBall().getRepresentation().setPosX(this.getPlayer().getRepresentation().getPosX()+(this.getPlayer().getRepresentation().getWidth()/2));
+			this.getBall().getRepresentation().setPosY(this.getPlayer().getRepresentation().getPosY()-this.getPlayer().getRepresentation().getHeight() -(this.getBall().getRepresentation().getHeight()/2));
+			this.getBall().moveUp();
+			this.getBall().moveRight();
+			this.getBall().setIsMoving(false);
+			this.life--;
+			this.getPanel().updateLife(this.life);
 		}
-	}*/
-
+		this.getBall().move(Ball.MOVE_SPEED);
+	}
 
 	/**
 	 * Update the bricks entities
@@ -415,11 +437,17 @@ public class Breakout extends Game{
 	public void updateBricks() {
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
-		Iterator<Brick> iterator = this.getBricks().iterator();
+		//System.out.println(nbBricks);
+		//System.out.println(life);
 
-		if (this.nbBricks <= 0 && this.life >= 0){
+		Iterator<Brick> iterator = this.getBricks().iterator();
+	
+		 
+		if (this.nbBricks == 0 && this.life >= 0){
+			System.out.println(nbBricks);
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
+
 
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
@@ -523,7 +551,7 @@ public class Breakout extends Game{
 		while(iterator.hasNext()){
 			Bonus bonus = iterator.next();
 			if (bonus.getRepresentation().isColliding(this.getPlayer().getRepresentation())){
-				applyBonus(bonus.getbonusType());
+				applyBonus(bonus.getBonusType());
 				this.getPanel().getGameZone().remove(bonus.getRepresentation());
 				iterator.remove();
 			}
@@ -540,34 +568,34 @@ public class Breakout extends Game{
 	/**
 	 * Apply the bonus to the game state, given a specific type of bonus
 	 */
-	public void applyBonus(int bonusType){
+	public void applyBonus(Bonus.BonusType bonusType){
 		switch(bonusType){
-			case 0:
+			case BONUS_SIZE:
 				if (Breakout.this.getPlayer().getRepresentation().getWidth() + (int)(0.1f*Player.DEFAULT_SIZE) <= Player.MAX_SIZE) {
 					Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth() + (int)(0.1f*Player.DEFAULT_SIZE));
 				}
 				break; 
-			case 1:
+			case MALUS_SIZE:
 				if (Breakout.this.getPlayer().getRepresentation().getWidth() - (int)(0.1f*Player.DEFAULT_SIZE) >= Player.MIN_SIZE) {
 					Breakout.this.getPlayer().getRepresentation().setWidth(Breakout.this.getPlayer().getRepresentation().getWidth() - (int)(0.1f*Player.DEFAULT_SIZE));
 				}
 				break;
-			case 2:
+			case BONUS_SPEED:
 				if (Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
 					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
-					//System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
 				}
 				break;
-			case 3:
+			case MALUS_SPEED:
 				if (Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
 					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
-					//System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
 				}
 				break;
-			case 4:
+			case BONUS_TIME:
 				// TODO : once the timer is implemented after a graphical fix
 				break;
-			case 5:
+			case DEFAULT:
 				// default image
 				break;
 			default:
@@ -575,13 +603,21 @@ public class Breakout extends Game{
 		}
 	}
 
+
+	/**
+	 * update dedicated to print for test and debug purpose
+	 */
+	public void updateDebug(){
+		System.out.println(Brick.MAX_LIFESPAN);
+	};
+
 	/**
 	 * @see game.rules.Game#onUpdate()
 	 */
 	@Override
 	public void onUpdate(double deltaTime) {
 		this.updatePlayer();
-		//this.updateBall();
+		this.updateBall();
 		this.physicEngine.update(deltaTime);
 		if(this.level != -1 ){
 			this.updateBricks();
@@ -589,6 +625,7 @@ public class Breakout extends Game{
 		this.updateMarathonBricks();
 		}
 		this.updateBonus();
+		//this.updateDebug();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 	}
 

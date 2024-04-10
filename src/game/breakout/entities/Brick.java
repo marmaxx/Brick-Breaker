@@ -1,14 +1,19 @@
 package game.breakout.entities;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.Collections;
 
+import javax.swing.ImageIcon;
+import java.awt.Image;
+
 import display.engine.shapes.Rectangle;
+import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-
 public class Brick extends Entity {
+    public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
+    public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
+
     protected boolean isDestroyed, dropBonus;
     protected int lifespan;
 
@@ -17,12 +22,11 @@ public class Brick extends Entity {
 	public static final int DEFAULT_WIDTH = 100;
 	public static final int DEFAULT_HEIGHT = 20;
 
-	public static final HashMap<Integer, Color> lifespans = new HashMap<Integer, Color>() {
+	public static final HashMap<Integer, Image> lifespans = new HashMap<Integer, Image>() {
 		{
-			put(0, Color.RED);
-			put(1, Color.ORANGE);
-			put(2, Color.YELLOW);
-			put(3, Color.GREEN);
+			put(0, new ImageIcon(path + "Brick0.png").getImage());
+			put(1, new ImageIcon(path + "Brick1.png").getImage());
+			put(2, new ImageIcon(path + "Brick2.png").getImage());
 		}
 	};
 
@@ -44,7 +48,7 @@ public class Brick extends Entity {
 	 * @throws IllegalArgumentException if the color is not in the hashmap
 	 */
 	public Brick(
-		Color color,
+		Image image,
         int posX, int posY,
         int width, int height,
         int lifespan, boolean dropBonus
@@ -56,7 +60,7 @@ public class Brick extends Entity {
 		if (width <= 0 || height <= 0) {
 			throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
 		}
-		if (!lifespans.containsValue(color) || color == null) {
+		if (!lifespans.containsValue(image) || image == null) {
 			throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
 		}
 
@@ -123,7 +127,7 @@ public class Brick extends Entity {
 			return false;
 		}
 		this.lifespan = lifespan;
-		this.getRepresentation().setColor(lifespans.get(lifespan));
+		this.getRepresentation().setImage(lifespans.get(lifespan));
 		return true;
     }
 
@@ -147,6 +151,15 @@ public class Brick extends Entity {
         this.dropBonus = dropBonus;
     }
 
+	/**
+ 	* Retrieves the Rectangle associated with the current brick.
+ 	* 
+ 	* @return the rectangle associated with the brick
+ 	*/
+	 public Rectangle getRectangle() {
+        return ((Rectangle) this.getRepresentation());
+	}	
+
 	@Override
 	public void collided(){
 		super.collided();
@@ -157,12 +170,7 @@ public class Brick extends Entity {
 
 	}
 
-	/**
- 	* Retrieves the Rectangle associated with the current brick.
- 	* 
- 	* @return the rectangle associated with the brick
- 	*/
-	public Rectangle getRectangle() {
-        return ((Rectangle) this.getRepresentation());
-	}
 }
+
+
+
