@@ -14,8 +14,6 @@ public abstract class Entity extends PhysicalObject {
     protected GraphicalObject representation;
 	protected final static int WALL_WIDTH = 20;
 
-	private boolean active=true; 
-
 	private boolean movingLeft=false;
 	private boolean movingRight=false;
 	private boolean movingUp=false;
