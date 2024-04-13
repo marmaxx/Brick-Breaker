@@ -427,9 +427,8 @@ public class Breakout extends Game{
 	public void updateMarathonBricks() {
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
-		Iterator<Brick> iterator = this.getBricks().iterator();
-
-		if(this.nbBricks <30){ // has to be here to not cause conflict with the iterator
+		ListIterator<Brick> iterator = this.getBricks().listIterator();
+		if(this.nbBricks <32){ // has to be here to not cause conflict with the iterator
 			final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
 
 			int rows =1;
@@ -449,8 +448,9 @@ public class Breakout extends Game{
 		
 					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
 					randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
-					this.getBricks().add(brick);
-	
+					iterator.add(brick);
+					brick.moveRight();
+					this.getPanel().getGameZone().add(brick.getRepresentation());
 					this.getPhysicEngine().getPhysicalObjects().add(brick);
 				}
 			}
