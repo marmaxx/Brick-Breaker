@@ -143,6 +143,8 @@ public class Level {
 	 * 
 	 */
 	public static void createLevelMarathon(Breakout b){
+		b.setLife(999);
+
 		int columns = 8;
         int rows = 4;
 		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
