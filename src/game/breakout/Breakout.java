@@ -428,7 +428,7 @@ public class Breakout extends Game{
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
 		ListIterator<Brick> iterator = this.getBricks().listIterator();
-		if(this.nbBricks <32){ // has to be here to not cause conflict with the iterator
+		if(this.nbBricks <25){ // has to be here to not cause conflict with the iterator
 			final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
 
 			int rows =1;
@@ -511,7 +511,9 @@ public class Breakout extends Game{
 				iterator.remove();
 			}
 			else{
+				bonus.moveDown();
 				bonus.move(Bonus.MOVE_SPEED);
+
 			}
 		}
 	}
