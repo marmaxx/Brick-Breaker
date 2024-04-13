@@ -86,8 +86,6 @@ public class PhysicsEngine {
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject objectB = physicalObjects.get(j);
                 if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
-                    objectA.collided(objectB);
-                    objectB.collided(objectA);
                    //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
@@ -96,6 +94,9 @@ public class PhysicsEngine {
                     //System.out.println("B= "+objectB.getMass());
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
+
+                    objectA.collided(objectB);
+                    objectB.collided(objectA);
                 }
             }
         }
