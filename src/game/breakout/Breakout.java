@@ -387,20 +387,14 @@ public class Breakout extends Game{
 		}
 	}
 
-	/**
-	 * Update the ball entity
-	 *public void updateBall() {
 
-			if(this.getBall().willBeOffScreen(this.getPanel(), Ball.MOVE_SPEED)){
-					
-		} 
-		else if (this.getBall().willLoose(panel, Ball.MOVE_SPEED)){
-			if( this.getLife() == 1 && this.getNbBricks() > 0){
+	 public void updateBall() {
+
+			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
-			this.getBall().move(Ball.MOVE_SPEED);
-		}*/
+		}
 	
 
 
@@ -605,7 +599,7 @@ public class Breakout extends Game{
 	@Override
 	public void onUpdate(double deltaTime) {
 		this.updatePlayer();
-		//this.updateBall();
+		this.updateBall();
 		this.checkBallInGame();
 		//System.out.println(this.ball.getPosition());
 		if (this.ball.getIsMoving() == true) this.physicEngine.update(deltaTime);
