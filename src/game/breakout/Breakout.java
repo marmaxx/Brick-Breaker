@@ -427,7 +427,7 @@ public class Breakout extends Game{
 	public void updateMarathonBricks() {
 		// Using an iterator to safely remove bricks from the collection
 		// Without getting the ConcurrentModificationException
-		ListIterator<Brick> iterator = this.getBricks().listIterator();
+		Iterator<Brick> iterator = this.getBricks().iterator();
 
 		if(this.nbBricks <30){ // has to be here to not cause conflict with the iterator
 			final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
@@ -474,22 +474,18 @@ public class Breakout extends Game{
 				}
 			}
 			brick.move(1);
-			if (brick.getRepresentation().isColliding(this.getBall().getRepresentation())) {
-				//this.getBall().reverseHorizontalMomentum         
-				if (brick.getLifespan()-1 < Brick.MIN_LIFESPAN) {
-					if (brick.doesDropBonus()){
-						// store the size of the brick
-						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
-					}
-					this.getPanel().getGameZone().remove(brick.getRepresentation());
-					this.nbBricks--; // Decrement the count of brick when the brick is broken
-					this.score += 100; // Increment the score when the brick is broken
-					// Safely remove the brick from the collection
-					iterator.remove();
-					this.getPanel().updateScore(this.score, this.nbBricks);
-					
-					
+			if (!brick.isActive()) {
+				if (brick.doesDropBonus()){
+					// store the size of the brick
+					createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 				}
+				this.nbBricks--; // Decrement the count of brick when the brick is broken
+				this.score += 100; // Increment the score when the brick is broken
+				// Safely remove the brick from the collection
+				iterator.remove();
+				this.getPanel().updateScore(this.score, this.nbBricks);
+				
+				
 			}	
 			
 		}
