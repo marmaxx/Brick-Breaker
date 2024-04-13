@@ -19,6 +19,9 @@ public abstract class Entity extends PhysicalObject {
 	private boolean movingUp=false;
 	private boolean movingDown=false;
 
+	private static final boolean DEFAULT_MOVABLE =true;
+	private static final int DEFAULT_MASS = 0;
+
 
 	/**
 	 *  Instantiates a new Entity
@@ -31,6 +34,20 @@ public abstract class Entity extends PhysicalObject {
 		super(mass, position, movable, representation);
 		this.setRepresentation(representation);
     }
+
+	/**
+	 * Instantiates a new Entity
+	 * 
+	 * @param representation the graphical representation of the entity
+	 */
+    public Entity(GraphicalObject representation) {
+		super(DEFAULT_MASS,new Vector2D(representation.getPosX(),representation.getPosY()),DEFAULT_MOVABLE,representation);
+		this.setRepresentation(representation);
+		 
+    }
+
+
+
 
 	/**
 	 * Gets the graphical representation of the entity

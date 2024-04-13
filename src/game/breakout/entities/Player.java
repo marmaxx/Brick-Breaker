@@ -82,6 +82,69 @@ public class Player extends Entity {
 		this(DEFAULT_IMAGE,  DEFAULT_SIZE, DEFAULT_SPEED,mass,position,movable);
 	}
 
+	/**
+	 * Instantiates a new Player
+	 * 
+	 * @param color the color of the player object
+	 * @param posX the initial x position of the player
+	 * @param posY the initial y position of the player
+	 * @param size the size of the player
+	 */
+    public Player(
+		Color color,
+        int posX, int posY,
+        int size,
+		int speed
+    ) {
+		super(new Rectangle(color, posX, posY, size, size/4, speed));
+    }
+
+	/**
+	 * Instantiates a new Player
+	 * 
+	 * @param image the image representing the player
+	 * @param posX the initial x position of the player
+	 * @param posY the initial y position of the player
+	 * @param size the size of the player
+	 */
+    public Player(
+		Image image,
+        int posX, int posY,
+        int size,
+		int speed
+    ) {
+		super(new Rectangle(image, posX, posY, size, size/4, speed));
+    }
+
+	/**
+	 * Instantiates a new Player
+	 * 
+	 * @param posX the initial x position of the player
+	 * @param posY the initial y position of the player
+	 * @param size the size of the player
+	 */
+	public Player(int posX, int posY, int size) {
+		this(DEFAULT_IMAGE, posX, posY, size, DEFAULT_SPEED);
+	}
+
+	/**
+	 * Instantiates a new Player
+	 * 
+	 * @param posX the initial x position of the player
+	 * @param posY the initial y position of the player
+	 */
+	public Player(int posX, int posY) {
+		this(DEFAULT_IMAGE, posX, posY, DEFAULT_SIZE, DEFAULT_SPEED);
+	}
+
+	/**
+	 * Instantiates a new Player
+	 */
+	public Player() {
+		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE, DEFAULT_SPEED);
+	}
+
+
 
 	// getters for the different variations of speed
 	public int getMoveSpeed() {

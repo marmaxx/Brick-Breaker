@@ -17,6 +17,14 @@ public class Wall extends Entity {
         super(mass,position,movable,new Rectangle(DEFAULT_COLOR, (int)position.getX(), (int)position.getY(), width, height));
     }
 
+    /**
+     * Instantiates a new wall
+     */
+    public Wall(int posX, int posY, int width, int height){
+        super(new Rectangle(DEFAULT_COLOR, posX, posY, width, height));
+    }
+
+
     @Override
     public void collided(PhysicalObject object) {
         super.collided();
