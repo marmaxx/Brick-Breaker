@@ -6,7 +6,9 @@ import javax.swing.ImageIcon;
 import java.util.Collections;
 import java.awt.Image;
 
+import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
+import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
@@ -64,8 +66,8 @@ public class Bonus extends Entity {
     }
 
     public Bonus(
-        int posX, int posY,
         int size,
+		int posX,int posY,
         BonusType bonusType
     ) {
         this(bonusTypes.get(bonusType), posX, posY, size, bonusType);
@@ -107,4 +109,10 @@ public class Bonus extends Entity {
     public void move(int speed) {
         this.getRepresentation().setPosY(this.getRepresentation().getPosY() + speed);
     }
+
+
+	@Override
+	public void collided(PhysicalObject object) {
+		super.collided();
+	}
 }
