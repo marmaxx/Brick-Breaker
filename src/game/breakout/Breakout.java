@@ -599,11 +599,11 @@ public class Breakout extends Game{
 					Ball ballToBeDuplicated = iterator.next();
 
 					Random randomDistance = new Random();
-					int randomX = (int)ballToBeDuplicated.getPosition().getX() + randomDistance.nextInt(-50, 50);
-					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-50, 50);
+					int randomX = (int)ballToBeDuplicated.getPosition().getX() + randomDistance.nextInt(-30, 30);
+					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-30, 30);
 					Vector2D ballPos = new Vector2D(randomX, randomY);
 
-					Ball ball = new Ball(Ball.DEFAULT_IMAGE,  30,50,ballPos,true);
+					Ball ball = new Ball(Ball.DEFAULT_IMAGE,  20,50,ballPos,true);
 					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
 					ball.setSpeed(ballToBeDuplicated.getSpeed());
 
@@ -638,16 +638,21 @@ public class Breakout extends Game{
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
+			this.getPhysicEngine().getPhysicalObjects().remove(this.ball);
+			this.getBalls().remove(this.ball);
+
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
 			
 			Ball ball = new Ball(Ball.DEFAULT_COLOR, 30, 50, new Vector2D(x, y), true);
+			ball.setSpeed(new Vector2D(0.5, -0.5));
+
 			this.setBall(ball);
 			this.getBalls().add(ball);
-			
+
 			this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 			this.physicEngine.getPhysicalObjects().add(ball);
-			this.ball.setIsMoving(false);
+			this.ball.setIsMoving(true);
 			this.life--;
 			this.getPanel().updateLife(this.life);
 		}
