@@ -603,7 +603,7 @@ public class Breakout extends Game{
 					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-50, 50);
 					Vector2D ballPos = new Vector2D(randomX, randomY);
 
-					Ball ball = new Ball(Color.ORANGE,  30,50,ballPos,true);
+					Ball ball = new Ball(Ball.DEFAULT_IMAGE,  30,50,ballPos,true);
 					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
 					ball.setSpeed(ballToBeDuplicated.getSpeed());
 
@@ -640,7 +640,11 @@ public class Breakout extends Game{
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
-			this.setBall(new Ball(Ball.DEFAULT_COLOR, 30, 50, new Vector2D(x, y), true));
+			
+			Ball ball = new Ball(Ball.DEFAULT_COLOR, 30, 50, new Vector2D(x, y), true);
+			this.setBall(ball);
+			this.getBalls().add(ball);
+			
 			this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 			this.physicEngine.getPhysicalObjects().add(ball);
 			this.ball.setIsMoving(false);
