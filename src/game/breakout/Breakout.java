@@ -1,7 +1,7 @@
 package game.breakout;
 
 import java.util.*;
-
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -28,6 +28,7 @@ public class Breakout extends Game{
 
 	private ArrayList<Brick> bricks;
 	private ArrayList<Bonus> bonuses;
+	private ArrayList<Ball>  Balls;
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
@@ -65,10 +66,14 @@ public class Breakout extends Game{
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
+		this.setBalls(new ArrayList<Ball>());
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,51,new Vector2D(530, 700),false));
 
-		this.setBall(new Ball(Ball.DEFAULT_COLOR,  30,50,new Vector2D(565,670),true));
+		Ball mainBall = new Ball(Ball.DEFAULT_COLOR,  30,50,new Vector2D(565,670),true);
+		this.setBall(mainBall);
+		this.getBalls().add(mainBall);
+
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
 
@@ -154,6 +159,24 @@ public class Breakout extends Game{
 	 */
 	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks = bricks;
+	}
+
+	/**
+	 * Get the list of bricks in the game.
+	 * 
+	 * @return The list of bricks
+	 */
+	public ArrayList<Ball> getBalls() {
+		return this.Balls;
+	}
+
+	/**
+	 * Set the list of bricks in the game.
+	 * 
+	 * @param bricks The list of bricks
+	 */
+	public void setBalls(ArrayList<Ball> ballz) {
+		this.Balls = ballz;
 	}
 
 	/**
@@ -565,7 +588,38 @@ public class Breakout extends Game{
 				// TODO : once the timer is implemented after a graphical fix
 				break;
 			case DEFAULT:
-				// default image
+				
+				ArrayList<Ball> ballsToBeAdded = new ArrayList<Ball>();
+				
+				Iterator<Ball> iterator = this.getBalls().iterator();
+				
+				while(iterator.hasNext()){
+					Ball ballToBeDuplicated = iterator.next();
+
+					Random randomDistance = new Random();
+					int randomX = (int)ballToBeDuplicated.getPosition().getX() + randomDistance.nextInt(-30, 30);
+					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-30, 30);
+					Vector2D ballPos = new Vector2D(randomX, randomY);
+
+					Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
+					ball.setSpeed(ballToBeDuplicated.getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
+
+					ballsToBeAdded.add(ball);
+
+				}
+
+				Iterator<Ball> ballsToBeAddedIterator = ballsToBeAdded.iterator();
+				while(ballsToBeAddedIterator.hasNext()){
+					Ball ball = ballsToBeAddedIterator.next();
+
+					this.getBalls().add(ball);
+
+					this.getPanel().getGameZone().add(ball.getRepresentation());
+					this.getPhysicEngine().getPhysicalObjects().add(ball);
+
+				}
+
 				break;
 			default:
 				break;
@@ -582,12 +636,21 @@ public class Breakout extends Game{
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
+			this.getPhysicEngine().getPhysicalObjects().remove(this.ball);
+			this.getBalls().remove(this.ball);
+
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
-			this.setBall(new Ball(Ball.DEFAULT_COLOR, 30, 50, new Vector2D(x, y), true));
+			
+			Ball ball = new Ball(Ball.DEFAULT_COLOR, 30, 50, new Vector2D(x, y), true);
+			ball.setSpeed(new Vector2D(0.5, -0.5));
+
+			this.setBall(ball);
+			this.getBalls().add(ball);
+
 			this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 			this.physicEngine.getPhysicalObjects().add(ball);
-			this.ball.setIsMoving(false);
+			this.ball.setIsMoving(true);
 			this.life--;
 			this.getPanel().updateLife(this.life);
 		}

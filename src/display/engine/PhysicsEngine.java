@@ -12,7 +12,7 @@ import game.breakout.entities.rules.Entity;
  */
 public class PhysicsEngine {
     public static double GRAVITY_CONSTANT=0.5;
-    public static final double rebondForce = 10000;
+    public static final double rebondForce = 100;
     private static final double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject> physicalObjects;
 
