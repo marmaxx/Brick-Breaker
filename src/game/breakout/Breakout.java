@@ -8,6 +8,7 @@ import java.io.File;
 
 import display.engine.PhysicsEngine;
 import display.engine.rules.PhysicalObject;
+import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
@@ -412,7 +413,7 @@ public class Breakout extends Game{
 
 
 	 public void updateBall() {
-
+			this.getBall().trail.addPoint(new Circle(Color.BLUE, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");

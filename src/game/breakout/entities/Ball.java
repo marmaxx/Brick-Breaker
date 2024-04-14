@@ -1,12 +1,19 @@
 package game.breakout.entities;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
+import java.util.LinkedList;
+
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
 import display.view.GamePanel;
@@ -23,6 +30,7 @@ public class Ball extends Entity {
 	public int angle; // it will be used later
 	public boolean isMoving;
 
+	public BallTrail trail = new BallTrail();
 
 
 	/**
@@ -162,6 +170,20 @@ public class Ball extends Entity {
 
 	@Override
 	public void collided(PhysicalObject object) {
+		
+	}
+
+	public class BallTrail {
+    	private LinkedList<Circle> points = new LinkedList<>();
+
+    	public void addPoint(Circle point, Breakout b) {
+			b.getPanel().getGameZone().add(point);
+        	points.add(point);
+        	if 	(points.size() > 5) { // Limit the trail length
+				b.getPanel().getGameZone().remove(points.getFirst());
+				points.removeFirst();
+        	}
+    	}
 		
 	}
 
