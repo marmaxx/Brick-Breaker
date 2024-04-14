@@ -603,9 +603,9 @@ public class Breakout extends Game{
 					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-30, 30);
 					Vector2D ballPos = new Vector2D(randomX, randomY);
 
-					Ball ball = new Ball(Ball.DEFAULT_IMAGE,  20,50,ballPos,true);
+					Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
 					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
-					ball.setSpeed(ballToBeDuplicated.getSpeed());
+					ball.setSpeed(ballToBeDuplicated.getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
 
 					ballsToBeAdded.add(ball);
 

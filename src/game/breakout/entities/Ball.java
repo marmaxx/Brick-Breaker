@@ -149,6 +149,18 @@ public class Ball extends Entity {
 	}
 
 	@Override
+	public void resolveCollision(PhysicalObject object) {
+		super.resolveCollision(object);
+		if (isMovable()){
+            if (object.isMovable()){
+				if (object.getRepresentation() instanceof Circle){
+					//TODO: handle ball to ball collision
+				}
+			}
+		}
+	}
+
+	@Override
 	public void collided(PhysicalObject object) {
 		
 	}
