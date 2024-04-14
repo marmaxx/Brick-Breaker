@@ -1,7 +1,7 @@
 package game.breakout;
 
 import java.util.*;
-
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -28,6 +28,7 @@ public class Breakout extends Game{
 
 	private ArrayList<Brick> bricks;
 	private ArrayList<Bonus> bonuses;
+	private ArrayList<Ball>  optionalBalls;
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
@@ -65,6 +66,7 @@ public class Breakout extends Game{
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
+		this.setOptionalBalls(new ArrayList<Ball>());
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,51,new Vector2D(530, 700),false));
 
@@ -154,6 +156,24 @@ public class Breakout extends Game{
 	 */
 	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks = bricks;
+	}
+
+	/**
+	 * Get the list of bricks in the game.
+	 * 
+	 * @return The list of bricks
+	 */
+	public ArrayList<Ball> getOptionalBalls() {
+		return this.optionalBalls;
+	}
+
+	/**
+	 * Set the list of bricks in the game.
+	 * 
+	 * @param bricks The list of bricks
+	 */
+	public void setOptionalBalls(ArrayList<Ball> ballz) {
+		this.optionalBalls = ballz;
 	}
 
 	/**
@@ -568,7 +588,13 @@ public class Breakout extends Game{
 				break;
 			case DEFAULT:
 				// default image
-				System.out.println("ballin'");
+				Ball ball = new Ball(Color.ORANGE,  30,50,this.getBall().getPosition(),true);
+				ball.setAcceleration(this.getBall().getAcceleration());
+				ball.setSpeed(ball.getSpeed());
+				this.getOptionalBalls().add(ball);
+
+				this.getPanel().getGameZone().add(ball.getRepresentation());
+				this.getPhysicEngine().getPhysicalObjects().add(ball);
 				break;
 			default:
 				break;
