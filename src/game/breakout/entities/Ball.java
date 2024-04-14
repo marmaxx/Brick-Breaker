@@ -1,12 +1,19 @@
 package game.breakout.entities;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
+import java.util.LinkedList;
+
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
 import display.view.GamePanel;
@@ -23,6 +30,7 @@ public class Ball extends Entity {
 	public int angle; // it will be used later
 	public boolean isMoving;
 
+	public BallTrail trail = new BallTrail();
 
 
 	/**
@@ -163,6 +171,33 @@ public class Ball extends Entity {
 	@Override
 	public void collided(PhysicalObject object) {
 		
+	}
+
+	public class BallTrail extends JPanel {
+    	private LinkedList<Circle> points = new LinkedList<>();
+
+    	public void addPoint(Circle point, Breakout b) {
+			b.getPanel().getGameZone().add(point);
+        	points.add(point);
+        	if 	(points.size() > 10) { // Limit the trail length
+				b.getPanel().getGameZone().remove(points.getFirst());
+				points.removeFirst();
+        	}
+        	repaint();
+    	}
+
+    	@Override
+    	protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+    	    Graphics2D g2d = (Graphics2D) g;
+	        float alpha = 1.0f;
+   		    float alphaDecrement = 1.0f / points.size();
+        	for (Circle point : points) {
+            	g2d.setColor(new Color(0, 0, 0, alpha));
+	            g2d.fillOval(point.getPosX(), point.getPosY(), 10, 10);
+    	        alpha -= alphaDecrement;
+        	}
+    	}
 	}
 
 
