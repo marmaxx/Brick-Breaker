@@ -337,6 +337,7 @@ public class Breakout extends Game{
 	
 		// Get a random between 0 and the last number of the hashmap 
 		int randomBonusType = new Random().nextInt(Bonus.MAX_BONUSTYPE);
+		randomBonusType = 5; //TODO : remove this, it forces the ball power up to drop
 		this.getBonuses().add(new Bonus(Bonus.bonusTypes.get(BonusType.values()[randomBonusType]), posX, posY, Bonus.DEFAULT_SIZE, BonusType.values()[randomBonusType]));
 		for (Bonus bonus : this.getBonuses()) {
 			this.getPanel().getGameZone().add(bonus.getRepresentation());
@@ -419,7 +420,8 @@ public class Breakout extends Game{
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 				if (!brick.isActive()) {
-					if (brick.doesDropBonus()){
+					//if (brick.doesDropBonus()){
+					if(true){  //TODO : remove this, it forces the ball power up to drop
 						// store the size of the brick
 						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 					}
@@ -566,6 +568,7 @@ public class Breakout extends Game{
 				break;
 			case DEFAULT:
 				// default image
+				System.out.println("ballin'");
 				break;
 			default:
 				break;
