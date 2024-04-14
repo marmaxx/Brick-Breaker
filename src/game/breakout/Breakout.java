@@ -28,7 +28,7 @@ public class Breakout extends Game{
 
 	private ArrayList<Brick> bricks;
 	private ArrayList<Bonus> bonuses;
-	private ArrayList<Ball>  optionalBalls;
+	private ArrayList<Ball>  Balls;
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
@@ -66,11 +66,14 @@ public class Breakout extends Game{
 		this.gameframe.setGame(this);
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
-		this.setOptionalBalls(new ArrayList<Ball>());
+		this.setBalls(new ArrayList<Ball>());
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,51,new Vector2D(530, 700),false));
 
-		this.setBall(new Ball(Ball.DEFAULT_COLOR,  30,50,new Vector2D(565,670),true));
+		Ball mainBall = new Ball(Ball.DEFAULT_COLOR,  30,50,new Vector2D(565,670),true);
+		this.setBall(mainBall);
+		this.getBalls().add(mainBall);
+
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
 
@@ -163,8 +166,8 @@ public class Breakout extends Game{
 	 * 
 	 * @return The list of bricks
 	 */
-	public ArrayList<Ball> getOptionalBalls() {
-		return this.optionalBalls;
+	public ArrayList<Ball> getBalls() {
+		return this.Balls;
 	}
 
 	/**
@@ -172,8 +175,8 @@ public class Breakout extends Game{
 	 * 
 	 * @param bricks The list of bricks
 	 */
-	public void setOptionalBalls(ArrayList<Ball> ballz) {
-		this.optionalBalls = ballz;
+	public void setBalls(ArrayList<Ball> ballz) {
+		this.Balls = ballz;
 	}
 
 	/**
@@ -587,14 +590,38 @@ public class Breakout extends Game{
 				// TODO : once the timer is implemented after a graphical fix
 				break;
 			case DEFAULT:
-				// default image
-				Ball ball = new Ball(Color.ORANGE,  30,50,this.getBall().getPosition(),true);
-				ball.setAcceleration(this.getBall().getAcceleration());
-				ball.setSpeed(ball.getSpeed());
-				this.getOptionalBalls().add(ball);
+				
+				ArrayList<Ball> ballsToBeAdded = new ArrayList<Ball>();
+				
+				Iterator<Ball> iterator = this.getBalls().iterator();
+				
+				while(iterator.hasNext()){
+					Ball ballToBeDuplicated = iterator.next();
 
-				this.getPanel().getGameZone().add(ball.getRepresentation());
-				this.getPhysicEngine().getPhysicalObjects().add(ball);
+					Random randomDistance = new Random();
+					int randomX = (int)ballToBeDuplicated.getPosition().getX() + randomDistance.nextInt(-50, 50);
+					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-50, 50);
+					Vector2D ballPos = new Vector2D(randomX, randomY);
+
+					Ball ball = new Ball(Color.ORANGE,  30,50,ballPos,true);
+					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
+					ball.setSpeed(ballToBeDuplicated.getSpeed());
+
+					ballsToBeAdded.add(ball);
+
+				}
+
+				Iterator<Ball> ballsToBeAddedIterator = ballsToBeAdded.iterator();
+				while(ballsToBeAddedIterator.hasNext()){
+					Ball ball = ballsToBeAddedIterator.next();
+
+					this.getBalls().add(ball);
+
+					this.getPanel().getGameZone().add(ball.getRepresentation());
+					this.getPhysicEngine().getPhysicalObjects().add(ball);
+
+				}
+
 				break;
 			default:
 				break;
