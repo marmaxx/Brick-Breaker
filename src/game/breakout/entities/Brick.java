@@ -1,14 +1,26 @@
 package game.breakout.entities;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.Collections;
 
+import javax.swing.ImageIcon;
+
+import java.awt.Color;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import java.awt.Image;
+
+import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;
+import display.engine.utils.Vector2D;
+import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-
 public class Brick extends Entity {
+    public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
+    public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
+
     protected boolean isDestroyed, dropBonus;
     protected int lifespan;
 
@@ -17,19 +29,23 @@ public class Brick extends Entity {
 	public static final int DEFAULT_WIDTH = 100;
 	public static final int DEFAULT_HEIGHT = 20;
 
-	public static final HashMap<Integer, Color> lifespans = new HashMap<Integer, Color>() {
+	public static final HashMap<Integer, Image> lifespans = new HashMap<Integer, Image>() {
 		{
-			put(0, Color.RED);
-			put(1, Color.ORANGE);
-			put(2, Color.YELLOW);
-			put(3, Color.GREEN);
+			put(0, new ImageIcon(path + "Brick0.png").getImage());
+			put(1, new ImageIcon(path + "Brick1.png").getImage());
+			put(2, new ImageIcon(path + "Brick2.png").getImage());
 		}
 	};
 
 	public static final int MIN_LIFESPAN = Collections.min(lifespans.keySet());
 	public static final int MAX_LIFESPAN = lifespans.size();
 
-	/**
+
+
+
+
+	
+		/**
 	 * Instantiates a new Brick
 	 * 
 	 * @param posX the initial x position of the brick
@@ -44,7 +60,78 @@ public class Brick extends Entity {
 	 * @throws IllegalArgumentException if the color is not in the hashmap
 	 */
 	public Brick(
-		Color color,
+		Image image,
+        int width, int height,
+        int lifespan, boolean dropBonus,
+		double mass, Vector2D position, boolean movable
+    ) {
+        super(mass,position,movable,new Rectangle(lifespans.get(lifespan), (int)position.getX(), (int)position.getY(),  width, height));
+		if (!lifespans.containsKey(lifespan)) {
+			throw new IllegalArgumentException("La durée de vie d'une brique doit être 0, 1, 2 ou 3 !");
+		}
+		if (width <= 0 || height <= 0) {
+			throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
+		}
+		if (!lifespans.containsValue(image) || image == null) {
+			throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
+		}
+
+        this.setLifespan(lifespan);
+        this.setDropBonus(dropBonus);
+    }
+
+	/**
+	 * Instantiates a new Brick
+	 * 
+	 * @param posX the initial x position of the brick
+	 * @param posY the initial y position of the brick
+	 * @param width the width of the brick
+	 * @param height the height of the brick
+	 * @param lifespan the lifespan of the brick, see the lifespans hashmap
+	 * @param dropBonus whether the brick drops a bonus when destroyed
+	 */
+    public Brick(
+        int width, int height,
+        int lifespan, boolean dropBonus,
+		double mass, Vector2D position, boolean movable
+    ) {
+		this(lifespans.get(lifespan), width, height, lifespan, dropBonus, mass, position,movable);
+    }
+
+	/**
+	 * Instantiates a new Brick
+	 * 
+	 * @param posX the initial x position of the brick
+	 * @param posY the initial y position of the brick
+	 * @param width the width of the brick
+	 * @param height the height of the brick
+	 * @param dropBonus whether the brick drops a bonus when destroyed
+	 */
+	public Brick(
+		int width, int height,
+		boolean dropBonus,
+		double mass, Vector2D position, boolean movable
+	) {
+		this(lifespans.get(MAX_LIFESPAN), width, height, MAX_LIFESPAN, dropBonus,mass,position,movable);
+	}
+
+	
+		/**
+	 * Instantiates a new Brick
+	 * 
+	 * @param posX the initial x position of the brick
+	 * @param posY the initial y position of the brick
+	 * @param width the width of the brick
+	 * @param height the height of the brick
+	 * @param lifespan the lifespan of the brick, see the lifespans hashmap
+	 * @param dropBonus whether the brick drops a bonus when destroyed
+	 * 
+	 * @throws IllegalArgumentException if the lifespan is not in the hashmap
+	 * @throws IllegalArgumentException if the width or height is less than or equal to 0
+	 * @throws IllegalArgumentException if the color is not in the hashmap
+	 */
+	public Brick(
+		Image image,
         int posX, int posY,
         int width, int height,
         int lifespan, boolean dropBonus
@@ -56,7 +143,7 @@ public class Brick extends Entity {
 		if (width <= 0 || height <= 0) {
 			throw new IllegalArgumentException("La taille d'une brique doit être strictement positive !");
 		}
-		if (!lifespans.containsValue(color) || color == null) {
+		if (!lifespans.containsValue(image) || image == null) {
 			throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
 		}
 
@@ -99,7 +186,6 @@ public class Brick extends Entity {
 		this(lifespans.get(MAX_LIFESPAN), posX, posY, width, height, MAX_LIFESPAN, dropBonus);
 	}
 
-
 	/**
 	 * Gets the lifespan of the brick
 	 * 
@@ -123,7 +209,7 @@ public class Brick extends Entity {
 			return false;
 		}
 		this.lifespan = lifespan;
-		this.getRepresentation().setColor(lifespans.get(lifespan));
+		this.getRepresentation().setImage(lifespans.get(lifespan));
 		return true;
     }
 
@@ -162,7 +248,22 @@ public class Brick extends Entity {
  	* 
  	* @return the rectangle associated with the brick
  	*/
-	public Rectangle getRectangle() {
+	 public Rectangle getRectangle() {
         return ((Rectangle) this.getRepresentation());
 	}
+
+
+
+	@Override
+	public void collided(PhysicalObject object) {
+		super.collided();
+		if(object instanceof Ball){
+			if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
+				this.destroy();
+			}
+			this.setLifespan(this.getLifespan() - 1);
+		}
+	}
+
+
 }

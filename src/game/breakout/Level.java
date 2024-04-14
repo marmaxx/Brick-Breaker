@@ -1,9 +1,11 @@
 package game.breakout;
 import java.util.Random;
+
+
+import display.engine.utils.Vector2D;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
-import physics.PhysicalObject;
-import physics.utils.Vector2D;
+
 
 
 public class Level {
@@ -76,19 +78,14 @@ public class Level {
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 	
-				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
-				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus);
+				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				b.getBricks().add(brick);
 
-				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
-				b.getPhysicalBricks().add(physicalBrick);
+				b.getPhysicEngine().getPhysicalObjects().add(brick);
 			}
 		}
-		for (PhysicalObject<Entity> brick:b.getPhysicalBricks()){
-			b.getPhysicEngine().getPhysicalObjects().add(brick);
-		}
+
 	}
 
 
@@ -123,25 +120,20 @@ public class Level {
                     int randomNumber = new Random().nextInt(4) + 1;
                     boolean dropBonus = (randomNumber == 1);
 
-                    Brick brick = new Brick(initialXPos + column * BRICK_SPACING, verticalPos,
-                            Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT,
-                            randomLifespan, dropBonus);
+                    Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+
 
 					// Apply rotation of -10 degrees to rectangles at odd positions
                     if ((row % 2 == 1) && (column % 2 == 1)) {
                         brick.getRectangle().setRotate(-10); 
                     }
 
-                    b.getBricks().add(brick);
-					
-					Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-					PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
-					b.getPhysicalBricks().add(physicalBrick);
+					b.getBricks().add(brick);
+
+					b.getPhysicEngine().getPhysicalObjects().add(brick);
         		}
     		}
-		}
-		for (PhysicalObject<Entity> brick:b.getPhysicalBricks()){
-			b.getPhysicEngine().getPhysicalObjects().add(brick);
 		}
 	}
 
@@ -151,6 +143,8 @@ public class Level {
 	 * 
 	 */
 	public static void createLevelMarathon(Breakout b){
+		b.setLife(999);
+
 		int columns = 8;
         int rows = 4;
 		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
@@ -168,19 +162,14 @@ public class Level {
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 				
-				Brick brick = new Brick(initialXPos+column*BRICK_SPACING,verticalPos,
-				Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus);
+				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+
 				brick.moveRight();
 				b.getBricks().add(brick);
 
-				Vector2D brickVectPos = new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos);
-				PhysicalObject<Entity> physicalBrick = new PhysicalObject<Entity>(brick, 10, brickVectPos, false, brick.getRepresentation());
-				b.getPhysicalBricks().add(physicalBrick);
+				b.getPhysicEngine().getPhysicalObjects().add(brick);
 			}
-		}
-		for (PhysicalObject<Entity> brick:b.getPhysicalBricks()){
-			b.getPhysicEngine().getPhysicalObjects().add(brick);
 		}
 	}
 }
