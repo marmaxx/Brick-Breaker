@@ -173,31 +173,18 @@ public class Ball extends Entity {
 		
 	}
 
-	public class BallTrail extends JPanel {
+	public class BallTrail {
     	private LinkedList<Circle> points = new LinkedList<>();
 
     	public void addPoint(Circle point, Breakout b) {
 			b.getPanel().getGameZone().add(point);
         	points.add(point);
-        	if 	(points.size() > 10) { // Limit the trail length
+        	if 	(points.size() > 5) { // Limit the trail length
 				b.getPanel().getGameZone().remove(points.getFirst());
 				points.removeFirst();
         	}
-        	repaint();
     	}
-
-    	@Override
-    	protected void paintComponent(Graphics g) {
-	        super.paintComponent(g);
-    	    Graphics2D g2d = (Graphics2D) g;
-	        float alpha = 1.0f;
-   		    float alphaDecrement = 1.0f / points.size();
-        	for (Circle point : points) {
-            	g2d.setColor(new Color(0, 0, 0, alpha));
-	            g2d.fillOval(point.getPosX(), point.getPosY(), 10, 10);
-    	        alpha -= alphaDecrement;
-        	}
-    	}
+		
 	}
 
 
