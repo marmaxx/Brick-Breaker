@@ -71,7 +71,7 @@ public class Breakout extends Game{
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,51,new Vector2D(530, 700),false));
 
-		Ball mainBall = new Ball(Ball.DEFAULT_COLOR,  30,50,new Vector2D(565,670),true);
+		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
 		this.getBalls().add(mainBall);
 
@@ -413,7 +413,7 @@ public class Breakout extends Game{
 
 
 	 public void updateBall() {
-			this.getBall().trail.addPoint(new Circle(Color.BLUE, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
+			this.getBall().trail.addPoint(new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
@@ -634,6 +634,8 @@ public class Breakout extends Game{
 	public void updateDebug(){
 		System.out.println(Brick.MAX_LIFESPAN);
 	};
+
+
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
@@ -643,7 +645,7 @@ public class Breakout extends Game{
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
 			
-			Ball ball = new Ball(Ball.DEFAULT_COLOR, 30, 50, new Vector2D(x, y), true);
+			Ball ball = new Ball(Ball.DEFAULT_IMAGE2, 30, 50, new Vector2D(x, y), true);
 			ball.setSpeed(new Vector2D(0.5, -0.5));
 
 			this.setBall(ball);
@@ -651,7 +653,7 @@ public class Breakout extends Game{
 
 			this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 			this.physicEngine.getPhysicalObjects().add(ball);
-			this.ball.setIsMoving(true);
+			//this.ball.setIsMoving(true);
 			this.life--;
 			this.getPanel().updateLife(this.life);
 		}
