@@ -20,6 +20,8 @@ import display.view.GamePanel;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
+import java.awt.Color;
+
 public class Ball extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
 	public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
@@ -175,18 +177,42 @@ public class Ball extends Entity {
 	}
 
 	public class BallTrail {
-    	private LinkedList<Circle> points = new LinkedList<>();
+		private class TrailPoint {
+			public Circle point;
+			public double opacity;
+	
+			public TrailPoint(Circle point, double opacity) {
+				this.point = point;
+				this.opacity = opacity;
+			}
+		}
+	
+		private LinkedList<TrailPoint> points = new LinkedList<>();
+		private static final double OPACITY_DECREMENT = 0.1;
 
-    	public void addPoint(Circle point, Breakout b) {
-			b.getPanel().getGameZone().add(point);
-        	points.add(point);
-        	if 	(points.size() > 5) { // Limit the trail length
-				b.getPanel().getGameZone().remove(points.getFirst());
-				points.removeFirst();
-        	}
-    	}
+		public void addPoint(Circle point, Breakout breakout) {
+			for (TrailPoint tp : points) {
+				tp.opacity = Math.max(0, tp.opacity - OPACITY_DECREMENT);
 		
-	}
+				// Interpolate between red and yellow based on the opacity
+				float r = 1.0f;
+				float g = (float) tp.opacity;  // Green component increases as opacity decreases
+				float b = 0.0f;
+		
+				// Use the opacity field to set the color of the Circle
+				tp.point.setColor(new Color(r, g, b, (float) tp.opacity));
+			}
+		
+			points.add(new TrailPoint(point, 1));
+			breakout.getPanel().getGameZone().add(point);
+		
+			if (points.size() > 10) { // Limit the trail length
+				breakout.getPanel().getGameZone().remove(points.getFirst().point);
+				points.removeFirst();
+			}
+		}
+
+		}
 
 
 	
