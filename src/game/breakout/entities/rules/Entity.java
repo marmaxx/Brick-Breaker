@@ -293,6 +293,7 @@ public abstract class Entity extends PhysicalObject {
 					if (object instanceof Player){
 						//System.out.println("VITESSE: "+this.getSpeed());
 						//System.out.println("acc AVANT: "+this.getAcceleration());
+						//this.resolveSpeedToHigh(); 
 						if (this.getAcceleration().getY() > 100) this.applyForce(new Vector2D(0, - this.getMass() * PhysicsEngine.rebondForce));
 						//System.out.println("acc APRES: "+this.getAcceleration());
 					}
