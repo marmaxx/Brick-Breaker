@@ -69,7 +69,7 @@ public class Level {
 		int initialXPos = (int) Math.floor(b.getPanel().getGameZone().getPreferredSize().getWidth()
 		/ 2 - (columns * BRICK_SPACING) / 2);
 		
-		for(int row = 0; row < rows; row++){
+		/*for(int row = 0; row < rows; row++){
 			for(int column = 0; column < columns; column++){
 				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
 				int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN);
@@ -84,7 +84,12 @@ public class Level {
 
 				b.getPhysicEngine().getPhysicalObjects().add(brick);
 			}
-		}
+		}*/
+		Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				2, false,10000,new Vector2D(600,200),false);
+				b.getBricks().add(brick);
+
+				b.getPhysicEngine().getPhysicalObjects().add(brick);
 
 	}
 

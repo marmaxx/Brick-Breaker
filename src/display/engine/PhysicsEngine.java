@@ -55,6 +55,7 @@ public class PhysicsEngine {
         applyGravity(deltaTime);
         handleCollisions(deltaTime);
         applyFriction(FRICTION_COEFFICIENT);
+        applyGravitationalForces(deltaTime);
        
             // updating objects position relatively to the time spent
          for (PhysicalObject object : physicalObjects) {
@@ -114,6 +115,35 @@ public class PhysicsEngine {
         for (PhysicalObject object : physicalObjects) {
             // applying acceleration due to gravity
             if(object.isMovable() &&object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
+        }
+    }
+
+    /**
+     * Applies gravitational field forces to all movable objects
+     * 
+     * @param deltaTime the time since last tick
+     */
+    private void applyGravitationalForces(double deltaTime) {
+        final double G = 6.67430; // gravitational constant
+    
+        for (int i = 0; i < physicalObjects.size(); i++) {
+            for (int j = i + 1; j < physicalObjects.size(); j++) {
+                PhysicalObject object1 = physicalObjects.get(i);
+                PhysicalObject object2 = physicalObjects.get(j);
+
+                Vector2D r = object2.getPosition().subtract(object1.getPosition());
+                double distance = r.magnitude();
+    
+                double forceMagnitude = G * (object1.getMass() * object2.getMass()) / (distance * distance);
+                Vector2D force = r.normalize().multiply(forceMagnitude);
+
+                if(object1.isActive() && object1.isMovable()){
+                    object1.applyForce(force.multiply(deltaTime));
+                }
+                if(object2.isActive() && object2.isMovable()){
+                    object2.applyForce(force.multiply(-deltaTime));
+                }
+            }
         }
     }
 
