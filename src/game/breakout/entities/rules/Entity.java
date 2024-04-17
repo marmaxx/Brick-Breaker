@@ -1,5 +1,6 @@
 package game.breakout.entities.rules;
 
+import display.engine.PhysicsEngine;
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
@@ -289,7 +290,13 @@ public abstract class Entity extends PhysicalObject {
                         default: reflexionAngle = 0; break;
                     }        
 
-
+					if (object instanceof Player){
+						//System.out.println("VITESSE: "+this.getSpeed());
+						//System.out.println("acc AVANT: "+this.getAcceleration());
+						//this.resolveSpeedToHigh(); 
+						if (this.getAcceleration().getY() > 100) this.applyForce(new Vector2D(0, - this.getMass() * PhysicsEngine.rebondForce));
+						//System.out.println("acc APRES: "+this.getAcceleration());
+					}
                     this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
                 }
                 

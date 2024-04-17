@@ -31,6 +31,7 @@ public abstract class PhysicalObject {
     protected Vector2D topRightPosition;
     protected Vector2D bottomLeftPosition;
     protected Vector2D bottomRightPosition;
+    protected double MAX_SPEED = 0.8;
 
     public PhysicalObject(double mass, Vector2D position, boolean movable, GraphicalObject representation){
 
@@ -201,6 +202,9 @@ public abstract class PhysicalObject {
 
     public abstract void resolveCollision(PhysicalObject objectB);
 
-
+    public void resolveSpeedToHigh(){
+        if (this.getSpeed().getX() > MAX_SPEED) this.setSpeed(new Vector2D(MAX_SPEED, this.getSpeed().getY()));
+        if (this.getSpeed().getY() > MAX_SPEED) this.setSpeed(new Vector2D(this.getSpeed().getX(), MAX_SPEED));
+    }
 
 }

@@ -58,6 +58,7 @@ public class PhysicsEngine {
        
             // updating objects position relatively to the time spent
          for (PhysicalObject object : physicalObjects) {
+            //if (object instanceof Ball) System.out.println(object.getAcceleration());
             object.updateVelocity(deltaTime); 
             if (object.isActive() && object.isMovable()){
                 //System.out.println("vitesse: "+object.getSpeed());
