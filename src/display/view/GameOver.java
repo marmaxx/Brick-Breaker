@@ -24,7 +24,7 @@ public class GameOver extends JPanel{
         
 
          try {
-            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "GameOver.jpg"));
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "GameOver2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

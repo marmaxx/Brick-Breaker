@@ -22,7 +22,7 @@ public class WinPanel extends JPanel{
 
 
         try {
-            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Win.jpg")); 
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Victory.png")); 
         } catch (IOException e) {
             e.printStackTrace();
         }
