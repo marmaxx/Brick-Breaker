@@ -69,18 +69,18 @@ public class Breakout extends Game{
 		this.setBonuses(new ArrayList<Bonus>());
 		this.setBalls(new ArrayList<Ball>());
 
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,0,new Vector2D(530, 700),false));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,51,new Vector2D(530, 700),false));
 
-		Ball mainBall = new Ball(Ball.DEFAULT_COLOR,  30,100,new Vector2D(565,670),true);
+		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
 		this.getBalls().add(mainBall);
 
 		
-		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 0,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
+		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
 
-		this.setWestWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(),0,new Vector2D(0, 0),false));
+		this.setWestWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(),100,new Vector2D(0, 0),false));
 
-		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,0,new Vector2D(0, 0),false));
+		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 0),false));
 
 		this.physicEngine.getPhysicalObjects().add(ball);
 		this.physicEngine.getPhysicalObjects().add(player);

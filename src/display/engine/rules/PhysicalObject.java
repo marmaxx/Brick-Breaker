@@ -39,7 +39,7 @@ public abstract class PhysicalObject {
         this.position=position;
         this.movable=movable;
         this.representation=representation;
-        this.active=true;
+        active=true;
     }
 
     public enum Slope {
