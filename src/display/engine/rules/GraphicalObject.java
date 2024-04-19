@@ -17,7 +17,6 @@ public abstract class GraphicalObject extends JComponent {
     protected int width, height;
 	protected Color color;
 	protected Image image;
-	protected int speed;
 
 	// Used to define the boundaries of the object (i.e collision detection)
 	public static enum Boundary {
@@ -35,8 +34,7 @@ public abstract class GraphicalObject extends JComponent {
 	 */
     public GraphicalObject(Image image,
         int posX, int posY,
-        int width, int height,
-		int speed
+        int width, int height
     ) {
 		this.setColor(null);
 		this.setImage(image);
@@ -44,7 +42,6 @@ public abstract class GraphicalObject extends JComponent {
 		this.setPosY(posY);
 		this.setWidth(width);
 		this.setHeight(height);
-		this.setSpeed(speed);
 		
     }
     
@@ -59,8 +56,7 @@ public abstract class GraphicalObject extends JComponent {
 	 */
     public GraphicalObject(Color color, 
 		int posX, int posY,
-        int width, int height,
-		int speed
+        int width, int height
     ) {
 		this.setColor(color);
 		this.setImage(null);
@@ -68,7 +64,6 @@ public abstract class GraphicalObject extends JComponent {
 		this.setPosY(posY);
 		this.setWidth(width);
 		this.setHeight(height);
-		this.setSpeed(speed);
     }
 
 	/**
@@ -153,15 +148,6 @@ public abstract class GraphicalObject extends JComponent {
     }
 
 	/**
-	 * Gets the speed of the graphical object
-	 * 
-	 * @param height
-	 */
-	public int getSpeed() {
-		return speed;
-	}
-
-	/**
 	 * Sets the height of the graphical object
 	 * 
 	 * @param height The height of the graphical object
@@ -188,14 +174,6 @@ public abstract class GraphicalObject extends JComponent {
 		this.color = color;
 	}
 
-	/**
-	 * Sets the speed of the graphical object
-	 * 
-	 * @param speed The speed of the graphical object
-	 */
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
 
 	/**
 	 * Sets the image representing the graphical object

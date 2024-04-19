@@ -15,10 +15,9 @@ public class Oval extends Shape {
 	 */
 	public Oval(Color color,
 		int posX, int posY,
-		int width, int height,
-		int speed
+		int width, int height
 	) {
-		super(color, posX, posY, width, height, speed);
+		super(color, posX, posY, width, height);
 	}
 
 	/**
@@ -28,35 +27,11 @@ public class Oval extends Shape {
 	 */
 	public Oval(Image image,
 		int posX, int posY,
-		int width, int height,
-		int speed
+		int width, int height
 	) {
-		super(image, posX, posY, width, height, speed);
+		super(image, posX, posY, width, height);
 	}
 
-	/**
-	 * Instantiates a new Oval
-	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Image, int, int, int, int)
-	 */
-    public Oval(Color color,
-        int posX, int posY,
-        int width, int height
-    ) {
-        this(color, posX, posY, width, height, 0);
-    }
-
-	/**
-	 * Instantiates a new Oval
-	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int)
-	 */
-    public Oval(Image image,
-        int posX, int posY,
-        int width, int height
-    ) {
-		this(image, posX, posY, width, height, 0);
-    }
 
     /**
 	 * Instantiates a new Oval
@@ -67,7 +42,7 @@ public class Oval extends Shape {
         int posX, int posY,
         int width
     ) {
-        this(color, posX, posY, width, width/2, 0);
+        this(color, posX, posY, width, width/2);
     }
 
 	/**
@@ -79,7 +54,7 @@ public class Oval extends Shape {
         int posX, int posY,
         int width
     ) {
-		this(image, posX, posY, width, width/2, 0);
+		this(image, posX, posY, width, width/2);
     }
 
 	/**

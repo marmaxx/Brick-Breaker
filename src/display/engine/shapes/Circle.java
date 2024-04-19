@@ -15,10 +15,9 @@ public class Circle extends Shape {
 	 */
 	public Circle(Color color,
 		int posX, int posY,
-		int width, int height,
-		int speed
+		int width, int height
 	) {
-		super(color, posX, posY, width, height, speed);
+		super(color, posX, posY, width, height);
 	}
 
 	/**
@@ -28,35 +27,11 @@ public class Circle extends Shape {
 	 */
 	public Circle(Image image,
 		int posX, int posY,
-		int width, int height,
-		int speed
+		int width, int height
 	) {
-		super(image, posX, posY, width, height, speed);
+		super(image, posX, posY, width, height);
 	}
 
-	/**
-	 * Instantiates a new Circle
-	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Image, int, int, int, int)
-	 */
-    public Circle(Color color,
-        int posX, int posY,
-        int width, int height
-    ) {
-        this(color, posX, posY, width, height, 0);
-    }
-
-	/**
-	 * Instantiates a new Circle
-	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int)
-	 */
-    public Circle(Image image,
-        int posX, int posY,
-        int width, int height
-    ) {
-		this(image, posX, posY, width, height, 0);
-    }
 
 	/**
 	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)

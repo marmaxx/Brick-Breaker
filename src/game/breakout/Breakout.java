@@ -69,7 +69,7 @@ public class Breakout extends Game{
 		this.setBonuses(new ArrayList<Bonus>());
 		this.setBalls(new ArrayList<Ball>());
 
-		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE, Player.DEFAULT_SPEED,51,new Vector2D(530, 700),false));
+		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
 		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
@@ -399,9 +399,9 @@ public class Breakout extends Game{
 	 * Update the player entity
 	 */
 	public void updatePlayer() {
-		if(!this.getPlayer().willBeOffScreen(this.getPanel(), this.getPlayer().getRepresentation().getSpeed())){
+		if(!this.getPlayer().willBeOffScreen(this.getPanel(), this.getPlayer().getIntSpeed())){
 			this.player.setLastPos(this.player.getPosition());
-			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
+			this.getPlayer().move(this.getPlayer().getIntSpeed());
 			
 			if (!this.getBall().active){
 				this.ball.getRepresentation().setPosX(this.player.getRepresentation().getX() + this.player.getRepresentation().getWidth()/3);				
@@ -576,15 +576,15 @@ public class Breakout extends Game{
 				}
 				break;
 			case BONUS_SPEED:
-				if (Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
-					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+				if (Breakout.this.getPlayer().getIntSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
+					Breakout.this.getPlayer().setIntSpeed(this.getPlayer().getIntSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
+					System.out.println(Breakout.this.getPlayer().getIntSpeed());
 				}
 				break;
 			case MALUS_SPEED:
-				if (Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
-					Breakout.this.getPlayer().getRepresentation().setSpeed(Breakout.this.getPlayer().getRepresentation().getSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getRepresentation().getSpeed());
+				if (Breakout.this.getPlayer().getIntSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
+					Breakout.this.getPlayer().setIntSpeed(Breakout.this.getPlayer().getIntSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
+					System.out.println(Breakout.this.getPlayer().getIntSpeed());
 				}
 				break;
 			case BONUS_TIME:

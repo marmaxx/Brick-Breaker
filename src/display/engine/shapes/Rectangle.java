@@ -17,10 +17,9 @@ public class Rectangle extends Shape {
 	 */
 	public Rectangle(Color color,
 		int posX, int posY,
-		int width, int height,
-		int speed
+		int width, int height
 	) {
-		super(color, posX, posY, width, height, speed);
+		super(color, posX, posY, width, height);
 	}
 
 	/**
@@ -30,35 +29,10 @@ public class Rectangle extends Shape {
 	 */
 	public Rectangle(Image image,
 		int posX, int posY,
-		int width, int height,
-		int speed
+		int width, int height
 	) {
-		super(image, posX, posY, width, height, speed);
+		super(image, posX, posY, width, height);
 	}
-
-	/**
-	 * Instantiates a new Rectangle
-	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Image, int, int, int, int)
-	 */
-    public Rectangle(Color color,
-        int posX, int posY,
-        int width, int height
-    ) {
-        this(color, posX, posY, width, height, 0);
-    }
-
-	/**
-	 * Instantiates a new Rectangle
-	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int)
-	 */
-    public Rectangle(Image image,
-        int posX, int posY,
-        int width, int height
-    ) {
-		this(image, posX, posY, width, height, 0);
-    }
 
 	/**
  	* Sets the rotation angle.

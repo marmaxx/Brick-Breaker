@@ -23,6 +23,7 @@ public class Player extends Entity {
 	public static final int MIN_SPEED = DEFAULT_SPEED - (int)(0.5f * DEFAULT_SPEED);
 	public static final int MAX_SPEED = DEFAULT_SPEED + (int)(1.0f * DEFAULT_SPEED);
 	private Vector2D lastPos = new Vector2D(630, 700);
+	private int intSpeed = DEFAULT_SPEED;
 
 	/**
 	 * Instantiates a new Player
@@ -38,8 +39,9 @@ public class Player extends Entity {
 		int speed,
 		double mass, Vector2D position, boolean movable
     ) {
-		super(mass,position,movable,new Rectangle(color, (int)position.getX(), (int)position.getY(), size, size/4, speed));
-    }
+		super(mass,position,movable,new Rectangle(color, (int)position.getX(), (int)position.getY(), size, size/4));
+		this.intSpeed = speed;
+	}
 
 	/**
 	 * Instantiates a new Player
@@ -55,7 +57,8 @@ public class Player extends Entity {
 		int speed,
 		double mass, Vector2D position, boolean movable
     ) {
-		super(mass,position,movable,new Rectangle(image, (int)position.getX(), (int)position.getY(), size, size/4, speed));
+		super(mass,position,movable,new Rectangle(image, (int)position.getX(), (int)position.getY(), size, size/4));
+		this.intSpeed = speed;
     }
 
 	/**
@@ -96,7 +99,8 @@ public class Player extends Entity {
         int size,
 		int speed
     ) {
-		super(new Rectangle(color, posX, posY, size, size/4, speed));
+		super(new Rectangle(color, posX, posY, size, size/4));
+		this.intSpeed = speed;
     }
 
 	/**
@@ -113,7 +117,8 @@ public class Player extends Entity {
         int size,
 		int speed
     ) {
-		super(new Rectangle(image, posX, posY, size, size/4, speed));
+		super(new Rectangle(image, posX, posY, size, size/4));
+		this.intSpeed = speed;
     }
 
 	/**
@@ -147,8 +152,8 @@ public class Player extends Entity {
 
 
 	// getters for the different variations of speed
-	public int getMoveSpeed() {
-		return this.getRepresentation().getSpeed();
+	public int getIntSpeed() {
+		return this.intSpeed;
 	}
 
 	public int getMinSpeed() {
@@ -166,6 +171,10 @@ public class Player extends Entity {
 		this.lastPos = vect;
 	}
 
+	
+	public void setIntSpeed(int intSpeed) {
+		this.intSpeed = intSpeed;
+	}
 
 
 	/**
