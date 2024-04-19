@@ -73,6 +73,7 @@ public class Breakout extends Game{
 
 		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
+		mainBall.active=false;
 		this.getBalls().add(mainBall);
 
 		
@@ -110,8 +111,9 @@ public class Breakout extends Game{
 						}
 						break;
 					case KeyEvent.VK_SPACE:
-						if (!Breakout.this.getBall().getIsMoving()){
-							Breakout.this.getBall().setIsMoving(true);
+						if (!Breakout.this.getBall().active){
+							//Breakout.this.getBall().setIsMoving(true);
+							Breakout.this.getBall().active=true;
 							Vector2D newPosition = new Vector2D(Breakout.this.ball.getRepresentation().getX(), Breakout.this.ball.getRepresentation().getY());
 							Breakout.this.ball.setPosition(newPosition);
 							Vector2D speed = new Vector2D(0.5, -0.5);
@@ -401,7 +403,7 @@ public class Breakout extends Game{
 			this.player.setLastPos(this.player.getPosition());
 			this.getPlayer().move(this.getPlayer().getRepresentation().getSpeed());
 			
-			if (!this.getBall().getIsMoving()){
+			if (!this.getBall().active){
 				this.ball.getRepresentation().setPosX(this.player.getRepresentation().getX() + this.player.getRepresentation().getWidth()/3);				
 			}
 		}
@@ -413,7 +415,7 @@ public class Breakout extends Game{
 
 
 	 public void updateBall() {
-			this.getBall().trail.addPoint(new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
+			if(this.getBall().active)this.getBall().trail.addPoint(new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
@@ -647,7 +649,7 @@ public class Breakout extends Game{
 			
 			Ball ball = new Ball(Ball.DEFAULT_IMAGE2, 30, 50, new Vector2D(x, y), true);
 			ball.setSpeed(new Vector2D(0.5, -0.5));
-
+			ball.active=false;
 			this.setBall(ball);
 			this.getBalls().add(ball);
 
@@ -668,7 +670,8 @@ public class Breakout extends Game{
 		this.updateBall();
 		this.checkBallInGame();
 		//System.out.println(this.ball.getPosition());
-		if (this.ball.getIsMoving() == true) this.physicEngine.update(deltaTime);
+		// if (this.ball.getIsMoving() == true) 
+		this.physicEngine.update(deltaTime);
 		if(this.level != -1 ){
 			this.updateBricks();
 			this.ball.resolveSpeedToHigh();
