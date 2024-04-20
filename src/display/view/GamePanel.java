@@ -2,6 +2,8 @@ package display.view;
 
 import javax.swing.*;
 
+import game.breakout.Breakout;
+
 import java.awt.*;
 
 public class GamePanel extends JPanel {
@@ -9,15 +11,17 @@ public class GamePanel extends JPanel {
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension GAME_ZONE_SIZE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
 	public static final Dimension STAT_ZONE_GAME = new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10);
-	
+	public static final String DEFAULT_IMAGE = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Galaxy.png";
+    
 	private GameFrame gameFrame;
-    private JPanel gameZone = new JPanel();
+	private JPanel gameZone = new JPanelWithBackground(DEFAULT_IMAGE);
     private JPanel statZone = new JPanel();
 	private JLabel score = new JLabel();
     private JLabel life = new JLabel();
     private JLabel nbBricks = new JLabel();
 	private JButton menu = new JButton("menu");
 	private MenuInGame menuInGame; 
+	
     
 	/**
 	 * Instantiates a new GamePanel
@@ -32,7 +36,7 @@ public class GamePanel extends JPanel {
 		this.setPreferredSize(SCREEN_FULL_SIZE);
 
 		this.gameZone.setPreferredSize(GAME_ZONE_SIZE);
-		this.gameZone.setBackground(Color.BLACK);
+		//this.gameZone.setBackground(Color.BLACK);
 
 		this.statZone.setPreferredSize(STAT_ZONE_GAME);
 		this.statZone.setBackground(new Color(30,30,30));
