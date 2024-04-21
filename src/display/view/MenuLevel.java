@@ -34,7 +34,7 @@ public class MenuLevel extends JPanel {
         this.addLevel();
 
         this.menu.addActionListener((event) -> {
-            this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "menuPanel");
+            this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "classicGame");
         });
 
         this.add(menu);

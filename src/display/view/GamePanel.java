@@ -18,6 +18,7 @@ public class GamePanel extends JPanel {
     private JLabel nbBricks = new JLabel();
 	private JButton menu = new JButton("menu");
 	private MenuInGame menuInGame; 
+	JLayeredPane layeredPane = new JLayeredPane();
     
 	/**
 	 * Instantiates a new GamePanel
@@ -52,13 +53,11 @@ public class GamePanel extends JPanel {
         this.menuInGame.setVisible(false);
 
 
-        // Utilisation d'un JLayeredPane pour superposer les composants
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(400,700));
-        // Ajout du MenuInGame au premier plan
-        this.menuInGame.getMenuInGameSquarePane().setBounds(0, 0, 400, 800);
-        layeredPane.add(this.menuInGame.getMenuInGameSquarePane(), JLayeredPane.POPUP_LAYER);
-        // Ajout du JLayeredPane au GamePanel
+       
+        
+        layeredPane.setPreferredSize(GAME_ZONE_SIZE);
+        this.menuInGame.setBounds(0, 0, GAME_ZONE_SIZE.width, GAME_ZONE_SIZE.height);
+        layeredPane.add(this.menuInGame, JLayeredPane.POPUP_LAYER);
 
 
 		this.menu.addActionListener((event) -> {

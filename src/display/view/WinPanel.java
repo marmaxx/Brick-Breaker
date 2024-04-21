@@ -43,6 +43,9 @@ public class WinPanel extends JPanel{
 			gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
 
+        this.exit.addMouseListener(new ButtonMouseListener(this.exit));
+        this.backToMenu.addMouseListener(new ButtonMouseListener(this.backToMenu));
+
         this.add(this.exit);
         this.add(this.backToMenu);
     }
