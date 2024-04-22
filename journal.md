@@ -328,8 +328,14 @@ Nic JDC
     -   Implementé le bonus qui donne plusieurs balles
     -   added a basic ball trail
     -   another code refactor to remove the speed attribute from shapes 
-    -   Implementation de champs gravitationels. L'implementation semble correcte mais ne fonctionne comme prevu a cause de la fonction HandleCollisions qui ne suit pas exactement les lois physiques
+    -   Implementation de champs gravitationels. L'implementation semble correcte mais ne fonctionne comme prevu pour l'instant
 
+- Marius :
+    - implémentation du respawn de la balle qui avait été perdu lors du merge de la physique
+    - ajout d'une force de propulsion lors de la collision balle/paddle
+    - ajout d'une vitesse maximale que la balle peut atteindre
+    - graphismes de la balle, du fond du jeu 
+    - touche M pour accéder au menu et R pour reprendre la game à partir du menu
 
 
 ### À faire
@@ -338,3 +344,6 @@ Nic JDC
 - rotation (vitesse angulaire) de la balle (effets)
 - Pour Nic : Essayer de mettre chaque update de breakout des entités dans les classes respectives (En cours mais compliqué, et arrêté entre temps pour pas empiéter sur le merge de la physique) 
 - Finir certains TODO (oubliés car ils n'étaient pas des tâches essentielles) 
+- Améliorer le mode marathon (mouvement verticale semblerait plus approprié)
+- Améliorer le visuel des briques en biais
+- créer un bonus de vie maybe ?
