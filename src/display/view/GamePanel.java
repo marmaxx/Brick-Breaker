@@ -3,6 +3,11 @@ package display.view;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import game.breakout.Breakout;
 
 public class GamePanel extends JPanel {
 	private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);
@@ -16,9 +21,11 @@ public class GamePanel extends JPanel {
 	private JLabel score = new JLabel();
     private JLabel life = new JLabel();
     private JLabel nbBricks = new JLabel();
-	private JButton menu = new JButton("menu");
+	private JButton menu = createStyledButton("MENU");
 	private MenuInGame menuInGame; 
 	JLayeredPane layeredPane = new JLayeredPane();
+
+	private BufferedImage backgroundImage; // background image 
     
 	/**
 	 * Instantiates a new GamePanel
@@ -27,6 +34,14 @@ public class GamePanel extends JPanel {
 	 * @param color The background color of the panel
 	 */
     public GamePanel(GameFrame gameFrame, Color color) {
+
+		try {
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "BackGround.jpg")); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 		this.setFrame(gameFrame);
 		this.setBackground(color);
 		this.setLayout(new FlowLayout()); //set GamePanel to FlowLayout
@@ -36,7 +51,7 @@ public class GamePanel extends JPanel {
 		this.gameZone.setBackground(Color.BLACK);
 
 		this.statZone.setPreferredSize(STAT_ZONE_GAME);
-		this.statZone.setBackground(new Color(30,30,30));
+		this.statZone.setBackground(new Color(30,30,30,150));
 		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout 
 
 		this.score.setPreferredSize(new Dimension(200, 100));
@@ -46,8 +61,7 @@ public class GamePanel extends JPanel {
         this.nbBricks.setPreferredSize(new Dimension(200, 100));
         this.nbBricks.setForeground(Color.WHITE); // set color of the text
 
-		this.menu.setPreferredSize(new Dimension(100, 50)); 
-		this.menu.setForeground(Color.MAGENTA);
+		this.menu.addMouseListener(new ButtonMouseListener(this.menu));
 
         this.menuInGame = new MenuInGame(this.gameFrame,this);
         this.menuInGame.setVisible(false);
@@ -55,10 +69,9 @@ public class GamePanel extends JPanel {
 
        
         
-        layeredPane.setPreferredSize(GAME_ZONE_SIZE);
-        this.menuInGame.setBounds(0, 0, GAME_ZONE_SIZE.width, GAME_ZONE_SIZE.height);
-        layeredPane.add(this.menuInGame, JLayeredPane.POPUP_LAYER);
-
+        // layeredPane.setPreferredSize(GAME_ZONE_SIZE);
+        // this.menuInGame.setBounds(0, 0, GAME_ZONE_SIZE.width, GAME_ZONE_SIZE.height);
+        // layeredPane.add(this.menuInGame, JLayeredPane.POPUP_LAYER);
 
 		this.menu.addActionListener((event) -> {
 			this.getFrame().getGame().pause();
@@ -74,7 +87,7 @@ public class GamePanel extends JPanel {
 
 		this.add(statZone);
 		this.add(gameZone);
-		this.add(layeredPane);	
+		this.add(menuInGame);
     }
 
 	/**s
@@ -113,6 +126,17 @@ public class GamePanel extends JPanel {
 		return this.gameZone;
 	}
 
+	/**
+	 * Get the JPanel in which the menu is displayed
+	 * 
+	 * @return The JPanel in which the menu is displayed
+	 */
+	public JPanel getMenu(){
+		return this.menuInGame;
+	}
+
+
+
 	/** 
 	 * update game life in JLabel
 	 * @param life The Life in game
@@ -134,14 +158,27 @@ public class GamePanel extends JPanel {
 		//this.statZone.repaint(); // Redraw the statZone
 	}
 
-	@Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-	}
 
 	public void resumeGamePanel(){
 		this.menuInGame.setVisible(false);
 		this.gameZone.setVisible(true);
 	}
+
+	private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false); 
+        button.setBorderPainted(false); 
+        return button;
+    }
+
+	@Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
 	
 }

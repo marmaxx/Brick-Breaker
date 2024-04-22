@@ -15,15 +15,11 @@ public class ButtonMouseListener extends MouseAdapter {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // Action à effectuer lorsque la souris entre dans la zone du bouton
-        //button.setSize((int) (button.getWidth() * 1.1), (int) (button.getHeight() * 1.1));
         button.setForeground(Color.BLACK);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // Action à effectuer lorsque la souris sort de la zone du bouton
-        button.setSize(BUTTON_SIZE);
         button.setForeground(Color.WHITE);
     }
 }

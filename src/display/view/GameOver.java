@@ -38,10 +38,9 @@ public class GameOver extends JPanel{
          //setting back to menu button 
          this.backToMenu.setPreferredSize(BUTTON_SIZE);
          this.backToMenu.addActionListener(e -> {
-            frame.dispose();
-            GameFrame gameFrame = new GameFrame();
-			gameFrame.addMenu(new MenuPanel(gameFrame));
-			gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+            frame.getGamePanel().getGameZone().removeAll();
+            //frame.getGamePanel().getGameZone().setVisible(true);
+            frame.getCardlayout().show(frame.getPanelContainer(), "classic");
         });
 
         this.exit.addMouseListener(new ButtonMouseListener(this.exit));

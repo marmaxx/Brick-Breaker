@@ -37,10 +37,12 @@ public class WinPanel extends JPanel{
         //setting back to menu button
         this.backToMenu.setPreferredSize(BUTTON_SIZE);
         this.backToMenu.addActionListener(e -> {
-            frame.dispose();
-            GameFrame gameFrame = new GameFrame();
-			gameFrame.addMenu(new MenuPanel(gameFrame));
-			gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+            frame.getGame().clearGameComponents();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                }
+            });
         });
 
         this.exit.addMouseListener(new ButtonMouseListener(this.exit));
