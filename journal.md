@@ -316,3 +316,25 @@ Nic JDC
 - implémenter le respawn de la balle et l'actualisation du nopmbre de vies
 - Pour Nic : Essayer de mettre chaque update de breakout des entités dans les classes respectives (En cours mais compliqué, et arrêté entre temps pour pas empiéter sur le merge de la physique) 
 - Finir certains TODO (oubliés car ils n'étaient pas des tâches essentielles) 
+- 
+
+## Semaine 11 (23/4/2024)
+
+### Ce qui a été fait:
+
+
+- Noaym :
+    -   Refactoring important du code comme mentionné dans le "A faire" précedent
+    -   Implementé le bonus qui donne plusieurs balles
+    -   added a basic ball trail
+    -   another code refactor to remove the speed attribute from shapes 
+    -   Implementation de champs gravitationels. L'implementation semble correcte mais ne fonctionne comme prevu a cause de la fonction HandleCollisions qui ne suit pas exactement les lois physiques
+
+
+
+### À faire
+- plus de niveaux
+- penser à écrire des tests exécutables
+- rotation (vitesse angulaire) de la balle (effets)
+- Pour Nic : Essayer de mettre chaque update de breakout des entités dans les classes respectives (En cours mais compliqué, et arrêté entre temps pour pas empiéter sur le merge de la physique) 
+- Finir certains TODO (oubliés car ils n'étaient pas des tâches essentielles) 
