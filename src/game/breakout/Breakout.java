@@ -102,7 +102,7 @@ public class Breakout extends Game{
 					case KeyEvent.VK_RIGHT:
 						Breakout.this.getPlayer().moveRight();
 						break;
-					case KeyEvent.VK_ESCAPE:
+					case KeyEvent.VK_P:
 						if(Breakout.this.isPaused()){
 							Breakout.this.resume();
 						}
@@ -119,6 +119,22 @@ public class Breakout extends Game{
 							Vector2D speed = new Vector2D(0.5, -0.5);
 							Breakout.this.ball.setSpeed(speed);
 						}
+						break;
+					case KeyEvent.VK_M:
+						if (!Breakout.this.gameframe.getGame().isPaused()){
+							Breakout.this.pause();
+							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
+							Breakout.this.gameframe.getGamePanel().getMenu().setVisible(true);
+						}
+						break;
+					case KeyEvent.VK_R:
+					if (Breakout.this.gameframe.getGame().isPaused()){
+						Breakout.this.resume();
+						Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(true);
+						Breakout.this.gameframe.getGamePanel().getMenu().setVisible(false);
+					}
+					break;
+						
 				}
 			}
 
@@ -640,6 +656,7 @@ public class Breakout extends Game{
 
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
+			this.ball.trail.remove(this);
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
 			this.getPhysicEngine().getPhysicalObjects().remove(this.ball);
 			this.getBalls().remove(this.ball);

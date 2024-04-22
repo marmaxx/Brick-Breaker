@@ -118,6 +118,15 @@ public class GamePanel extends JPanel {
 		return this.gameZone;
 	}
 
+	/**
+	 * Get the JPanel in which the menu is displayed
+	 * 
+	 * @return The JPanel in which the menu is displayed
+	 */
+	public JPanel getMenu(){
+		return this.menuInGame;
+	}
+
 	/** 
 	 * update game life in JLabel
 	 * @param life The Life in game
