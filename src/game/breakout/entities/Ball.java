@@ -241,6 +241,11 @@ public class Ball extends Entity {
 			}
 		}
 
+		public void remove(Breakout breakout){
+			for (int i = 0; i < points.size(); i++) breakout.getPanel().getGameZone().remove(points.getFirst().point);
+			points.clear();
+		}
+
 		}
 
 
