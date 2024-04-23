@@ -344,6 +344,13 @@ Nic JDC
     - Début de la séparation de breakout avec le mode marathon qui deviendra un jeu à part entière (spaceinvader)
     - Création du rapport, il manque plus qu'à remplir les TODO laisser sur le word.
 
+- Maxime : 
+    - Changement de l'apparence de tout les bouttons du jeu. 
+    - Amélioration graphique du niveau 1. 
+    - Amélioration du menu in game. 
+    - Implémentation d'un restart du jeu efficace à 100% depuis le menu in game et encore en cour depuis le menu game over et le menu Victory. 
+    - Creation de menu dfférent pour le mode marathon et le mode de jeu classique. 
+
 
 ### À faire
 - plus de niveaux
@@ -358,3 +365,5 @@ Nic JDC
 - Penser à mettre à jour le diagramme UML
 - Powerpoint (pas du tout prioritaire mais permet de transformer l'oral en une conférence et non un interrogatoire de 30 minutes)
 - Commencer à reformat le code et supprimer les warnings + javadocs manquantes
+- finir le menu level
+- faire un menu settings.
