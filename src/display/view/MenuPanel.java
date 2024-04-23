@@ -53,11 +53,14 @@ public class MenuPanel extends JPanel {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setPreferredSize(new Dimension(400, 80));
+        button.setMaximumSize(new Dimension(400, 80));
         button.setForeground(Color.WHITE);
-        button.setBackground(new Color(52, 152, 219)); // Bleu
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
+        button.setContentAreaFilled(false);
         return button;
     }
 

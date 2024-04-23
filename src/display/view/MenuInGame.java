@@ -90,7 +90,6 @@ public class MenuInGame extends JPanel{
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false); 
-        //button.setBorder(this.createBorder());
         button.setBorderPainted(false);
         button.setForeground(Color.WHITE);
         return button;
