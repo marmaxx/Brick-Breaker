@@ -353,6 +353,7 @@ Nic JDC
 
 
 ### À faire
+
 - plus de niveaux
 - penser à écrire des tests exécutables
 - rotation (vitesse angulaire) de la balle (effets)
@@ -367,3 +368,12 @@ Nic JDC
 - Commencer à reformat le code et supprimer les warnings + javadocs manquantes
 - finir le menu level
 - faire un menu settings.
+
+Ajouts :
+- réfléchir à soutenance (explication modélisation physique et conception objet)
+- préparer belle démo du produit quasi-fini
+- ajouter "tests" pour la soutenance : la balle est directement dans la configuration mettant en évidence le phénomène à démontrer
+
+### Absence
+
+Lucas
