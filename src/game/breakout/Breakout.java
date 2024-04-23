@@ -612,8 +612,11 @@ public class Breakout extends Game{
 					System.out.println(Breakout.this.getPlayer().getIntSpeed());
 				}
 				break;
-			case BONUS_TIME:
-				// TODO : once the timer is implemented after a graphical fix
+			case BONUS_HEALTH:
+				if (Breakout.this.getLife() + 1 < 3) {
+					Breakout.this.setLife(Breakout.this.getLife() + 1);
+					Breakout.this.getPanel().updateLife(Breakout.this.getLife());
+				}
 				break;
 			case DEFAULT:
 				
