@@ -315,6 +315,7 @@ Nic JDC
 - rotation (vitesse angulaire) de la balle (effets)
 - implémenter le respawn de la balle et l'actualisation du nopmbre de vies
 - Pour Nic : Essayer de mettre chaque update de breakout des entités dans les classes respectives (En cours mais compliqué, et arrêté entre temps pour pas empiéter sur le merge de la physique) 
+  (ça ne sera surement pas fait car pas en haut de la liste des priorités)
 - Finir certains TODO (oubliés car ils n'étaient pas des tâches essentielles) 
 - 
 
@@ -337,13 +338,23 @@ Nic JDC
     - graphismes de la balle, du fond du jeu 
     - touche M pour accéder au menu et R pour reprendre la game à partir du menu
 
+- Nic :
+    - Merge manuelle de certaines anciennes branches finies en cours pour éviter tout conflit depuis l'ajout de la physique
+    - Légères modifications structurelles pour que la personne qui s'occupe du visuelle n'aura plus qu'à mettre le path des images une fois finies.
+    - Début de la séparation de breakout avec le mode marathon qui deviendra un jeu à part entière (spaceinvader)
+    - Création du rapport, il manque plus qu'à remplir les TODO laisser sur le word.
+
 
 ### À faire
 - plus de niveaux
 - penser à écrire des tests exécutables
 - rotation (vitesse angulaire) de la balle (effets)
-- Pour Nic : Essayer de mettre chaque update de breakout des entités dans les classes respectives (En cours mais compliqué, et arrêté entre temps pour pas empiéter sur le merge de la physique) 
 - Finir certains TODO (oubliés car ils n'étaient pas des tâches essentielles) 
-- Améliorer le mode marathon (mouvement verticale semblerait plus approprié)
+- Améliorer le mode marathon (mouvement verticale semblerait plus approprié) 
+  (Séparation du mode marathon en cours)
+- Adapter le menu lorsqu'il y aura 2 jeux séparés
 - Améliorer le visuel des briques en biais
-- créer un bonus de vie maybe ?
+- créer un bonus de vie (Fait, il faudra cependant faire l'image du bonus correspondant)
+- Penser à mettre à jour le diagramme UML
+- Powerpoint (pas du tout prioritaire mais permet de transformer l'oral en une conférence et non un interrogatoire de 30 minutes)
+- Commencer à reformat le code et supprimer les warnings + javadocs manquantes
