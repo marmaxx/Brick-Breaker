@@ -16,7 +16,16 @@ public class GamePanel extends JPanel {
 	public static final Dimension STAT_ZONE_GAME = new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10);
 	
 	private GameFrame gameFrame;
-    private JPanel gameZone = new JPanel();
+    private JPanel gameZone = new JPanel(){
+         @Override
+         protected void paintComponent(Graphics g) {
+             super.paintComponent(g);
+             // Dessiner l'image de fond
+             if (backgroundImage != null) {
+                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+             }
+         }
+    };
     private JPanel statZone = new JPanel();
 	private JLabel score = new JLabel();
     private JLabel life = new JLabel();
@@ -48,7 +57,6 @@ public class GamePanel extends JPanel {
 		this.setPreferredSize(SCREEN_FULL_SIZE);
 
 		this.gameZone.setPreferredSize(GAME_ZONE_SIZE);
-		this.gameZone.setBackground(Color.BLACK);
 
 		this.statZone.setPreferredSize(STAT_ZONE_GAME);
 		this.statZone.setBackground(new Color(30,30,30,150));

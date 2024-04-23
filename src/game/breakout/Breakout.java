@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.io.File;
 
 import display.engine.PhysicsEngine;
-import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
@@ -18,7 +17,6 @@ import game.breakout.entities.Player;
 import game.breakout.entities.Bonus.BonusType;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
-import game.breakout.entities.rules.Entity;
 import game.rules.Game;
 
 public class Breakout extends Game{
@@ -110,6 +108,8 @@ public class Breakout extends Game{
 							Breakout.this.pause();
 						}
 						break;
+					case KeyEvent.VK_V : 
+						Breakout.this.gameframe.getCardlayout().show(Breakout.this.gameframe.getPanelContainer(), "winPanel");
 					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().active){
 							//Breakout.this.getBall().setIsMoving(true);
@@ -291,6 +291,15 @@ public class Breakout extends Game{
 	 */
 	public int getNbBricks(){
 		return this.nbBricks;
+	}
+
+	/**
+	 * Set the bricks number in the game
+	 * 
+	 * @param nbBricks the brick number
+	 */
+	public void setNbBricks(int nbBricks) {
+		this.nbBricks = nbBricks;
 	}
 
 	/**

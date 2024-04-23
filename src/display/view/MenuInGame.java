@@ -48,7 +48,7 @@ public class MenuInGame extends JPanel{
 
 
         this.BackToMenuButton.addActionListener(e -> {
-           // frame.getGame().clearGameComponents();
+            frame.getGame().clearGameComponents();
             pane.getGameZone().removeAll();
             pane.getMenu().setVisible(false);
             pane.getGameZone().setVisible(true);
