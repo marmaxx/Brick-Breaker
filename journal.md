@@ -351,6 +351,9 @@ Nic JDC
     - Implémentation d'un restart du jeu efficace à 100% depuis le menu in game et encore en cour depuis le menu game over et le menu Victory. 
     - Creation de menu dfférent pour le mode marathon et le mode de jeu classique. 
 
+- Lucas : 
+    - Réglage du problème de rotation de la balle lorsque le paddle la tape en venant de la gauche.
+
 
 ### À faire
 
