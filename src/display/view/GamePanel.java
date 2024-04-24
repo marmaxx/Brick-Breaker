@@ -60,7 +60,7 @@ public class GamePanel extends JPanel {
 		this.gameZone.setPreferredSize(GAME_ZONE_SIZE);
 
 		this.statZone.setPreferredSize(STAT_ZONE_GAME);
-		this.statZone.setBackground(new Color(30,30,30,150));
+		this.statZone.setBackground(new Color(30,30,30,0));
 		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout 
 
 		this.score.setPreferredSize(new Dimension(200, 100));

@@ -3,6 +3,7 @@ package display.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
@@ -32,16 +34,27 @@ public class SettingsPanel extends JPanel{
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     public static final Dimension SETTINGS_ZONE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
+    public static final int GRAVITY_DEFAULT_VALUE = 5;
+    public static final int REBOUND_DEFAULT_VALUE = 100;
+    public static final int FRICTION_DEFAULT_VALUE = 5;
 
     private JLabel gravityLabel = createStyledLabel("Force de gravité: ");
-    private JSlider gravitySlider = createStyledSlider("Gravité", 0, 10, 5);
+    private JLabel gravityValueLabel = createStyledLabel(String.valueOf(GRAVITY_DEFAULT_VALUE));
+    private JSlider gravitySlider = createStyledSlider("Gravité", 0, 10, 5);    
+    private JLabel reboundValueLabel = createStyledLabel(String.valueOf(REBOUND_DEFAULT_VALUE));
     private JLabel reboundLabel = createStyledLabel("Force du rebond: ");
-    private JSlider reboundSlider = createStyledSlider("Rebond", 0, 10, 5);
+    private JSlider reboundSlider = createStyledSlider("Rebond", 0, 200, 100);
+    private JLabel frictionValueLabel = createStyledLabel(String.valueOf(FRICTION_DEFAULT_VALUE));
     private JLabel frictionLabel = createStyledLabel("Force de frottements: ");
     private JSlider frictionSlider = createStyledSlider("Frottements", 0, 10, 5);
+    private JButton submitButton = createStyledButton("Valider");
+    private JButton reinitializeButton = createStyledButton("Réinitialiser");
     private JButton backButton = createStyledButton("Retour");
+    private double gravityValue = GRAVITY_DEFAULT_VALUE;
+    private double reboundValue = REBOUND_DEFAULT_VALUE;
+    private double frictionValue = FRICTION_DEFAULT_VALUE;
     private BufferedImage backgroundImage;
-    private JPanel sliderContainer =  new JPanel() {
+    private JPanel mainContainer =  new JPanel() {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -51,6 +64,11 @@ public class SettingsPanel extends JPanel{
             }
         }
     };
+    private JPanel sliderContainer = new JPanel();
+    private JPanel buttonContainer = new JPanel();
+    private JPanel gravitySliderContainer = new JPanel();
+    private JPanel reboundSliderContainer = new JPanel();
+    private JPanel frictionSliderContainer = new JPanel();
     
     public SettingsPanel(GameFrame gameFrame){
 
@@ -63,67 +81,117 @@ public class SettingsPanel extends JPanel{
         this.gravitySlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent event){
-                PhysicsEngine.GRAVITY_CONSTANT = gravitySlider.getValue();
+                setGravityValue(gravitySlider.getValue());
+                gravityValueLabel.setText(String.valueOf(gravityValue));
             }
         });
 
         this.reboundSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent event){
-                PhysicsEngine.rebondForce = reboundSlider.getValue();
+                setReboundValue(reboundSlider.getValue());
+                reboundValueLabel.setText(String.valueOf(reboundValue));
             }
         });
 
         this.frictionSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent event){
-                PhysicsEngine.FRICTION_COEFFICIENT = frictionSlider.getValue();
+                setFrictionValue(frictionSlider.getValue());
+                frictionValueLabel.setText(String.valueOf(frictionValue));
             }
         });
 
-        this.backButton.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame");
+        this.submitButton.addActionListener((event) -> {
+            PhysicsEngine.GRAVITY_CONSTANT = gravityValue/10;
+            PhysicsEngine.rebondForce = reboundValue;
+            PhysicsEngine.FRICTION_COEFFICIENT = frictionValue/10;
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
+        
+        this.reinitializeButton.addActionListener((event) -> {
+            this.gravitySlider.setValue(GRAVITY_DEFAULT_VALUE);
+            this.reboundSlider.setValue(REBOUND_DEFAULT_VALUE);
+            this.frictionSlider.setValue(FRICTION_DEFAULT_VALUE);
+            PhysicsEngine.GRAVITY_CONSTANT = GRAVITY_DEFAULT_VALUE/10;
+            PhysicsEngine.rebondForce = REBOUND_DEFAULT_VALUE;
+            PhysicsEngine.FRICTION_COEFFICIENT = FRICTION_DEFAULT_VALUE/10;
+        });
+
+        this.backButton.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+        });
+
+        this.submitButton.addMouseListener(new ButtonMouseListener(this.submitButton));
+        this.reinitializeButton.addMouseListener(new ButtonMouseListener(this.reinitializeButton));
+        this.backButton.addMouseListener(new ButtonMouseListener(this.backButton));
 
         this.sliderContainer.setLayout(new BoxLayout(this.sliderContainer, BoxLayout.Y_AXIS));
         this.sliderContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.sliderContainer.add(Box.createVerticalGlue());
+        this.sliderContainer.setBackground(new Color(30,30,30,0));
         
-        this.sliderContainer.add(this.gravityLabel);
-        this.sliderContainer.add(Box.createVerticalStrut(40));
-        this.sliderContainer.add(this.gravitySlider);
-        this.sliderContainer.add(Box.createVerticalStrut(40));
-        
-        this.sliderContainer.add(this.reboundLabel);
-        this.sliderContainer.add(Box.createVerticalStrut(40));
-        this.sliderContainer.add(this.reboundSlider);
-        this.sliderContainer.add(Box.createVerticalStrut(40));
-        
-        this.sliderContainer.add(this.frictionLabel);
-        this.sliderContainer.add(Box.createVerticalStrut(40));
-        this.sliderContainer.add(this.frictionSlider);
-        this.sliderContainer.add(Box.createVerticalStrut(40));
+        this.gravitySliderContainer.setBackground(new Color(30,30,30,0));
+        this.gravitySliderContainer.add(this.gravityLabel);
+        this.gravitySliderContainer.add(this.gravitySlider);
+        this.gravitySliderContainer.add(this.gravityValueLabel);
 
-        this.sliderContainer.add(this.backButton);
+        this.reboundSliderContainer.setBackground(new Color(30,30,30,0));
+        this.reboundSliderContainer.add(this.reboundLabel);
+        this.reboundSliderContainer.add(this.reboundSlider);
+        this.reboundSliderContainer.add(this.reboundValueLabel);
+        
+        this.frictionSliderContainer.setBackground(new Color(30,30,30,0));
+        this.frictionSliderContainer.add(this.frictionLabel);
+        this.frictionSliderContainer.add(this.frictionSlider);
+        this.frictionSliderContainer.add(this.frictionValueLabel);
+
         this.sliderContainer.add(Box.createVerticalGlue());
 
+        this.sliderContainer.add(Box.createVerticalStrut(200));
+        this.sliderContainer.add(this.gravitySliderContainer);
+        this.sliderContainer.add(Box.createVerticalStrut(10));
+
+        this.sliderContainer.add(this.reboundSliderContainer);
+        this.sliderContainer.add(Box.createVerticalStrut(10));
+
+        this.sliderContainer.add(this.frictionSliderContainer);
+        this.sliderContainer.add(Box.createVerticalStrut(10));
+
+        this.sliderContainer.add(Box.createVerticalGlue());
+
+        this.buttonContainer.setLayout(new BoxLayout(this.buttonContainer, BoxLayout.X_AXIS));
+        this.buttonContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.buttonContainer.setBackground(new Color(30,30,30,0));
+
+        this.buttonContainer.add(Box.createHorizontalGlue());
+        this.buttonContainer.add(this.submitButton);
+        this.buttonContainer.add(Box.createHorizontalStrut(20));
+        this.buttonContainer.add(this.reinitializeButton);
+        this.buttonContainer.add(Box.createHorizontalStrut(20));
+        this.buttonContainer.add(this.backButton);
+        this.buttonContainer.add(Box.createHorizontalGlue());
+        
+        this.mainContainer.setLayout(new BorderLayout());
+        this.mainContainer.add(this.sliderContainer, BorderLayout.CENTER);
+        this.mainContainer.add(this.buttonContainer, BorderLayout.SOUTH);
         this.setLayout(new BorderLayout());
         this.setPreferredSize(SETTINGS_ZONE);
-        this.add(sliderContainer, BorderLayout.CENTER);
-
+        
+        this.add(mainContainer, BorderLayout.CENTER);        
+        //this.add(buttonContainer, BorderLayout.SOUTH);
     }
 
     private JSlider createStyledSlider (String text, int min, int max, int value){
         JSlider slider = new JSlider(min, max, value);
         //slider.setBackground(Color.WHITE);
-        slider.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
+        //slider.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
         //slider.setUI(new CustomSliderUI(slider));
         return slider;
     }
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
@@ -133,8 +201,20 @@ public class SettingsPanel extends JPanel{
     private JLabel createStyledLabel (String text){
         JLabel label = new JLabel(text);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        label.setFont(new Font("Ubuntu", Font.BOLD, 22));
         return label;
+    }
+
+    private void setGravityValue(double value){
+        this.gravityValue =value;
+    }
+
+    private void setReboundValue(double value){
+        this.reboundValue =value;
+    }
+
+    private void setFrictionValue(double value){
+        this.frictionValue =value;
     }
 
     public class CustomSliderUI extends BasicSliderUI {

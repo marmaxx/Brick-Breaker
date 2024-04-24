@@ -14,14 +14,14 @@ public class Wall extends Entity {
      * Instantiates a new wall
      */
     public Wall(int width, int height, double mass, Vector2D position, boolean movable){
-        super(mass,position,movable,new Rectangle(new Color(30,30,30,150), (int)position.getX(), (int)position.getY(), width, height));
+        super(mass,position,movable,new Rectangle(new Color(30,30,30,0), (int)position.getX(), (int)position.getY(), width, height));
     }
 
     /**
      * Instantiates a new wall
      */
     public Wall(int posX, int posY, int width, int height){
-        super(new Rectangle(new Color(30,30,30,255), posX, posY, width, height));
+        super(new Rectangle(new Color(30,30,30,0), posX, posY, width, height));
     }
 
 

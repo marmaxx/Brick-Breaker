@@ -18,6 +18,9 @@ public class MenuPanel extends JPanel {
 
     private JButton Marathon  = createStyledButton("Marathon mode");
     private JButton classic_Game  = createStyledButton("Classic Game");
+    private JButton settings = createStyledButton(" Settings");
+    private JButton locker = createStyledButton("Casier");
+    private JButton exit = createStyledButton("Quitter");
     private BufferedImage backgroundImage; // background image 
 
 
@@ -33,7 +36,9 @@ public class MenuPanel extends JPanel {
 
         Marathon.setPreferredSize(BUTTON_SIZE);
         classic_Game.setPreferredSize(BUTTON_SIZE);
-        
+        settings.setPreferredSize(BUTTON_SIZE);
+        locker.setPreferredSize(BUTTON_SIZE);
+        exit.setPreferredSize(BUTTON_SIZE);
 
         Marathon.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuMarathon"); //switching card layout
@@ -43,17 +48,35 @@ public class MenuPanel extends JPanel {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame"); //switching card layout
         });
 
+        settings.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "settingsPanel");
+        });
+
+        locker.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "lockerPanel");
+        });
+
+        exit.addActionListener((event) -> {
+            System.exit(0);
+        });
+
         this.Marathon.addMouseListener(new ButtonMouseListener(this.Marathon));
         this.classic_Game.addMouseListener(new ButtonMouseListener(this.classic_Game));
+        this.settings.addMouseListener(new ButtonMouseListener(this.settings));
+        this.locker.addMouseListener(new ButtonMouseListener(this.locker));
+        this.exit.addMouseListener(new ButtonMouseListener(this.exit));
 
         this.add(this.classic_Game);
         this.add(this.Marathon);
+        this.add(this.settings);
+        this.add(this.locker);
+        this.add(this.exit);
     }
 
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
         button.setForeground(Color.WHITE);
         button.setBackground(new Color(52, 152, 219)); // Bleu
         button.setFocusPainted(false); 

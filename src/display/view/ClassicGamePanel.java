@@ -17,7 +17,6 @@ public class ClassicGamePanel extends JPanel {
     private JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
     private JButton Level = createStyledButton(" Level ");
     private JButton menu = createStyledButton(" Back to Menu");
-    private JButton settings = createStyledButton(" Settings");
     private BufferedImage backgroundImage; // background image 
 
     public ClassicGamePanel(GameFrame gameFrame){
@@ -33,7 +32,6 @@ public class ClassicGamePanel extends JPanel {
         QuickGame.setPreferredSize(BUTTON_SIZE);
         Level.setPreferredSize(BUTTON_SIZE);
         menu.setPreferredSize(BUTTON_SIZE);
-        settings.setPreferredSize(BUTTON_SIZE);
 
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
@@ -50,19 +48,13 @@ public class ClassicGamePanel extends JPanel {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
 
-        settings.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "settingsPanel");
-        });
-
         this.QuickGame.addMouseListener(new ButtonMouseListener(this.QuickGame));
         this.menu.addMouseListener(new ButtonMouseListener(this.menu));
         this.Level.addMouseListener(new ButtonMouseListener(this.Level));
-        this.settings.addMouseListener(new ButtonMouseListener(this.settings));
 
         this.add(this.QuickGame);
         this.add(this.Level);
         this.add(this.menu);
-        this.add(this.settings);
     }
 
     private JButton createStyledButton(String text) {
