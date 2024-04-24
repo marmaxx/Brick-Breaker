@@ -17,7 +17,9 @@ import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-public class Brick extends Entity {
+import java.io.Serializable;
+
+public class Brick extends Entity implements Serializable{
     public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
     public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
 

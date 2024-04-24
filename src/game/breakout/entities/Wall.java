@@ -1,13 +1,14 @@
 package game.breakout.entities;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;
 import display.engine.utils.Vector2D;
 import game.breakout.entities.rules.Entity;
 
-public class Wall extends Entity {
+public class Wall extends Entity implements Serializable {
     public static final Color DEFAULT_COLOR = Color.GRAY;
 
     /**

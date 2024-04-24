@@ -2,6 +2,7 @@ package game.breakout.entities;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
@@ -10,8 +11,7 @@ import display.engine.shapes.Rectangle;
 import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
-
-public class Player extends Entity {
+public class Player extends Entity implements Serializable{
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();
 	public static final Color DEFAULT_COLOR = Color.WHITE;
 	public static final int DEFAULT_SIZE = 100;

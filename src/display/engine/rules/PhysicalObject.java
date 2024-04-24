@@ -33,6 +33,10 @@ public abstract class PhysicalObject {
     protected Vector2D bottomRightPosition;
     protected double MAX_SPEED = 0.8;
 
+    public PhysicalObject(){
+        
+    }
+
     public PhysicalObject(double mass, Vector2D position, boolean movable, GraphicalObject representation){
 
         this.mass=mass;

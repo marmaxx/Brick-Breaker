@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import display.engine.PhysicsEngine;
 import display.engine.rules.PhysicalObject;
@@ -72,7 +75,14 @@ public class Breakout extends Game{
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
 		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
-		this.setBall(mainBall);
+		//this.setBall(mainBall);
+		try {
+			this.setBall(Ball.readFile());
+		} catch (IOException e) {
+			System.out.println("couldn't load ballInfo.txt");
+			e.printStackTrace();
+		}
+
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
 
@@ -99,6 +109,10 @@ public class Breakout extends Game{
 						Breakout.this.getPlayer().moveLeft();
 						break;
 					case KeyEvent.VK_D:
+					case KeyEvent.VK_X: {
+						writeObjects();
+						break;
+					}
 					case KeyEvent.VK_RIGHT:
 						Breakout.this.getPlayer().moveRight();
 						break;
@@ -136,6 +150,16 @@ public class Breakout extends Game{
 					break;
 						
 				}
+			}
+
+			private void writeObjects() {
+				try (FileOutputStream f = new FileOutputStream("ballInfo.txt");
+							ObjectOutputStream s = new ObjectOutputStream(f)) {
+							ball.writeToFile(s);
+							} catch (IOException error) {
+							 error.printStackTrace();
+						}
+						System.out.println("Successfully saved game!");
 			}
 
 			@Override

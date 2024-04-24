@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import java.util.Collections;
 import java.awt.Image;
+import java.io.Serializable;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
@@ -12,7 +13,10 @@ import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-public class Bonus extends Entity {
+
+
+
+public class Bonus extends Entity implements Serializable {
     public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
     public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
 

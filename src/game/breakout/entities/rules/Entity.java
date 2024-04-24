@@ -1,5 +1,8 @@
 package game.breakout.entities.rules;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import display.engine.PhysicsEngine;
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
@@ -47,6 +50,13 @@ public abstract class Entity extends PhysicalObject {
 		 
     }
 
+
+	/**
+	 * constructor to be used only for deserialization
+	 */
+	public Entity(){
+
+	}
 
 
 
@@ -182,6 +192,10 @@ public abstract class Entity extends PhysicalObject {
 	}
 
 
+	public void writeToFile (ObjectOutputStream out) throws IOException {
+		out.writeObject(this);
+		out.close();
+   }
 
 	/**
 	 * updates velocity using acceleration and time spent. Overriden by Player because its movement is differenty
