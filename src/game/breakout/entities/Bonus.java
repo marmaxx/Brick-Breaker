@@ -5,6 +5,10 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import java.util.Collections;
 import java.awt.Image;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import display.engine.rules.PhysicalObject;
@@ -121,4 +125,26 @@ public class Bonus extends Entity  {
 	public void collided(PhysicalObject object) {
 		super.collided();
 	}
+    
+    public void writeToFile (ObjectOutputStream out) throws IOException {
+		out.writeObject(this);
+		out.close();
+   }
+	public static Bonus readFile() throws IOException {
+		// needs to be returned later, so initialized outside of    //try/catch
+			 Bonus loadedBonus = null;
+			//  DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+		// DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+	
+			 try(FileInputStream in = new FileInputStream("bonusInfo.txt");
+			 ObjectInputStream s = new ObjectInputStream(in)) {
+				  loadedBonus = (Bonus) s.readObject();
+			 } catch (ClassNotFoundException e) {
+				System.out.println("couldn't find bonusInfo.txt");
+				  e.printStackTrace();
+			 }
+			 System.out.println("Loaded previous game!");
+			 return loadedBonus;
+		}
+
 }

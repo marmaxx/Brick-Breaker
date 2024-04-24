@@ -18,6 +18,7 @@ public class MenuPanel extends JPanel {
     JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
     JButton Level = createStyledButton(" Level "); 
     JButton Marathon  = createStyledButton("Marathon mode");
+    JButton SavedState = createStyledButton("Saved States");
     transient private BufferedImage backgroundImage; // background image 
 
     public MenuPanel(GameFrame gameFrame){
@@ -30,8 +31,10 @@ public class MenuPanel extends JPanel {
             e.printStackTrace();
         }
 
+        Level.setPreferredSize(BUTTON_SIZE);
         QuickGame.setPreferredSize(BUTTON_SIZE);
         Marathon.setPreferredSize(BUTTON_SIZE);
+        SavedState.setPreferredSize(BUTTON_SIZE);
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
@@ -48,10 +51,17 @@ public class MenuPanel extends JPanel {
             gameFrame.getPanelContainer().add(this, "MenuPanel");
             gameFrame.startGame(-1);
         });
+        SavedState.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
+            gameFrame.getPanelContainer().add(this, "MenuPanel");
+            gameFrame.startGame(100);
+        });
+
 
         this.add(QuickGame);
         this.add(Marathon);
         this.add(Level);
+        this.add(SavedState);
     }
 
     private JButton createStyledButton(String text) {

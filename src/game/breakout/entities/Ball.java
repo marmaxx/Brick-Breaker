@@ -9,7 +9,9 @@ import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -23,6 +25,7 @@ import game.breakout.entities.rules.Entity;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Ball extends Entity  {
@@ -180,23 +183,25 @@ public class Ball extends Entity  {
 	public void collided(PhysicalObject object) {
 		
 	}
-
-	public static Ball readFile() throws IOException {
-		// needs to be returned later, so initialized outside of    //try/catch
-			 Ball loadedBall = null;
-			//  DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
-		// DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
 	
-			 try(FileInputStream in = new FileInputStream("ballInfo.txt");
-			 ObjectInputStream s = new ObjectInputStream(in)) {
-				  loadedBall = (Ball) s.readObject();
-			 } catch (ClassNotFoundException e) {
-				System.out.println("couldn't find ballInfo.txt");
-				  e.printStackTrace();
-			 }
-			 System.out.println("Loaded previous game!");
-			 return loadedBall;
-		}
+	public void writeToFile (ObjectOutputStream out, ArrayList<Ball> balls) throws IOException {
+		out.writeObject(balls);
+		out.close();
+   }
+   	public static ArrayList<Ball> readFile() throws IOException {
+   		ArrayList<Ball> loadedBalls = null;
+
+    	try(FileInputStream in = new FileInputStream("ballInfo.txt");
+        	ObjectInputStream s = new ObjectInputStream(in)) {
+        	loadedBalls = (ArrayList<Ball>) s.readObject();
+    	} catch (ClassNotFoundException e) {
+        	System.out.println("couldn't find ballInfo.txt");
+        	e.printStackTrace();
+    }
+
+    System.out.println("Loaded previous game!");
+    return loadedBalls;
+}
 
 
 	public class BallTrail implements Serializable{

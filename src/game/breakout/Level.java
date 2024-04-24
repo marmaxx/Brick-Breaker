@@ -43,9 +43,17 @@ public class Level {
 				break;
 			default:
 				break;
+			case 100:
+				createSavedGame(b);
+				break;
 		}
 	}
 	
+
+	private static void createSavedGame(Breakout b) {
+		
+	}
+
 
 	/**
      * Generates the bricks for level 1.

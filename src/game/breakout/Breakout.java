@@ -79,12 +79,24 @@ public class Breakout extends Game {
 
 		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
 		//this.setBall(mainBall);
-		try {
-			this.setBall(Ball.readFile());
-		} catch (IOException e) {
-			System.out.println("couldn't load ballInfo.txt");
-			e.printStackTrace();
-		}
+		  try {
+		 	this.setBalls(Ball.readFile());
+		 	this.setBall(this.getBalls().getFirst());
+
+			Iterator<Ball> ballsIterator = this.getBalls().iterator();
+			 while(ballsIterator.hasNext()){
+				Ball ball = ballsIterator.next();
+
+
+
+				this.getPanel().getGameZone().add(ball.getRepresentation());
+				this.getPhysicEngine().getPhysicalObjects().add(ball);
+
+			}
+		 } catch (IOException e) {
+		 	System.out.println("couldn't load ballInfo.txt");
+		 	e.printStackTrace();
+		 }
 
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
@@ -112,6 +124,22 @@ public class Breakout extends Game {
 						Breakout.this.getPlayer().moveLeft();
 						break;
 					case KeyEvent.VK_D:
+					{
+
+						Random randomDistance = new Random();
+						int randomX = (int)getBall().getPosition().getX() + randomDistance.nextInt(-30, 30);
+						int randomY = (int)getBall().getPosition().getY() + randomDistance.nextInt(-30, 30);
+						Vector2D ballPos = new Vector2D(randomX, randomY);
+	
+						Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+						ball.setAcceleration(getBall().getAcceleration());
+						ball.setSpeed(getBall().getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
+	
+						getBalls().add(ball);
+						getPanel().getGameZone().add(ball.getRepresentation());
+						getPhysicEngine().getPhysicalObjects().add(ball);
+					}
+
 					case KeyEvent.VK_X: {
 						writeObjects();
 						break;
@@ -158,7 +186,7 @@ public class Breakout extends Game {
 			private void writeObjects() {
 				try (FileOutputStream f = new FileOutputStream("ballInfo.txt");
 							ObjectOutputStream s = new ObjectOutputStream(f)) {
-							ball.writeToFile(s);
+							ball.writeToFile(s, getBalls());
 							} catch (IOException error) {
 							 error.printStackTrace();
 						}
@@ -280,6 +308,8 @@ public class Breakout extends Game {
 	public Ball getBall() {
 		return this.ball;
 	}
+
+	
 
 	/**
 	 * Set the ball entity in the game.
