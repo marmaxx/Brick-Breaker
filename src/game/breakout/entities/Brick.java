@@ -5,11 +5,8 @@ import java.util.Collections;
 
 import javax.swing.ImageIcon;
 
-import java.awt.Color;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
-import java.awt.Image;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;

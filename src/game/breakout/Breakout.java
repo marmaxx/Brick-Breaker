@@ -31,7 +31,7 @@ public class Breakout extends Game{
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
-	private static final int WALL_WIDTH = 20;
+	private static final int WALL_WIDTH = 1;
 	// init at 1 because it takes time to initialize the list of bricks 
 	// and it would lead us to the win panel directly
 	private int nbBricks = 1; 
@@ -108,7 +108,8 @@ public class Breakout extends Game{
 							Breakout.this.pause();
 						}
 						break;
-					case KeyEvent.VK_V : 
+					case KeyEvent.VK_V :
+						Breakout.this.gameframe.setnbLevelUnlock();
 						Breakout.this.gameframe.getCardlayout().show(Breakout.this.gameframe.getPanelContainer(), "winPanel");
 					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().active){
@@ -445,7 +446,7 @@ public class Breakout extends Game{
 	
 		 
 		if (this.nbBricks == 0 && this.life >= 0){
-			System.out.println(nbBricks);
+			this.gameframe.setnbLevelUnlock();
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
 

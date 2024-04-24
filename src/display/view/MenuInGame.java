@@ -3,7 +3,6 @@ package display.view;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.Border;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -95,13 +94,6 @@ public class MenuInGame extends JPanel{
         return button;
     }
 
-    private Border createBorder(){
-        Color color = new Color(82, 32, 138); 
-        int borderWidth = 8; 
-        Border border = BorderFactory.createLineBorder(color, borderWidth);
-
-        return border;
-    }
 
     @Override
     protected void paintComponent(Graphics g) {

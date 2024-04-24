@@ -37,6 +37,8 @@ public class WinPanel extends JPanel{
         //setting back to menu button
         this.backToMenu.setPreferredSize(BUTTON_SIZE);
         this.backToMenu.addActionListener(e -> {
+            frame.getPanelContainer().remove(frame.getMenuLevel());
+            frame.getPanelContainer().add(new MenuLevel(frame), "menuLevel");
             frame.getGame().clearGameComponents();
             frame.getGamePanel().getGameZone().removeAll();
             frame.getGame().setLife(3);

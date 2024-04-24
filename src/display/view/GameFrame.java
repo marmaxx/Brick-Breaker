@@ -22,6 +22,7 @@ public class GameFrame extends JFrame {
 	private LockerPanel locker;
 	private CardLayout cardLayout;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+	public int nbLevelUnlock = 1;
     
 	/**
 	 * Instantiates a new GameFrame
@@ -145,9 +146,21 @@ public class GameFrame extends JFrame {
 		return this.game_win;
 	}
 
+	public MenuLevel getMenuLevel(){
+		return this.menu_level;
+	}
+
 
 	public void setGame(Breakout game){
 		this.game = game;
+	}
+
+	public void setnbLevelUnlock(){
+		++this.nbLevelUnlock;
+	}
+
+	public int getNbLevelUnlock(){
+		return this.nbLevelUnlock;
 	}
 
 	public Breakout getGame(){

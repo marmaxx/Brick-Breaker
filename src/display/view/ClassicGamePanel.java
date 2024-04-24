@@ -21,6 +21,7 @@ public class ClassicGamePanel extends JPanel {
 
     public ClassicGamePanel(GameFrame gameFrame){
         this.setLayout(new FlowLayout());
+        gameFrame.getPanelContainer().add(this, "classicGame");
         this.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.height, SCREEN_FULL_SIZE.width/2));
 
         try {
@@ -36,7 +37,6 @@ public class ClassicGamePanel extends JPanel {
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
-            gameFrame.getPanelContainer().add(this, "classicGame");
             gameFrame.startGame(0);
         });
 
