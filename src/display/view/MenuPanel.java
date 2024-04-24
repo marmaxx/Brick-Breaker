@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import java.io.Serializable;
 
 
-public class MenuPanel extends JPanel implements Serializable{
+public class MenuPanel extends JPanel {
     public static final long serialVersionUID = 56L;
 	
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 

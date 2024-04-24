@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import java.io.Serializable;
 
 
-public class JPanelWithBackground extends JPanel implements Serializable{
+public class JPanelWithBackground extends JPanel {
     public static final long serialVersionUID = 53L;
 	
     transient private ImageIcon background;

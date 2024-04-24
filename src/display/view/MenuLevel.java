@@ -8,7 +8,7 @@ import game.rules.Game;
 import java.io.Serializable;
 
 
-public class MenuLevel extends JPanel implements Serializable{
+public class MenuLevel extends JPanel {
     public static final long serialVersionUID = 55L;
 	
 

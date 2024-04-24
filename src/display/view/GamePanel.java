@@ -8,7 +8,7 @@ import java.awt.*;
 import java.io.Serializable;
 
 
-public class GamePanel extends JPanel implements Serializable{
+public class GamePanel extends JPanel {
     public static final long serialVersionUID = 52L;
 	
 	private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);

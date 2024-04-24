@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.io.Serializable;
 
 
-public class MenuInGame extends JPanel implements Serializable{
+public class MenuInGame extends JPanel {
     public static final long serialVersionUID = 54L;
 
     private JPanel menuInGameSquarePane = new JPanel(new BorderLayout());;

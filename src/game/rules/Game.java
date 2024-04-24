@@ -23,7 +23,7 @@ public abstract class Game implements Serializable{
 	protected long lastRenderTime;
 	protected boolean vSync;
 
-	public final int DEFAULT_FPS = 60;
+	public final static int DEFAULT_FPS = 60;
 
 	/**
 	 * Initialize a new game
@@ -56,7 +56,7 @@ public abstract class Game implements Serializable{
 	 * 
 	 * @param panel The panel to set
 	 */
-	private void setPanel(GamePanel panel) {
+	protected void setPanel(GamePanel panel) {
 		this.panel = panel;
 	}
 
@@ -92,7 +92,7 @@ public abstract class Game implements Serializable{
 	 * 
 	 * @param renderedFrames The number of frames to set
 	 */
-	private void setRenderedFrames(int renderedFrames) {
+	protected void setRenderedFrames(int renderedFrames) {
 		this.renderedFrames = renderedFrames;
 	}
 
@@ -110,7 +110,7 @@ public abstract class Game implements Serializable{
 	 * 
 	 * @param currentFPS The FPS to set
 	 */
-	private void setCurrentFPS(int currentFPS) {
+	protected void setCurrentFPS(int currentFPS) {
 		this.currentFPS = currentFPS;
 	}
 
@@ -177,7 +177,6 @@ public abstract class Game implements Serializable{
 	public void start() {
 		long second;
 		Thread gameThread;
-
 
 		// For some reason, the timer makes the game capped
 		// at either 60 or 30 FPS

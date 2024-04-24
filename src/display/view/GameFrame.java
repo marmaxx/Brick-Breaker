@@ -8,7 +8,7 @@ import game.breakout.Breakout;
 import java.io.Serializable;
 
 
-public class GameFrame extends JFrame implements Serializable{
+public class GameFrame extends JFrame {
 	public static final long serialVersionUID = 50L;
 
 	public static final Color INTERFACE_BACKGROUND = Color.WHITE;
@@ -151,6 +151,7 @@ public class GameFrame extends JFrame implements Serializable{
 		if(level == 100){
 		 try {
 		 	game = Breakout.readFile();
+			game.gameframe =this;
 		 } catch (IOException e) {
 		 	e.printStackTrace();
 		}

@@ -11,7 +11,7 @@ import game.breakout.Breakout;
 import java.io.Serializable;
 
 
-public class WinPanel extends JPanel implements Serializable{
+public class WinPanel extends JPanel {
     public static final long serialVersionUID = 57L;
 	
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 

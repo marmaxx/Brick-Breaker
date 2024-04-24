@@ -12,7 +12,7 @@ import display.engine.utils.Vector2D;
 import display.view.GamePanel;
 
 
-public abstract class GraphicalObject extends JComponent implements Serializable{
+public abstract class GraphicalObject extends JComponent {
 	public static final long serialVersionUID = 1L;
 
     protected int posX, posY;

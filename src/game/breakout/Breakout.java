@@ -36,7 +36,7 @@ public class Breakout extends Game {
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
 
-	GameFrame gameframe;
+	transient public GameFrame gameframe;
 
 	private ArrayList<Brick> bricks;
 	private ArrayList<Bonus> bonuses;
@@ -218,6 +218,18 @@ public class Breakout extends Game {
 
 	private static void loadObjects(Breakout b){
 		if (b==null) return;
+
+		b.setPanel(b.getPanel());
+		b.getPanel().getFrame().setTitle("Breakout");
+		b.setName("Breakout");
+		b.setRenderedFrames(0);
+		b.setCurrentFPS(0);
+		b.setMaxFPS(Game.DEFAULT_FPS);
+		b.setVSync(true);
+
+
+
+		
 		for (Ball ball : b.getBalls()){
 			b.getPanel().getGameZone().add(ball.getRepresentation());
 		}
@@ -232,7 +244,7 @@ public class Breakout extends Game {
 		b.getPanel().getGameZone().add(b.getWestWall().getRepresentation());
 		b.getPanel().getGameZone().add(b.getNorthWall().getRepresentation());
 		
-		b.getPanel().getGameZone().repaint();
+
 
 	}
 
@@ -480,7 +492,6 @@ public class Breakout extends Game {
 		//this.createBricks(4, 8);
 		Level.level(this);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
-		System.out.println(this.nbBricks);
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
