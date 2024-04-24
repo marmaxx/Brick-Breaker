@@ -4,8 +4,12 @@ import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import java.io.Serializable;
 
-public class JPanelWithBackground extends JPanel{
+
+public class JPanelWithBackground extends JPanel implements Serializable{
+    public static final long serialVersionUID = 53L;
+	
     transient private ImageIcon background;
 
     public JPanelWithBackground(String image) {

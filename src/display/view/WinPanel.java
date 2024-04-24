@@ -8,8 +8,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import game.breakout.Breakout;
+import java.io.Serializable;
 
-public class WinPanel extends JPanel{
+
+public class WinPanel extends JPanel implements Serializable{
+    public static final long serialVersionUID = 57L;
+	
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private JButton exit = createStyledButton(" Exit ");

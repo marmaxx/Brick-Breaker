@@ -195,10 +195,7 @@ public abstract class Entity extends PhysicalObject {
 	}
 
 
-	public void writeToFile (ObjectOutputStream out) throws IOException {
-		out.writeObject(this);
-		out.close();
-   }
+
 
 	/**
 	 * updates velocity using acceleration and time spent. Overriden by Player because its movement is differenty

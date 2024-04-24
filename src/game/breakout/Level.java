@@ -42,17 +42,11 @@ public class Level {
 				createLevelMarathon(b);
 				break;
 			default:
-				break;
-			case 100:
-				createSavedGame(b);
+				System.out.println("unhandled level number");
 				break;
 		}
 	}
 	
-
-	private static void createSavedGame(Breakout b) {
-		
-	}
 
 
 	/**

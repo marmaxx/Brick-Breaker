@@ -5,8 +5,12 @@ import java.awt.*;
 
 import game.breakout.Breakout;
 import game.rules.Game;
+import java.io.Serializable;
 
-public class MenuLevel extends JPanel {
+
+public class MenuLevel extends JPanel implements Serializable{
+    public static final long serialVersionUID = 55L;
+	
 
     private GameFrame game_frame; 
      private enum Level {

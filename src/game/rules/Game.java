@@ -178,6 +178,7 @@ public abstract class Game implements Serializable{
 		long second;
 		Thread gameThread;
 
+
 		// For some reason, the timer makes the game capped
 		// at either 60 or 30 FPS
 		// To make it into a feature, we use two different threads

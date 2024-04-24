@@ -25,6 +25,11 @@ import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.rules.Game;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class Breakout extends Game {
 	public static final long serialVersionUID = 15L;
 
@@ -61,6 +66,8 @@ public class Breakout extends Game {
 	
 	private int level = 0;
 
+
+
 	/**
 	 * Instantiates a new Breakout game
 	 * 
@@ -78,25 +85,7 @@ public class Breakout extends Game {
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
 		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
-		//this.setBall(mainBall);
-		  try {
-		 	this.setBalls(Ball.readFile());
-		 	this.setBall(this.getBalls().getFirst());
-
-			Iterator<Ball> ballsIterator = this.getBalls().iterator();
-			 while(ballsIterator.hasNext()){
-				Ball ball = ballsIterator.next();
-
-
-
-				this.getPanel().getGameZone().add(ball.getRepresentation());
-				this.getPhysicEngine().getPhysicalObjects().add(ball);
-
-			}
-		 } catch (IOException e) {
-		 	System.out.println("couldn't load ballInfo.txt");
-		 	e.printStackTrace();
-		 }
+		this.setBall(mainBall);
 
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
@@ -183,15 +172,6 @@ public class Breakout extends Game {
 				}
 			}
 
-			private void writeObjects() {
-				try (FileOutputStream f = new FileOutputStream("ballInfo.txt");
-							ObjectOutputStream s = new ObjectOutputStream(f)) {
-							ball.writeToFile(s, getBalls());
-							} catch (IOException error) {
-							 error.printStackTrace();
-						}
-						System.out.println("Successfully saved game!");
-			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -216,6 +196,55 @@ public class Breakout extends Game {
 		this.getPanel().addKeyListener(keyListener);
 	}
 
+
+	public void writeToFile (ObjectOutputStream out) throws IOException {
+		out.writeObject(this);
+		out.close();
+ 	}
+
+	public static Breakout readFile() throws IOException {
+		Breakout game = null;
+
+		try(FileInputStream in = new FileInputStream("BreakoutPreviousInstance.txt");
+			ObjectInputStream s = new ObjectInputStream(in)) {
+			game= (Breakout) s.readObject();
+		} catch (ClassNotFoundException e) {
+			System.out.println("couldn't find BreakoutPreviousInstance.txt");
+			e.printStackTrace();
+		}
+		loadObjects(game);
+		return game;
+	}	
+
+	private static void loadObjects(Breakout b){
+		if (b==null) return;
+		for (Ball ball : b.getBalls()){
+			b.getPanel().getGameZone().add(ball.getRepresentation());
+		}
+		for (Brick brick : b.getBricks()){
+			b.getPanel().getGameZone().add(brick.getRepresentation());
+		}
+		for (Bonus bonus : b.getBonuses()){
+			b.getPanel().getGameZone().add(bonus.getRepresentation());
+		}
+		b.getPanel().getGameZone().add(b.getPlayer().getRepresentation());
+		b.getPanel().getGameZone().add(b.getEastWAll().getRepresentation());
+		b.getPanel().getGameZone().add(b.getWestWall().getRepresentation());
+		b.getPanel().getGameZone().add(b.getNorthWall().getRepresentation());
+		
+		b.getPanel().getGameZone().repaint();
+
+	}
+
+	private void writeObjects() {
+		try (FileOutputStream f = new FileOutputStream("BreakoutPreviousInstance.txt");
+			ObjectOutputStream s = new ObjectOutputStream(f)) {
+			this.writeToFile(s);
+		} catch (IOException error) {
+			error.printStackTrace();
+		}
+			System.out.println("Successfully saved game!");
+	}
 
 	/**
 	 * Get the list of bricks in the game.
@@ -451,7 +480,7 @@ public class Breakout extends Game {
 		//this.createBricks(4, 8);
 		Level.level(this);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
-
+		System.out.println(this.nbBricks);
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());

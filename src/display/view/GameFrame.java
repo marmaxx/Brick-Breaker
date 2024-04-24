@@ -2,11 +2,15 @@ package display.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 import game.breakout.Breakout;
+import java.io.Serializable;
 
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements Serializable{
+	public static final long serialVersionUID = 50L;
+
 	public static final Color INTERFACE_BACKGROUND = Color.WHITE;
 
 	private Breakout game;
@@ -143,7 +147,18 @@ public class GameFrame extends JFrame {
 	}
 
 	public void startGame(int level){
-		Breakout game = new Breakout(this, level); //created instance of Breakout
+		Breakout game =null;
+		if(level == 100){
+		 try {
+		 	game = Breakout.readFile();
+		 } catch (IOException e) {
+		 	e.printStackTrace();
+		}
+		}else{
+			game = new Breakout(this, level); //created instance of Breakout
+		}
+
+
 		this.game = game;
 		game.start(); //starting the game 
 	}

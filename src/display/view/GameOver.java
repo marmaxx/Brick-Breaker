@@ -8,9 +8,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import game.breakout.Breakout;
+import java.io.Serializable;
 
 
-public class GameOver extends JPanel{
+public class GameOver extends JPanel implements Serializable{
+    public static final long serialVersionUID = 51L;
+
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private JButton exit = createStyledButton(" Exit ");

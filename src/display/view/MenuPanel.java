@@ -9,10 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.io.Serializable;
 
 
-
-public class MenuPanel extends JPanel {
+public class MenuPanel extends JPanel implements Serializable{
+    public static final long serialVersionUID = 56L;
+	
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game

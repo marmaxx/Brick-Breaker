@@ -5,8 +5,12 @@ import javax.swing.*;
 import game.breakout.Breakout;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class GamePanel extends JPanel {
+
+public class GamePanel extends JPanel implements Serializable{
+    public static final long serialVersionUID = 52L;
+	
 	private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension GAME_ZONE_SIZE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
