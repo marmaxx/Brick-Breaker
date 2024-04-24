@@ -4,12 +4,17 @@ import display.view.GamePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+
 import javax.swing.Timer;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class Game{
-    protected GamePanel panel;
+public abstract class Game implements Serializable{
+
+	public static final long serialVersionUID = 16L;
+    
+	protected GamePanel panel;
 	protected String name;
 	protected boolean paused;
 	protected int renderedFrames;

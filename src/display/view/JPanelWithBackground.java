@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class JPanelWithBackground extends JPanel{
-    private ImageIcon background;
+    transient private ImageIcon background;
 
     public JPanelWithBackground(String image) {
         background = new ImageIcon(image);

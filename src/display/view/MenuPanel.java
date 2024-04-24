@@ -18,7 +18,7 @@ public class MenuPanel extends JPanel {
     JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
     JButton Level = createStyledButton(" Level "); 
     JButton Marathon  = createStyledButton("Marathon mode");
-    private BufferedImage backgroundImage; // background image 
+    transient private BufferedImage backgroundImage; // background image 
 
     public MenuPanel(GameFrame gameFrame){
         this.setLayout(new FlowLayout());

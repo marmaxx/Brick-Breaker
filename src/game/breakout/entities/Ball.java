@@ -25,11 +25,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-public class Ball extends Entity implements Serializable {
-	private static final long serialversionUID =841L;
+public class Ball extends Entity  {
+	public static final long serialversionUID =10L;
 
-	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
-	public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+	transient public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+	transient public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
 	public static final Color DEFAULT_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
@@ -184,6 +184,9 @@ public class Ball extends Entity implements Serializable {
 	public static Ball readFile() throws IOException {
 		// needs to be returned later, so initialized outside of    //try/catch
 			 Ball loadedBall = null;
+			//  DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+		// DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+	
 			 try(FileInputStream in = new FileInputStream("ballInfo.txt");
 			 ObjectInputStream s = new ObjectInputStream(in)) {
 				  loadedBall = (Ball) s.readObject();

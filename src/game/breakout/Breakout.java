@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import display.engine.PhysicsEngine;
 import display.engine.rules.PhysicalObject;
@@ -24,7 +25,9 @@ import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 import game.rules.Game;
 
-public class Breakout extends Game{
+public class Breakout extends Game {
+	public static final long serialVersionUID = 15L;
+
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
 

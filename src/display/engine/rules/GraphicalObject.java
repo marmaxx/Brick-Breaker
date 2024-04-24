@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 
 import javax.swing.JComponent;
 
@@ -11,12 +12,13 @@ import display.engine.utils.Vector2D;
 import display.view.GamePanel;
 
 
-public abstract class GraphicalObject extends JComponent {
+public abstract class GraphicalObject extends JComponent implements Serializable{
+	public static final long serialVersionUID = 1L;
 
     protected int posX, posY;
     protected int width, height;
 	protected Color color;
-	protected Image image;
+	transient protected Image image;
 
 	// Used to define the boundaries of the object (i.e collision detection)
 	public static enum Boundary {

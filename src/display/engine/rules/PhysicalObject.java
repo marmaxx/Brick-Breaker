@@ -1,4 +1,5 @@
 package display.engine.rules;
+import java.io.Serializable;
 import java.util.Vector;
 
 import display.engine.rules.GraphicalObject.Boundary;
@@ -9,7 +10,8 @@ import game.breakout.entities.Player;
 import game.breakout.entities.Wall;
 import game.breakout.entities.rules.Entity;
 
-public abstract class PhysicalObject {
+public abstract class PhysicalObject implements Serializable{
+    public static final long serialVersionUID = 2L;
     public boolean active;
     protected double mass;
     protected Vector2D position ;

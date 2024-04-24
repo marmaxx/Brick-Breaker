@@ -2,6 +2,7 @@ package game.breakout.entities.rules;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import display.engine.PhysicsEngine;
 import display.engine.rules.GraphicalObject;
@@ -15,6 +16,8 @@ import game.breakout.entities.Wall;
 
 
 public abstract class Entity extends PhysicalObject {
+	public static final long serialVersionUID = 9L;
+
     protected GraphicalObject representation;
 	protected final static int WALL_WIDTH = 20;
 

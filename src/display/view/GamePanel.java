@@ -11,7 +11,7 @@ public class GamePanel extends JPanel {
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension GAME_ZONE_SIZE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
 	public static final Dimension STAT_ZONE_GAME = new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10);
-	public static final String DEFAULT_IMAGE = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Galaxy.png";
+	transient public static final String DEFAULT_IMAGE = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Galaxy.png";
     
 	private GameFrame gameFrame;
 	private JPanel gameZone = new JPanelWithBackground(DEFAULT_IMAGE);

@@ -16,9 +16,11 @@ import game.breakout.entities.rules.Entity;
 
 
 
-public class Bonus extends Entity implements Serializable {
+public class Bonus extends Entity  {
+    public static final long serialVersionUID = 11L;
+
     public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
-    public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
+    transient public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
 
     protected boolean isDestroyed;
     protected BonusType bonusType;
