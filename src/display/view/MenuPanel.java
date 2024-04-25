@@ -21,7 +21,7 @@ public class MenuPanel extends JPanel {
 
     private JButton Marathon  = createStyledButton("Marathon mode");
     private JButton classic_Game  = createStyledButton("Classic Game");
-    JButton SavedState = createStyledButton("Saved States");
+    private JButton SavedGames = createStyledButton("Saved Games");
     transient private BufferedImage backgroundImage; // background image 
 
 
@@ -38,18 +38,17 @@ public class MenuPanel extends JPanel {
 
         Marathon.setPreferredSize(BUTTON_SIZE);
         classic_Game.setPreferredSize(BUTTON_SIZE);
-        SavedState.setPreferredSize(BUTTON_SIZE);
+        SavedGames.setPreferredSize(BUTTON_SIZE);
         
 
         Marathon.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuMarathon"); //switching card layout
         });
-        SavedState.addActionListener((event) -> {
+        SavedGames.addActionListener((event) -> {
             File file = new File("BreakoutPreviousInstance.txt");
             if (file.exists()) {  //To verify if a saved instance already exists. Otherwise the game "launches" empty and the user is stuck
-                gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "Saved State"); // switching the card layout
-                gameFrame.getPanelContainer().add(this, "Saved State");
-                gameFrame.startGame(100);
+                gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "Saved States"); // switching the card layout
+                
             } else {
                 System.out.println("File does not exist");
                 // Handle the case where the file does not exist
@@ -61,13 +60,13 @@ public class MenuPanel extends JPanel {
         classic_Game.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame"); //switching card layout
         });
-        this.SavedState.addMouseListener(new ButtonMouseListener(this.SavedState));
+        this.SavedGames.addMouseListener(new ButtonMouseListener(this.SavedGames));
         this.Marathon.addMouseListener(new ButtonMouseListener(this.Marathon));
         this.classic_Game.addMouseListener(new ButtonMouseListener(this.classic_Game));
 
         this.add(this.classic_Game);
         this.add(this.Marathon);
-        this.add(SavedState);
+        this.add(SavedGames);
     }
 
 
