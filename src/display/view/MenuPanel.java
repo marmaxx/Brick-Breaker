@@ -47,7 +47,7 @@ public class MenuPanel extends JPanel {
         SavedState.addActionListener((event) -> {
             File file = new File("BreakoutPreviousInstance.txt");
             if (file.exists()) {  //To verify if a saved instance already exists. Otherwise the game "launches" empty and the user is stuck
-                gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
+                gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "Saved State"); // switching the card layout
                 gameFrame.getPanelContainer().add(this, "MenuPanel");
                 gameFrame.startGame(100);
             } else {
@@ -61,7 +61,7 @@ public class MenuPanel extends JPanel {
         classic_Game.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame"); //switching card layout
         });
-
+        this.SavedState.addMouseListener(new ButtonMouseListener(this.SavedState));
         this.Marathon.addMouseListener(new ButtonMouseListener(this.Marathon));
         this.classic_Game.addMouseListener(new ButtonMouseListener(this.classic_Game));
 
