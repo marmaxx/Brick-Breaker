@@ -187,20 +187,15 @@ public class Ball extends Entity {
 
 		public void addPoint(Circle point, Breakout breakout) {
 			for (TrailPoint tp : points) {
+				System.out.println(tp.point.getColor());
 				tp.opacity = Math.max(0, tp.opacity - OPACITY_DECREMENT);
-		
-				// Interpolate between red and yellow based on the opacity
-				float r = 1.0f;
-				float g = (float) tp.opacity;  // Green component increases as opacity decreases
-				float b = 0.0f;
-		
-				// Use the opacity field to set the color of the Circle
-				tp.point.setColor(new Color(r, g, b, (float) tp.opacity));
+
+				tp.point.setColor(new Color(1f, 0f, 0f, (float) tp.opacity));
 			}
-		
+
 			points.add(new TrailPoint(point, 1));
 			breakout.getPanel().getGameZone().add(point);
-		
+
 			if (points.size() > 10) { // Limit the trail length
 				breakout.getPanel().getGameZone().remove(points.getFirst().point);
 				points.removeFirst();
