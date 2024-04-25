@@ -29,7 +29,7 @@ public class Bonus extends Entity {
         MALUS_SIZE,
         BONUS_SPEED,
         MALUS_SPEED,
-        BONUS_TIME,
+        BONUS_HEALTH,
         DEFAULT
     }
 
@@ -39,7 +39,7 @@ public class Bonus extends Entity {
             put(BonusType.MALUS_SIZE, new ImageIcon(path + "MalusSize.png").getImage());
             put(BonusType.BONUS_SPEED, new ImageIcon(path + "BonusSpeed.png").getImage());
             put(BonusType.MALUS_SPEED, new ImageIcon(path + "MalusSpeed.png").getImage());
-            put(BonusType.BONUS_TIME, new ImageIcon(path + "BonusTime.png").getImage());
+            put(BonusType.BONUS_HEALTH, new ImageIcon(path + "BonusHealth.png").getImage());
             put(BonusType.DEFAULT, DEFAULT_IMAGE);
         }
     };

@@ -144,8 +144,6 @@ public class GamePanel extends JPanel {
 		return this.menuInGame;
 	}
 
-
-
 	/** 
 	 * update game life in JLabel
 	 * @param life The Life in game

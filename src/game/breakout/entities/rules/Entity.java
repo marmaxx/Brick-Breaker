@@ -278,7 +278,7 @@ public abstract class Entity extends PhysicalObject {
                     double incidenceAngle = Math.atan2(this.getSpeed().getY(),this.getSpeed().getX());
                     //double objectAVelocityAngle = Math.atan2(objectA.getSpeed().getY(), objectA.getSpeed().getX());
                     //double angleDifference = incidenceAngle - objectAVelocityAngle;
-                    double objectASpeed = object.getSpeed().magnitude();
+                    double objectASpeed = -object.getSpeed().getX(); //System.out.println(objectASpeed); System.out.println(object.getSpeed().magnitude());
                     double rotationAngle = Math.atan2(objectASpeed, this.getSpeed().magnitude());
                     double reflexionAngle;
 
@@ -286,17 +286,21 @@ public abstract class Entity extends PhysicalObject {
                     switch(object.getSlope()){
                         case VERTICAL: reflexionAngle = Math.PI - incidenceAngle + rotationAngle; break;
                         case HORIZONTAL: reflexionAngle = - incidenceAngle + rotationAngle; break;
-                        case OTHER: reflexionAngle = 0; break; // TODO handle a slope that is not vertical or horizontal
+                        case OTHER: reflexionAngle = 0; break;
+                        // TODO handle a slope that is not vertical or horizontal
                         default: reflexionAngle = 0; break;
                     }        
 
 					if (object instanceof Player){
 						//System.out.println("VITESSE: "+this.getSpeed());
 						//System.out.println("acc AVANT: "+this.getAcceleration());
-						//this.resolveSpeedToHigh(); 
+						//this.resolveSpeedToHigh();
 						if (this.getAcceleration().getY() > 100) this.applyForce(new Vector2D(0, - this.getMass() * PhysicsEngine.rebondForce));
 						//System.out.println("acc APRES: "+this.getAcceleration());
 					}
+					//System.out.println("cos "+Math.cos(reflexionAngle)+" ; sin "+ Math.sin(reflexionAngle));
+					//System.out.println(reflexionAngle);
+					//System.out.println(object.getSlope());
                     this.setSpeed(new Vector2D(this.getSpeed().magnitude() * Math.cos(reflexionAngle), this.getSpeed().magnitude()* Math.sin(reflexionAngle)));
                 }
                 
