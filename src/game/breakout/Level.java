@@ -4,7 +4,6 @@ import java.util.Random;
 
 import display.engine.utils.Vector2D;
 import game.breakout.entities.Brick;
-import game.breakout.entities.rules.Entity;
 
 
 
@@ -136,6 +135,8 @@ public class Level {
     		}
 		}
 	}
+
+
 
 
 	/**

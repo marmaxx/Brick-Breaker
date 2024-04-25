@@ -3,12 +3,11 @@ package display.view;
 import javax.swing.*; 
 import java.awt.*; 
 
-import game.breakout.Breakout;
-import game.rules.Game;
 
 public class MenuLevel extends JPanel {
 
-    private GameFrame game_frame; 
+    private GameFrame game_frame;
+    private int nbLevelUnlock;
      private enum Level {
         level_1,
         level_2,
@@ -27,6 +26,7 @@ public class MenuLevel extends JPanel {
 
     public MenuLevel(GameFrame gameFrame){
         this.game_frame = gameFrame;
+        this.nbLevelUnlock  = this.game_frame.getNbLevelUnlock(); 
 
         this.setLayout(new GridLayout(2,4));
         this.setBackground(new Color(30,30,30));
@@ -34,8 +34,9 @@ public class MenuLevel extends JPanel {
         this.addLevel();
 
         this.menu.addActionListener((event) -> {
-            this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "menuPanel");
+            this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "classicGame");
         });
+        addMouseListener(menu);
 
         this.add(menu);
     }
@@ -43,11 +44,14 @@ public class MenuLevel extends JPanel {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setPreferredSize(new Dimension(400, 80));
+        button.setMaximumSize(new Dimension(400, 80));
         button.setForeground(Color.WHITE);
-        button.setBackground(new Color(52, 152, 219)); // Bleu
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
+        button.setContentAreaFilled(false);
         return button;
     }
 
@@ -60,50 +64,59 @@ public class MenuLevel extends JPanel {
         this.add(level_6); 
     }
 
-    private void addActionListener(){
-        Level[] levelTab = Level.values(); 
-        for (int i = 1; i < levelTab.length+1; i++) {
+    private void addActionListener(){ 
+        Level[] levelTab = Level.values();
+        int nb = this.nbLevelUnlock;
+        if ( nb > levelTab.length){
+            nb = levelTab.length;
+        }
+        for (int i = 1; i <  nb+1 ; i++) {
             JButton button = null;
             switch(i) {
                 case 1:
                     button = level_1;
                     this.addAction(1, button);
+                    this.addMouseListener(button);
                     break;
                 case 2:
                     button = level_2;
                     this.addAction(2, button);
+                    this.addMouseListener(button);
                     break;
                 case 3:
                     button = level_3;
                     this.addAction(3, button);
+                    this.addMouseListener(button);
                     break;
                 case 4:
                     button = level_4;
                     this.addAction(4, button);
+                    this.addMouseListener(button);
                     break;
                 case 5:
                     button = level_5;
                     this.addAction(5, button);
+                    this.addMouseListener(button);
                     break;
                 case 6:
                     button = level_6;
                     this.addAction(6, button);
+                    this.addMouseListener(button);
                     break;
             }
         } 
     }
 
-    private void startgame(int i){
-        game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel"); // switching the card layout
-        game_frame.getPanelContainer().add(game_frame.getMenuPanel(), "MenuPanel");
-        Game game = new Breakout(game_frame,i); //created instance of Breakout
-		game.start(); //starting the game 
-    }
 
     private void addAction(int i, JButton b){
         b.addActionListener((event) -> {
-        startgame(i);
+            game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
+            game_frame.startGame(i);
         });
+    }
+
+    private void addMouseListener(JButton b){
+        b.addMouseListener(new ButtonMouseListener(b));
     }
 
 }

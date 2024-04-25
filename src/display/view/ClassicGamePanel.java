@@ -10,19 +10,18 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-
-
-public class MenuPanel extends JPanel {
+public class ClassicGamePanel extends JPanel {
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private JButton Marathon  = createStyledButton("Marathon mode");
-    private JButton classic_Game  = createStyledButton("Classic Game");
+    private JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
+    private JButton Level = createStyledButton(" Level ");
+    private JButton menu = createStyledButton(" Back to Menu");
     private BufferedImage backgroundImage; // background image 
 
-
-    public MenuPanel(GameFrame gameFrame){
+    public ClassicGamePanel(GameFrame gameFrame){
         this.setLayout(new FlowLayout());
+        gameFrame.getPanelContainer().add(this, "classicGame");
         this.setPreferredSize(new Dimension(SCREEN_FULL_SIZE.height, SCREEN_FULL_SIZE.width/2));
 
         try {
@@ -31,25 +30,32 @@ public class MenuPanel extends JPanel {
             e.printStackTrace();
         }
 
-        Marathon.setPreferredSize(BUTTON_SIZE);
-        classic_Game.setPreferredSize(BUTTON_SIZE);
-        
+        QuickGame.setPreferredSize(BUTTON_SIZE);
+        Level.setPreferredSize(BUTTON_SIZE);
+        menu.setPreferredSize(BUTTON_SIZE);
 
-        Marathon.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuMarathon"); //switching card layout
+        //add actionListener to the Quickgame button
+        QuickGame.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
+            gameFrame.startGame(0);
         });
 
-        classic_Game.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame"); //switching card layout
+        Level.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuLevel");
         });
 
-        this.Marathon.addMouseListener(new ButtonMouseListener(this.Marathon));
-        this.classic_Game.addMouseListener(new ButtonMouseListener(this.classic_Game));
+        menu.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+        });
 
-        this.add(this.classic_Game);
-        this.add(this.Marathon);
+        this.QuickGame.addMouseListener(new ButtonMouseListener(this.QuickGame));
+        this.menu.addMouseListener(new ButtonMouseListener(this.menu));
+        this.Level.addMouseListener(new ButtonMouseListener(this.Level));
+
+        this.add(this.QuickGame);
+        this.add(this.Level);
+        this.add(this.menu);
     }
-
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
@@ -74,4 +80,6 @@ public class MenuPanel extends JPanel {
         }
     }
 }
+    
+
 

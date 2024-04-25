@@ -37,11 +37,21 @@ public class WinPanel extends JPanel{
         //setting back to menu button
         this.backToMenu.setPreferredSize(BUTTON_SIZE);
         this.backToMenu.addActionListener(e -> {
-            frame.dispose();
-            GameFrame gameFrame = new GameFrame();
-			gameFrame.addMenu(new MenuPanel(gameFrame));
-			gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+            frame.getPanelContainer().remove(frame.getMenuLevel());
+            frame.getPanelContainer().add(new MenuLevel(frame), "menuLevel");
+            frame.getGame().clearGameComponents();
+            frame.getGamePanel().getGameZone().removeAll();
+            frame.getGame().setLife(3);
+            frame.getGame().setNbBricks(1);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                }
+            });
         });
+
+        this.exit.addMouseListener(new ButtonMouseListener(this.exit));
+        this.backToMenu.addMouseListener(new ButtonMouseListener(this.backToMenu));
 
         this.add(this.exit);
         this.add(this.backToMenu);
@@ -49,11 +59,14 @@ public class WinPanel extends JPanel{
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setPreferredSize(new Dimension(400, 80));
+        button.setMaximumSize(new Dimension(400, 80));
         button.setForeground(Color.WHITE);
-        button.setBackground(new Color(52, 152, 219)); // Bleu
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
+        button.setContentAreaFilled(false);
         return button;
     }
 

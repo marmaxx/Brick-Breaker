@@ -16,8 +16,11 @@ public class GameFrame extends JFrame {
 	private GameOver game_over; 
 	private WinPanel game_win;
 	private MenuLevel menu_level;
+	private MarathonPanel menu_Marathon;
+	private ClassicGamePanel menu_classic;
 	private CardLayout cardLayout;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+	public int nbLevelUnlock = 1;
     
 	/**
 	 * Instantiates a new GameFrame
@@ -39,11 +42,15 @@ public class GameFrame extends JFrame {
 		this.game_over = new GameOver(this);
 		this.game_win = new WinPanel(this);
 		this.menu_level = new MenuLevel(this);
+		this.menu_Marathon = new MarathonPanel(this);
+		this.menu_classic = new ClassicGamePanel(this);
 
 		this.container.add(this.gamePanel, "gamePanel");
 		this.container.add(this.game_over, "gameOver"); 
 		this.container.add(this.game_win, "winPanel");
 		this.container.add(this.menu_level, "menuLevel");
+		this.container.add(this.menu_Marathon, "menuMarathon");
+		this.container.add(this.menu_classic, "classicGame");
 
 		this.add(this.container);
 		this.pack();
@@ -133,9 +140,21 @@ public class GameFrame extends JFrame {
 		return this.game_win;
 	}
 
+	public MenuLevel getMenuLevel(){
+		return this.menu_level;
+	}
+
 
 	public void setGame(Breakout game){
 		this.game = game;
+	}
+
+	public void setnbLevelUnlock(){
+		++this.nbLevelUnlock;
+	}
+
+	public int getNbLevelUnlock(){
+		return this.nbLevelUnlock;
 	}
 
 	public Breakout getGame(){

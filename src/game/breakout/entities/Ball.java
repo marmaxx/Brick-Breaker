@@ -1,18 +1,14 @@
 package game.breakout.entities;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import display.engine.rules.GraphicalObject;
-import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
@@ -20,7 +16,6 @@ import display.view.GamePanel;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-import java.awt.Color;
 
 public class Ball extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();

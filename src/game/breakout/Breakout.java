@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.io.File;
 
 import display.engine.PhysicsEngine;
-import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
@@ -18,7 +17,6 @@ import game.breakout.entities.Player;
 import game.breakout.entities.Bonus.BonusType;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
-import game.breakout.entities.rules.Entity;
 import game.rules.Game;
 
 public class Breakout extends Game{
@@ -33,7 +31,7 @@ public class Breakout extends Game{
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
-	private static final int WALL_WIDTH = 20;
+	private static final int WALL_WIDTH = 1;
 	// init at 1 because it takes time to initialize the list of bricks 
 	// and it would lead us to the win panel directly
 	private int nbBricks = 1; 
@@ -110,6 +108,9 @@ public class Breakout extends Game{
 							Breakout.this.pause();
 						}
 						break;
+					case KeyEvent.VK_V :
+						Breakout.this.gameframe.setnbLevelUnlock();
+						Breakout.this.gameframe.getCardlayout().show(Breakout.this.gameframe.getPanelContainer(), "winPanel");
 					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().active){
 							//Breakout.this.getBall().setIsMoving(true);
@@ -310,6 +311,15 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * Set the bricks number in the game
+	 * 
+	 * @param nbBricks the brick number
+	 */
+	public void setNbBricks(int nbBricks) {
+		this.nbBricks = nbBricks;
+	}
+
+	/**
 	 * Get the life in the game.
 	 * 
 	 * @return The life
@@ -433,7 +443,6 @@ public class Breakout extends Game{
 	 public void updateBall() {
 			if(this.getBall().active)this.getBall().trail.addPoint(new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
-				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 		}
@@ -453,7 +462,7 @@ public class Breakout extends Game{
 	
 		 
 		if (this.nbBricks == 0 && this.life >= 0){
-			System.out.println(nbBricks);
+			this.gameframe.setnbLevelUnlock();
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
 
