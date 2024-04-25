@@ -116,17 +116,17 @@ public class Breakout extends Game {
 	/**
 	 * handles deserializing the saved game state
 	 */
-	public static Breakout readFile() throws IOException {
+	public static Breakout readFile(String saveName) throws IOException {
 		Breakout game = null;
 
-		try(FileInputStream in = new FileInputStream("Saves"+ java.io.File.separator +"BreakoutPreviousInstance.txt");
+		try(FileInputStream in = new FileInputStream("Saves"+ java.io.File.separator +saveName);
 			ObjectInputStream s = new ObjectInputStream(in)) {
 			game= (Breakout) s.readObject();
 		} catch (ClassNotFoundException e) {
-			System.out.println("couldn't find the class from BreakoutPreviousInstance.txt");
+			System.out.println("couldn't find the class from save");
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			System.out.println("couldn't find BreakoutPreviousInstance.txt");
+			System.out.println("couldn't find save");
 			e.printStackTrace();
 		}
 		

@@ -178,21 +178,20 @@ public class GameFrame extends JFrame {
 	}
 
 	public void startGame(int level){
-		Breakout game =null;
-		if(level == 100){
-		 try {
-		 	game = Breakout.readFile();
-			game.gameframe =this;
-			game.setup(this.getGamePanel(), level,"Breakout");
-			game.getGameFrame().repaint();
-		 } catch (IOException e) {
-		 	e.printStackTrace();
-		}
-		}else{
-			game = new Breakout(this, level); //created instance of Breakout
-		}
+		game = new Breakout(this, level); //created instance of Breakout
+		game.start(); //starting the game 
+	}
 
-		
+	public void loadGame(String saveName){
+		Breakout game =null;
+		try {
+			game = Breakout.readFile(saveName);
+			game.gameframe =this;
+			game.setup(this.getGamePanel(), 100,"Breakout");
+			game.getGameFrame().repaint();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.game = game;
 		game.start(); //starting the game 
 	}

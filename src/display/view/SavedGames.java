@@ -74,7 +74,7 @@ public class SavedGames extends JPanel {
             JButton saveButton = createStyledButton(saveFileName.substring(0, saveFileName.length() - 4));
             saveButton.addActionListener((event) -> {
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
-                game_frame.startGame(100);
+                game_frame.loadGame(saveFileName);
             });
             addMouseListener(saveButton);
             this.add(saveButton);
