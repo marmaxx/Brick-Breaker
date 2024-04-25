@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.FileNotFoundException;
 
 public class Breakout extends Game {
 	public static final long serialVersionUID = 15L;
@@ -209,6 +210,9 @@ public class Breakout extends Game {
 			ObjectInputStream s = new ObjectInputStream(in)) {
 			game= (Breakout) s.readObject();
 		} catch (ClassNotFoundException e) {
+			System.out.println("couldn't find the class from BreakoutPreviousInstance.txt");
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			System.out.println("couldn't find BreakoutPreviousInstance.txt");
 			e.printStackTrace();
 		}
@@ -267,6 +271,7 @@ public class Breakout extends Game {
 						getBalls().add(ball);
 						getPanel().getGameZone().add(ball.getRepresentation());
 						getPhysicEngine().getPhysicalObjects().add(ball);
+						break;
 					}
 
 					case KeyEvent.VK_X: {

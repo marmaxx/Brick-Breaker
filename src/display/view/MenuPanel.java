@@ -54,9 +54,15 @@ public class MenuPanel extends JPanel {
             gameFrame.startGame(-1);
         });
         SavedState.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
-            gameFrame.getPanelContainer().add(this, "MenuPanel");
-            gameFrame.startGame(100);
+            File file = new File("BreakoutPreviousInstance.txt");
+            if (file.exists()) {  //To verify if a saved instance already exists. Otherwise the game "launches" empty and the user is stuck
+                gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
+                gameFrame.getPanelContainer().add(this, "MenuPanel");
+                gameFrame.startGame(100);
+            } else {
+                System.out.println("File does not exist");
+                // Handle the case where the file does not exist
+            }
         });
 
 
