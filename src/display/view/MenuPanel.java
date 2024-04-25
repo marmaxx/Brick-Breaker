@@ -48,7 +48,7 @@ public class MenuPanel extends JPanel {
             File file = new File("BreakoutPreviousInstance.txt");
             if (file.exists()) {  //To verify if a saved instance already exists. Otherwise the game "launches" empty and the user is stuck
                 gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "Saved State"); // switching the card layout
-                gameFrame.getPanelContainer().add(this, "MenuPanel");
+                gameFrame.getPanelContainer().add(this, "Saved State");
                 gameFrame.startGame(100);
             } else {
                 System.out.println("File does not exist");
