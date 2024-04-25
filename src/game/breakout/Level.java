@@ -26,6 +26,7 @@ public class Level implements Serializable {
 				break;
 			case 2:
 				createLevel2(b);
+				
 				break;
 			case 3:
 				createLevel1(b);
@@ -39,11 +40,12 @@ public class Level implements Serializable {
 			case 6:
 				createLevel1(b);
 				break;
-			case -1: 
+			case 100:
+				break; // it just loads the saved state for now, later it will give the choice of selecting
+			case -1:
 				createLevelMarathon(b);
 				break;
 			default:
-				System.out.println("unhandled level number");
 				break;
 		}
 	}

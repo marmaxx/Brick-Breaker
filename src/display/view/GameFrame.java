@@ -152,7 +152,7 @@ public class GameFrame extends JFrame {
 		 try {
 		 	game = Breakout.readFile();
 			game.gameframe =this;
-			game.setup(this.getGamePanel(), "Breakout");
+			game.setup(this.getGamePanel(), level,"Breakout");
 			game.getGameFrame().repaint();
 		 } catch (IOException e) {
 		 	e.printStackTrace();

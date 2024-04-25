@@ -183,26 +183,6 @@ public class Ball extends Entity  {
 	public void collided(PhysicalObject object) {
 		
 	}
-	
-	public void writeToFile (ObjectOutputStream out, ArrayList<Ball> balls) throws IOException {
-		out.writeObject(balls);
-		out.close();
-   }
-   	public static ArrayList<Ball> readFile() throws IOException {
-   		ArrayList<Ball> loadedBalls = null;
-
-    	try(FileInputStream in = new FileInputStream("ballInfo.txt");
-        	ObjectInputStream s = new ObjectInputStream(in)) {
-        	loadedBalls = (ArrayList<Ball>) s.readObject();
-    	} catch (ClassNotFoundException e) {
-        	System.out.println("couldn't find ballInfo.txt");
-        	e.printStackTrace();
-    }
-
-    System.out.println("Loaded previous game!");
-    return loadedBalls;
-}
-
 
 	public class BallTrail implements Serializable{
 		private class TrailPoint implements Serializable{

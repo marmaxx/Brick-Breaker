@@ -197,12 +197,17 @@ public class Breakout extends Game {
 		this.getPanel().addKeyListener(keyListener);
 	}
 
-
+	/**
+	 * Serializes the current state of the game when X is pressed
+	 */
 	public void writeToFile (ObjectOutputStream out) throws IOException {
 		out.writeObject(this);
 		out.close();
  	}
 
+	/**
+	 * handles deserializing the saved game state
+	 */
 	public static Breakout readFile() throws IOException {
 		Breakout game = null;
 
@@ -220,8 +225,11 @@ public class Breakout extends Game {
 		return game;
 	}	
 
-
-	public void setup(GamePanel gamePanel, String title) {
+	/**
+	 * handles setting up the game after deserialization, does what the constructor does when the game is normally initialized.
+	 * calls load()
+	 */
+	public void setup(GamePanel gamePanel,int level, String title) {
 		super.setPanel(gamePanel);
 		super.getPanel().getFrame().setTitle(name);
 		super.setName(name);
@@ -229,6 +237,10 @@ public class Breakout extends Game {
 		super.setCurrentFPS(0);
 		super.setMaxFPS(DEFAULT_FPS);
 		super.setVSync(true);
+
+		this.load();
+		this.level=level;
+
 		KeyListener keyListener = new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -320,6 +332,36 @@ public class Breakout extends Game {
 		// Make the panel focusable so it can listen to key inputs
 		this.getPanel().requestFocus();
 		this.getPanel().addKeyListener(keyListener);
+
+
+	}
+
+	/**
+	 * reloads all objects in the game so that they appear properly after deserialization
+	 */
+	private void load(){
+		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+		this.getBall().getRepresentation().setImage(Ball.DEFAULT_IMAGE2);
+		for (Ball ball : this.getBalls()){
+			this.getPanel().getGameZone().add(ball.getRepresentation());
+			ball.getRepresentation().repaint();
+		}
+		for (Brick brick : this.getBricks()){
+			this.getPanel().getGameZone().add(brick.getRepresentation());
+			brick.getRepresentation().setImage(Brick.lifespans.get(brick.getLifespan()));
+		}
+		for(Bonus bonus : this .getBonuses()){
+			this.getPanel().getGameZone().add(bonus.getRepresentation());
+			bonus.getRepresentation().setImage(Bonus.bonusTypes.get(bonus.getBonusType()));
+		}
+		this.getEastWall().getRepresentation().repaint();
+		this.getWestWall().getRepresentation().repaint();
+		this.getNorthWall().getRepresentation().repaint();
+		this.getPanel().getGameZone().add(this.getEastWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
+
+
 	}
 
 
@@ -440,7 +482,7 @@ public class Breakout extends Game {
 		return WALL_WIDTH;
 	}
 
-	public Wall getEastWAll(){
+	public Wall getEastWall(){
 		return this.eastWall;
 	}
 
@@ -570,7 +612,7 @@ public class Breakout extends Game {
 		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
 		}
-		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().add(this.getEastWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
@@ -895,7 +937,7 @@ public class Breakout extends Game {
 		this.getPanel().getGameZone().remove(this.getBall().getRepresentation());
 	
 		// Remove the walls from the game zone
-		this.getPanel().getGameZone().remove(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().remove(this.getEastWall().getRepresentation());
 		this.getPanel().getGameZone().remove(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().remove(this.getNorthWall().getRepresentation());
 	}
