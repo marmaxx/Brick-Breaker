@@ -29,6 +29,7 @@ import javax.swing.plaf.basic.BasicSliderUI;
 
 import display.engine.PhysicsEngine;
 import game.breakout.Breakout;
+import game.breakout.entities.Player;
 
 public class SettingsPanel extends JPanel{
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
@@ -37,22 +38,32 @@ public class SettingsPanel extends JPanel{
     public static final int GRAVITY_DEFAULT_VALUE = 5;
     public static final int REBOUND_DEFAULT_VALUE = 100;
     public static final int FRICTION_DEFAULT_VALUE = 5;
+    public static final int PADDLE_SPEED_DEFAULT_VALUE = 10;
 
     private JLabel gravityLabel = createStyledLabel("Force de gravité: ");
     private JLabel gravityValueLabel = createStyledLabel(String.valueOf(GRAVITY_DEFAULT_VALUE));
     private JSlider gravitySlider = createStyledSlider("Gravité", 0, 10, 5);    
+
     private JLabel reboundValueLabel = createStyledLabel(String.valueOf(REBOUND_DEFAULT_VALUE));
     private JLabel reboundLabel = createStyledLabel("Force du rebond: ");
     private JSlider reboundSlider = createStyledSlider("Rebond", 0, 200, 100);
+
     private JLabel frictionValueLabel = createStyledLabel(String.valueOf(FRICTION_DEFAULT_VALUE));
     private JLabel frictionLabel = createStyledLabel("Force de frottements: ");
     private JSlider frictionSlider = createStyledSlider("Frottements", 0, 10, 5);
+
     private JButton submitButton = createStyledButton("Valider");
     private JButton reinitializeButton = createStyledButton("Réinitialiser");
     private JButton backButton = createStyledButton("Retour");
+
+    private JLabel paddleSpeedLabel = createStyledLabel("Vitesse du paddle:");
+    private JLabel paddleSpeedValueLabel = createStyledLabel(String.valueOf(PADDLE_SPEED_DEFAULT_VALUE));
+    private JSlider paddleSpeedSlider = createStyledSlider("PaddleSpeed", 5, 30, 10);
+
     private double gravityValue = GRAVITY_DEFAULT_VALUE;
     private double reboundValue = REBOUND_DEFAULT_VALUE;
     private double frictionValue = FRICTION_DEFAULT_VALUE;
+    private int paddleSpeedValue = PADDLE_SPEED_DEFAULT_VALUE;
     private BufferedImage backgroundImage;
     private JPanel mainContainer =  new JPanel() {
         @Override
@@ -69,6 +80,7 @@ public class SettingsPanel extends JPanel{
     private JPanel gravitySliderContainer = new JPanel();
     private JPanel reboundSliderContainer = new JPanel();
     private JPanel frictionSliderContainer = new JPanel();
+    private JPanel paddleSpeedSliderContainer = new JPanel();
     
     public SettingsPanel(GameFrame gameFrame){
 
@@ -102,10 +114,19 @@ public class SettingsPanel extends JPanel{
             }
         });
 
+        this.paddleSpeedSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent event){
+                setPaddleSpeedValue(paddleSpeedSlider.getValue());
+                paddleSpeedValueLabel.setText(String.valueOf(paddleSpeedValue));
+            }
+        });
+
         this.submitButton.addActionListener((event) -> {
-            PhysicsEngine.GRAVITY_CONSTANT = gravityValue;
+            PhysicsEngine.GRAVITY_CONSTANT = (gravityValue/10);
             PhysicsEngine.rebondForce = reboundValue;
             PhysicsEngine.FRICTION_COEFFICIENT = frictionValue;
+            Player.DEFAULT_SPEED= paddleSpeedValue;
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
         
@@ -113,9 +134,11 @@ public class SettingsPanel extends JPanel{
             this.gravitySlider.setValue(GRAVITY_DEFAULT_VALUE);
             this.reboundSlider.setValue(REBOUND_DEFAULT_VALUE);
             this.frictionSlider.setValue(FRICTION_DEFAULT_VALUE);
-            PhysicsEngine.GRAVITY_CONSTANT = GRAVITY_DEFAULT_VALUE/10;
+            this.paddleSpeedSlider.setValue(PADDLE_SPEED_DEFAULT_VALUE);
+            PhysicsEngine.GRAVITY_CONSTANT = 0.5;
             PhysicsEngine.rebondForce = REBOUND_DEFAULT_VALUE;
-            PhysicsEngine.FRICTION_COEFFICIENT = FRICTION_DEFAULT_VALUE/10;
+            PhysicsEngine.FRICTION_COEFFICIENT = 0.5;
+            Player.DEFAULT_SPEED = PADDLE_SPEED_DEFAULT_VALUE;
         });
 
         this.backButton.addActionListener((event) -> {
@@ -145,6 +168,11 @@ public class SettingsPanel extends JPanel{
         this.frictionSliderContainer.add(this.frictionSlider);
         this.frictionSliderContainer.add(this.frictionValueLabel);
 
+        this.paddleSpeedSliderContainer.setBackground(new Color(30,30,30,0));
+        this.paddleSpeedSliderContainer.add(this.paddleSpeedLabel);
+        this.paddleSpeedSliderContainer.add(this.paddleSpeedSlider);
+        this.paddleSpeedSliderContainer.add(this.paddleSpeedValueLabel);
+
         this.sliderContainer.add(Box.createVerticalGlue());
 
         this.sliderContainer.add(Box.createVerticalStrut(200));
@@ -155,6 +183,9 @@ public class SettingsPanel extends JPanel{
         this.sliderContainer.add(Box.createVerticalStrut(10));
 
         this.sliderContainer.add(this.frictionSliderContainer);
+        this.sliderContainer.add(Box.createVerticalStrut(10));
+
+        this.sliderContainer.add(this.paddleSpeedSliderContainer);
         this.sliderContainer.add(Box.createVerticalStrut(10));
 
         this.sliderContainer.add(Box.createVerticalGlue());
@@ -195,6 +226,7 @@ public class SettingsPanel extends JPanel{
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
+        button.setContentAreaFilled(false);
         return button;
     }
 
@@ -215,6 +247,10 @@ public class SettingsPanel extends JPanel{
 
     private void setFrictionValue(double value){
         this.frictionValue =value;
+    }
+
+    private void setPaddleSpeedValue(int value){
+        this.paddleSpeedValue = value;
     }
 
     public class CustomSliderUI extends BasicSliderUI {
