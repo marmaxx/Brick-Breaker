@@ -28,7 +28,7 @@ public class Ball extends Entity {
 	public int angle; // it will be used later
 	public boolean isMoving;
 
-	public BallTrail trail = new BallTrail();
+	public BallTrail trail = new BallTrail(DEFAULT_IMAGE, this);
 
 
 	/**
@@ -172,6 +172,30 @@ public class Ball extends Entity {
 	}
 
 	public class BallTrail {
+		private Ball ball;
+		public Color trailColor;
+		public Image Image = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+		public float r;
+		public float g;
+		public float b;
+		
+		public BallTrail(Color trailColor, Ball thisBall) {
+			this.ball = thisBall;
+			this.trailColor = trailColor;
+			this.r = trailColor.getRed();
+			this.g = trailColor.getGreen();
+			this.b = trailColor.getBlue();
+		}
+
+		public BallTrail(Ball thisBall) {
+			this.ball = thisBall;
+			this.trailColor = Color.RED;
+		}
+		public BallTrail(Image imageBall ,Ball thisBall) {
+			this.ball = thisBall;
+			this.Image = imageBall;
+		}
+		
 		private class TrailPoint {
 			public Circle point;
 			public double opacity;
@@ -181,18 +205,24 @@ public class Ball extends Entity {
 				this.opacity = opacity;
 			}
 		}
+		
 	
 		private LinkedList<TrailPoint> points = new LinkedList<>();
 		private static final double OPACITY_DECREMENT = 0.1;
 
-		public void addPoint(Circle point, Breakout breakout) {
+		public void addPoint(Breakout breakout) {
 			for (TrailPoint tp : points) {
-				System.out.println(tp.point.getColor());
 				tp.opacity = Math.max(0, tp.opacity - OPACITY_DECREMENT);
 
-				tp.point.setColor(new Color(1f, 0f, 0f, (float) tp.opacity));
+				tp.point.setColor(new Color(r/255, g/255, b/255, (float) tp.opacity));
 			}
-
+			Circle point =null;
+			if (trailColor ==null){
+				point = new Circle(Image, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
+			
+			}else{
+				point = new Circle(trailColor, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
+			}
 			points.add(new TrailPoint(point, 1));
 			breakout.getPanel().getGameZone().add(point);
 
