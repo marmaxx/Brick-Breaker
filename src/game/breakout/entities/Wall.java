@@ -14,7 +14,7 @@ public class Wall extends Entity {
      * Instantiates a new wall
      */
     public Wall(int width, int height, double mass, Vector2D position, boolean movable){
-        super(mass,position,movable,new Rectangle(new Color(30,30,30,0), (int)position.getX(), (int)position.getY(), width, height));
+        super(mass,position,movable,new Rectangle(Color.BLACK, (int)position.getX(), (int)position.getY(), width, height));
     }
 
     /**
