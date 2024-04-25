@@ -1,3 +1,6 @@
 # Conserver les fichiers .gitkeep, ils sont utiles pour conserver les dossiers vides
 # Note: Mettre les dossiers à ignorer avant cette ligne
 !**/.gitkeep
+
+# Ignore BreakoutPreviousInstance.txt
+BreakoutPreviousInstance.txt

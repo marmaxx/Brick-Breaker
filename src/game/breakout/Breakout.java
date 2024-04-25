@@ -220,26 +220,7 @@ public class Breakout extends Game {
 		return game;
 	}	
 
-	public  void loadObjects(){
 
-		setup(this.getPanel(), "Breakout");
-
-		
-		for (Ball ball : this.getBalls()){
-			this.getPanel().getGameZone().add(ball.getRepresentation());
-		}
-		for (Brick brick : this.getBricks()){
-			this.getPanel().getGameZone().add(brick.getRepresentation());
-		}
-		for (Bonus bonus : this.getBonuses()){
-			this.getPanel().getGameZone().add(bonus.getRepresentation());
-		}
-		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
-		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
-		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
-		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
-		
-	}
 	public void setup(GamePanel gamePanel, String title) {
 		super.setPanel(gamePanel);
 		super.getPanel().getFrame().setTitle(name);
