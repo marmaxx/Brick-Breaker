@@ -31,9 +31,8 @@ public class LockerPanel extends JPanel{
     public static final Dimension LOCKER_ZONE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
     
     private BufferedImage backgroundImage;
-    private BufferedImage ballImage;
-    private BufferedImage trailImage;
-    private BufferedImage paddleImage;
+    private ImageIcon ballImage;
+    private ImageIcon trailImage;
     private JPanel mainContainer =  new JPanel() {
         @Override
         protected void paintComponent(Graphics g) {
@@ -45,27 +44,29 @@ public class LockerPanel extends JPanel{
         }
     };
 
-    private JPanel ballPanel = new JPanel();/* {
+    private JPanel ballPanel = new JPanel() {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             // Dessiner l'image de fond
             if (ballImage != null) {
-                g.drawImage(ballImage, 0, 0, 100, 100, this);
+                Image image = ballImage.getImage();
+                g.drawImage(image, 0, 0, 0, 0, this);
             }
         }
-    };*/
+    };
 
-    private JPanel trailPanel = new JPanel(); /*{
+    private JPanel trailPanel = new JPanel() {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             // Dessiner l'image de fond
             if (trailImage != null) {
-                g.drawImage(trailImage, 0, 0, 0, 0, this);
+                Image image = trailImage.getImage();
+                g.drawImage(image, 0, 0, 0, 0, this);
             }
         }
-    };*/
+    };
 
     private JPanel paddlePanel = new JPanel();/* {
         @Override
@@ -83,9 +84,9 @@ public class LockerPanel extends JPanel{
     private JPanel lockerContainer = new JPanel();
     private JPanel buttonContainer = new JPanel();
 
-    private JLabel ballLabel = createStyledLabel("Balle:");
+    private JLabel ballLabel = createStyledLabel("Balle:    ");
     private JLabel trailLabel = createStyledLabel("Trainée:");
-    private JLabel paddleLabel = createStyledLabel("Paddle:");
+    private JLabel paddleLabel = createStyledLabel("Paddle: ");
     private JButton leftBallButton = createStyledButton(30, 27, "left_arrow.png");
     private JButton rightBallButton = createStyledButton(30, 27, "right_arrow.png");
     private JButton leftTrailButton = createStyledButton(30, 27, "left_arrow.png");
@@ -96,9 +97,11 @@ public class LockerPanel extends JPanel{
     private JButton reinitializeButton = createStyledButton("Réinitialiser");
     private JButton backButton = createStyledButton("Retour");
 
-    private String[] colorOptions = {"Blanc", "Jaune", "Rouge", "Vert", "Bleu"};
-    private int ballCurrentColorIndex = 0;
-    private int trailCurrentColorIndex = 2;
+    private String[] ballOptions = {"Meteorite", "earth", "mars", "venus"};
+    private String[] colorOptions = {"white", "yellow", "red", "green", "blue"};
+
+    private int ballCurrentIndex = 0;
+    private int trailCurrentColorIndex = 0;
     private int paddleCurrentColorIndex = 0;
 
     public LockerPanel(GameFrame gameFrame){
@@ -108,42 +111,55 @@ public class LockerPanel extends JPanel{
             e.printStackTrace();
         }
 
-        try {
-            ballImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ballPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Dessiner l'image de fond
+                if (ballImage != null) {
+                    Image image = ballImage.getImage();
+                    g.drawImage(image, 0, 0, 100, 100, this);
+                }
+            }
+        };
 
-        try {
-            trailImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png")); 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        trailPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Dessiner l'image de fond
+                if (trailImage != null) {
+                    Image image = trailImage.getImage();
+                    g.drawImage(image, 0, 0, 100, 100, this);
+                }
+            }
+        };
 
-        try {
-            paddleImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png")); 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ballImage = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png");
+        trailImage = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "redTrail.png");
 
         this.leftBallButton.addActionListener((event) -> {
             ballPreviousColor();
-            this.ballPanel.setBackground(createColorFrom(ballCurrentColorIndex));
+            ballImage = createBallImageFrom(ballCurrentIndex);
+            this.ballPanel.repaint();
         });
 
         this.rightBallButton.addActionListener((event) -> {
             ballNextColor();
-            this.ballPanel.setBackground(createColorFrom(ballCurrentColorIndex));            
+            ballImage = createBallImageFrom(ballCurrentIndex);
+            this.ballPanel.repaint();
         });
 
         this.leftTrailButton.addActionListener((event) -> {
             trailPreviousColor();
-            this.trailPanel.setBackground(createColorFrom(trailCurrentColorIndex));
+            trailImage = createTrailImageFrom(trailCurrentColorIndex);
+            this.trailPanel.repaint();
         });
 
         this.rightTrailButton.addActionListener((event) -> {
-            trailNextColor();            
-            this.trailPanel.setBackground(createColorFrom(trailCurrentColorIndex));
+            trailNextColor();
+            trailImage = createTrailImageFrom(trailCurrentColorIndex);            
+            this.trailPanel.repaint();
         });
 
         this.leftPaddleButton.addActionListener((event) -> {
@@ -157,44 +173,57 @@ public class LockerPanel extends JPanel{
         });
 
         this.submitButton.addActionListener((event) -> {
-            Ball.DEFAULT_COLOR = createColorFrom(ballCurrentColorIndex);
+            Ball.DEFAULT_IMAGE = createBallImageFrom(ballCurrentIndex).getImage();
             Player.DEFAULT_COLOR = createColorFrom(paddleCurrentColorIndex);
+            Ball.DEFAULT_TRAIL_COLOR = createColorFrom(trailCurrentColorIndex);
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
 
         this.reinitializeButton.addActionListener((event) -> {
-            Ball.DEFAULT_COLOR = createColorFrom(0);
-            Player.DEFAULT_COLOR = createColorFrom(0);
-            ballCurrentColorIndex = 0;
+            Ball.DEFAULT_IMAGE = createBallImageFrom(0).getImage();
+            Ball.DEFAULT_TRAIL_COLOR = createColorFrom(0);
+            Player.DEFAULT_COLOR = createColorFrom(2);
+            ballCurrentIndex = 0;
+            trailCurrentColorIndex = 2;
             paddleCurrentColorIndex = 0;
             this.paddlePanel.setBackground(createColorFrom(paddleCurrentColorIndex));
-            this.ballPanel.setBackground(createColorFrom(ballCurrentColorIndex)); 
+            trailImage = createTrailImageFrom(trailCurrentColorIndex);
+            this.trailPanel.repaint();
+            ballImage = createBallImageFrom(ballCurrentIndex);
+            this.ballPanel.repaint();
         });
+
         this.backButton.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
         
-        this.ballPanel.setBackground(Color.WHITE);
-        this.trailPanel.setBackground(Color.RED);
+        this.ballPanel.setBackground(new Color(30,30,30,0));
+        this.ballPanel.setPreferredSize(new Dimension(100,100));
+        this.trailPanel.setBackground(new Color(30,30,30,0));
+        this.trailPanel.setPreferredSize(new Dimension(100,100));
         this.paddlePanel.setBackground(Color.WHITE);
+        this.paddlePanel.setPreferredSize(new Dimension(100,100));
 
         this.lockerContainer.setLayout(new BoxLayout(this.lockerContainer, BoxLayout.Y_AXIS));
         this.lockerContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.lockerContainer.setBackground(new Color(30,30,30,0));
 
         this.ballContainer.setBackground(new Color(30,30,30,0));
+        this.ballContainer.setPreferredSize(new Dimension(200, 200));
         this.ballContainer.add(this.ballLabel);
         this.ballContainer.add(this.leftBallButton);
         this.ballContainer.add(this.ballPanel);
         this.ballContainer.add(this.rightBallButton);
 
         this.trailContainer.setBackground(new Color(30,30,30,0));
+        this.trailContainer.setPreferredSize(new Dimension(200,200));
         this.trailContainer.add(this.trailLabel);
         this.trailContainer.add(this.leftTrailButton);
         this.trailContainer.add(this.trailPanel);
         this.trailContainer.add(this.rightTrailButton);
 
         this.paddleContainer.setBackground(new Color(30,30,30,0));
+        this.paddleContainer.setPreferredSize(new Dimension(200,200));
         this.paddleContainer.add(this.paddleLabel);
         this.paddleContainer.add(this.leftPaddleButton);
         this.paddleContainer.add(this.paddlePanel);
@@ -263,16 +292,16 @@ public class LockerPanel extends JPanel{
     }
 
     private void ballPreviousColor() {
-        ballCurrentColorIndex--;
-        if (ballCurrentColorIndex < 0) {
-            ballCurrentColorIndex = colorOptions.length - 1;
+        ballCurrentIndex--;
+        if (ballCurrentIndex < 0) {
+            ballCurrentIndex = ballOptions.length - 1;
         }
     }
 
     private void ballNextColor() {
-        ballCurrentColorIndex++;
-        if (ballCurrentColorIndex >= colorOptions.length) {
-            ballCurrentColorIndex = 0;
+        ballCurrentIndex++;
+        if (ballCurrentIndex >= ballOptions.length) {
+            ballCurrentIndex = 0;
         }
     }
 
@@ -314,5 +343,13 @@ public class LockerPanel extends JPanel{
             case 4: color = Color.BLUE; break;
         }
         return color;
+    }
+
+    private ImageIcon createBallImageFrom(int index){
+        return new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + ballOptions[index] + ".png");
+    }
+
+    private ImageIcon createTrailImageFrom(int index){
+        return new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + colorOptions[index] + "Trail.png");
     }
 }

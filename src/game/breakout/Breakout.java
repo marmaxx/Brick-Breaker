@@ -69,7 +69,7 @@ public class Breakout extends Game{
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
-		Ball mainBall = new Ball(Ball.DEFAULT_COLOR,  30,50,new Vector2D(565,670),true);
+		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
