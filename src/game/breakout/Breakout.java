@@ -229,6 +229,7 @@ public class Breakout extends Game {
 						String filename = JOptionPane.showInputDialog("Enter the filename to save:");
 						if (filename != null) {
 							writeObjects(filename + ".txt");
+							Breakout.this.gameframe.getSavedGames().updateSaveFileNames();
 						}
 						Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(true);
 						Breakout.this.resume();

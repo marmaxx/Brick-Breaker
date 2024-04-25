@@ -9,14 +9,21 @@ import javax.swing.JPanel;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class SavedGames extends JPanel {
     public static final long serialVersionUID = 111L;
 	
-
+    public ArrayList<String> saveFileNames = getSaveFileNames("Saves");
     private GameFrame game_frame;
-
-    private JButton Save1= createStyledButton(" Save 1");    
+  
     private JButton menu = createStyledButton(" Back to Menu ");
 
     public SavedGames(GameFrame gameFrame){
@@ -24,13 +31,15 @@ public class SavedGames extends JPanel {
 
         this.setLayout(new GridLayout(2,4));
         this.setBackground(new Color(30,30,30));
-
-        Save1.addActionListener((event) -> {
-            game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
-            game_frame.startGame(100);
-        });
-        this.addMouseListener(Save1);
-        this.add(Save1);
+        for (String saveFileName : saveFileNames) {
+            JButton saveButton = createStyledButton(saveFileName.substring(0, saveFileName.length() - 4)); // substring is used here to remove the ".txt" 
+            saveButton.addActionListener((event) -> {
+                game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
+                game_frame.startGame(100);
+            });
+            addMouseListener(saveButton);
+            this.add(saveButton);
+        }
 
         this.menu.addActionListener((event) -> {
             this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "classicGame");
@@ -40,7 +49,44 @@ public class SavedGames extends JPanel {
         this.add(menu);
     }
 
+    
+    public ArrayList<String> getSaveFileNames(String directory) {
+        ArrayList<String> saveFileNames = new ArrayList<>();
+        try {
+            saveFileNames = (ArrayList<String>) Files.walk(Paths.get(directory))
+                .filter(Files::isRegularFile)
+                .map(path -> path.getFileName().toString())
+                .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return saveFileNames;
+    }
+    
+    public void updateSaveFileNames() {
+        this.saveFileNames = getSaveFileNames("Saves");
+        this.removeAll();
+        menu = createStyledButton(" Back to Menu "); 
 
+        this.setLayout(new GridLayout(2,4));
+        this.setBackground(new Color(30,30,30));
+        for (String saveFileName : saveFileNames) {
+            JButton saveButton = createStyledButton(saveFileName.substring(0, saveFileName.length() - 4));
+            saveButton.addActionListener((event) -> {
+                game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
+                game_frame.startGame(100);
+            });
+            addMouseListener(saveButton);
+            this.add(saveButton);
+        }
+
+        this.menu.addActionListener((event) -> {
+            this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "classicGame");
+        });
+        addMouseListener(menu);
+
+        this.add(menu);
+    }
 
     private void addMouseListener(JButton b){
         b.addMouseListener(new ButtonMouseListener(b));

@@ -81,6 +81,14 @@ public class GameFrame extends JFrame {
 		return this.gamePanel;
 	}
 
+	public SavedGames getSavedGames() {
+		return this.savedGames;
+	}
+
+	public void setSavedGames(SavedGames savedGames) {
+		this.savedGames = savedGames;
+	}
+
 	/**
 	 * Set the game panel to attach to the frame
 	 * 
