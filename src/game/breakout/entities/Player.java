@@ -13,7 +13,7 @@ import game.breakout.entities.rules.Entity;
 
 public class Player extends Entity {
 	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();
-	public static final Color DEFAULT_COLOR = Color.WHITE;
+	public static Color DEFAULT_COLOR = Color.WHITE;
 	public static final int DEFAULT_SIZE = 100;
 	public static final int MIN_SIZE = DEFAULT_SIZE - (int)(0.2f * DEFAULT_SIZE);
 	public static final int MAX_SIZE = DEFAULT_SIZE + (int)(0.3f * DEFAULT_SIZE);

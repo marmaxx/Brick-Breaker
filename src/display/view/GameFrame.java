@@ -19,6 +19,7 @@ public class GameFrame extends JFrame {
 	private MarathonPanel menu_Marathon;
 	private ClassicGamePanel menu_classic;
 	private SettingsPanel settings;
+	private LockerPanel locker;
 	private CardLayout cardLayout;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     
@@ -45,6 +46,7 @@ public class GameFrame extends JFrame {
 		this.menu_Marathon = new MarathonPanel(this);
 		this.menu_classic = new ClassicGamePanel(this);
 		this.settings = new SettingsPanel(this);
+		this.locker = new LockerPanel(this);
 
 		this.container.add(this.gamePanel, "gamePanel");
 		this.container.add(this.game_over, "gameOver"); 
@@ -53,6 +55,7 @@ public class GameFrame extends JFrame {
 		this.container.add(this.menu_Marathon, "menuMarathon");
 		this.container.add(this.menu_classic, "classicGame");
 		this.container.add(this.settings, "settingsPanel");
+		this.container.add(this.locker, "lockerPanel");
 
 		this.add(this.container);
 		this.pack();
