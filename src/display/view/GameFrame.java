@@ -152,6 +152,8 @@ public class GameFrame extends JFrame {
 		 try {
 		 	game = Breakout.readFile();
 			game.gameframe =this;
+			game.setup(this.getGamePanel(), "Breakout");
+			game.loadObjects();
 		 } catch (IOException e) {
 		 	e.printStackTrace();
 		}
@@ -159,7 +161,7 @@ public class GameFrame extends JFrame {
 			game = new Breakout(this, level); //created instance of Breakout
 		}
 
-
+		
 		this.game = game;
 		game.start(); //starting the game 
 	}

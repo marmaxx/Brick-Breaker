@@ -67,7 +67,6 @@ public class Breakout extends Game {
 	private int level = 0;
 
 
-
 	/**
 	 * Instantiates a new Breakout game
 	 * 
@@ -212,50 +211,139 @@ public class Breakout extends Game {
 			System.out.println("couldn't find BreakoutPreviousInstance.txt");
 			e.printStackTrace();
 		}
-		loadObjects(game);
+		
 		return game;
 	}	
 
-	private static void loadObjects(Breakout b){
-		if (b==null) return;
+	public  void loadObjects(){
 
-		b.setPanel(b.getPanel());
-		b.getPanel().getFrame().setTitle("Breakout");
-		b.setName("Breakout");
-		b.setRenderedFrames(0);
-		b.setCurrentFPS(0);
-		b.setMaxFPS(Game.DEFAULT_FPS);
-		b.setVSync(true);
-
-
+		setup(this.getPanel(), "Breakout");
 
 		
-		for (Ball ball : b.getBalls()){
-			b.getPanel().getGameZone().add(ball.getRepresentation());
+		for (Ball ball : this.getBalls()){
+			this.getPanel().getGameZone().add(ball.getRepresentation());
 		}
-		for (Brick brick : b.getBricks()){
-			b.getPanel().getGameZone().add(brick.getRepresentation());
+		for (Brick brick : this.getBricks()){
+			this.getPanel().getGameZone().add(brick.getRepresentation());
 		}
-		for (Bonus bonus : b.getBonuses()){
-			b.getPanel().getGameZone().add(bonus.getRepresentation());
+		for (Bonus bonus : this.getBonuses()){
+			this.getPanel().getGameZone().add(bonus.getRepresentation());
 		}
-		b.getPanel().getGameZone().add(b.getPlayer().getRepresentation());
-		b.getPanel().getGameZone().add(b.getEastWAll().getRepresentation());
-		b.getPanel().getGameZone().add(b.getWestWall().getRepresentation());
-		b.getPanel().getGameZone().add(b.getNorthWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
 		
+	}
+	public void setup(GamePanel gamePanel, String title) {
+		super.setPanel(gamePanel);
+		super.getPanel().getFrame().setTitle(name);
+		super.setName(name);
+		super.setRenderedFrames(0);
+		super.setCurrentFPS(0);
+		super.setMaxFPS(DEFAULT_FPS);
+		super.setVSync(true);
+		KeyListener keyListener = new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_Q:
+					case KeyEvent.VK_LEFT:
+						Breakout.this.getPlayer().moveLeft();
+						break;
+					case KeyEvent.VK_D:
+					{
+
+						Random randomDistance = new Random();
+						int randomX = (int)getBall().getPosition().getX() + randomDistance.nextInt(-30, 30);
+						int randomY = (int)getBall().getPosition().getY() + randomDistance.nextInt(-30, 30);
+						Vector2D ballPos = new Vector2D(randomX, randomY);
+	
+						Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+						ball.setAcceleration(getBall().getAcceleration());
+						ball.setSpeed(getBall().getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
+	
+						getBalls().add(ball);
+						getPanel().getGameZone().add(ball.getRepresentation());
+						getPhysicEngine().getPhysicalObjects().add(ball);
+					}
+
+					case KeyEvent.VK_X: {
+						writeObjects();
+						break;
+					}
+					case KeyEvent.VK_RIGHT:
+						Breakout.this.getPlayer().moveRight();
+						break;
+					case KeyEvent.VK_P:
+						if(Breakout.this.isPaused()){
+							Breakout.this.resume();
+						}
+						else{
+							Breakout.this.pause();
+						}
+						break;
+					case KeyEvent.VK_SPACE:
+						if (!Breakout.this.getBall().active){
+							//Breakout.this.getBall().setIsMoving(true);
+							Breakout.this.getBall().active=true;
+							Vector2D newPosition = new Vector2D(Breakout.this.ball.getRepresentation().getX(), Breakout.this.ball.getRepresentation().getY());
+							Breakout.this.ball.setPosition(newPosition);
+							Vector2D speed = new Vector2D(0.5, -0.5);
+							Breakout.this.ball.setSpeed(speed);
+						}
+						break;
+					case KeyEvent.VK_M:
+						if (!Breakout.this.gameframe.getGame().isPaused()){
+							Breakout.this.pause();
+							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
+							Breakout.this.gameframe.getGamePanel().getMenu().setVisible(true);
+						}
+						break;
+					case KeyEvent.VK_R:
+					if (Breakout.this.gameframe.getGame().isPaused()){
+						Breakout.this.resume();
+						Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(true);
+						Breakout.this.gameframe.getGamePanel().getMenu().setVisible(false);
+					}
+					break;
+						
+				}
+			}
 
 
+			@Override
+			public void keyReleased(KeyEvent e) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_Q:
+					case KeyEvent.VK_LEFT:
+						Breakout.this.getPlayer().stopLeft();
+						break;
+					case KeyEvent.VK_D:
+					case KeyEvent.VK_RIGHT:
+						Breakout.this.getPlayer().stopRight();
+						break;
+				}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+		};
+		// Make the panel focusable so it can listen to key inputs
+		this.getPanel().requestFocus();
+		this.getPanel().addKeyListener(keyListener);
 	}
 
-	private void writeObjects() {
+
+	public void writeObjects() {
 		try (FileOutputStream f = new FileOutputStream("BreakoutPreviousInstance.txt");
 			ObjectOutputStream s = new ObjectOutputStream(f)) {
 			this.writeToFile(s);
 		} catch (IOException error) {
 			error.printStackTrace();
 		}
-			System.out.println("Successfully saved game!");
+			System.out.println("Successfully saved Breakout!");
 	}
 
 	/**
@@ -489,7 +577,6 @@ public class Breakout extends Game {
 	@Override
 	public void start() {
 		super.start();
-		//this.createBricks(4, 8);
 		Level.level(this);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
 		// Add all entities to the game
@@ -512,6 +599,7 @@ public class Breakout extends Game {
 	 * Update the player entity
 	 */
 	public void updatePlayer() {
+		System.out.println(this.getPlayer().getPosition());
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), this.getPlayer().getIntSpeed())){
 			this.player.setLastPos(this.player.getPosition());
 			this.getPlayer().move(this.getPlayer().getIntSpeed());

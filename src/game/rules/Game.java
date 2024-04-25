@@ -9,6 +9,11 @@ import java.io.Serializable;
 import javax.swing.Timer;
 
 import java.util.concurrent.TimeUnit;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 public abstract class Game implements Serializable{
 
@@ -25,6 +30,7 @@ public abstract class Game implements Serializable{
 
 	public final static int DEFAULT_FPS = 60;
 
+	
 	/**
 	 * Initialize a new game
 	 * 
@@ -266,6 +272,7 @@ public abstract class Game implements Serializable{
 	 */
 	public void render(){
 		// Calculate maxFPS
+
 		long second = TimeUnit.SECONDS.toNanos(1);
 		long now = System.nanoTime();
 		long timeSpent = now - this.getLastRenderTime();
@@ -282,4 +289,6 @@ public abstract class Game implements Serializable{
 		// The size displayed might not be the same as the actual number of pixels occupied by the window
 		+ " [" + this.getPanel().getFrame().getSize().width + "x" + this.getPanel().getFrame().getSize().height + "]");
 	}
+
+
 }

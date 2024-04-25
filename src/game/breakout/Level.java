@@ -6,10 +6,11 @@ import display.engine.utils.Vector2D;
 import game.breakout.entities.Brick;
 import game.breakout.entities.rules.Entity;
 
+import java.io.Serializable;
 
 
-public class Level {
-    
+public class Level implements Serializable {
+    public static final long serialVersionUID = 20L;
 	/**
      * Generates the bricks for the specified level.
      * 
