@@ -1,11 +1,8 @@
 package game.breakout.entities;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import display.engine.rules.GraphicalObject;
-import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
@@ -14,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;

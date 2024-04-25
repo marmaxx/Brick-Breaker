@@ -17,11 +17,13 @@ public class MenuPanel extends JPanel {
 	
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
-    JButton Level = createStyledButton(" Level "); 
-    JButton Marathon  = createStyledButton("Marathon mode");
+
+
+    private JButton Marathon  = createStyledButton("Marathon mode");
+    private JButton classic_Game  = createStyledButton("Classic Game");
     JButton SavedState = createStyledButton("Saved States");
     transient private BufferedImage backgroundImage; // background image 
+
 
     public MenuPanel(GameFrame gameFrame){
         this.setLayout(new FlowLayout());
@@ -33,25 +35,14 @@ public class MenuPanel extends JPanel {
             e.printStackTrace();
         }
 
-        Level.setPreferredSize(BUTTON_SIZE);
-        QuickGame.setPreferredSize(BUTTON_SIZE);
-        Marathon.setPreferredSize(BUTTON_SIZE);
-        SavedState.setPreferredSize(BUTTON_SIZE);
-        //add actionListener to the Quickgame button
-        QuickGame.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
-            gameFrame.getPanelContainer().add(this, "MenuPanel");
-            gameFrame.startGame(0);
-        });
 
-        Level.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuLevel");
-        });
+        Marathon.setPreferredSize(BUTTON_SIZE);
+        classic_Game.setPreferredSize(BUTTON_SIZE);
+        SavedState.setPreferredSize(BUTTON_SIZE);
         
+
         Marathon.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
-            gameFrame.getPanelContainer().add(this, "MenuPanel");
-            gameFrame.startGame(-1);
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuMarathon"); //switching card layout
         });
         SavedState.addActionListener((event) -> {
             File file = new File("BreakoutPreviousInstance.txt");
@@ -66,19 +57,30 @@ public class MenuPanel extends JPanel {
         });
 
 
-        this.add(QuickGame);
-        this.add(Marathon);
-        this.add(Level);
+
+        classic_Game.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame"); //switching card layout
+        });
+
+        this.Marathon.addMouseListener(new ButtonMouseListener(this.Marathon));
+        this.classic_Game.addMouseListener(new ButtonMouseListener(this.classic_Game));
+
+        this.add(this.classic_Game);
+        this.add(this.Marathon);
         this.add(SavedState);
     }
 
+
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setPreferredSize(new Dimension(400, 80));
+        button.setMaximumSize(new Dimension(400, 80));
         button.setForeground(Color.WHITE);
-        button.setBackground(new Color(52, 152, 219)); // Bleu
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
+        button.setContentAreaFilled(false);
         return button;
     }
 

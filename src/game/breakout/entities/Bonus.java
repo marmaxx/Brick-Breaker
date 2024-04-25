@@ -13,7 +13,6 @@ import java.io.Serializable;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
-import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
