@@ -107,7 +107,7 @@ public class Breakout extends Game {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
-					case KeyEvent.VK_Q:
+					case KeyEvent.VK_Q:break;
 					case KeyEvent.VK_LEFT:
 						Breakout.this.getPlayer().moveLeft();
 						break;
@@ -126,6 +126,7 @@ public class Breakout extends Game {
 						getBalls().add(ball);
 						getPanel().getGameZone().add(ball.getRepresentation());
 						getPhysicEngine().getPhysicalObjects().add(ball);
+						break;
 					}
 
 					case KeyEvent.VK_X: {
@@ -599,7 +600,6 @@ public class Breakout extends Game {
 	 * Update the player entity
 	 */
 	public void updatePlayer() {
-		System.out.println(this.getPlayer().getPosition());
 		if(!this.getPlayer().willBeOffScreen(this.getPanel(), this.getPlayer().getIntSpeed())){
 			this.player.setLastPos(this.player.getPosition());
 			this.getPlayer().move(this.getPlayer().getIntSpeed());
