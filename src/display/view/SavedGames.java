@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.stream.Collectors;
+import java.nio.file.Path;
 
 public class SavedGames extends JPanel {
     public static final long serialVersionUID = 111L;
@@ -71,13 +72,23 @@ public class SavedGames extends JPanel {
         this.setLayout(new GridLayout(2,4));
         this.setBackground(new Color(30,30,30));
         for (String saveFileName : saveFileNames) {
-            JButton saveButton = createStyledButton(saveFileName.substring(0, saveFileName.length() - 4));
+            JButton saveButton = createStyledButton(saveFileName.substring(0, saveFileName.length() - 4)); // substring is used here to remove the ".txt" 
             saveButton.addActionListener((event) -> {
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
-                game_frame.loadGame(saveFileName);
+                game_frame.startGame(100);
             });
             addMouseListener(saveButton);
             this.add(saveButton);
+
+
+            JButton deleteButton = createStyledButton("Delete: " + saveFileName.substring(0, saveFileName.length() - 4));
+            deleteButton.addActionListener((event) -> {
+                deleteSaveFile(saveFileName);
+                game_frame.getCardlayout().show(game_frame.getPanelContainer(), "menuPanel");
+                updateSaveFileNames();
+            });
+            addMouseListener(deleteButton);
+            this.add(deleteButton);
         }
 
         this.menu.addActionListener((event) -> {
@@ -86,6 +97,15 @@ public class SavedGames extends JPanel {
         addMouseListener(menu);
 
         this.add(menu);
+    }
+
+    private void deleteSaveFile(String fileName) {
+        Path filePath = Paths.get("Saves"+java.io.File.separator + fileName);
+        try {
+            Files.delete(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addMouseListener(JButton b){
