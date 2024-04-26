@@ -175,7 +175,7 @@ public class SettingsPanel extends JPanel{
 
         this.sliderContainer.add(Box.createVerticalGlue());
 
-        this.sliderContainer.add(Box.createVerticalStrut(200));
+        this.sliderContainer.add(Box.createVerticalStrut(300));
         this.sliderContainer.add(this.gravitySliderContainer);
         this.sliderContainer.add(Box.createVerticalStrut(10));
 
@@ -203,13 +203,12 @@ public class SettingsPanel extends JPanel{
         this.buttonContainer.add(Box.createHorizontalGlue());
         
         this.mainContainer.setLayout(new BorderLayout());
-        this.mainContainer.add(this.sliderContainer, BorderLayout.CENTER);
-        this.mainContainer.add(this.buttonContainer, BorderLayout.SOUTH);
+        this.mainContainer.add(this.sliderContainer, BorderLayout.NORTH);
+        this.mainContainer.add(this.buttonContainer, BorderLayout.CENTER);
         this.setLayout(new BorderLayout());
         this.setPreferredSize(SETTINGS_ZONE);
         
         this.add(mainContainer, BorderLayout.CENTER);        
-        //this.add(buttonContainer, BorderLayout.SOUTH);
     }
 
     private JSlider createStyledSlider (String text, int min, int max, int value){

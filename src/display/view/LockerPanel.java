@@ -233,12 +233,11 @@ public class LockerPanel extends JPanel{
 
         this.lockerContainer.add(Box.createVerticalStrut(200));
         this.lockerContainer.add(this.ballContainer);
-        this.lockerContainer.add(Box.createVerticalStrut(10));
 
-        this.lockerContainer.add(Box.createVerticalStrut(10));
+        this.lockerContainer.add(Box.createVerticalStrut(1));
         this.lockerContainer.add(this.trailContainer);
 
-        this.lockerContainer.add(Box.createVerticalStrut(10));
+        this.lockerContainer.add(Box.createVerticalStrut(1));
         this.lockerContainer.add(this.paddleContainer);
 
         this.lockerContainer.add(Box.createVerticalGlue());
@@ -255,9 +254,13 @@ public class LockerPanel extends JPanel{
         this.buttonContainer.add(this.backButton);
         this.buttonContainer.add(Box.createHorizontalGlue());
 
-        this.mainContainer.setLayout(new BorderLayout());
-        this.mainContainer.add(this.lockerContainer, BorderLayout.CENTER);
-        this.mainContainer.add(this.buttonContainer, BorderLayout.SOUTH);
+        this.mainContainer.setLayout(new BoxLayout(this.mainContainer, BoxLayout.Y_AXIS));
+        this.lockerContainer.add(Box.createVerticalGlue());
+        this.mainContainer.add(Box.createVerticalStrut(50));
+        this.mainContainer.add(this.lockerContainer);
+        this.mainContainer.add(Box.createVerticalStrut(5));
+        this.mainContainer.add(this.buttonContainer);
+        this.lockerContainer.add(Box.createVerticalGlue());
         this.setLayout(new BorderLayout());
         this.setPreferredSize(LOCKER_ZONE);
         this.add(mainContainer, BorderLayout.CENTER);
