@@ -4,12 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.Font;
 import java.awt.GridLayout;
-
+import java.awt.Image;
 import java.util.ArrayList;
 
 import java.io.IOException;
@@ -38,20 +39,23 @@ public class SavedGames extends JPanel {
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
                 game_frame.loadGame(saveFileName);
             });
-            
+            this.add(saveButton);
+            addMouseListener(saveButton);
+            addImageToButton(saveButton,saveFileName.substring(0, saveFileName.length() - 4));
+            saveButton.repaint();
+
+
+
             JButton deleteButton = createStyledButton("Delete: " + saveFileName.substring(0, saveFileName.length() - 4));
             deleteButton.addActionListener((event) -> {
                 deleteSaveFile(saveFileName);
+                deleteSaveFileImage(saveFileName.substring(0, saveFileName.length() - 4));
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "menuPanel");
                 updateSaveFileNames();
             });
-
-            addMouseListener(saveButton);
-            addMouseListener(deleteButton);
-            this.add(saveButton);
             this.add(deleteButton);
-
-        
+            addMouseListener(deleteButton);
+            deleteButton.repaint();
         }
 
         this.menu.addActionListener((event) -> {
@@ -89,21 +93,23 @@ public class SavedGames extends JPanel {
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
                 game_frame.loadGame(saveFileName);
             });
+            this.add(saveButton);
+            addMouseListener(saveButton);
+            addImageToButton(saveButton,saveFileName.substring(0, saveFileName.length() - 4));
+            saveButton.repaint();
 
 
 
             JButton deleteButton = createStyledButton("Delete: " + saveFileName.substring(0, saveFileName.length() - 4));
             deleteButton.addActionListener((event) -> {
                 deleteSaveFile(saveFileName);
+                deleteSaveFileImage(saveFileName.substring(0, saveFileName.length() - 4));
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "menuPanel");
                 updateSaveFileNames();
             });
-
-            addMouseListener(saveButton);
-            addMouseListener(deleteButton);
-            this.add(saveButton);
             this.add(deleteButton);
-
+            addMouseListener(deleteButton);
+            deleteButton.repaint();
         }
 
         this.menu.addActionListener((event) -> {
@@ -122,6 +128,15 @@ public class SavedGames extends JPanel {
             e.printStackTrace();
         }
     }
+    private void deleteSaveFileImage(String fileName) {
+        Path filePath = Paths.get("SavesPics"+java.io.File.separator + fileName+".jpg");
+        try {
+            Files.delete(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void addMouseListener(JButton b){
         b.addMouseListener(new ButtonMouseListener(b));
@@ -138,6 +153,13 @@ public class SavedGames extends JPanel {
         button.setBorderPainted(false); 
         button.setContentAreaFilled(false);
         return button;
+    }
+
+    private void addImageToButton(JButton button,String text){
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("SavesPics"+java.io.File.separator+text+".jpg").getImage().getScaledInstance(200, 130, Image.SCALE_DEFAULT));
+        button.setIcon(imageIcon);
+        button.setHorizontalTextPosition(JButton.CENTER);
+        button.setVerticalTextPosition(JButton.CENTER);
     }
 
 }
