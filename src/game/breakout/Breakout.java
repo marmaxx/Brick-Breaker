@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
+
 
 import display.engine.PhysicsEngine;
 import display.engine.shapes.Circle;
-import display.engine.shapes.Rectangle;
+
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
@@ -26,9 +26,9 @@ import game.breakout.entities.Brick;
 import game.rules.Game;
 
 import java.io.FileInputStream;
-import java.io.IOException;
+
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 import java.awt.image.BufferedImage;
@@ -813,7 +813,7 @@ public class Breakout extends Game {
 		}
         BufferedImage screenShot = robot.createScreenCapture(new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
         try {
-			ImageIO.write(screenShot, "JPG", new File(fileName));
+			ImageIO.write(screenShot, "JPG", new File(fileName+".jpg"));
 		} catch (IOException e) {
 			System.out.println("couldn't take image");
 		}

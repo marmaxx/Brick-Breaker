@@ -5,7 +5,6 @@ import java.awt.*;
 import java.io.IOException;
 
 import game.breakout.Breakout;
-import java.io.Serializable;
 
 
 public class GameFrame extends JFrame {

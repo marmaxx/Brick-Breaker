@@ -1,7 +1,6 @@
 package game.breakout.entities;
 
 import java.awt.Color;
-import java.io.Serializable;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;

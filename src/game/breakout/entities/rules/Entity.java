@@ -1,8 +1,6 @@
 package game.breakout.entities.rules;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+
 
 import display.engine.PhysicsEngine;
 import display.engine.rules.GraphicalObject;
@@ -10,9 +8,8 @@ import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.Vector2D;
 import display.view.GamePanel;
-import game.breakout.entities.Ball;
+
 import game.breakout.entities.Player;
-import game.breakout.entities.Wall;
 
 
 public abstract class Entity extends PhysicalObject {

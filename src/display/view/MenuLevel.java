@@ -3,9 +3,6 @@ package display.view;
 import javax.swing.*; 
 import java.awt.*; 
 
-import game.breakout.Breakout;
-import game.rules.Game;
-import java.io.Serializable;
 
 
 public class MenuLevel extends JPanel {

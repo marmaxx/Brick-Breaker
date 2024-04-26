@@ -6,9 +6,9 @@ import display.engine.rules.GraphicalObject;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
-import java.util.List;
+
 
 import javax.swing.ImageIcon;
 
@@ -18,10 +18,7 @@ import display.view.GamePanel;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.io.Serializable;
 
 public class Ball extends Entity  {

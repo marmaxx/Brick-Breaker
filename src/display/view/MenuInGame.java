@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import game.breakout.Breakout;
 
-import java.io.Serializable;
 
 
 public class MenuInGame extends JPanel {

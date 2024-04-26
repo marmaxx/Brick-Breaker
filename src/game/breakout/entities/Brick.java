@@ -14,7 +14,7 @@ import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-import java.io.Serializable;
+
 
 public class Brick extends Entity {
 	public static final long serialVersionUID = 12L;

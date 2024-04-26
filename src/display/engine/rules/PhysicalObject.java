@@ -1,15 +1,8 @@
 package display.engine.rules;
 import java.io.Serializable;
-import java.util.Vector;
 
-import display.engine.rules.GraphicalObject.Boundary;
+
 import display.engine.utils.*;
-import game.breakout.entities.Ball;
-import game.breakout.entities.Brick;
-import game.breakout.entities.Player;
-import game.breakout.entities.Wall;
-import game.breakout.entities.rules.Entity;
-
 public abstract class PhysicalObject implements Serializable{
     public static final long serialVersionUID = 2L;
     public boolean active;
