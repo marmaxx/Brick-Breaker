@@ -23,7 +23,7 @@ import java.nio.file.Path;
 public class SavedGames extends JPanel {
     public static final long serialVersionUID = 111L;
 	
-    public ArrayList<String> saveFileNames = getSaveFileNames("Saves");
+    public ArrayList<String> saveFileNames = getSaveFileNames("src"+java.io.File.separator+"Saves");
     private GameFrame game_frame;
   
     private JButton menu = createStyledButton(" Back to Menu ");
@@ -81,7 +81,7 @@ public class SavedGames extends JPanel {
     }
     
     public void updateSaveFileNames() {
-        this.saveFileNames = getSaveFileNames("Saves");
+        this.saveFileNames = getSaveFileNames("src"+java.io.File.separator+"Saves");
         this.removeAll();
         menu = createStyledButton(" Back to Menu "); 
 
@@ -121,7 +121,7 @@ public class SavedGames extends JPanel {
     }
 
     private void deleteSaveFile(String fileName) {
-        Path filePath = Paths.get("Saves"+java.io.File.separator + fileName);
+        Path filePath = Paths.get("src"+java.io.File.separator+"Saves"+java.io.File.separator + fileName);
         try {
             Files.delete(filePath);
         } catch (IOException e) {
@@ -129,7 +129,7 @@ public class SavedGames extends JPanel {
         }
     }
     private void deleteSaveFileImage(String fileName) {
-        Path filePath = Paths.get("SavesPics"+java.io.File.separator + fileName+".jpg");
+        Path filePath = Paths.get("src"+java.io.File.separator+"SavesPics"+java.io.File.separator + fileName+".jpg");
         try {
             Files.delete(filePath);
         } catch (IOException e) {
@@ -156,7 +156,7 @@ public class SavedGames extends JPanel {
     }
 
     private void addImageToButton(JButton button,String text){
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("SavesPics"+java.io.File.separator+text+".jpg").getImage().getScaledInstance(200, 130, Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src"+java.io.File.separator+"SavesPics"+java.io.File.separator+text+".jpg").getImage().getScaledInstance(200, 130, Image.SCALE_DEFAULT));
         button.setIcon(imageIcon);
         button.setHorizontalTextPosition(JButton.CENTER);
         button.setVerticalTextPosition(JButton.CENTER);

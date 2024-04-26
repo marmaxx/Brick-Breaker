@@ -126,7 +126,7 @@ public class Breakout extends Game {
 	public static Breakout readFile(String saveName) throws IOException {
 		Breakout game = null;
 
-		try(FileInputStream in = new FileInputStream("Saves"+ java.io.File.separator +saveName);
+		try(FileInputStream in = new FileInputStream("src"+java.io.File.separator+"Saves"+ java.io.File.separator +saveName);
 			ObjectInputStream s = new ObjectInputStream(in)) {
 			game= (Breakout) s.readObject();
 		} catch (ClassNotFoundException e) {
@@ -194,7 +194,7 @@ public class Breakout extends Game {
 
 
 	public void writeObjects(String fileName) {
-		try (FileOutputStream f = new FileOutputStream("Saves"+ java.io.File.separator + fileName);
+		try (FileOutputStream f = new FileOutputStream("src"+java.io.File.separator+"Saves"+ java.io.File.separator + fileName);
 			ObjectOutputStream s = new ObjectOutputStream(f)) {
 			this.writeToFile(s);
 		} catch (IOException error) {
@@ -245,7 +245,7 @@ public class Breakout extends Game {
 						String filename = JOptionPane.showInputDialog("Enter the filename to save:");
 						if (filename != null) {
 							try {
-								ImageIO.write(screenShot, "JPG", new File("SavesPics"+java.io.File.separator+filename+".jpg"));
+								ImageIO.write(screenShot, "JPG", new File("src"+java.io.File.separator+"SavesPics"+java.io.File.separator+filename+".jpg"));
 							} catch (IOException ee) {
 								System.out.println("couldn't take image");
 							}
