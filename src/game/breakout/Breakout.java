@@ -544,6 +544,13 @@ public class Breakout extends Game {
 	}
 
 	/**
+	 * sets the level in the game.
+	 */
+	public void setLevel(int level){
+		this.level = level;
+	}
+
+	/**
 	 * Create a bonus at a given position (posX is the center of the bonus, however y is the top)
 	 * 
 	 * @param posX

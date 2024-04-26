@@ -183,8 +183,10 @@ public class GameFrame extends JFrame {
 
 	public void loadGame(String saveName){
 		Breakout game =null;
+		int gameLevel = 0;
 		try {
 			game = Breakout.readFile(saveName);
+			gameLevel = game.getLevel(); //this is done so that the game doesn't load the actual level, to not get duplicate bricks
 			game.gameframe =this;
 			game.setup(this.getGamePanel(), 100,"Breakout");
 			game.getGameFrame().repaint();
@@ -193,5 +195,6 @@ public class GameFrame extends JFrame {
 		}
 		this.game = game;
 		game.start(); //starting the game 
+		game.setLevel(gameLevel); //resets the level to the actual level after game generation
 	}
 }
