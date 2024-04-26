@@ -108,6 +108,7 @@ public class Breakout extends Game {
 		this.physicEngine.getPhysicalObjects().add(westWall);
 		this.physicEngine.getPhysicalObjects().add(northWall);		
 
+	
 		this.addKeyListener();
 	}
 
@@ -154,6 +155,7 @@ public class Breakout extends Game {
 
 		this.load();
 		this.level=level;
+
 
 		this.addKeyListener();
 
@@ -202,6 +204,12 @@ public class Breakout extends Game {
 	}
 
 	private void addKeyListener(){
+		
+		//remove all present key listeners to avoid conflicts 
+		KeyListener[] keyListeners = this.getPanel().getKeyListeners();
+		for (KeyListener keyListener : keyListeners) {
+    		this.getPanel().removeKeyListener(keyListener);
+		}
 		KeyListener keyListener = new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
