@@ -648,6 +648,7 @@ public class Breakout extends Game{
 
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
+			this.ball.destroy();
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
 			this.getPhysicEngine().getPhysicalObjects().remove(this.ball);
 			this.getBalls().remove(this.ball);

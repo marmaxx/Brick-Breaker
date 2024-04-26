@@ -168,12 +168,20 @@ public class Ball extends Entity {
 	}
 
 	@Override
+	public void destroy(){
+		super.destroy();
+		for (Ball.BallTrail.TrailPoint point: trail.points){
+			point.point.destroy();
+		}
+	}
+
+	@Override
 	public void collided(PhysicalObject object) {
 		
 	}
 
 	public class BallTrail {
-		private Ball ball;
+		public Ball ball;
 		public Color trailColor;
 		public Image Image = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
 		public float r;
@@ -208,7 +216,7 @@ public class Ball extends Entity {
 		}
 		
 	
-		private LinkedList<TrailPoint> points = new LinkedList<>();
+		public LinkedList<TrailPoint> points = new LinkedList<>();
 		private static final double OPACITY_DECREMENT = 0.1;
 
 		public void addPoint(Breakout breakout) {
