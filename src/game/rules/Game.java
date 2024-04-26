@@ -4,12 +4,17 @@ import display.view.GamePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+
 import javax.swing.Timer;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class Game{
-    protected GamePanel panel;
+public abstract class Game implements Serializable{
+
+	public static final long serialVersionUID = 16L;
+    
+	protected GamePanel panel;
 	protected String name;
 	protected boolean paused;
 	protected int renderedFrames;
@@ -18,8 +23,9 @@ public abstract class Game{
 	protected long lastRenderTime;
 	protected boolean vSync;
 
-	public final int DEFAULT_FPS = 60;
+	public final static int DEFAULT_FPS = 60;
 
+	
 	/**
 	 * Initialize a new game
 	 * 
@@ -51,7 +57,7 @@ public abstract class Game{
 	 * 
 	 * @param panel The panel to set
 	 */
-	private void setPanel(GamePanel panel) {
+	protected void setPanel(GamePanel panel) {
 		this.panel = panel;
 	}
 
@@ -87,7 +93,7 @@ public abstract class Game{
 	 * 
 	 * @param renderedFrames The number of frames to set
 	 */
-	private void setRenderedFrames(int renderedFrames) {
+	protected void setRenderedFrames(int renderedFrames) {
 		this.renderedFrames = renderedFrames;
 	}
 
@@ -105,7 +111,7 @@ public abstract class Game{
 	 * 
 	 * @param currentFPS The FPS to set
 	 */
-	private void setCurrentFPS(int currentFPS) {
+	protected void setCurrentFPS(int currentFPS) {
 		this.currentFPS = currentFPS;
 	}
 
@@ -261,6 +267,7 @@ public abstract class Game{
 	 */
 	public void render(){
 		// Calculate maxFPS
+
 		long second = TimeUnit.SECONDS.toNanos(1);
 		long now = System.nanoTime();
 		long timeSpent = now - this.getLastRenderTime();
@@ -277,4 +284,6 @@ public abstract class Game{
 		// The size displayed might not be the same as the actual number of pixels occupied by the window
 		+ " [" + this.getPanel().getFrame().getSize().width + "x" + this.getPanel().getFrame().getSize().height + "]");
 	}
+
+
 }

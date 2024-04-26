@@ -9,13 +9,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class MarathonPanel extends JPanel{
+    public static final long serialVersionUID = 101L;
+
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     private JButton Start = createStyledButton("START");
     private JButton Rules = createStyledButton("RULES");
     private JButton menu = createStyledButton(" Back to Menu ");
-    private BufferedImage backgroundImage;
+    transient private BufferedImage backgroundImage;
 
     public MarathonPanel(GameFrame gameFrame){
        this.setLayout(new FlowLayout()) ;

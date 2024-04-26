@@ -6,7 +6,8 @@ import java.awt.Image;
 import display.engine.rules.GraphicalObject;
 
 public abstract class Shape extends GraphicalObject {
-	protected Image image;
+	public static final long serialVersionUID = 3L;
+	transient protected Image image;
 
 	/**
 	 * Instantiates a new Shape

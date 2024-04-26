@@ -8,6 +8,8 @@ import java.awt.Image;
 
 public class Rectangle extends Shape {
 
+	public static final long serialVersionUID = 6L;
+
 	private int angle = 0;
 
 	/**

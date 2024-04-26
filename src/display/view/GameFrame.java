@@ -2,11 +2,14 @@ package display.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 import game.breakout.Breakout;
 
 
 public class GameFrame extends JFrame {
+	public static final long serialVersionUID = 50L;
+
 	public static final Color INTERFACE_BACKGROUND = Color.WHITE;
 
 	private Breakout game;
@@ -18,6 +21,7 @@ public class GameFrame extends JFrame {
 	private MenuLevel menu_level;
 	private MarathonPanel menu_Marathon;
 	private ClassicGamePanel menu_classic;
+	private SavedGames savedGames;
 	private CardLayout cardLayout;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public int nbLevelUnlock = 1;
@@ -44,6 +48,8 @@ public class GameFrame extends JFrame {
 		this.menu_level = new MenuLevel(this);
 		this.menu_Marathon = new MarathonPanel(this);
 		this.menu_classic = new ClassicGamePanel(this);
+		this.savedGames = new SavedGames(this);
+
 
 		this.container.add(this.gamePanel, "gamePanel");
 		this.container.add(this.game_over, "gameOver"); 
@@ -51,6 +57,7 @@ public class GameFrame extends JFrame {
 		this.container.add(this.menu_level, "menuLevel");
 		this.container.add(this.menu_Marathon, "menuMarathon");
 		this.container.add(this.menu_classic, "classicGame");
+		this.container.add(this.savedGames, "Saved States");
 
 		this.add(this.container);
 		this.pack();
@@ -71,6 +78,14 @@ public class GameFrame extends JFrame {
 	 */
 	public GamePanel getGamePanel() {
 		return this.gamePanel;
+	}
+
+	public SavedGames getSavedGames() {
+		return this.savedGames;
+	}
+
+	public void setSavedGames(SavedGames savedGames) {
+		this.savedGames = savedGames;
 	}
 
 	/**
@@ -162,8 +177,24 @@ public class GameFrame extends JFrame {
 	}
 
 	public void startGame(int level){
-		Breakout game = new Breakout(this, level); //created instance of Breakout
+		game = new Breakout(this, level); //created instance of Breakout
+		game.start(); //starting the game 
+	}
+
+	public void loadGame(String saveName){
+		Breakout game =null;
+		int gameLevel = 0;
+		try {
+			game = Breakout.readFile(saveName);
+			gameLevel = game.getLevel(); //this is done so that the game doesn't load the actual level, to not get duplicate bricks
+			game.gameframe =this;
+			game.setup(this.getGamePanel(), 100,"Breakout");
+			game.getGameFrame().repaint();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.game = game;
 		game.start(); //starting the game 
+		game.setLevel(gameLevel); //resets the level to the actual level after game generation
 	}
 }

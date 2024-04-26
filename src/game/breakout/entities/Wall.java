@@ -7,7 +7,9 @@ import display.engine.shapes.Rectangle;
 import display.engine.utils.Vector2D;
 import game.breakout.entities.rules.Entity;
 
-public class Wall extends Entity {
+public class Wall extends Entity  {
+    public static final long serialVersionUID = 14L;
+
     public static final Color DEFAULT_COLOR = Color.GRAY;
 
     /**

@@ -1,13 +1,19 @@
 package game.breakout;
 
 import java.util.*;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 
 import display.engine.PhysicsEngine;
 import display.engine.shapes.Circle;
+
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
@@ -19,11 +25,24 @@ import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
 import game.rules.Game;
 
-public class Breakout extends Game{
+import java.io.FileInputStream;
+
+import java.io.ObjectInputStream;
+
+import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.Robot;
+import java.awt.Toolkit;
+
+public class Breakout extends Game {
+	public static final long serialVersionUID = 15L;
+
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
 
-	GameFrame gameframe;
+	transient public GameFrame gameframe;
 
 	private ArrayList<Brick> bricks;
 	private ArrayList<Bonus> bonuses;
@@ -53,6 +72,7 @@ public class Breakout extends Game{
 	
 	private int level = 0;
 
+
 	/**
 	 * Instantiates a new Breakout game
 	 * 
@@ -71,6 +91,7 @@ public class Breakout extends Game{
 
 		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
+
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
 
@@ -87,16 +108,155 @@ public class Breakout extends Game{
 		this.physicEngine.getPhysicalObjects().add(westWall);
 		this.physicEngine.getPhysicalObjects().add(northWall);		
 
+	
+		this.addKeyListener();
+	}
 
+	/**
+	 * Serializes the current state of the game when X is pressed
+	 */
+	public void writeToFile (ObjectOutputStream out) throws IOException {
+		out.writeObject(this);
+		out.close();
+ 	}
+
+	/**
+	 * handles deserializing the saved game state
+	 */
+	public static Breakout readFile(String saveName) throws IOException {
+		Breakout game = null;
+
+		try(FileInputStream in = new FileInputStream("src"+java.io.File.separator+"Saves"+ java.io.File.separator +saveName);
+			ObjectInputStream s = new ObjectInputStream(in)) {
+			game= (Breakout) s.readObject();
+		} catch (ClassNotFoundException e) {
+			System.out.println("couldn't find the class from save");
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			System.out.println("couldn't find save");
+			e.printStackTrace();
+		}
+		
+		return game;
+	}	
+
+	/**
+	 * handles setting up the game after deserialization, does what the constructor does when the game is normally initialized.
+	 * calls load()
+	 */
+	public void setup(GamePanel gamePanel,int level, String title) {
+		super.setPanel(gamePanel);
+		super.getPanel().getFrame().setTitle(name);
+		super.setName(name);
+		super.setRenderedFrames(0);
+		super.setCurrentFPS(0);
+		super.setMaxFPS(DEFAULT_FPS);
+		super.setVSync(true);
+
+		this.load();
+		this.level=level;
+
+
+		this.addKeyListener();
+
+
+	}
+
+
+
+	/**
+	 * reloads all objects in the game so that they appear properly after deserialization
+	 */
+	private void load(){
+		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+		this.getBall().getRepresentation().setImage(Ball.DEFAULT_IMAGE2);
+		for (Ball ball : this.getBalls()){
+			this.getPanel().getGameZone().add(ball.getRepresentation());
+			ball.getRepresentation().repaint();
+		}
+		for (Brick brick : this.getBricks()){
+			this.getPanel().getGameZone().add(brick.getRepresentation());
+			brick.getRepresentation().setImage(Brick.lifespans.get(brick.getLifespan()));
+		}
+		for(Bonus bonus : this .getBonuses()){
+			this.getPanel().getGameZone().add(bonus.getRepresentation());
+			bonus.getRepresentation().setImage(Bonus.bonusTypes.get(bonus.getBonusType()));
+		}
+		this.getEastWall().getRepresentation().repaint();
+		this.getWestWall().getRepresentation().repaint();
+		this.getNorthWall().getRepresentation().repaint();
+		this.getPanel().getGameZone().add(this.getEastWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
+		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
+
+
+	}
+
+
+	public void writeObjects(String fileName) {
+		try (FileOutputStream f = new FileOutputStream("src"+java.io.File.separator+"Saves"+ java.io.File.separator + fileName);
+			ObjectOutputStream s = new ObjectOutputStream(f)) {
+			this.writeToFile(s);
+		} catch (IOException error) {
+			error.printStackTrace();
+		}
+			System.out.println("Successfully saved Breakout!");
+	}
+
+	private void addKeyListener(){
+		
+		//remove all present key listeners to avoid conflicts 
+		KeyListener[] keyListeners = this.getPanel().getKeyListeners();
+		for (KeyListener keyListener : keyListeners) {
+    		this.getPanel().removeKeyListener(keyListener);
+		}
 		KeyListener keyListener = new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
-					case KeyEvent.VK_Q:
+					case KeyEvent.VK_Q:break;
 					case KeyEvent.VK_LEFT:
 						Breakout.this.getPlayer().moveLeft();
 						break;
 					case KeyEvent.VK_D:
+					{
+
+						Random randomDistance = new Random();
+						int randomX = (int)getBall().getPosition().getX() + randomDistance.nextInt(-30, 30);
+						int randomY = (int)getBall().getPosition().getY() + randomDistance.nextInt(-30, 30);
+						Vector2D ballPos = new Vector2D(randomX, randomY);
+	
+						Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+						ball.setAcceleration(getBall().getAcceleration());
+						ball.setSpeed(getBall().getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
+	
+						getBalls().add(ball);
+						getPanel().getGameZone().add(ball.getRepresentation());
+						getPhysicEngine().getPhysicalObjects().add(ball);
+						break;
+					}
+					case KeyEvent.VK_X: {
+						BufferedImage screenShot = null;
+						if (!Breakout.this.gameframe.getGame().isPaused()){
+							screenShot = screenShot();
+							Breakout.this.pause();
+							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
+						}
+						String filename = JOptionPane.showInputDialog("Enter the filename to save:");
+						if (filename != null) {
+							try {
+								ImageIO.write(screenShot, "JPG", new File("src"+java.io.File.separator+"SavesPics"+java.io.File.separator+filename+".jpg"));
+							} catch (IOException ee) {
+								System.out.println("couldn't take image");
+							}
+
+							writeObjects(filename + ".txt");
+							Breakout.this.gameframe.getSavedGames().updateSaveFileNames();
+						}
+						Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(true);
+						Breakout.this.resume();
+						break;
+					}
 					case KeyEvent.VK_RIGHT:
 						Breakout.this.getPlayer().moveRight();
 						break;
@@ -139,6 +299,7 @@ public class Breakout extends Game{
 				}
 			}
 
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 				switch (e.getKeyCode()) {
@@ -161,6 +322,7 @@ public class Breakout extends Game{
 		this.getPanel().requestFocus();
 		this.getPanel().addKeyListener(keyListener);
 	}
+
 
 
 	/**
@@ -255,6 +417,8 @@ public class Breakout extends Game{
 		return this.ball;
 	}
 
+	
+
 	/**
 	 * Set the ball entity in the game.
 	 * 
@@ -268,7 +432,7 @@ public class Breakout extends Game{
 		return WALL_WIDTH;
 	}
 
-	public Wall getEastWAll(){
+	public Wall getEastWall(){
 		return this.eastWall;
 	}
 
@@ -380,6 +544,13 @@ public class Breakout extends Game{
 	}
 
 	/**
+	 * sets the level in the game.
+	 */
+	public void setLevel(int level){
+		this.level = level;
+	}
+
+	/**
 	 * Create a bonus at a given position (posX is the center of the bonus, however y is the top)
 	 * 
 	 * @param posX
@@ -401,15 +572,13 @@ public class Breakout extends Game{
 	@Override
 	public void start() {
 		super.start();
-		//this.createBricks(4, 8);
 		Level.level(this);
 		this.nbBricks = this.bricks.size(); //initialize nbBricks withe the size of list bricks
-
 		// Add all entities to the game
 		for (Brick brick : this.getBricks()) {
 			this.getPanel().getGameZone().add(brick.getRepresentation());
 		}
-		this.getPanel().getGameZone().add(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().add(this.getEastWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
@@ -657,6 +826,16 @@ public class Breakout extends Game{
 		}
 	}
 
+	private BufferedImage screenShot() {
+        Robot robot =null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			System.out.println("couldn't generate robot for image creation");
+		}
+        BufferedImage screenShot = robot.createScreenCapture(new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+		return screenShot;
+	}
 
 	/**
 	 * update dedicated to print for test and debug purpose
@@ -733,7 +912,7 @@ public class Breakout extends Game{
 		this.getPanel().getGameZone().remove(this.getBall().getRepresentation());
 	
 		// Remove the walls from the game zone
-		this.getPanel().getGameZone().remove(this.getEastWAll().getRepresentation());
+		this.getPanel().getGameZone().remove(this.getEastWall().getRepresentation());
 		this.getPanel().getGameZone().remove(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().remove(this.getNorthWall().getRepresentation());
 	}

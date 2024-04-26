@@ -7,6 +7,8 @@ import java.awt.Image;
 import display.engine.shapes.rules.Shape;
 
 public class Circle extends Shape {	
+	public static final long serialVersionUID = 4L;
+
 
 	/**
 	 * Instantiates a new Circle

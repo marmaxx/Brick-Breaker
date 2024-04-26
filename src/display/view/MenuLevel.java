@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*; 
 
 
+
 public class MenuLevel extends JPanel {
+    public static final long serialVersionUID = 55L;
+	
 
     private GameFrame game_frame;
     private int nbLevelUnlock;

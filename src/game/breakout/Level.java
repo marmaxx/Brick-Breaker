@@ -5,10 +5,11 @@ import java.util.Random;
 import display.engine.utils.Vector2D;
 import game.breakout.entities.Brick;
 
+import java.io.Serializable;
 
 
-public class Level {
-    
+public class Level implements Serializable {
+    public static final long serialVersionUID = 20L;
 	/**
      * Generates the bricks for the specified level.
      * 
@@ -24,6 +25,7 @@ public class Level {
 				break;
 			case 2:
 				createLevel2(b);
+				
 				break;
 			case 3:
 				createLevel1(b);
@@ -37,7 +39,9 @@ public class Level {
 			case 6:
 				createLevel1(b);
 				break;
-			case -1: 
+			case 100:
+				break; // it just loads the saved state for now, later it will give the choice of selecting
+			case -1:
 				createLevelMarathon(b);
 				break;
 			default:
@@ -45,6 +49,7 @@ public class Level {
 		}
 	}
 	
+
 
 	/**
      * Generates the bricks for level 1.

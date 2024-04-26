@@ -10,15 +10,17 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-
-
 public class MenuPanel extends JPanel {
+    public static final long serialVersionUID = 56L;
+	
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
+
     private JButton Marathon  = createStyledButton("Marathon mode");
     private JButton classic_Game  = createStyledButton("Classic Game");
-    private BufferedImage backgroundImage; // background image 
+    private JButton SavedGames = createStyledButton("Saved Games");
+    transient private BufferedImage backgroundImage; // background image 
 
 
     public MenuPanel(GameFrame gameFrame){
@@ -31,23 +33,31 @@ public class MenuPanel extends JPanel {
             e.printStackTrace();
         }
 
+
         Marathon.setPreferredSize(BUTTON_SIZE);
         classic_Game.setPreferredSize(BUTTON_SIZE);
+        SavedGames.setPreferredSize(BUTTON_SIZE);
         
 
         Marathon.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuMarathon"); //switching card layout
         });
+        SavedGames.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "Saved States"); // switching the card layout
+        });
+
+
 
         classic_Game.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame"); //switching card layout
         });
-
+        this.SavedGames.addMouseListener(new ButtonMouseListener(this.SavedGames));
         this.Marathon.addMouseListener(new ButtonMouseListener(this.Marathon));
         this.classic_Game.addMouseListener(new ButtonMouseListener(this.classic_Game));
 
         this.add(this.classic_Game);
         this.add(this.Marathon);
+        this.add(SavedGames);
     }
 
 
