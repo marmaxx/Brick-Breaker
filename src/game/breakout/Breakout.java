@@ -236,13 +236,20 @@ public class Breakout extends Game {
 						break;
 					}
 					case KeyEvent.VK_X: {
+						BufferedImage screenShot = null;
 						if (!Breakout.this.gameframe.getGame().isPaused()){
-							screenShot("test");
+							screenShot = screenShot();
 							Breakout.this.pause();
 							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
 						}
 						String filename = JOptionPane.showInputDialog("Enter the filename to save:");
 						if (filename != null) {
+							try {
+								ImageIO.write(screenShot, "JPG", new File("SavesPics"+java.io.File.separator+filename+".jpg"));
+							} catch (IOException ee) {
+								System.out.println("couldn't take image");
+							}
+
 							writeObjects(filename + ".txt");
 							Breakout.this.gameframe.getSavedGames().updateSaveFileNames();
 						}
@@ -812,7 +819,7 @@ public class Breakout extends Game {
 		}
 	}
 
-	private void screenShot(String fileName) {
+	private BufferedImage screenShot() {
         Robot robot =null;
 		try {
 			robot = new Robot();
@@ -820,11 +827,7 @@ public class Breakout extends Game {
 			System.out.println("couldn't generate robot for image creation");
 		}
         BufferedImage screenShot = robot.createScreenCapture(new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-        try {
-			ImageIO.write(screenShot, "JPG", new File(fileName+".jpg"));
-		} catch (IOException e) {
-			System.out.println("couldn't take image");
-		}
+		return screenShot;
 	}
 
 	/**
