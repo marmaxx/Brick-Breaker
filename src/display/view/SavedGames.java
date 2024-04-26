@@ -36,10 +36,22 @@ public class SavedGames extends JPanel {
             JButton saveButton = createStyledButton(saveFileName.substring(0, saveFileName.length() - 4)); // substring is used here to remove the ".txt" 
             saveButton.addActionListener((event) -> {
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
-                game_frame.startGame(100);
+                game_frame.loadGame(saveFileName);
             });
+            
+            JButton deleteButton = createStyledButton("Delete: " + saveFileName.substring(0, saveFileName.length() - 4));
+            deleteButton.addActionListener((event) -> {
+                deleteSaveFile(saveFileName);
+                game_frame.getCardlayout().show(game_frame.getPanelContainer(), "menuPanel");
+                updateSaveFileNames();
+            });
+
             addMouseListener(saveButton);
+            addMouseListener(deleteButton);
             this.add(saveButton);
+            this.add(deleteButton);
+
+        
         }
 
         this.menu.addActionListener((event) -> {
@@ -75,10 +87,9 @@ public class SavedGames extends JPanel {
             JButton saveButton = createStyledButton(saveFileName.substring(0, saveFileName.length() - 4)); // substring is used here to remove the ".txt" 
             saveButton.addActionListener((event) -> {
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
-                game_frame.startGame(100);
+                game_frame.loadGame(saveFileName);
             });
-            addMouseListener(saveButton);
-            this.add(saveButton);
+
 
 
             JButton deleteButton = createStyledButton("Delete: " + saveFileName.substring(0, saveFileName.length() - 4));
@@ -87,8 +98,12 @@ public class SavedGames extends JPanel {
                 game_frame.getCardlayout().show(game_frame.getPanelContainer(), "menuPanel");
                 updateSaveFileNames();
             });
+
+            addMouseListener(saveButton);
             addMouseListener(deleteButton);
+            this.add(saveButton);
             this.add(deleteButton);
+
         }
 
         this.menu.addActionListener((event) -> {
