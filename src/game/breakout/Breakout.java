@@ -1,6 +1,7 @@
 package game.breakout;
 
 import java.util.*;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 
 import display.engine.PhysicsEngine;
 import display.engine.shapes.Circle;
+import display.engine.shapes.Rectangle;
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
 import display.view.GamePanel;
@@ -29,6 +31,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.Robot;
+import java.awt.Toolkit;
 
 public class Breakout extends Game {
 	public static final long serialVersionUID = 15L;
@@ -223,6 +229,7 @@ public class Breakout extends Game {
 					}
 					case KeyEvent.VK_X: {
 						if (!Breakout.this.gameframe.getGame().isPaused()){
+							screenShot("test");
 							Breakout.this.pause();
 							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
 						}
@@ -797,6 +804,20 @@ public class Breakout extends Game {
 		}
 	}
 
+	private void screenShot(String fileName) {
+        Robot robot =null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			System.out.println("couldn't generate robot for image creation");
+		}
+        BufferedImage screenShot = robot.createScreenCapture(new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+        try {
+			ImageIO.write(screenShot, "JPG", new File(fileName));
+		} catch (IOException e) {
+			System.out.println("couldn't take image");
+		}
+	}
 
 	/**
 	 * update dedicated to print for test and debug purpose
