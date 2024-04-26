@@ -139,37 +139,39 @@ public class LockerPanel extends JPanel{
         trailImage = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "redTrail.png");
 
         this.leftBallButton.addActionListener((event) -> {
+            this.repaint();
             ballPreviousColor();
             ballImage = createBallImageFrom(ballCurrentIndex);
-            this.ballPanel.repaint();
         });
 
         this.rightBallButton.addActionListener((event) -> {
             ballNextColor();
             ballImage = createBallImageFrom(ballCurrentIndex);
-            this.ballPanel.repaint();
+            this.repaint();
         });
 
         this.leftTrailButton.addActionListener((event) -> {
             trailPreviousColor();
             trailImage = createTrailImageFrom(trailCurrentColorIndex);
-            this.trailPanel.repaint();
+            this.repaint();
         });
 
         this.rightTrailButton.addActionListener((event) -> {
             trailNextColor();
             trailImage = createTrailImageFrom(trailCurrentColorIndex);            
-            this.trailPanel.repaint();
+            this.repaint();
         });
 
         this.leftPaddleButton.addActionListener((event) -> {
             paddlePreviousColor();
             this.paddlePanel.setBackground(createColorFrom(paddleCurrentColorIndex));
+            this.repaint();
         });
 
         this.rightPaddleButton.addActionListener((event) -> {
             paddleNextColor();
-            this.paddlePanel.setBackground(createColorFrom(paddleCurrentColorIndex));            
+            this.paddlePanel.setBackground(createColorFrom(paddleCurrentColorIndex));
+            this.repaint();            
         });
 
         this.submitButton.addActionListener((event) -> {
@@ -177,6 +179,7 @@ public class LockerPanel extends JPanel{
             Player.DEFAULT_COLOR = createColorFrom(paddleCurrentColorIndex);
             Ball.DEFAULT_TRAIL_COLOR = createColorFrom(trailCurrentColorIndex);
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+            this.repaint();
         });
 
         this.reinitializeButton.addActionListener((event) -> {
@@ -191,10 +194,12 @@ public class LockerPanel extends JPanel{
             this.trailPanel.repaint();
             ballImage = createBallImageFrom(ballCurrentIndex);
             this.ballPanel.repaint();
+            this.repaint();
         });
 
         this.backButton.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+            this.repaint();
         });
         
         this.ballPanel.setBackground(new Color(30,30,30,0));
@@ -206,23 +211,23 @@ public class LockerPanel extends JPanel{
 
         this.lockerContainer.setLayout(new BoxLayout(this.lockerContainer, BoxLayout.Y_AXIS));
         this.lockerContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.lockerContainer.setBackground(new Color(30,30,30,0));
+        this.lockerContainer.setBackground(new Color(0,0,0,0));
 
-        this.ballContainer.setBackground(new Color(30,30,30,0));
+        this.ballContainer.setBackground(new Color(0,0,0,0));
         this.ballContainer.setPreferredSize(new Dimension(200, 200));
         this.ballContainer.add(this.ballLabel);
         this.ballContainer.add(this.leftBallButton);
         this.ballContainer.add(this.ballPanel);
         this.ballContainer.add(this.rightBallButton);
 
-        this.trailContainer.setBackground(new Color(30,30,30,0));
+        this.trailContainer.setBackground(new Color(0,0,0,0));
         this.trailContainer.setPreferredSize(new Dimension(200,200));
         this.trailContainer.add(this.trailLabel);
         this.trailContainer.add(this.leftTrailButton);
         this.trailContainer.add(this.trailPanel);
         this.trailContainer.add(this.rightTrailButton);
 
-        this.paddleContainer.setBackground(new Color(30,30,30,0));
+        this.paddleContainer.setBackground(new Color(0,0,0,0));
         this.paddleContainer.setPreferredSize(new Dimension(200,200));
         this.paddleContainer.add(this.paddleLabel);
         this.paddleContainer.add(this.leftPaddleButton);
@@ -244,7 +249,7 @@ public class LockerPanel extends JPanel{
 
         this.buttonContainer.setLayout(new BoxLayout(this.buttonContainer, BoxLayout.X_AXIS));
         this.buttonContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.buttonContainer.setBackground(new Color(30,30,30,0));
+        this.buttonContainer.setBackground(new Color(0,0,0,0));
 
         this.buttonContainer.add(Box.createHorizontalGlue());
         this.buttonContainer.add(this.submitButton);
