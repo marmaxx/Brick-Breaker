@@ -18,9 +18,10 @@ import game.breakout.entities.rules.Entity;
 
 
 public class Ball extends Entity {
-	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
-	public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
-	public static final Color DEFAULT_COLOR = Color.RED;
+	public static Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+	public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "earth.png").getImage();
+	public static Color DEFAULT_COLOR = Color.RED;
+	public static Color DEFAULT_TRAIL_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
@@ -28,7 +29,7 @@ public class Ball extends Entity {
 	public int angle; // it will be used later
 	public boolean isMoving;
 
-	public BallTrail trail = new BallTrail();
+	public BallTrail trail = new BallTrail(DEFAULT_TRAIL_COLOR, this);
 
 
 	/**
@@ -167,11 +168,43 @@ public class Ball extends Entity {
 	}
 
 	@Override
+	public void destroy(){
+		super.destroy();
+		for (Ball.BallTrail.TrailPoint point: trail.points){
+			point.point.destroy();
+		}
+	}
+
+	@Override
 	public void collided(PhysicalObject object) {
 		
 	}
 
 	public class BallTrail {
+		public Ball ball;
+		public Color trailColor;
+		public Image Image = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+		public float r;
+		public float g;
+		public float b;
+		
+		public BallTrail(Color trailColor, Ball thisBall) {
+			this.ball = thisBall;
+			this.trailColor = trailColor;
+			this.r = trailColor.getRed();
+			this.g = trailColor.getGreen();
+			this.b = trailColor.getBlue();
+		}
+
+		public BallTrail(Ball thisBall) {
+			this.ball = thisBall;
+			this.trailColor = Color.RED;
+		}
+		public BallTrail(Image imageBall ,Ball thisBall) {
+			this.ball = thisBall;
+			this.Image = imageBall;
+		}
+		
 		private class TrailPoint {
 			public Circle point;
 			public double opacity;
@@ -181,26 +214,27 @@ public class Ball extends Entity {
 				this.opacity = opacity;
 			}
 		}
+		
 	
-		private LinkedList<TrailPoint> points = new LinkedList<>();
+		public LinkedList<TrailPoint> points = new LinkedList<>();
 		private static final double OPACITY_DECREMENT = 0.1;
 
-		public void addPoint(Circle point, Breakout breakout) {
+		public void addPoint(Breakout breakout) {
 			for (TrailPoint tp : points) {
 				tp.opacity = Math.max(0, tp.opacity - OPACITY_DECREMENT);
-		
-				// Interpolate between red and yellow based on the opacity
-				float r = 1.0f;
-				float g = (float) tp.opacity;  // Green component increases as opacity decreases
-				float b = 0.0f;
-		
-				// Use the opacity field to set the color of the Circle
-				tp.point.setColor(new Color(r, g, b, (float) tp.opacity));
+
+				tp.point.setColor(new Color(r/255, g/255, b/255, (float) tp.opacity));
 			}
-		
+			Circle point =null;
+			if (trailColor ==null){
+				point = new Circle(Image, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
+			
+			}else{
+				point = new Circle(trailColor, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
+			}
 			points.add(new TrailPoint(point, 1));
 			breakout.getPanel().getGameZone().add(point);
-		
+
 			if (points.size() > 10) { // Limit the trail length
 				breakout.getPanel().getGameZone().remove(points.getFirst().point);
 				points.removeFirst();

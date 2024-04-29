@@ -69,7 +69,7 @@ public class Breakout extends Game{
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
-		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
+		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
@@ -441,7 +441,7 @@ public class Breakout extends Game{
 
 
 	 public void updateBall() {
-			if(this.getBall().active)this.getBall().trail.addPoint(new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
+			if(this.getBall().active)this.getBall().trail.addPoint(this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
@@ -668,7 +668,7 @@ public class Breakout extends Game{
 
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
-			this.ball.trail.remove(this);
+			this.ball.destroy();
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
 			this.getPhysicEngine().getPhysicalObjects().remove(this.ball);
 			this.getBalls().remove(this.ball);
