@@ -18,13 +18,13 @@ public class ButtonMouseListener extends MouseAdapter implements Serializable{
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        //button.setForeground(Color.BLACK);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 30));
+        button.setForeground(Color.BLACK);
+        //button.setFont(new Font("Ubuntu", Font.BOLD, 30));
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        //button.setForeground(Color.WHITE);
+        //button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setForeground(Color.WHITE);
     }
 }

@@ -1,31 +1,15 @@
 package display.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.basic.BasicSliderUI;
 
 import display.engine.PhysicsEngine;
 import game.breakout.Breakout;
@@ -95,6 +79,7 @@ public class SettingsPanel extends JPanel{
             public void stateChanged(ChangeEvent event){
                 setGravityValue(gravitySlider.getValue());
                 gravityValueLabel.setText(String.valueOf(gravityValue));
+                repaint();
             }
         });
 
@@ -103,6 +88,7 @@ public class SettingsPanel extends JPanel{
             public void stateChanged(ChangeEvent event){
                 setReboundValue(reboundSlider.getValue());
                 reboundValueLabel.setText(String.valueOf(reboundValue));
+                repaint();
             }
         });
 
@@ -111,6 +97,7 @@ public class SettingsPanel extends JPanel{
             public void stateChanged(ChangeEvent event){
                 setFrictionValue(frictionSlider.getValue());
                 frictionValueLabel.setText(String.valueOf(frictionValue));
+                repaint();
             }
         });
 
@@ -119,6 +106,7 @@ public class SettingsPanel extends JPanel{
             public void stateChanged(ChangeEvent event){
                 setPaddleSpeedValue(paddleSpeedSlider.getValue());
                 paddleSpeedValueLabel.setText(String.valueOf(paddleSpeedValue));
+                repaint();
             }
         });
 
@@ -128,6 +116,7 @@ public class SettingsPanel extends JPanel{
             PhysicsEngine.FRICTION_COEFFICIENT = frictionValue;
             Player.DEFAULT_SPEED= paddleSpeedValue;
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+            this.repaint();
         });
         
         this.reinitializeButton.addActionListener((event) -> {
@@ -139,6 +128,7 @@ public class SettingsPanel extends JPanel{
             PhysicsEngine.rebondForce = REBOUND_DEFAULT_VALUE;
             PhysicsEngine.FRICTION_COEFFICIENT = 0.5;
             Player.DEFAULT_SPEED = PADDLE_SPEED_DEFAULT_VALUE;
+            this.repaint();
         });
 
         this.backButton.addActionListener((event) -> {
@@ -192,7 +182,7 @@ public class SettingsPanel extends JPanel{
 
         this.buttonContainer.setLayout(new BoxLayout(this.buttonContainer, BoxLayout.X_AXIS));
         this.buttonContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.buttonContainer.setBackground(new Color(30,30,30,0));
+        this.buttonContainer.setBackground(new Color(30,30,30,30));
 
         this.buttonContainer.add(Box.createHorizontalGlue());
         this.buttonContainer.add(this.submitButton);
@@ -250,27 +240,5 @@ public class SettingsPanel extends JPanel{
 
     private void setPaddleSpeedValue(int value){
         this.paddleSpeedValue = value;
-    }
-
-    public class CustomSliderUI extends BasicSliderUI {
-        private BufferedImage thumbImage;
-
-        public CustomSliderUI(JSlider b) {
-            super(b);
-            try {
-                thumbImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "planet.png")); ;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void paintThumb(Graphics g) {
-            if (thumbImage != null) {
-                g.drawImage(thumbImage, 0, 0, 50, 50, null);
-            } else {
-                super.paintThumb(g);
-            }
-        }
     }
 }
