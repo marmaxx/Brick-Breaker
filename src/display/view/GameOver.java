@@ -9,13 +9,14 @@ import javax.imageio.ImageIO;
 
 import game.breakout.Breakout;
 
+public class GameOver extends JPanel {
+    public static final long serialVersionUID = 51L;
 
-public class GameOver extends JPanel{
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private JButton exit = createStyledButton(" Exit ");
     private JButton backToMenu = createStyledButton(" Back to Menu ");
-    private BufferedImage backgroundImage; // background image 
+    transient private BufferedImage backgroundImage; // background image 
 
 
     public GameOver(GameFrame frame){

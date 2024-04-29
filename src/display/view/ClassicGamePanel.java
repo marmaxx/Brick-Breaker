@@ -11,13 +11,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ClassicGamePanel extends JPanel {
+    public static final long serialVersionUID = 100L;
+
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     private JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
     private JButton Level = createStyledButton(" Level ");
     private JButton menu = createStyledButton(" Back to Menu");
-    private BufferedImage backgroundImage; // background image 
+    transient private BufferedImage backgroundImage; // background image 
 
     public ClassicGamePanel(GameFrame gameFrame){
         this.setLayout(new FlowLayout());

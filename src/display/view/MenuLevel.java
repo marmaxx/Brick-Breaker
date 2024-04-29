@@ -10,7 +10,10 @@ import javax.imageio.ImageIO;
 import game.breakout.Breakout;
 
 
+
 public class MenuLevel extends JPanel {
+    public static final long serialVersionUID = 55L;
+	
 
     private GameFrame game_frame;
     private int nbLevelUnlock;

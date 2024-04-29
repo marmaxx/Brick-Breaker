@@ -11,7 +11,9 @@ import javax.imageio.ImageIO;
 import game.breakout.Breakout;
 
 
-public class MenuInGame extends JPanel{
+
+public class MenuInGame extends JPanel {
+    public static final long serialVersionUID = 54L;
 
     private JButton resumeButton = createButton("Reprendre");
     private JButton BackToMenuButton = createButton("Retour Accueil");
@@ -26,7 +28,7 @@ public class MenuInGame extends JPanel{
             }
         }
     };
-    private BufferedImage backgroundImage; // background image 
+    transient private BufferedImage backgroundImage; // background image 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension MENU_ZONE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
 

@@ -1,19 +1,20 @@
 package display.engine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.*;
-import game.breakout.entities.Ball;
-import game.breakout.entities.rules.Entity;
 
 /**
  * PhysicsEngine
  */
-public class PhysicsEngine {
-    public static double GRAVITY_CONSTANT = 0.5;
-    public static double rebondForce = 100;
-    public static double FRICTION_COEFFICIENT = 0.5;
+public class PhysicsEngine implements Serializable{
+    public static final long serialVersionUID = 8L;
+
+    public static double GRAVITY_CONSTANT=0.5;
+    public static final double rebondForce = 100;
+    private static final double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject> physicalObjects;
 
     /**

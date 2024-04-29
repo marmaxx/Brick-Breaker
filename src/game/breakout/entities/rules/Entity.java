@@ -1,17 +1,20 @@
 package game.breakout.entities.rules;
 
+
+
 import display.engine.PhysicsEngine;
 import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.Vector2D;
 import display.view.GamePanel;
-import game.breakout.entities.Ball;
+
 import game.breakout.entities.Player;
-import game.breakout.entities.Wall;
 
 
 public abstract class Entity extends PhysicalObject {
+	public static final long serialVersionUID = 9L;
+
     protected GraphicalObject representation;
 	protected final static int WALL_WIDTH = 20;
 
@@ -47,6 +50,13 @@ public abstract class Entity extends PhysicalObject {
 		 
     }
 
+
+	/**
+	 * constructor to be used only for deserialization
+	 */
+	public Entity(){
+
+	}
 
 
 
@@ -180,6 +190,7 @@ public abstract class Entity extends PhysicalObject {
 		
 		return false;
 	}
+
 
 
 

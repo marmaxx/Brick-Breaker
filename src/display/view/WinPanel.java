@@ -9,12 +9,16 @@ import javax.imageio.ImageIO;
 
 import game.breakout.Breakout;
 
-public class WinPanel extends JPanel{
+
+
+public class WinPanel extends JPanel {
+    public static final long serialVersionUID = 57L;
+	
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private JButton exit = createStyledButton(" Exit ");
     private JButton backToMenu = createStyledButton(" Back to Menu ");
-    private BufferedImage backgroundImage; // background image 
+    transient private BufferedImage backgroundImage; // background image 
 
     public WinPanel(GameFrame frame){
         this.setLayout(new FlowLayout());

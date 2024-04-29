@@ -6,7 +6,9 @@ import display.engine.rules.GraphicalObject;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
+
 import java.util.LinkedList;
+
 
 import javax.swing.ImageIcon;
 
@@ -17,11 +19,14 @@ import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
 
-public class Ball extends Entity {
-	public static Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
-	public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "earth.png").getImage();
-	public static Color DEFAULT_COLOR = Color.RED;
-	public static Color DEFAULT_TRAIL_COLOR = Color.RED;
+import java.io.Serializable;
+
+public class Ball extends Entity  {
+	public static final long serialversionUID =10L;
+
+	transient public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+	transient public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+	public static final Color DEFAULT_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
@@ -31,6 +36,12 @@ public class Ball extends Entity {
 
 	public BallTrail trail = new BallTrail(DEFAULT_TRAIL_COLOR, this);
 
+	/**
+ 	*constructor to be used only for deserialziation 
+ 	*/
+	public Ball(){
+
+	}
 
 	/**
 	 * Instantiates a new Ball
@@ -118,12 +129,6 @@ public class Ball extends Entity {
 
 	}
 
-	/**
-	 * Instantiates a new Ball
-	 */
-	public Ball() {
-		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE);
-	}
 
 
 
