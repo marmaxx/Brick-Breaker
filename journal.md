@@ -380,3 +380,36 @@ Ajouts :
 ### Absence
 
 Lucas
+
+
+## Semaine 12 (01/05/2024)
+
+### Ce qui a été fait:
+
+
+- Noaym :
+    -un save completement fonctionnel + images sur le boutton associé au save. 
+
+
+
+### À faire
+
+- plus de niveaux
+- penser à écrire des tests exécutables
+- rotation (vitesse angulaire) de la balle (effets)
+- Finir certains TODO (oubliés car ils n'étaient pas des tâches essentielles) 
+- Améliorer le mode marathon (mouvement verticale semblerait plus approprié) 
+  (Séparation du mode marathon en cours)
+- Adapter le menu lorsqu'il y aura 2 jeux séparés
+- Améliorer le visuel des briques en biais
+- créer un bonus de vie (Fait, il faudra cependant faire l'image du bonus correspondant)
+- Penser à mettre à jour le diagramme UML
+- Powerpoint (pas du tout prioritaire mais permet de transformer l'oral en une conférence et non un interrogatoire de 30 minutes)
+- Commencer à reformat le code et supprimer les warnings + javadocs manquantes
+- finir le menu level
+- faire un menu settings.
+
+Ajouts :
+- réfléchir à soutenance (explication modélisation physique et conception objet)
+- préparer belle démo du produit quasi-fini
+
