@@ -2,7 +2,6 @@ package game.breakout;
 
 import java.util.*;
 import java.awt.AWTException;
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -12,7 +11,6 @@ import java.io.ObjectOutputStream;
 
 
 import display.engine.PhysicsEngine;
-import display.engine.shapes.Circle;
 
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;

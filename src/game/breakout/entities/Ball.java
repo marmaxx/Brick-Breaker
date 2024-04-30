@@ -19,8 +19,6 @@ import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
 
-import java.io.Serializable;
-
 public class Ball extends Entity  {
 	public static final long serialversionUID =10L;
 

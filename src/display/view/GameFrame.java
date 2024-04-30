@@ -24,6 +24,7 @@ public class GameFrame extends JFrame {
 	private SettingsPanel settings;
 	private LockerPanel locker;
 	private SavedGames savedGames;
+	private HomePage homePage;
 	private CardLayout cardLayout;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public int nbLevelUnlock = 1;
@@ -133,6 +134,16 @@ public class GameFrame extends JFrame {
 		this.menuPanel = menu;
 	}
 
+	/**
+	 * Add HomePage to the Container
+	 * 
+	 * @param MenuPanel The menu panel to add
+	 */
+	public void addHomePage(HomePage homePage){
+		this.container.add(homePage, "homePage");
+		this.homePage = homePage;
+	}
+
 
 	/**
 	 * Get the menu panel attach to the containers
@@ -141,6 +152,15 @@ public class GameFrame extends JFrame {
 	 */
 	public MenuPanel getMenuPanel(){
 		return this.menuPanel;
+	}
+
+	/**
+	 * Get the home page attach to the containers
+	 * 
+	 * @return The menu Panel
+	 */
+	public HomePage getHomePage(){
+		return this.homePage;
 	}
 	
 	/**
