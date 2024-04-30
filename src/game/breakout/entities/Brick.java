@@ -5,11 +5,8 @@ import java.util.Collections;
 
 import javax.swing.ImageIcon;
 
-import java.awt.Color;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
-import java.awt.Image;
 
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Rectangle;
@@ -17,9 +14,13 @@ import display.engine.utils.Vector2D;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
+
+
 public class Brick extends Entity {
+	public static final long serialVersionUID = 12L;
+
     public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
-    public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
+    transient public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
 
     protected boolean isDestroyed, dropBonus;
     protected int lifespan;

@@ -1,11 +1,15 @@
 package display.engine.utils;
 
+import java.io.Serializable;
+
 /**
  * This class represents a two-dimensional vector.
  * It stores the x and the y coordinates of a point in space.
  */
 
-public class Vector2D {
+public class Vector2D implements Serializable{
+    public static final long serialVersionUID = 7L;
+
     private double x; // x-coordinate of the vector
     private double y; // y-coordinate of the vector
 

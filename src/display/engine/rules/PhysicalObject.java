@@ -1,15 +1,10 @@
 package display.engine.rules;
-import java.util.Vector;
+import java.io.Serializable;
 
-import display.engine.rules.GraphicalObject.Boundary;
+
 import display.engine.utils.*;
-import game.breakout.entities.Ball;
-import game.breakout.entities.Brick;
-import game.breakout.entities.Player;
-import game.breakout.entities.Wall;
-import game.breakout.entities.rules.Entity;
-
-public abstract class PhysicalObject {
+public abstract class PhysicalObject implements Serializable{
+    public static final long serialVersionUID = 2L;
     public boolean active;
     protected double mass;
     protected Vector2D position ;
@@ -32,6 +27,10 @@ public abstract class PhysicalObject {
     protected Vector2D bottomLeftPosition;
     protected Vector2D bottomRightPosition;
     protected double MAX_SPEED = 0.8;
+
+    public PhysicalObject(){
+        
+    }
 
     public PhysicalObject(double mass, Vector2D position, boolean movable, GraphicalObject representation){
 

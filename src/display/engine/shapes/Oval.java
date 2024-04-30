@@ -7,7 +7,7 @@ import java.awt.Image;
 import display.engine.shapes.rules.Shape;
 
 public class Oval extends Shape {	
-
+	public static final long serialVersionUID = 5L;
 	/**
 	 * Instantiates a new Oval
 	 * 

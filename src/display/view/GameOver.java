@@ -9,13 +9,14 @@ import javax.imageio.ImageIO;
 
 import game.breakout.Breakout;
 
+public class GameOver extends JPanel {
+    public static final long serialVersionUID = 51L;
 
-public class GameOver extends JPanel{
     public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private JButton exit = createStyledButton(" Exit ");
     private JButton backToMenu = createStyledButton(" Back to Menu ");
-    private BufferedImage backgroundImage; // background image 
+    transient private BufferedImage backgroundImage; // background image 
 
 
     public GameOver(GameFrame frame){
@@ -38,11 +39,19 @@ public class GameOver extends JPanel{
          //setting back to menu button 
          this.backToMenu.setPreferredSize(BUTTON_SIZE);
          this.backToMenu.addActionListener(e -> {
-            frame.dispose();
-            GameFrame gameFrame = new GameFrame();
-			gameFrame.addMenu(new MenuPanel(gameFrame));
-			gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
+            frame.getGame().clearGameComponents();
+            frame.getGamePanel().getGameZone().removeAll();
+            frame.getGame().setLife(3);
+            frame.getGame().setNbBricks(1);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                }
+            });
         });
+
+        this.exit.addMouseListener(new ButtonMouseListener(this.exit));
+        this.backToMenu.addMouseListener(new ButtonMouseListener(this.backToMenu));
 
 
         this.add(this.exit);
@@ -51,11 +60,14 @@ public class GameOver extends JPanel{
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 18));
+        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setPreferredSize(new Dimension(400, 80));
+        button.setMaximumSize(new Dimension(400, 80));
         button.setForeground(Color.WHITE);
-        button.setBackground(new Color(52, 152, 219)); // Bleu
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
+        button.setContentAreaFilled(false);
         return button;
     }
 

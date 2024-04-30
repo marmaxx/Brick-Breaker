@@ -1,18 +1,16 @@
 package game.breakout.entities;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import display.engine.rules.GraphicalObject;
-import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
+
 import java.util.LinkedList;
 
+
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
@@ -20,11 +18,14 @@ import display.view.GamePanel;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
-import java.awt.Color;
 
-public class Ball extends Entity {
-	public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
-	public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+import java.io.Serializable;
+
+public class Ball extends Entity  {
+	public static final long serialversionUID =10L;
+
+	transient public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+	transient public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
 	public static final Color DEFAULT_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
@@ -35,6 +36,12 @@ public class Ball extends Entity {
 
 	public BallTrail trail = new BallTrail();
 
+	/**
+ 	*constructor to be used only for deserialziation 
+ 	*/
+	public Ball(){
+
+	}
 
 	/**
 	 * Instantiates a new Ball
@@ -122,12 +129,6 @@ public class Ball extends Entity {
 
 	}
 
-	/**
-	 * Instantiates a new Ball
-	 */
-	public Ball() {
-		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE);
-	}
 
 
 
@@ -176,8 +177,8 @@ public class Ball extends Entity {
 		
 	}
 
-	public class BallTrail {
-		private class TrailPoint {
+	public class BallTrail implements Serializable{
+		private class TrailPoint implements Serializable{
 			public Circle point;
 			public double opacity;
 	
