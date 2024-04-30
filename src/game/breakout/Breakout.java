@@ -14,7 +14,7 @@ import display.engine.PhysicsEngine;
 
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
-import display.view.GamePanel;
+import display.view.brickbreakerview.*;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Bonus;
 import game.breakout.entities.Player;

@@ -1,5 +1,6 @@
-package display.view;
+package display.view.brickbreakerview;
 
+import display.view.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

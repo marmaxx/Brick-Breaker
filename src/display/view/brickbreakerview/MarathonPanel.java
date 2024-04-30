@@ -1,5 +1,7 @@
-package display.view;
+package display.view.brickbreakerview;
 
+
+import display.view.*;
 import javax.swing.*;
 import game.breakout.Breakout;
 import java.awt.*;

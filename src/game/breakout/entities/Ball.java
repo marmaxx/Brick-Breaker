@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
-import display.view.GamePanel;
+import display.view.brickbreakerview.*;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 

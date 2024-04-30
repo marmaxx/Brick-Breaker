@@ -1,5 +1,6 @@
 package display.view;
 
+import display.view.brickbreakerview.*;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
