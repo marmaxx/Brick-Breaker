@@ -562,6 +562,7 @@ public class Breakout extends Game {
 		int randomBonusType = new Random().nextInt(Bonus.MAX_BONUSTYPE);
 		this.getBonuses().add(new Bonus(Bonus.bonusTypes.get(BonusType.values()[randomBonusType]), posX, posY, Bonus.DEFAULT_SIZE, BonusType.values()[randomBonusType]));
 		for (Bonus bonus : this.getBonuses()) {
+			bonus.getRepresentation().setBounds(posX, posY, bonus.getRepresentation().getWidth(), bonus.getRepresentation().getHeight());
 			this.getPanel().getGameZone().add(bonus.getRepresentation());
 		}
 	}
@@ -610,7 +611,9 @@ public class Breakout extends Game {
 
 
 	 public void updateBall() {
-			if(this.getBall().active)this.getBall().trail.addPoint(new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
+		Circle trailPoint = new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10);
+		trailPoint.setBounds(trailPoint.getPosX(), trailPoint.getPosY(), trailPoint.getWidth(), trailPoint.getHeight());
+		if(this.getBall().active) this.getBall().trail.addPoint(trailPoint,this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
@@ -686,6 +689,7 @@ public class Breakout extends Game {
 					randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 					iterator.add(brick);
 					brick.moveRight();
+					brick.getRepresentation().setBounds(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY(), brick.getRepresentation().getWidth(), brick.getRepresentation().getHeight());
 					this.getPanel().getGameZone().add(brick.getRepresentation());
 					this.getPhysicEngine().getPhysicalObjects().add(brick);
 				}
@@ -796,12 +800,15 @@ public class Breakout extends Game {
 				while(iterator.hasNext()){
 					Ball ballToBeDuplicated = iterator.next();
 
+
 					Random randomDistance = new Random();
 					int randomX = (int)ballToBeDuplicated.getPosition().getX() + randomDistance.nextInt(-30, 30);
 					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-30, 30);
 					Vector2D ballPos = new Vector2D(randomX, randomY);
 
 					Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+					ball.getRepresentation().setBounds(ball.getRepresentation().getPosX(), ball.getRepresentation().getPosY(), ball.getRepresentation().getWidth(), ball.getRepresentation().getHeight());
+					
 					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
 					ball.setSpeed(ballToBeDuplicated.getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
 
@@ -812,12 +819,11 @@ public class Breakout extends Game {
 				Iterator<Ball> ballsToBeAddedIterator = ballsToBeAdded.iterator();
 				while(ballsToBeAddedIterator.hasNext()){
 					Ball ball = ballsToBeAddedIterator.next();
-
+					ball.getRepresentation().setBounds(ball.getRepresentation().getPosX(), ball.getRepresentation().getPosY(), ball.getRepresentation().getWidth(), ball.getRepresentation().getHeight());
 					this.getBalls().add(ball);
-
 					this.getPanel().getGameZone().add(ball.getRepresentation());
 					this.getPhysicEngine().getPhysicalObjects().add(ball);
-
+					
 				}
 
 				break;
