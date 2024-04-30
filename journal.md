@@ -395,6 +395,17 @@ Lucas
     - Création du Space Invader qui fonctionne comme un jeu à part pour montrer la modularité du jeu
     - Début de la création de pong qui fonctionnera également comme un jeu à part
 
+- Maxime : 
+    - mise en forme du menu level. 
+    - deblocage des level apres avoir fini le level precédent.
+
+- Marius : 
+    - création de menu lockers.
+    - création de menu settings.
+
+- Lucas : 
+    - travail sur les bricks à champs gravitationnels.
+
 
 
 ### À faire
