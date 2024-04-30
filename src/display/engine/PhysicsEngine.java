@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.*;
+import game.breakout.entities.Ball;
 
 /**
  * PhysicsEngine
@@ -52,16 +53,18 @@ public class PhysicsEngine implements Serializable{
      * 
      * @param deltaTime
      */
-    public void update(double deltaTime) {
+    public void update(double deltaTime, Ball planete) {
         applyGravity(deltaTime);
         handleCollisions(deltaTime);
         applyFriction(FRICTION_COEFFICIENT);
+        
        
             // updating objects position relatively to the time spent
          for (PhysicalObject object : physicalObjects) {
-            //if (object instanceof Ball) System.out.println(object.getAcceleration());
+            if (object instanceof Ball) ((Ball)object).applyGravitationalForces(deltaTime, planete); //System.out.println(object.getAcceleration());
             object.updateVelocity(deltaTime); 
             if (object.isActive() && object.isMovable()){
+                
                 //System.out.println("vitesse: "+object.getSpeed());
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
@@ -117,6 +120,8 @@ public class PhysicsEngine implements Serializable{
             if(object.isMovable() &&object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
         }
     }
+
+     
 
     /**
      * Apply friction to all objects depending on the friction coefficient

@@ -885,7 +885,7 @@ public class Breakout extends Game {
 		this.checkBallInGame();
 		//System.out.println(this.ball.getPosition());
 		// if (this.ball.getIsMoving() == true) 
-		this.physicEngine.update(deltaTime);
+		this.physicEngine.update(deltaTime, this.planete);
 		if(this.level != -1 ){
 			this.updateBricks();
 			this.ball.resolveSpeedToHigh();
