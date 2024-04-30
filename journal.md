@@ -390,9 +390,16 @@ Lucas
 - Noaym :
     -un save completement fonctionnel + images sur le boutton associé au save. 
 
+- Nic :
+    - Implémentation bonus coeur avec l'image
+    - Création du Space Invader qui fonctionne comme un jeu à part pour montrer la modularité du jeu
+    - Début de la création de pong qui fonctionnera également comme un jeu à part
+
 
 
 ### À faire
+
+- IMPORTANT : modifier le menu pour qu'il puisse accueillir les différents jeux qui ont été crées !
 
 - plus de niveaux
 - penser à écrire des tests exécutables
@@ -410,6 +417,7 @@ Lucas
 - faire un menu settings.
 
 Ajouts :
-- réfléchir à soutenance (explication modélisation physique et conception objet)
+- réfléchir à soutenance (explication modélisation physique et conception objet) 
+ (déjà en cours)
 - préparer belle démo du produit quasi-fini
 

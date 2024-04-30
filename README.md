@@ -36,19 +36,14 @@ Ce projet a été réalisé en mode projet dans un contexte scolaire. Il a été
       - [Entitées](#modèle)
     - [Conventions et nomenclature](#conventions-et-nomenclature)
 - [Rapports](#Rapports-des-réunions)
-  - [à déterminer](#première-réunion)
-  - [à déterminer](#deuxième-réunion)
-  - [à déterminer](#troisième-réunion)
-  - [à déterminer](#quatrième-réunion)
-  - [à déterminer](#cinquième-réunion)
-  - [à déterminer](#sixième-réunion)
+
 
 
 ## Développer sur Casse Brique
 
 Requis:
 
-- OpenJDK (version xx jusqu'à xx) version à déterminer
+- OpenJDK version 17 ou plus
 - VSCode (ou un autre IDE)
 
 Étape 1: Cloner le projet (avec les droits requis)
@@ -122,15 +117,4 @@ functionName(type: arg1, objectType|null: arg2) : returnType1 | returnType2 // (
 
 # Rapports des Réunions
 
-## Première Réunion
-
-## Deuxième Réunion
-
-
-## Troisième Réunion
-
-## Quatrième Réunion
-
-## Cinquième Réunion
-
-## Sixième Réunion
+Le rapport des réunions a été décallé dans journal.md
