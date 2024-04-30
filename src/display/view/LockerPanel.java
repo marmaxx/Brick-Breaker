@@ -15,14 +15,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
+
 
 import game.breakout.Breakout;
 import game.breakout.entities.Ball;
@@ -71,21 +68,7 @@ public class LockerPanel extends JPanel{
         }
     };
 
-    private JPanel paddlePanel = new JPanel();/* {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // Dessiner l'image de fond
-            if (paddleImage != null) {
-                g.drawImage(paddleImage, 0, 0, 0, 0, this);
-            }
-        }*/
-    
-    private JPanel ballContainer = new JPanel();
-    private JPanel trailContainer = new JPanel();
-    private JPanel paddleContainer = new JPanel();
-    private JPanel lockerContainer = new JPanel();
-    private JPanel buttonContainer = new JPanel();
+    private JPanel paddlePanel = new JPanel();
 
     private JLabel ballLabel = createStyledLabel("Balle:    ");
     private JLabel trailLabel = createStyledLabel("Trainée:");
@@ -99,7 +82,6 @@ public class LockerPanel extends JPanel{
     private JButton submitButton = createStyledButton("Valider");
     private JButton reinitializeButton = createStyledButton("Réinitialiser");
     private JButton backButton = createStyledButton("Retour");
-    private JButton vide = new JButton();
 
     private String[] ballOptions = {"Meteorite", "earth", "mars", "venus"};
     private String[] colorOptions = {"white", "yellow", "red", "green", "blue"};

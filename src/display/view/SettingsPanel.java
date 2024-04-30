@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -45,8 +44,6 @@ public class SettingsPanel extends JPanel{
     private JSlider paddleSpeedSlider = createStyledSlider("PaddleSpeed", 5, 30, 10);
 
 
-    private JButton vide = new JButton();
-
     private double gravityValue = GRAVITY_DEFAULT_VALUE;
     private double reboundValue = REBOUND_DEFAULT_VALUE;
     private double frictionValue = FRICTION_DEFAULT_VALUE;
@@ -80,6 +77,7 @@ public class SettingsPanel extends JPanel{
                 repaint();
             }
         });
+        this.gravitySlider.setBackground(new Color(0,0,0,0));
 
         this.reboundSlider.addChangeListener(new ChangeListener() {
             @Override
@@ -89,6 +87,7 @@ public class SettingsPanel extends JPanel{
                 repaint();
             }
         });
+        this.reboundSlider.setBackground(new Color(0,0,0,0));
 
         this.frictionSlider.addChangeListener(new ChangeListener() {
             @Override
@@ -98,6 +97,7 @@ public class SettingsPanel extends JPanel{
                 repaint();
             }
         });
+        this.frictionSlider.setBackground(new Color(0,0,0,0));
 
         this.paddleSpeedSlider.addChangeListener(new ChangeListener() {
             @Override
@@ -107,6 +107,7 @@ public class SettingsPanel extends JPanel{
                 repaint();
             }
         });
+        this.paddleSpeedSlider.setBackground(new Color(0,0,0,0));
 
         this.submitButton.addActionListener((event) -> {
             PhysicsEngine.GRAVITY_CONSTANT = (gravityValue/10);
@@ -139,10 +140,6 @@ public class SettingsPanel extends JPanel{
 
         this.mainContainer.setLayout(new GridBagLayout());
 
-        this.vide.setFocusPainted(false); 
-        this.vide.setBorderPainted(false); 
-        this.vide.setContentAreaFilled(false);
-
         GridBagConstraints gbc =  new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -153,15 +150,15 @@ public class SettingsPanel extends JPanel{
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.FIRST_LINE_END;
         gbc.insets = new Insets(1, 1, 1, 1);
-        this.mainContainer.add(this.vide, gbc); 
+        this.mainContainer.add(emptyJButton(), gbc); 
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.mainContainer.add(emptyJButton(), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         this.mainContainer.add(this.gravityLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        this.mainContainer.add(this.reboundLabel, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 1;
@@ -171,6 +168,18 @@ public class SettingsPanel extends JPanel{
         gbc.gridy = 1;
         this.mainContainer.add(this.gravityValueLabel, gbc);
 
+        gbc.gridx = 4;
+        gbc.gridy = 1;
+        this.mainContainer.add(emptyJButton(), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        this.mainContainer.add(emptyJButton(), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.reboundLabel, gbc);
+
         gbc.gridx = 2;
         gbc.gridy = 2;
         this.mainContainer.add(this.reboundSlider, gbc);
@@ -178,6 +187,14 @@ public class SettingsPanel extends JPanel{
         gbc.gridx = 3;
         gbc.gridy = 2;
         this.mainContainer.add(this.reboundValueLabel, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 2;
+        this.mainContainer.add(emptyJButton(), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        this.mainContainer.add(emptyJButton(), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -191,6 +208,14 @@ public class SettingsPanel extends JPanel{
         gbc.gridy = 3;
         this.mainContainer.add(this.frictionValueLabel, gbc);
 
+        gbc.gridx = 4;
+        gbc.gridy = 3;
+        this.mainContainer.add(emptyJButton(), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        this.mainContainer.add(emptyJButton(), gbc);
+
         gbc.gridx = 1;
         gbc.gridy = 4;
         this.mainContainer.add(this.paddleSpeedLabel, gbc);
@@ -203,17 +228,29 @@ public class SettingsPanel extends JPanel{
         gbc.gridy = 4;
         this.mainContainer.add(this.paddleSpeedValueLabel, gbc);
 
+        gbc.gridx = 4;
+        gbc.gridy = 4;
+        this.mainContainer.add(emptyJButton(), gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 5;
-        this.mainContainer.add(this.submitButton, gbc);
+        this.mainContainer.add(emptyJButton(), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        this.mainContainer.add(this.reinitializeButton, gbc);
+        this.mainContainer.add(this.submitButton, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 5;
+        this.mainContainer.add(this.reinitializeButton, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 5;
         this.mainContainer.add(this.backButton, gbc); 
+
+        gbc.gridx = 4;
+        gbc.gridy = 5;
+        this.mainContainer.add(emptyJButton(), gbc);
 
         this.setLayout(new BorderLayout());
         this.add(this.mainContainer, BorderLayout.CENTER);
@@ -258,5 +295,13 @@ public class SettingsPanel extends JPanel{
 
     private void setPaddleSpeedValue(int value){
         this.paddleSpeedValue = value;
+    }
+
+    private JButton emptyJButton (){
+        JButton b = new JButton();
+        b.setFocusPainted(false); 
+        b.setBorderPainted(false); 
+        b.setContentAreaFilled(false);
+        return b;
     }
 }
