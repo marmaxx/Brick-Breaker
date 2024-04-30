@@ -17,6 +17,7 @@ public class PhysicsEngine implements Serializable{
     public static final double rebondForce = 100;
     private static final double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject> physicalObjects;
+    private int compteurPlanete=0;
 
     /**
      * Create a new PhysicsEngine
@@ -102,10 +103,13 @@ public class PhysicsEngine implements Serializable{
 
                     objectA.collided(objectB);
                     objectB.collided(objectA);
+                    //TODO: ajouter un compteur qui vérifie le nombre de fois que la planete a été en collision : au bout de 5 fois elle explose
                 }
             }
         }
     }
+
+    //TODO: ajouter la force de souffle porovoquée par l'explosion
 
 
     /**

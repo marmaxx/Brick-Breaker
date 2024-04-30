@@ -233,15 +233,16 @@ public class Ball extends Entity  {
         final double G = 6.67430; // gravitational constant
 
 			Vector2D r = planete.getPosition().subtract(this.getPosition());
-			//if (r.magnitude()<200) return;
+			
 			double distance = r.magnitude();
+			if (distance<200) return;
 
 			System.out.println("objet 1: "+this.getMass()+" "+this.getPosition());
 			System.out.println("objet 2: "+planete.getMass()+" "+planete.getPosition());
 
 			double forceMagnitude = G * (this.getMass() * planete.getMass()) / (distance * distance);
 			//System.out.println("force norme :"+forceMagnitude);
-			Vector2D force = r.normalize().multiply(forceMagnitude);
+			Vector2D force = r.normalize().multiply(forceMagnitude*4);
 
 			this.applyForce(force.multiply(deltaTime));
 			//this.setSpeed(force.multiply(deltaTime));
