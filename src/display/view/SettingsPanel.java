@@ -44,28 +44,26 @@ public class SettingsPanel extends JPanel{
     private JLabel paddleSpeedValueLabel = createStyledLabel(String.valueOf(PADDLE_SPEED_DEFAULT_VALUE));
     private JSlider paddleSpeedSlider = createStyledSlider("PaddleSpeed", 5, 30, 10);
 
+
+    private JButton vide = new JButton();
+
     private double gravityValue = GRAVITY_DEFAULT_VALUE;
     private double reboundValue = REBOUND_DEFAULT_VALUE;
     private double frictionValue = FRICTION_DEFAULT_VALUE;
     private int paddleSpeedValue = PADDLE_SPEED_DEFAULT_VALUE;
     private BufferedImage backgroundImage;
-    private JPanel mainContainer =  new JPanel() {
+
+    private JPanel mainContainer = new JPanel() {
         @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // Dessiner l'image de fond
-            if (backgroundImage != null) {
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-            }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Dessiner l'image de fond
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
+    }
     };
-    private JPanel sliderContainer = new JPanel();
-    private JPanel buttonContainer = new JPanel();
-    private JPanel gravitySliderContainer = new JPanel();
-    private JPanel reboundSliderContainer = new JPanel();
-    private JPanel frictionSliderContainer = new JPanel();
-    private JPanel paddleSpeedSliderContainer = new JPanel();
-    
+
     public SettingsPanel(GameFrame gameFrame){
 
         try {
@@ -139,66 +137,86 @@ public class SettingsPanel extends JPanel{
         this.reinitializeButton.addMouseListener(new ButtonMouseListener(this.reinitializeButton));
         this.backButton.addMouseListener(new ButtonMouseListener(this.backButton));
 
-        this.sliderContainer.setLayout(new BoxLayout(this.sliderContainer, BoxLayout.Y_AXIS));
-        this.sliderContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.sliderContainer.setBackground(new Color(30,30,30,0));
-        
-        this.gravitySliderContainer.setBackground(new Color(30,30,30,0));
-        this.gravitySliderContainer.add(this.gravityLabel);
-        this.gravitySliderContainer.add(this.gravitySlider);
-        this.gravitySliderContainer.add(this.gravityValueLabel);
+        this.mainContainer.setLayout(new GridBagLayout());
 
-        this.reboundSliderContainer.setBackground(new Color(30,30,30,0));
-        this.reboundSliderContainer.add(this.reboundLabel);
-        this.reboundSliderContainer.add(this.reboundSlider);
-        this.reboundSliderContainer.add(this.reboundValueLabel);
-        
-        this.frictionSliderContainer.setBackground(new Color(30,30,30,0));
-        this.frictionSliderContainer.add(this.frictionLabel);
-        this.frictionSliderContainer.add(this.frictionSlider);
-        this.frictionSliderContainer.add(this.frictionValueLabel);
+        this.vide.setFocusPainted(false); 
+        this.vide.setBorderPainted(false); 
+        this.vide.setContentAreaFilled(false);
 
-        this.paddleSpeedSliderContainer.setBackground(new Color(30,30,30,0));
-        this.paddleSpeedSliderContainer.add(this.paddleSpeedLabel);
-        this.paddleSpeedSliderContainer.add(this.paddleSpeedSlider);
-        this.paddleSpeedSliderContainer.add(this.paddleSpeedValueLabel);
+        GridBagConstraints gbc =  new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gbc.insets = new Insets(1, 1, 1, 1);
+        this.mainContainer.add(this.vide, gbc); 
 
-        this.sliderContainer.add(Box.createVerticalGlue());
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        this.mainContainer.add(this.gravityLabel, gbc);
 
-        this.sliderContainer.add(Box.createVerticalStrut(300));
-        this.sliderContainer.add(this.gravitySliderContainer);
-        this.sliderContainer.add(Box.createVerticalStrut(10));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.reboundLabel, gbc);
 
-        this.sliderContainer.add(this.reboundSliderContainer);
-        this.sliderContainer.add(Box.createVerticalStrut(10));
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        this.mainContainer.add(this.gravitySlider, gbc);
 
-        this.sliderContainer.add(this.frictionSliderContainer);
-        this.sliderContainer.add(Box.createVerticalStrut(10));
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        this.mainContainer.add(this.gravityValueLabel, gbc);
 
-        this.sliderContainer.add(this.paddleSpeedSliderContainer);
-        this.sliderContainer.add(Box.createVerticalStrut(10));
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.reboundSlider, gbc);
 
-        this.sliderContainer.add(Box.createVerticalGlue());
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.reboundValueLabel, gbc);
 
-        this.buttonContainer.setLayout(new BoxLayout(this.buttonContainer, BoxLayout.X_AXIS));
-        this.buttonContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.buttonContainer.setBackground(new Color(30,30,30,30));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        this.mainContainer.add(this.frictionLabel, gbc);
 
-        this.buttonContainer.add(Box.createHorizontalGlue());
-        this.buttonContainer.add(this.submitButton);
-        this.buttonContainer.add(Box.createHorizontalStrut(20));
-        this.buttonContainer.add(this.reinitializeButton);
-        this.buttonContainer.add(Box.createHorizontalStrut(20));
-        this.buttonContainer.add(this.backButton);
-        this.buttonContainer.add(Box.createHorizontalGlue());
-        
-        this.mainContainer.setLayout(new BorderLayout());
-        this.mainContainer.add(this.sliderContainer, BorderLayout.NORTH);
-        this.mainContainer.add(this.buttonContainer, BorderLayout.CENTER);
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        this.mainContainer.add(this.frictionSlider, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 3;
+        this.mainContainer.add(this.frictionValueLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        this.mainContainer.add(this.paddleSpeedLabel, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        this.mainContainer.add(this.paddleSpeedSlider, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 4;
+        this.mainContainer.add(this.paddleSpeedValueLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        this.mainContainer.add(this.submitButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        this.mainContainer.add(this.reinitializeButton, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 5;
+        this.mainContainer.add(this.backButton, gbc); 
+
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(SETTINGS_ZONE);
-        
-        this.add(mainContainer, BorderLayout.CENTER);        
+        this.add(this.mainContainer, BorderLayout.CENTER);
     }
 
     private JSlider createStyledSlider (String text, int min, int max, int value){
