@@ -49,6 +49,7 @@ public class Breakout extends Game {
 	private ArrayList<Ball>  Balls;
 	private Player player;
 	private Ball ball;
+	private Ball planete;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 1;
 	// init at 1 because it takes time to initialize the list of bricks 
@@ -95,6 +96,8 @@ public class Breakout extends Game {
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
 
+		this.planete = new Ball (Ball.PLANET_IMAGE, 100, 1000, new Vector2D(20, 20), false);
+		this.getBalls().add(planete);
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
 
@@ -106,7 +109,8 @@ public class Breakout extends Game {
 		this.physicEngine.getPhysicalObjects().add(player);
 		this.physicEngine.getPhysicalObjects().add(eastWall);
 		this.physicEngine.getPhysicalObjects().add(westWall);
-		this.physicEngine.getPhysicalObjects().add(northWall);		
+		this.physicEngine.getPhysicalObjects().add(northWall);	
+		this.physicEngine.getPhysicalObjects().add(planete);	
 
 	
 		this.addKeyListener();
@@ -169,6 +173,7 @@ public class Breakout extends Game {
 	 */
 	private void load(){
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+		this.getPanel().getGameZone().add(this.planete.getRepresentation());
 		this.getBall().getRepresentation().setImage(Ball.DEFAULT_IMAGE2);
 		for (Ball ball : this.getBalls()){
 			this.getPanel().getGameZone().add(ball.getRepresentation());
@@ -583,6 +588,7 @@ public class Breakout extends Game {
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
+		this.getPanel().getGameZone().add(this.planete.getRepresentation());
 
 
 		this.getPanel().updateScore(this.score, this.nbBricks);
