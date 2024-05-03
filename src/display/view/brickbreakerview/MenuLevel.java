@@ -173,7 +173,7 @@ public class MenuLevel extends JPanel {
     private void addAction(int i, JButton b){
         b.addActionListener((event) -> {
             game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
-            game_frame.startGame(i);
+            game_frame.startBreakoutGame(i);
         });
     }
 

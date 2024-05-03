@@ -43,6 +43,11 @@ public class HomePage extends JPanel{
             this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "menuPanel");
         });
 
+        this.SpaceInvader.addActionListener((event) -> {
+            gameframe.getCardlayout().show(gameframe.getPanelContainer(), "gamePanel");
+            gameframe.startSpaceInvaderGame();
+        });
+
         this.exit.addActionListener((event) -> {
             System.exit(0);
         });

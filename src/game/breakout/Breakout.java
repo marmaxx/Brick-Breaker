@@ -235,7 +235,7 @@ public class Breakout extends Game {
 					}
 					case KeyEvent.VK_X: {
 						BufferedImage screenShot = null;
-						if (!Breakout.this.gameframe.getGame().isPaused()){
+						if (!Breakout.this.gameframe.getBreakoutGame().isPaused()){
 							screenShot = screenShot();
 							Breakout.this.pause();
 							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
@@ -280,14 +280,14 @@ public class Breakout extends Game {
 						}
 						break;
 					case KeyEvent.VK_M:
-						if (!Breakout.this.gameframe.getGame().isPaused()){
+						if (!Breakout.this.gameframe.getBreakoutGame().isPaused()){
 							Breakout.this.pause();
 							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
 							Breakout.this.gameframe.getGamePanel().getMenu().setVisible(true);
 						}
 						break;
 					case KeyEvent.VK_R:
-					if (Breakout.this.gameframe.getGame().isPaused()){
+					if (Breakout.this.gameframe.getBreakoutGame().isPaused()){
 						Breakout.this.resume();
 						Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(true);
 						Breakout.this.gameframe.getGamePanel().getMenu().setVisible(false);

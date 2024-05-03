@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 
 import game.breakout.Breakout;
+import game.spaceinvader.*;
 
 
 public class GameFrame extends JFrame {
@@ -15,9 +16,13 @@ public class GameFrame extends JFrame {
 
 	public static final Color INTERFACE_BACKGROUND = Color.WHITE;
 
-	private Breakout game;
+	private Breakout BreakoutGame;
+	private SpaceInvader SpaceInvaderGame;
+
 	private GamePanel gamePanel;
 	private MenuPanel menuPanel;
+	int numberOfTheGame = 0; //0 for brickbreaker, 1 for spaceInvader, 2 for pong
+
 	private JPanel container;
 	private GameOver game_over; 
 	private WinPanel game_win;
@@ -190,7 +195,11 @@ public class GameFrame extends JFrame {
 
 
 	public void setGame(Breakout game){
-		this.game = game;
+		this.BreakoutGame = game;
+	}
+
+	public void setGame(SpaceInvader game){
+		this.SpaceInvaderGame = game;
 	}
 
 	public void setnbLevelUnlock(){
@@ -201,13 +210,28 @@ public class GameFrame extends JFrame {
 		return this.nbLevelUnlock;
 	}
 
-	public Breakout getGame(){
-		return this.game;
+	public Breakout getBreakoutGame(){
+		return this.BreakoutGame;
 	}
 
-	public void startGame(int level){
-		game = new Breakout(this, level); //created instance of Breakout
-		game.start(); //starting the game 
+	public SpaceInvader getSpaceInvaderGame(){
+		return this.SpaceInvaderGame;
+	}
+
+	public void startBreakoutGame(int level){
+		this.numberOfTheGame = 0;
+		this.BreakoutGame = new Breakout(this, level); //created instance of Breakout
+		this.BreakoutGame.start(); //starting the game 
+	}
+
+	public void startSpaceInvaderGame(){
+		this.numberOfTheGame = 1;
+		this.SpaceInvaderGame = new SpaceInvader(this); //created instance of SpaceInvader
+		this.SpaceInvaderGame.start();
+	}
+
+	public int getNumberOfTheGame(){
+		return this.numberOfTheGame;
 	}
 
 	public void loadGame(String saveName){
@@ -222,7 +246,7 @@ public class GameFrame extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.game = game;
+		this.BreakoutGame = game;
 		game.start(); //starting the game 
 		game.setLevel(gameLevel); //resets the level to the actual level after game generation
 	}

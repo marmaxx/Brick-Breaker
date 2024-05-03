@@ -42,7 +42,11 @@ public class MenuInGame extends JPanel {
         }
 
         this.resumeButton.addActionListener(e -> {
-           frame.getGame().resume();
+            if(frame.getNumberOfTheGame() == 0){
+                frame.getBreakoutGame().resume();
+            }else if( frame.getNumberOfTheGame() == 1){
+                frame.getSpaceInvaderGame().resume();
+            }
            pane.resumeGamePanel();
            pane.requestFocus();
         });
@@ -50,13 +54,21 @@ public class MenuInGame extends JPanel {
 
 
         this.BackToMenuButton.addActionListener(e -> {
-            frame.getGame().clearGameComponents();
+            if(frame.getNumberOfTheGame() == 0){
+                frame.getBreakoutGame().clearGameComponents();
+            }else if( frame.getNumberOfTheGame() == 1){
+                frame.getSpaceInvaderGame().clearGameComponents();
+            }
             pane.getGameZone().removeAll();
             pane.getMenu().setVisible(false);
             pane.getGameZone().setVisible(true);
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                    if(frame.getNumberOfTheGame() == 0){
+                        frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                    }else if( frame.getNumberOfTheGame() == 1){
+                        frame.getCardlayout().show(frame.getPanelContainer(), "homePage");
+                    }
                 }
             });
         });

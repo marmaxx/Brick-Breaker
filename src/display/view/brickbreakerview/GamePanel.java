@@ -83,7 +83,11 @@ public class GamePanel extends JPanel {
         this.menuInGame.setVisible(false);
 
 		this.menu.addActionListener((event) -> {
-			this.getFrame().getGame().pause();
+			if (this.getFrame().getNumberOfTheGame() == 0){
+				this.getFrame().getBreakoutGame().pause();
+			} else if (this.getFrame().getNumberOfTheGame() == 1){
+				this.getFrame().getSpaceInvaderGame().pause();
+			}
 			this.gameZone.setVisible(false);
 			this.menuInGame.setVisible(true);
 		});
