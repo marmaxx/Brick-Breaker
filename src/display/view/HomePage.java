@@ -20,9 +20,9 @@ public class HomePage extends JPanel{
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     public static final Dimension BUTTON_SIZE = new Dimension((int)(SCREEN_FULL_SIZE.getWidth()*20/100), (int)(SCREEN_FULL_SIZE.getHeight()*10/100)); 
 
-    private JButton BrickBreaker  = createStyledButton(" Brick Bracker ");
+    private JButton BrickBreaker  = createStyledButton(" Brick Breacker ");
     private JButton SpaceInvader = createStyledButton(" Space Invader ");
-    private JButton Ponk = createStyledButton(" Ponk ");
+    private JButton Ponk = createStyledButton(" Pong ");
     private JButton exit = createStyledButton("Quitter");
 
     public HomePage(GameFrame gameframe){
