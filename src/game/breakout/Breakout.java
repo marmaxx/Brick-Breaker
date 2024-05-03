@@ -523,8 +523,8 @@ public class Breakout extends Game {
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 	
-				Brick brick =new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
 				this.physicEngine.getPhysicalObjects().add(brick);
@@ -683,7 +683,7 @@ public class Breakout extends Game {
 					boolean dropBonus = (randomNumber == 1);
 		
 					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-					randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+					randomLifespan, dropBonus, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 					iterator.add(brick);
 					brick.moveRight();
 					this.getPanel().getGameZone().add(brick.getRepresentation());
