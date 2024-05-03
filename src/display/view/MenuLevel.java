@@ -18,7 +18,7 @@ public class MenuLevel extends JPanel {
     private GameFrame game_frame;
     private int nbLevelUnlock;
     private BufferedImage backgroundImage; // background image 
-    private static final String LEVEL_1_IMAGE_PATH = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Level1.png";
+    private static final String LEVEL_1_IMAGE_PATH = "src" + java.io.File.separator + "resources" + java.io.File.separator + "Level1.png";
 
      private enum Level {
         level_1,
@@ -42,7 +42,7 @@ public class MenuLevel extends JPanel {
         this.nbLevelUnlock = this.game_frame.getNbLevelUnlock(); 
 
         try {
-            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Careers.png"));
+            backgroundImage = ImageIO.read(new File("src" + java.io.File.separator + "resources" + java.io.File.separator + "Careers.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

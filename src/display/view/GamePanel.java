@@ -49,7 +49,7 @@ public class GamePanel extends JPanel {
     public GamePanel(GameFrame gameFrame, Color color) {
 
 		try {
-            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "BackGround.jpg")); 
+            backgroundImage = ImageIO.read(new File("src" + java.io.File.separator + "resources" + java.io.File.separator + "BackGround.jpg")); 
         } catch (IOException e) {
             e.printStackTrace();
         }

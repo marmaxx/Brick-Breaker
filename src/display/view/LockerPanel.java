@@ -106,7 +106,7 @@ public class LockerPanel extends JPanel{
 
     public LockerPanel(GameFrame gameFrame){
         try {
-            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Settings.png")); 
+            backgroundImage = ImageIO.read(new File("src" + java.io.File.separator + "resources" + java.io.File.separator + "Settings.png")); 
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,8 +135,8 @@ public class LockerPanel extends JPanel{
             }
         };
 
-        ballImage = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png");
-        trailImage = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "redTrail.png");
+        ballImage = new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + "Meteorite.png");
+        trailImage = new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + "redTrail.png");
 
         this.leftBallButton.addActionListener((event) -> {
             this.repaint();
@@ -282,7 +282,7 @@ public class LockerPanel extends JPanel{
     }
     
     private JButton createStyledButton(int width, int height, String url){
-        ImageIcon imageIcon = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + url);
+        ImageIcon imageIcon = new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + url);
         Image image = imageIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         JButton button = new JButton(new ImageIcon(image));
         button.setForeground(Color.WHITE);
@@ -354,10 +354,10 @@ public class LockerPanel extends JPanel{
     }
 
     private ImageIcon createBallImageFrom(int index){
-        return new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + ballOptions[index] + ".png");
+        return new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + ballOptions[index] + ".png");
     }
 
     private ImageIcon createTrailImageFrom(int index){
-        return new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + colorOptions[index] + "Trail.png");
+        return new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + colorOptions[index] + "Trail.png");
     }
 }
