@@ -19,7 +19,7 @@ import game.breakout.entities.rules.Entity;
 public class Brick extends Entity {
 	public static final long serialVersionUID = 12L;
 
-    public static final String path = "src" + java.io.File.separator + "resources" + java.io.File.separator;
+    public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
     transient public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
 
     protected boolean isDestroyed, dropBonus, unbreakable;

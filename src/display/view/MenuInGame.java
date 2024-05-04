@@ -35,7 +35,7 @@ public class MenuInGame extends JPanel {
     public MenuInGame(GameFrame frame, GamePanel pane){
 
         try {
-            backgroundImage = ImageIO.read(new File("src" + java.io.File.separator + "resources" + java.io.File.separator + "MenuInGame.jpg")); 
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "MenuInGame.jpg")); 
         } catch (IOException e) {
             e.printStackTrace();
         }

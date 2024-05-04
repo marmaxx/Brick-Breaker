@@ -24,8 +24,8 @@ import java.io.Serializable;
 public class Ball extends Entity  {
 	public static final long serialversionUID =10L;
 
-	transient public static Image DEFAULT_IMAGE = new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + "ball.png").getImage();
-	transient public static final Image DEFAULT_IMAGE2 = new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + "Meteorite.png").getImage();
+	transient public static Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+	transient public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
 	public static  Color DEFAULT_COLOR = Color.RED;
 	public static  Color DEFAULT_TRAIL_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
@@ -189,7 +189,7 @@ public class Ball extends Entity  {
 	public class BallTrail {
 		public Ball ball;
 		public Color trailColor;
-		public Image Image = new ImageIcon("src" + java.io.File.separator + "resources" + java.io.File.separator + "Meteorite.png").getImage();
+		public Image Image = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
 		public float r;
 		public float g;
 		public float b;
