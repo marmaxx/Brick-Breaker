@@ -51,6 +51,7 @@ public class GameOver extends JPanel {
                 frame.getSpaceInvaderGame().clearGameComponents();
                 frame.getGamePanel().getGameZone().removeAll();
                 frame.getSpaceInvaderGame().setLife(5);
+                frame.getSpaceInvaderGame().setnbEnemies(1);
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         frame.getCardlayout().show(frame.getPanelContainer(), "homePage");

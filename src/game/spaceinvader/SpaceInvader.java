@@ -331,6 +331,15 @@ public class SpaceInvader extends Game{
 	}
 
 	/**
+	 * set the enemies number in the game.
+	 * 
+	 * @param e enemies number 
+	 */
+	public void setnbEnemies(int e){
+		this.nbEnemies = e;
+	}
+
+	/**
 	 * Get the life in the game.
 	 * 
 	 * @return The life
@@ -478,6 +487,7 @@ public class SpaceInvader extends Game{
 		while (iterator.hasNext()) {
 			Enemy enemy = iterator.next();
 			if (enemy.getRepresentation().getPosY()>this.getPlayer().getRepresentation().getPosY()){
+				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 			if(enemy.willBeOffScreen(this.getPanel(),5)){
@@ -513,9 +523,9 @@ public class SpaceInvader extends Game{
 		}
 
 		// If there are no more enemies, the player wins
-		if (this.getEnemies().isEmpty()) {
+		if (this.nbEnemies == 0 && this.life > 0) {
 			this.clearGameComponents();
-			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
+			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
 	}
 
