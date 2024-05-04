@@ -175,7 +175,7 @@ public class LockerPanel extends JPanel{
         });
 
         this.submitButton.addActionListener((event) -> {
-            Ball.DEFAULT_IMAGE = createBallImageFrom(ballCurrentIndex).getImage();
+            Ball.DEFAULT_IMAGE2 = createBallImageFrom(ballCurrentIndex).getImage();
             Player.DEFAULT_COLOR = createColorFrom(paddleCurrentColorIndex);
             Ball.DEFAULT_TRAIL_COLOR = createColorFrom(trailCurrentColorIndex);
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
