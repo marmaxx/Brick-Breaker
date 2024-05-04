@@ -1,7 +1,6 @@
 package game.breakout.entities;
 
 import java.util.HashMap;
-import java.util.Collections;
 
 import javax.swing.ImageIcon;
 

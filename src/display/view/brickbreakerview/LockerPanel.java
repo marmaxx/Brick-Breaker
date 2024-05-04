@@ -94,7 +94,7 @@ public class LockerPanel extends JPanel{
 
     public LockerPanel(GameFrame gameFrame){
         try {
-            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Settings.png")); 
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "locker.png")); 
         } catch (IOException e) {
             e.printStackTrace();
         }
