@@ -2,15 +2,15 @@ package display.view.brickbreakerview;
 
 import display.view.*;
 
-import javax.swing.*; 
+import javax.swing.*;
+
+import game.breakout.Breakout;
+
 import java.awt.*; 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
-import game.breakout.Breakout;
-
 
 
 public class MenuLevel extends JPanel {

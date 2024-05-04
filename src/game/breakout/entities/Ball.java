@@ -23,9 +23,9 @@ public class Ball extends Entity  {
 	public static final long serialversionUID =10L;
 
 	transient public static Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
-	transient public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
-	public static  Color DEFAULT_COLOR = Color.RED;
-	public static  Color DEFAULT_TRAIL_COLOR = Color.RED;
+	transient public static Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+	public static Color DEFAULT_COLOR = Color.RED;
+	public static Color DEFAULT_TRAIL_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;

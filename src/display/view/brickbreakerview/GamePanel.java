@@ -144,7 +144,7 @@ public class GamePanel extends JPanel {
 		return this.menuInGame;
 	}
 
-	/** 
+	/**  
 	 * update game life in JLabel
 	 * @param life The Life in game
 	 * @param bricks The number of brick in game
@@ -175,7 +175,7 @@ public class GamePanel extends JPanel {
         JButton button = new JButton(text);
         button.setFont(new Font("Ubuntu", Font.BOLD, 22));
         button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setMaximumSize(new Dimension(400, 80)); 
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

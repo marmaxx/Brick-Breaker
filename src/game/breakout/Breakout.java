@@ -48,7 +48,7 @@ public class Breakout extends Game {
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
-	private static final int WALL_WIDTH = 10;
+	private static final int WALL_WIDTH = 1;
 	// init at 1 because it takes time to initialize the list of bricks 
 	// and it would lead us to the win panel directly
 	private int nbBricks = 1; 
@@ -87,7 +87,7 @@ public class Breakout extends Game {
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
-		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE,  30,50,new Vector2D(565,670),true);
+		Ball mainBall = new Ball(Ball.DEFAULT_IMAGE2,  30,50,new Vector2D(565,670),true);
 		this.setBall(mainBall);
 
 		mainBall.active=false;
@@ -521,8 +521,8 @@ public class Breakout extends Game {
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 	
-				Brick brick =new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
 				this.physicEngine.getPhysicalObjects().add(brick);
@@ -681,7 +681,7 @@ public class Breakout extends Game {
 					boolean dropBonus = (randomNumber == 1);
 		
 					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-					randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+					randomLifespan, dropBonus, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 					iterator.add(brick);
 					brick.moveRight();
 					this.getPanel().getGameZone().add(brick.getRepresentation());
