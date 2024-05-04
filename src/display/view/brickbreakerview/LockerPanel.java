@@ -72,8 +72,8 @@ public class LockerPanel extends JPanel{
 
     private JPanel paddlePanel = new JPanel();
 
-    private JLabel ballLabel = createStyledLabel("Balle:    ");
-    private JLabel trailLabel = createStyledLabel("Trainée:");
+    private JLabel ballLabel = createStyledLabel("Ball:    ");
+    private JLabel trailLabel = createStyledLabel("Trail:");
     private JLabel paddleLabel = createStyledLabel("Paddle: ");
     private JButton leftBallButton = createStyledButton(30, 27, "left_arrow.png");
     private JButton rightBallButton = createStyledButton(30, 27, "right_arrow.png");
@@ -81,9 +81,9 @@ public class LockerPanel extends JPanel{
     private JButton rightTrailButton = createStyledButton(30, 27, "right_arrow.png");
     private JButton leftPaddleButton = createStyledButton(30, 27, "left_arrow.png");
     private JButton rightPaddleButton = createStyledButton(30, 27, "right_arrow.png");
-    private JButton submitButton = createStyledButton("Valider");
-    private JButton reinitializeButton = createStyledButton("Réinitialiser");
-    private JButton backButton = createStyledButton("Retour");
+    private JButton submitButton = createStyledButton("Submit");
+    private JButton reinitializeButton = createStyledButton("Reinitialize");
+    private JButton backButton = createStyledButton("Back");
 
     private String[] ballOptions = {"Meteorite", "earth", "mars", "venus"};
     private String[] colorOptions = {"white", "yellow", "red", "green", "blue"};

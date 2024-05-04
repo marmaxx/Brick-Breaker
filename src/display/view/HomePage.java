@@ -23,7 +23,7 @@ public class HomePage extends JPanel{
     private JButton BrickBreaker  = createStyledButton(" Brick Breacker ");
     private JButton SpaceInvader = createStyledButton(" Space Invader ");
     private JButton Ponk = createStyledButton(" Pong ");
-    private JButton exit = createStyledButton("Quitter");
+    private JButton exit = createStyledButton(" Exit ");
 
     public HomePage(GameFrame gameframe){
 
@@ -32,7 +32,7 @@ public class HomePage extends JPanel{
         this.setPreferredSize(new Dimension(SCREEN_FULL_SIZE));
 
         try {
-            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "BrickBreaker.png"));
+            backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Home.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

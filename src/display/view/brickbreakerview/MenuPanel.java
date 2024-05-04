@@ -21,8 +21,8 @@ public class MenuPanel extends JPanel {
     private JButton Marathon  = createStyledButton("Marathon mode");
     private JButton classic_Game  = createStyledButton("Classic Game");
     private JButton settings = createStyledButton(" Settings");
-    private JButton locker = createStyledButton("Casier");
-    private JButton backHome = createStyledButton("Retour");
+    private JButton locker = createStyledButton("Locker");
+    private JButton backHome = createStyledButton("Back");
     private JButton SavedGames = createStyledButton("Saved Games");
     transient private BufferedImage backgroundImage; // background image 
 

@@ -24,23 +24,23 @@ public class SettingsPanel extends JPanel{
     public static final int FRICTION_DEFAULT_VALUE = 5;
     public static final int PADDLE_SPEED_DEFAULT_VALUE = 10;
 
-    private JLabel gravityLabel = createStyledLabel("Force de gravité: ");
+    private JLabel gravityLabel = createStyledLabel("Gravity force: ");
     private JLabel gravityValueLabel = createStyledLabel(String.valueOf(GRAVITY_DEFAULT_VALUE));
     private JSlider gravitySlider = createStyledSlider("Gravité", 0, 10, 5);    
 
     private JLabel reboundValueLabel = createStyledLabel(String.valueOf(REBOUND_DEFAULT_VALUE));
-    private JLabel reboundLabel = createStyledLabel("Force du rebond: ");
+    private JLabel reboundLabel = createStyledLabel("Rebound force: ");
     private JSlider reboundSlider = createStyledSlider("Rebond", 0, 200, 100);
 
     private JLabel frictionValueLabel = createStyledLabel(String.valueOf(FRICTION_DEFAULT_VALUE));
-    private JLabel frictionLabel = createStyledLabel("Force de frottements: ");
+    private JLabel frictionLabel = createStyledLabel("Friction force: ");
     private JSlider frictionSlider = createStyledSlider("Frottements", 0, 10, 5);
 
-    private JButton submitButton = createStyledButton("Valider");
-    private JButton reinitializeButton = createStyledButton("Réinitialiser");
-    private JButton backButton = createStyledButton("Retour");
+    private JButton submitButton = createStyledButton("Submit");
+    private JButton reinitializeButton = createStyledButton("Reinitialize");
+    private JButton backButton = createStyledButton("Back");
 
-    private JLabel paddleSpeedLabel = createStyledLabel("Vitesse du paddle:");
+    private JLabel paddleSpeedLabel = createStyledLabel("Paddle speed:");
     private JLabel paddleSpeedValueLabel = createStyledLabel(String.valueOf(PADDLE_SPEED_DEFAULT_VALUE));
     private JSlider paddleSpeedSlider = createStyledSlider("PaddleSpeed", 5, 30, 10);
 
