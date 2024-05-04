@@ -50,7 +50,7 @@ public class Breakout extends Game {
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
-	private static final int WALL_WIDTH = 10;
+	private static final int WALL_WIDTH = 1;
 	// init at 1 because it takes time to initialize the list of bricks 
 	// and it would lead us to the win panel directly
 	private int nbBricks = 1; 
