@@ -1,6 +1,9 @@
 package display.view;
 
-import javax.swing.*; 
+import javax.swing.*;
+
+import game.breakout.Breakout;
+
 import java.awt.*; 
 import java.awt.image.BufferedImage;
 import java.io.File;
