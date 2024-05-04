@@ -7,20 +7,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
 
 import game.breakout.Breakout;
 import game.breakout.entities.Ball;
@@ -69,21 +70,7 @@ public class LockerPanel extends JPanel{
         }
     };
 
-    private JPanel paddlePanel = new JPanel();/* {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // Dessiner l'image de fond
-            if (paddleImage != null) {
-                g.drawImage(paddleImage, 0, 0, 0, 0, this);
-            }
-        }*/
-    
-    private JPanel ballContainer = new JPanel();
-    private JPanel trailContainer = new JPanel();
-    private JPanel paddleContainer = new JPanel();
-    private JPanel lockerContainer = new JPanel();
-    private JPanel buttonContainer = new JPanel();
+    private JPanel paddlePanel = new JPanel();
 
     private JLabel ballLabel = createStyledLabel("Balle:    ");
     private JLabel trailLabel = createStyledLabel("Trainée:");
@@ -119,10 +106,11 @@ public class LockerPanel extends JPanel{
                 // Dessiner l'image de fond
                 if (ballImage != null) {
                     Image image = ballImage.getImage();
-                    g.drawImage(image, 0, 0, 100, 100, this);
+                    g.drawImage(image, 0, 0, 160, 160, this);
                 }
             }
         };
+        ballPanel.setBackground(new Color(0,0,0,0));
 
         trailPanel = new JPanel() {
             @Override
@@ -131,10 +119,11 @@ public class LockerPanel extends JPanel{
                 // Dessiner l'image de fond
                 if (trailImage != null) {
                     Image image = trailImage.getImage();
-                    g.drawImage(image, 0, 0, 100, 100, this);
+                    g.drawImage(image, 0, 0, 160, 160, this);
                 }
             }
         };
+        trailPanel.setBackground(new Color(0,0,0,0));
 
         ballImage = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png");
         trailImage = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "redTrail.png");
@@ -203,73 +192,114 @@ public class LockerPanel extends JPanel{
             this.repaint();
         });
         
-        this.ballPanel.setBackground(new Color(30,30,30,0));
-        this.ballPanel.setPreferredSize(new Dimension(100,100));
-        this.trailPanel.setBackground(new Color(30,30,30,0));
-        this.trailPanel.setPreferredSize(new Dimension(100,100));
-        this.paddlePanel.setBackground(Color.WHITE);
-        this.paddlePanel.setPreferredSize(new Dimension(100,100));
+        this.mainContainer.setLayout(new GridBagLayout());
 
-        this.lockerContainer.setLayout(new BoxLayout(this.lockerContainer, BoxLayout.Y_AXIS));
-        this.lockerContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.lockerContainer.setBackground(new Color(0,0,0,0));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gbc.insets = new Insets(2, 2, 2, 2);
+        this.mainContainer.add(emptyJButton(), gbc);
 
-        this.ballContainer.setBackground(new Color(0,0,0,0));
-        this.ballContainer.setPreferredSize(new Dimension(200, 200));
-        this.ballContainer.add(this.ballLabel);
-        this.ballContainer.add(this.leftBallButton);
-        this.ballContainer.add(this.ballPanel);
-        this.ballContainer.add(this.rightBallButton);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.mainContainer.add(emptyJButton(), gbc);
 
-        this.trailContainer.setBackground(new Color(0,0,0,0));
-        this.trailContainer.setPreferredSize(new Dimension(200,200));
-        this.trailContainer.add(this.trailLabel);
-        this.trailContainer.add(this.leftTrailButton);
-        this.trailContainer.add(this.trailPanel);
-        this.trailContainer.add(this.rightTrailButton);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        this.mainContainer.add(this.ballLabel, gbc);
 
-        this.paddleContainer.setBackground(new Color(0,0,0,0));
-        this.paddleContainer.setPreferredSize(new Dimension(200,200));
-        this.paddleContainer.add(this.paddleLabel);
-        this.paddleContainer.add(this.leftPaddleButton);
-        this.paddleContainer.add(this.paddlePanel);
-        this.paddleContainer.add(this.rightPaddleButton);
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        this.mainContainer.add(this.leftBallButton, gbc);
 
-        this.lockerContainer.add(Box.createVerticalGlue());
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        this.mainContainer.add(this.ballPanel, gbc);
 
-        this.lockerContainer.add(Box.createVerticalStrut(200));
-        this.lockerContainer.add(this.ballContainer);
+        gbc.gridx = 4;
+        gbc.gridy = 1;
+        this.mainContainer.add(this.rightBallButton, gbc);
 
-        this.lockerContainer.add(Box.createVerticalStrut(1));
-        this.lockerContainer.add(this.trailContainer);
+        gbc.gridx = 5;
+        gbc.gridy = 1;
+        this.mainContainer.add(emptyJButton(), gbc);
 
-        this.lockerContainer.add(Box.createVerticalStrut(1));
-        this.lockerContainer.add(this.paddleContainer);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        this.mainContainer.add(emptyJButton(), gbc);
 
-        this.lockerContainer.add(Box.createVerticalGlue());
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.trailLabel, gbc);
 
-        this.buttonContainer.setLayout(new BoxLayout(this.buttonContainer, BoxLayout.X_AXIS));
-        this.buttonContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
-        this.buttonContainer.setBackground(new Color(0,0,0,0));
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.leftTrailButton, gbc);
 
-        this.buttonContainer.add(Box.createHorizontalGlue());
-        this.buttonContainer.add(this.submitButton);
-        this.buttonContainer.add(Box.createHorizontalStrut(20));
-        this.buttonContainer.add(this.reinitializeButton);
-        this.buttonContainer.add(Box.createHorizontalStrut(20));
-        this.buttonContainer.add(this.backButton);
-        this.buttonContainer.add(Box.createHorizontalGlue());
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.trailPanel, gbc);
 
-        this.mainContainer.setLayout(new BoxLayout(this.mainContainer, BoxLayout.Y_AXIS));
-        this.lockerContainer.add(Box.createVerticalGlue());
-        this.mainContainer.add(Box.createVerticalStrut(50));
-        this.mainContainer.add(this.lockerContainer);
-        this.mainContainer.add(Box.createVerticalStrut(5));
-        this.mainContainer.add(this.buttonContainer);
-        this.lockerContainer.add(Box.createVerticalGlue());
+        gbc.gridx = 4;
+        gbc.gridy = 2;
+        this.mainContainer.add(this.rightTrailButton, gbc);
+
+        gbc.gridx = 5;
+        gbc.gridy = 2;
+        this.mainContainer.add(emptyJButton(), gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        this.mainContainer.add(emptyJButton(), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        this.mainContainer.add(this.paddleLabel, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        this.mainContainer.add(this.leftPaddleButton, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 3;
+        this.mainContainer.add(this.paddlePanel, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 3;
+        this.mainContainer.add(this.rightPaddleButton, gbc);
+
+        gbc.gridx = 5;
+        gbc.gridy = 3;
+        this.mainContainer.add(emptyJButton(), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        this.mainContainer.add(emptyJButton(), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        this.mainContainer.add(this.submitButton, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        this.mainContainer.add(this.reinitializeButton, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 4;
+        this.mainContainer.add(this.backButton, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 4;
+        this.mainContainer.add(emptyJButton(), gbc);
+
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(LOCKER_ZONE);
-        this.add(mainContainer, BorderLayout.CENTER);
+        this.add(this.mainContainer, BorderLayout.CENTER);
     }
 
     private JButton createStyledButton(String text) {
@@ -360,5 +390,13 @@ public class LockerPanel extends JPanel{
 
     private ImageIcon createTrailImageFrom(int index){
         return new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + colorOptions[index] + "Trail.png");
+    }
+
+    private JButton emptyJButton (){
+        JButton b = new JButton();
+        b.setFocusPainted(false); 
+        b.setBorderPainted(false); 
+        b.setContentAreaFilled(false);
+        return b;
     }
 }
