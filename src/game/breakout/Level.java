@@ -19,14 +19,15 @@ public class Level implements Serializable {
     public static void level(Breakout b) {
 		switch (b.getLevel()) {
 			case 0:
-				createLevel3(b);
+				createLevel1(b);
+				//createLevel2(b);
+				//createLevel3(b);
 				break;
 			case 1:
-				createLevel1(b);
+				createLevel2(b);
 				break;
 			case 2:
-				createLevel2(b);
-				
+				createLevel3(b);
 				break;
 			case 3:
 				createLevel1(b);
