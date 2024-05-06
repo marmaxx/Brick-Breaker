@@ -808,7 +808,6 @@ public class Breakout extends Game {
 					Vector2D ballPos = new Vector2D(randomX, randomY);
 
 					Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
-					ball.getRepresentation().setBounds(ball.getRepresentation().getPosX(), ball.getRepresentation().getPosY(), ball.getRepresentation().getWidth(), ball.getRepresentation().getHeight());
 					
 					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
 					ball.setSpeed(ballToBeDuplicated.getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
@@ -820,7 +819,6 @@ public class Breakout extends Game {
 				Iterator<Ball> ballsToBeAddedIterator = ballsToBeAdded.iterator();
 				while(ballsToBeAddedIterator.hasNext()){
 					Ball ball = ballsToBeAddedIterator.next();
-					ball.getRepresentation().setBounds(ball.getRepresentation().getPosX(), ball.getRepresentation().getPosY(), ball.getRepresentation().getWidth(), ball.getRepresentation().getHeight());
 					this.getBalls().add(ball);
 					this.getPanel().getGameZone().add(ball.getRepresentation());
 					this.getPhysicEngine().getPhysicalObjects().add(ball);

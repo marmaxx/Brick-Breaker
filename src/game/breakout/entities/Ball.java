@@ -232,10 +232,11 @@ public class Ball extends Entity  {
 			Circle point =null;
 			if (trailColor ==null){
 				point = new Circle(Image.getImage(), ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
-			
+				
 			}else{
 				point = new Circle(trailColor, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
 			}
+			point.setBounds(ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
 			points.add(new TrailPoint(point, 1));
 			breakout.getPanel().getGameZone().add(point);
 
