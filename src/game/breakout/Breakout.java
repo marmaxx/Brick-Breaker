@@ -614,7 +614,7 @@ public class Breakout extends Game {
 	 public void updateBall() {
 		Circle trailPoint = new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10);
 		trailPoint.setBounds(trailPoint.getPosX(), trailPoint.getPosY(), trailPoint.getWidth(), trailPoint.getHeight());
-		if(this.getBall().active) this.getBall().trail.addPoint(trailPoint,this);
+		if(this.getBall().active) this.getBall().trail.addPoint(this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
