@@ -634,7 +634,7 @@ public class Breakout extends Game {
 		Iterator<Brick> iterator = this.getBricks().iterator();
 	
 		 
-		if (this.nbBricks == 0 && this.life >= 0){
+		if ((this.nbBricks == 0 && this.life >= 0) || (this.nbBricks == Level.unbreakableBrickNumber && this.life >= 0)){
 			this.gameframe.setnbLevelUnlock();
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
@@ -860,7 +860,7 @@ public class Breakout extends Game {
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
 			
-			Ball ball = new Ball(Ball.DEFAULT_IMAGE, 30, 50, new Vector2D(x, y), true);
+			Ball ball = new Ball(Ball.DEFAULT_IMAGE2, 30, 50, new Vector2D(x, y), true);
 			ball.setSpeed(new Vector2D(0.5, -0.5));
 			ball.active=false;
 			this.setBall(ball);

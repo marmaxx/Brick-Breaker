@@ -1,5 +1,6 @@
 package game.breakout.entities;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -31,16 +32,15 @@ public class Brick extends Entity {
 
 	public static final HashMap<Integer, Image> lifespans = new HashMap<Integer, Image>() {
 		{
-			put(0, new ImageIcon(path + "unbreakableBrick.png").getImage());
-			put(1, new ImageIcon(path + "Brick0.png").getImage());
-			put(2, new ImageIcon(path + "Brick1.png").getImage());
-			put(3, new ImageIcon(path + "Brick2.png").getImage());
-			
+			put(0, new ImageIcon(path + "Brick0.png").getImage());
+			put(1, new ImageIcon(path + "Brick1.png").getImage());
+			put(2, new ImageIcon(path + "Brick2.png").getImage());
+			put(3, new ImageIcon(path + "unbreakableBrick.png").getImage());
 		}
 	};
 
-	public static final int MIN_LIFESPAN = 0;//Collections.min(lifespans.keySet());
-	public static final int MAX_LIFESPAN = lifespans.size();
+	public static final int MIN_LIFESPAN = Collections.min(lifespans.keySet());
+	public static final int MAX_LIFESPAN = lifespans.size() - 1;
 
 
 
@@ -271,9 +271,9 @@ public class Brick extends Entity {
 		if(object instanceof Ball){
 			if (this.getLifespan() <= Brick.MIN_LIFESPAN) {
 				if (!(this.unbreakable)) this.destroy();
-				this.setLifespan(0);
+				this.setLifespan(Brick.MAX_LIFESPAN);
 			}
-			this.setLifespan(this.getLifespan() - 1);
+			else if (this.getLifespan() != Brick.MAX_LIFESPAN) this.setLifespan(this.getLifespan() - 1);
 		}
 	}
 
