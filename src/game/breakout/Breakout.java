@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import display.engine.PhysicsEngine;
 
 import display.engine.utils.Vector2D;
+import display.engine.shapes.*; 
 import display.view.GameFrame;
 import display.view.brickbreakerview.*;
 import game.breakout.entities.Ball;
@@ -33,6 +34,8 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.Robot;
 import java.awt.Toolkit;
+
+import java.awt.*;
 
 public class Breakout extends Game {
 	public static final long serialVersionUID = 15L;
