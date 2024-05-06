@@ -49,7 +49,7 @@ public class SettingsPanel extends JPanel{
     private double reboundValue = REBOUND_DEFAULT_VALUE;
     private double frictionValue = FRICTION_DEFAULT_VALUE;
     private int paddleSpeedValue = PADDLE_SPEED_DEFAULT_VALUE;
-    private BufferedImage backgroundImage;
+    transient private BufferedImage backgroundImage;
 
     private JPanel mainContainer = new JPanel() {
         @Override

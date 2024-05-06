@@ -16,7 +16,7 @@ import game.breakout.Breakout;
 public class HomePage extends JPanel{
 
     private GameFrame gameframe;
-    private BufferedImage backgroundImage; 
+    transient private BufferedImage backgroundImage; 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     public static final Dimension BUTTON_SIZE = new Dimension((int)(SCREEN_FULL_SIZE.getWidth()*20/100), (int)(SCREEN_FULL_SIZE.getHeight()*10/100)); 
 

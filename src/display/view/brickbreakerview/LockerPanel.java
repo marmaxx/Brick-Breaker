@@ -32,7 +32,7 @@ public class LockerPanel extends JPanel{
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     public static final Dimension LOCKER_ZONE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
     
-    private BufferedImage backgroundImage;
+    transient private BufferedImage backgroundImage;
     private ImageIcon ballImage;
     private ImageIcon trailImage;
     private JPanel mainContainer =  new JPanel() {

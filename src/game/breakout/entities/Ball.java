@@ -6,7 +6,7 @@ import display.engine.rules.GraphicalObject;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
-
+import java.io.Serializable;
 import java.util.LinkedList;
 
 
@@ -184,10 +184,10 @@ public class Ball extends Entity  {
 		
 	}
 
-	public class BallTrail {
+	public class BallTrail implements Serializable{
 		public Ball ball;
 		public Color trailColor;
-		public Image Image = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+		public ImageIcon Image = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png");
 		public float r;
 		public float g;
 		public float b;
@@ -206,10 +206,10 @@ public class Ball extends Entity  {
 		}
 		public BallTrail(Image imageBall ,Ball thisBall) {
 			this.ball = thisBall;
-			this.Image = imageBall;
+			this.Image = new ImageIcon(imageBall);
 		}
 		
-		private class TrailPoint {
+		private class TrailPoint implements Serializable{
 			public Circle point;
 			public double opacity;
 	
@@ -231,7 +231,7 @@ public class Ball extends Entity  {
 			}
 			Circle point =null;
 			if (trailColor ==null){
-				point = new Circle(Image, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
+				point = new Circle(Image.getImage(), ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
 			
 			}else{
 				point = new Circle(trailColor, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);

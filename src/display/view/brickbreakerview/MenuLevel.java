@@ -19,7 +19,7 @@ public class MenuLevel extends JPanel {
 
     private GameFrame game_frame;
     private int nbLevelUnlock;
-    private BufferedImage backgroundImage; // background image 
+    transient private BufferedImage backgroundImage; // background image 
     private static final String LEVEL_1_IMAGE_PATH = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Level1.png";
 
      private enum Level {
