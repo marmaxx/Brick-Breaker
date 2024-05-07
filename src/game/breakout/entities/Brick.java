@@ -47,7 +47,7 @@ public class Brick extends Entity {
 
 
 	
-		/**
+	/**
 	 * Instantiates a new Brick
 	 * 
 	 * @param posX the initial x position of the brick
@@ -231,24 +231,47 @@ public class Brick extends Entity {
 	 * 
 	 * @param dropBonus whether the brick drops a bonus
 	 * 
-	 * @return whether the brick drops a bonus
 	 */
     public void setDropBonus(boolean dropBonus) {
         this.dropBonus = dropBonus;
     }
 
-	
+	/**
+	 * Gets whether the brick is unbreakable
+	 * 
+	 * @return whether the break is unbreakable
+	 * 
+	 */
 	public boolean getUnbreakable(){
 		return this.unbreakable;
 	}
 
+	/**
+	 * Sets whether the brick is unbreakable
+	 * 
+	 * @param unbreakable whether the brick is unbreakable
+	 * 
+	 */
 	public void setUnbreakable(boolean unbreakable){
 		this.unbreakable = unbreakable;
 	}
 
+	/**
+	 * Gets whether the brick is moving
+	 * 
+	 * @return whether the brick is moving
+	 * 
+	 */
 	public boolean isMoving(){
 		return this.moving;
 	}
+
+	/**
+	 * Sets whether the brick is moving 
+	 * 
+	 * @param moving whether the brick is moving
+	 * 
+	 */
 	public void setMoving(boolean moving){
 		this.moving = moving;
 	}
