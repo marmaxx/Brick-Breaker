@@ -45,6 +45,7 @@ public class ClassicGamePanel extends JPanel {
         });
 
         Level.addActionListener((event) -> {
+            gameFrame.getPanelContainer().add(new MenuLevel(gameFrame),"menuLevel");
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuLevel");
         });
 

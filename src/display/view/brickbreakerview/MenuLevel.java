@@ -129,6 +129,7 @@ public class MenuLevel extends JPanel {
     private void addActionListener(){ 
         Level[] levelTab = Level.values();
         int nb = this.nbLevelUnlock;
+        
         if ( nb > levelTab.length){
             nb = levelTab.length;
         }
@@ -172,6 +173,7 @@ public class MenuLevel extends JPanel {
 
     private void addAction(int i, JButton b){
         b.addActionListener((event) -> {
+            System.out.println(this.game_frame.getNbLevelUnlock());
             game_frame.getCardlayout().show(game_frame.getPanelContainer(), "gamePanel");
             game_frame.startBreakoutGame(i);
         });

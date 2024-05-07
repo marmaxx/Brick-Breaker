@@ -67,7 +67,6 @@ public class GameFrame extends JFrame {
 		this.container.add(this.gamePanel, "gamePanel");
 		this.container.add(this.game_over, "gameOver"); 
 		this.container.add(this.game_win, "winPanel");
-		this.container.add(this.menu_level, "menuLevel");
 		this.container.add(this.menu_Marathon, "menuMarathon");
 		this.container.add(this.menu_classic, "classicGame");
 		this.container.add(this.settings, "settingsPanel");
