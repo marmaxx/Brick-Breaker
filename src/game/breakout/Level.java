@@ -19,9 +19,10 @@ public class Level implements Serializable {
     public static void level(Breakout b) {
 		switch (b.getLevel()) {
 			case 0:
-				createLevel1(b);
+				//createLevel1(b);
 				//createLevel2(b);
 				//createLevel3(b);
+				createLevel4(b);
 				break;
 			case 1:
 				createLevel2(b);
@@ -85,7 +86,7 @@ public class Level implements Serializable {
 				boolean dropBonus = (randomNumber == 1);
 	
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				randomLifespan, dropBonus,false, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				b.getBricks().add(brick);
 
 				b.getPhysicEngine().getPhysicalObjects().add(brick);
@@ -135,7 +136,7 @@ public class Level implements Serializable {
 				boolean unbreakable = (randomNumberUnbreakable == 1);
 				if (unbreakable) unbreakableBrickNumber += 1;
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				Brick.MAX_LIFESPAN-1, dropBonus, unbreakable, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				Brick.MAX_LIFESPAN-1, dropBonus, unbreakable,false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				b.getBricks().add(brick);
 
 				b.getPhysicEngine().getPhysicalObjects().add(brick);
@@ -172,10 +173,42 @@ public class Level implements Serializable {
 				}
 				else lifespan = Brick.MAX_LIFESPAN - 1;
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				lifespan, dropBonus, unbreakable, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				lifespan, dropBonus, unbreakable, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				b.getBricks().add(brick);
 
 				b.getPhysicEngine().getPhysicalObjects().add(brick);
+			}
+		}
+	}
+
+	public static void createLevel4(Breakout b){
+
+		int columns = 8;
+        int rows = 10;
+		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+		// Start the bricks at the center of the panel
+		int initialXPos = (int) Math.floor(b.getPanel().getGameZone().getPreferredSize().getWidth()
+		/ 2 - (columns * BRICK_SPACING) / 2);
+		
+		for(int row = 0; row < rows; row++){
+			int randomColumn = new Random().nextInt(rows);
+			for(int column = 0; column < columns; column++){
+				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+
+				// Generate a random number between 1 and 3
+				int randomNumber = new Random().nextInt(4) + 1;
+				boolean dropBonus = (randomNumber == 1);
+				
+				if (randomColumn == column){
+					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+					Brick.MAX_LIFESPAN - 1, dropBonus, false, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+
+					brick.moveRight();
+					b.getBricks().add(brick);
+
+					b.getPhysicEngine().getPhysicalObjects().add(brick);
+				}
 			}
 		}
 	}
@@ -208,7 +241,7 @@ public class Level implements Serializable {
 				boolean dropBonus = (randomNumber == 1);
 				
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				randomLifespan, dropBonus, false, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 
 				brick.moveRight();
 				b.getBricks().add(brick);

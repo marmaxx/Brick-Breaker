@@ -525,7 +525,7 @@ public class Breakout extends Game {
 				boolean dropBonus = (randomNumber == 1);
 	
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				randomLifespan, dropBonus, true, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
 				this.physicEngine.getPhysicalObjects().add(brick);
@@ -642,21 +642,31 @@ public class Breakout extends Game {
 
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
-				if (!brick.isActive()) {
-					if (brick.doesDropBonus()){
-						// store the size of the brick
-						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
-					}
-					this.nbBricks--; // Decrement the count of brick when the brick is broken
-					this.score += 100; // Increment the score when the brick is broken
-					// Safely remove the brick from the collection
-					iterator.remove();
-					this.getPanel().updateScore(this.score, this.nbBricks);
-					
-					
+			if (!brick.isActive()) {
+				if (brick.doesDropBonus()){
+					// store the size of the brick
+					createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 				}
+				this.nbBricks--; // Decrement the count of brick when the brick is broken
+				this.score += 100; // Increment the score when the brick is broken
+				// Safely remove the brick from the collection
+				iterator.remove();
+				this.getPanel().updateScore(this.score, this.nbBricks);
 				
-			
+				
+			}
+			if (brick.isMoving()){
+				if(brick.willBeOffScreen(this.getPanel(),5)){
+					if(brick.movingRight()){
+						brick.stopRight();
+						brick.moveLeft();
+					}else{
+						brick.stopLeft();
+						brick.moveRight();
+					}
+				}
+				brick.move(1);
+			}
 		}
 	}
 	
@@ -687,7 +697,7 @@ public class Breakout extends Game {
 					boolean dropBonus = (randomNumber == 1);
 		
 					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-					randomLifespan, dropBonus, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+					randomLifespan, dropBonus, false, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 					iterator.add(brick);
 					brick.moveRight();
 					brick.getRepresentation().setBounds(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY(), brick.getRepresentation().getWidth(), brick.getRepresentation().getHeight());

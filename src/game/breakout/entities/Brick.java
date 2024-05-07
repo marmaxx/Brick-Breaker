@@ -22,7 +22,7 @@ public class Brick extends Entity {
     public static final String path = Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator;
     transient public static final Image DEFAULT_IMAGE = new ImageIcon(path + "ball.png").getImage();
 
-    protected boolean isDestroyed, dropBonus, unbreakable;
+    protected boolean isDestroyed, dropBonus, unbreakable, moving;
     protected int lifespan;
 
 	public static final int DEFAULT_POS_X = 1;
@@ -64,7 +64,7 @@ public class Brick extends Entity {
 	public Brick(
 		Image image,
         int width, int height,
-        int lifespan, boolean dropBonus, boolean unbreakable,
+        int lifespan, boolean dropBonus, boolean unbreakable, boolean moving,
 		double mass, Vector2D position, boolean movable
     ) {
         super(mass,position,movable,new Rectangle(lifespans.get(lifespan), (int)position.getX(), (int)position.getY(),  width, height));
@@ -80,6 +80,7 @@ public class Brick extends Entity {
 		this.setUnbreakable(unbreakable);
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
+		this.setMoving(moving);
     }
 
 	/**
@@ -94,10 +95,10 @@ public class Brick extends Entity {
 	 */
     public Brick(
         int width, int height,
-        int lifespan, boolean dropBonus, boolean unbreakable,
+        int lifespan, boolean dropBonus, boolean unbreakable, boolean moving, 
 		double mass, Vector2D position, boolean movable
     ) {
-		this(lifespans.get(lifespan), width, height, lifespan, dropBonus, unbreakable, mass, position,movable);
+		this(lifespans.get(lifespan), width, height, lifespan, dropBonus, unbreakable, moving, mass, position,movable);
     }
 
 	/**
@@ -111,10 +112,10 @@ public class Brick extends Entity {
 	 */
 	public Brick(
 		int width, int height,
-		boolean dropBonus, boolean unbreakable, 
+		boolean dropBonus, boolean unbreakable, boolean moving,
 		double mass, Vector2D position, boolean movable
 	) {
-		this(lifespans.get(MAX_LIFESPAN), width, height, MAX_LIFESPAN, dropBonus, unbreakable, mass,position,movable);
+		this(lifespans.get(MAX_LIFESPAN), width, height, MAX_LIFESPAN, dropBonus, unbreakable, moving, mass,position,movable);
 	}
 
 	
@@ -136,7 +137,7 @@ public class Brick extends Entity {
 		Image image,
         int posX, int posY,
         int width, int height,
-        int lifespan, boolean dropBonus, boolean unbreakable
+        int lifespan, boolean dropBonus, boolean unbreakable, boolean moving
     ) {
         super(new Rectangle(lifespans.get(lifespan), posX, posY, width, height));
 		if (!lifespans.containsKey(lifespan)) {
@@ -148,9 +149,10 @@ public class Brick extends Entity {
 		if (!lifespans.containsValue(image) || image == null) {
 			throw new IllegalArgumentException("La couleur d'une brique doit être rouge, orange, jaune ou verte !");
 		}
-
+		this.setUnbreakable(unbreakable);
         this.setLifespan(lifespan);
         this.setDropBonus(dropBonus);
+		this.setMoving(moving);
     }
 
 	/**
@@ -166,9 +168,9 @@ public class Brick extends Entity {
     public Brick(
         int posX, int posY,
         int width, int height,
-        int lifespan, boolean dropBonus, boolean unbreakable
+        int lifespan, boolean dropBonus, boolean unbreakable, boolean moving
     ) {
-		this(lifespans.get(lifespan), posX, posY, width, height, lifespan, dropBonus, unbreakable);
+		this(lifespans.get(lifespan), posX, posY, width, height, lifespan, dropBonus, unbreakable, moving);
     }
 
 	/**
@@ -183,9 +185,9 @@ public class Brick extends Entity {
 	public Brick(
 		int posX, int posY,
 		int width, int height,
-		boolean dropBonus, boolean unbreakable
+		boolean dropBonus, boolean unbreakable, boolean moving
 	) {
-		this(lifespans.get(MAX_LIFESPAN), posX, posY, width, height, MAX_LIFESPAN, dropBonus, unbreakable);
+		this(lifespans.get(MAX_LIFESPAN), posX, posY, width, height, MAX_LIFESPAN, dropBonus, unbreakable, moving);
 	}
 
 	/**
@@ -242,6 +244,13 @@ public class Brick extends Entity {
 
 	public void setUnbreakable(boolean unbreakable){
 		this.unbreakable = unbreakable;
+	}
+
+	public boolean isMoving(){
+		return this.moving;
+	}
+	public void setMoving(boolean moving){
+		this.moving = moving;
 	}
 
 	@Override
