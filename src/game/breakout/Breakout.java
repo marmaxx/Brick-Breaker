@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 
 
 import display.engine.PhysicsEngine;
+import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
 
 import display.engine.utils.Vector2D;
@@ -554,6 +555,7 @@ public class Breakout extends Game {
 	public void setLevel(int level){
 		this.level = level;
 	}
+
 
 	/**
 	 * Create a bonus at a given position (posX is the center of the bonus, however y is the top)

@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 
 import display.engine.utils.*;
+import game.breakout.entities.Ball;
 public abstract class PhysicalObject implements Serializable{
     public static final long serialVersionUID = 2L;
     public boolean active;
@@ -117,6 +118,10 @@ public abstract class PhysicalObject implements Serializable{
 
     public boolean isMovable(){
         return this.movable;
+    }
+
+    public boolean isAPlanet(){
+        return (this instanceof Ball && this.mass==150);
     }
 
 

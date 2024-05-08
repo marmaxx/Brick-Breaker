@@ -92,6 +92,12 @@ public class PhysicsEngine implements Serializable{
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject objectB = physicalObjects.get(j);
                 if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
+                    if (objectA.isAPlanet() || objectB.isAPlanet()) compteurPlanete++;
+                    if (compteurPlanete==5){
+                        //TODO: fonction qui fait exploser/disparaître la planete
+                        //TODO: implémenter la force de souffle
+                    }
+                    System.out.println("compteur: "+compteurPlanete);
                    //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
@@ -103,13 +109,11 @@ public class PhysicsEngine implements Serializable{
 
                     objectA.collided(objectB);
                     objectB.collided(objectA);
-                    //TODO: ajouter un compteur qui vérifie le nombre de fois que la planete a été en collision : au bout de 5 fois elle explose
+                    
                 }
             }
         }
     }
-
-    //TODO: ajouter la force de souffle porovoquée par l'explosion
 
 
     /**
