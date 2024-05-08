@@ -12,11 +12,8 @@ public abstract class PhysicalObject implements Serializable{
     protected Vector2D speed = new Vector2D(0, 0);
     protected Vector2D acceleration = new Vector2D(0, 0);
     protected boolean movable; //indicates if the object can move, if its position is influenced by collisions or frictions 
-    //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     protected GraphicalObject representation;
-    protected double elasticity;
     protected double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
-    //TODO: gérer la rotation 
 
 
     protected Vector2D normalVectorVT = new Vector2D(0, 1);
@@ -121,7 +118,7 @@ public abstract class PhysicalObject implements Serializable{
     }
 
     public boolean isAPlanet(){
-        return (this instanceof Ball && this.mass==150);
+        return (this instanceof Ball && this.mass==750);
     }
 
 
@@ -210,5 +207,6 @@ public abstract class PhysicalObject implements Serializable{
         if (this.getSpeed().getX() > MAX_SPEED) this.setSpeed(new Vector2D(MAX_SPEED, this.getSpeed().getY()));
         if (this.getSpeed().getY() > MAX_SPEED) this.setSpeed(new Vector2D(this.getSpeed().getX(), MAX_SPEED));
     }
+
 
 }

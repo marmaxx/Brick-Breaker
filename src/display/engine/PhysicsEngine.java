@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.*;
+import game.breakout.Breakout;
 import game.breakout.entities.Ball;
 
 /**
@@ -54,9 +55,9 @@ public class PhysicsEngine implements Serializable{
      * 
      * @param deltaTime
      */
-    public void update(double deltaTime, Ball planete) {
+    public void update(double deltaTime, Ball planete, Breakout breakout) {
         applyGravity(deltaTime);
-        handleCollisions(deltaTime);
+        handleCollisions(deltaTime, breakout);
         applyFriction(FRICTION_COEFFICIENT);
         
        
@@ -86,22 +87,35 @@ public class PhysicsEngine implements Serializable{
      * 
      * @param deltaTime
      */
-    private void handleCollisions(double deltaTime) {
+    private void handleCollisions(double deltaTime, Breakout breakout) {
         for (int i = 0; i < physicalObjects.size(); i++) {
             PhysicalObject objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
-                    if (objectA.isAPlanet() || objectB.isAPlanet()) compteurPlanete++;
+                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() && objectB.isActive()) {
+                    if (objectA.isAPlanet() || objectB.isAPlanet()){
+                    compteurPlanete++;
+                    //System.out.println("Planete");
+                    }
+
                     if (compteurPlanete==5){
+                        Vector2D distance = objectB.getPosition().subtract(objectA.getPosition());
+                        if (objectA.isAPlanet()){
+                            objectB.applyForce(distance.normalize().multiply(10));
+                            breakout.planetExplosion();
+                        }
+                        if (objectB.isAPlanet()){
+                            objectA.applyForce(distance.normalize().multiply(-10));
+                            breakout.planetExplosion();
+                        }
                         //TODO: fonction qui fait exploser/disparaître la planete
                         //TODO: implémenter la force de souffle
                     }
-                    System.out.println("compteur: "+compteurPlanete);
-                   //System.out.println("COLLISION");
+                    //System.out.println("compteur: "+compteurPlanete);
+                    //System.out.println("COLLISION");
                     //System.out.println(objectB.getPosition());
                     //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
-                    // resolving collision between A and B+-
+                    //resolving collision between A and B+-
                     //System.out.println("A= "+objectA.getMass());
                     //System.out.println("B= "+objectB.getMass());
                     objectA.resolveCollision(objectB);

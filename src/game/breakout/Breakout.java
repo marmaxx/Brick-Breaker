@@ -887,7 +887,7 @@ public class Breakout extends Game {
 		this.checkBallInGame();
 		//System.out.println(this.ball.getPosition());
 		// if (this.ball.getIsMoving() == true) 
-		this.physicEngine.update(deltaTime, this.planete);
+		this.physicEngine.update(deltaTime, this.planete, this);
 		if(this.level != -1 ){
 			this.updateBricks();
 			this.ball.resolveSpeedToHigh();
@@ -924,5 +924,17 @@ public class Breakout extends Game {
 		this.getPanel().getGameZone().remove(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().remove(this.getNorthWall().getRepresentation());
 	}
+
+	/**
+	 * method making the planet explode
+	 */
+
+	public void planetExplosion(){
+
+		this.physicEngine.getPhysicalObjects().remove(this.planete);
+		this.gameframe.remove(this.planete.getRepresentation());
+
+	}
+
 	
 }
