@@ -7,7 +7,7 @@ import display.engine.rules.GraphicalObject;
 import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.Vector2D;
-import display.view.GamePanel;
+import display.view.brickbreakerview.*;
 
 import game.breakout.entities.Player;
 

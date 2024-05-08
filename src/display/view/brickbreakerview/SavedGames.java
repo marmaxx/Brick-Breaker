@@ -1,4 +1,6 @@
-package display.view;
+package display.view.brickbreakerview;
+
+import display.view.*;
 
 import java.awt.Color;
 import java.awt.Component;

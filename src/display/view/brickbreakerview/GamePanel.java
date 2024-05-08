@@ -1,5 +1,6 @@
-package display.view;
+package display.view.brickbreakerview;
 
+import display.view.*;
 import javax.swing.*;
 
 import game.breakout.Breakout;
@@ -63,13 +64,16 @@ public class GamePanel extends JPanel {
 		this.gameZone.setPreferredSize(GAME_ZONE_SIZE);
 
 		this.statZone.setPreferredSize(STAT_ZONE_GAME);
-		this.statZone.setBackground(new Color(30,30,30,0));
+		this.statZone.setBackground(new Color(0,0,0,0));
 		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout 
 
 		this.score.setPreferredSize(new Dimension(200, 100));
         this.score.setForeground(Color.WHITE); // set color of the text
+
         this.life.setPreferredSize(new Dimension(200, 100));
         this.life.setForeground(Color.WHITE); // set color of the text
+		this.life.setFont(new Font("Ubuntu", Font.BOLD, 22));
+
         this.nbBricks.setPreferredSize(new Dimension(200, 100));
         this.nbBricks.setForeground(Color.WHITE); // set color of the text
 
@@ -78,26 +82,19 @@ public class GamePanel extends JPanel {
         this.menuInGame = new MenuInGame(this.gameFrame,this);
         this.menuInGame.setVisible(false);
 
-
-       
-        
-        // layeredPane.setPreferredSize(GAME_ZONE_SIZE);
-        // this.menuInGame.setBounds(0, 0, GAME_ZONE_SIZE.width, GAME_ZONE_SIZE.height);
-        // layeredPane.add(this.menuInGame, JLayeredPane.POPUP_LAYER);
-
 		this.menu.addActionListener((event) -> {
-			this.getFrame().getGame().pause();
+			if (this.getFrame().getNumberOfTheGame() == 0){
+				this.getFrame().getBreakoutGame().pause();
+			} else if (this.getFrame().getNumberOfTheGame() == 1){
+				this.getFrame().getSpaceInvaderGame().pause();
+			}
 			this.gameZone.setVisible(false);
 			this.menuInGame.setVisible(true);
 		});
 
 
-		this.statZone.add(this.score);
-        this.statZone.add(this.life);
-        this.statZone.add(this.nbBricks);
-		this.statZone.add(this.menu);
-
-		this.add(statZone);
+        this.add(this.life);
+		this.add(this.menu);
 		this.add(gameZone);
 		this.add(menuInGame);
     }
@@ -147,7 +144,7 @@ public class GamePanel extends JPanel {
 		return this.menuInGame;
 	}
 
-	/** 
+	/**  
 	 * update game life in JLabel
 	 * @param life The Life in game
 	 * @param bricks The number of brick in game
@@ -178,7 +175,7 @@ public class GamePanel extends JPanel {
         JButton button = new JButton(text);
         button.setFont(new Font("Ubuntu", Font.BOLD, 22));
         button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setMaximumSize(new Dimension(400, 80)); 
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

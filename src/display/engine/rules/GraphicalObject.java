@@ -8,7 +8,7 @@ import java.awt.Image;
 import javax.swing.JComponent;
 
 import display.engine.utils.Vector2D;
-import display.view.GamePanel;
+import display.view.brickbreakerview.*;
 
 
 public abstract class GraphicalObject extends JComponent {

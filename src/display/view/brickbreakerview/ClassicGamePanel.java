@@ -1,4 +1,6 @@
-package display.view;
+package display.view.brickbreakerview;
+
+import display.view.*;
 
 import javax.swing.*;
 
@@ -39,10 +41,11 @@ public class ClassicGamePanel extends JPanel {
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
-            gameFrame.startGame(0);
+            gameFrame.startBreakoutGame(0);
         });
 
         Level.addActionListener((event) -> {
+            gameFrame.getPanelContainer().add(new MenuLevel(gameFrame),"menuLevel");
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuLevel");
         });
 

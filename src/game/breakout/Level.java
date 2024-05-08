@@ -83,7 +83,7 @@ public class Level implements Serializable {
 				boolean dropBonus = (randomNumber == 1);
 	
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				randomLifespan, dropBonus,false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				b.getBricks().add(brick);
 
 				b.getPhysicEngine().getPhysicalObjects().add(brick);
@@ -125,7 +125,7 @@ public class Level implements Serializable {
                     boolean dropBonus = (randomNumber == 1);
 
                     Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				randomLifespan, dropBonus, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 
 
 					// Apply rotation of -10 degrees to rectangles at odd positions
@@ -169,7 +169,7 @@ public class Level implements Serializable {
 				boolean dropBonus = (randomNumber == 1);
 				
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				randomLifespan, dropBonus, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 
 				brick.moveRight();
 				b.getBricks().add(brick);
