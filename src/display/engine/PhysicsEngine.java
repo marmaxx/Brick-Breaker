@@ -101,11 +101,13 @@ public class PhysicsEngine implements Serializable{
                     if (compteurPlanete==5){
                         Vector2D distance = objectB.getPosition().subtract(objectA.getPosition());
                         if (objectA.isAPlanet()){
-                            objectB.applyForce(distance.normalize().multiply(10));
+                            objectB.applyForce(distance.normalize().multiply(50000));
+                            objectA.setAcceleration(new Vector2D(0, 0));
                             breakout.planetExplosion();
                         }
                         if (objectB.isAPlanet()){
-                            objectA.applyForce(distance.normalize().multiply(-10));
+                            objectA.applyForce(distance.normalize().multiply(-50000));
+                            objectA.setAcceleration(new Vector2D(0, 0));
                             breakout.planetExplosion();
                         }
                         //TODO: fonction qui fait exploser/disparaître la planete

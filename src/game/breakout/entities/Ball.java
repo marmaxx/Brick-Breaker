@@ -230,6 +230,8 @@ public class Ball extends Entity  {
      * @param deltaTime the time since last tick
      */
     public void applyGravitationalForces(double deltaTime, Ball planete) {
+		System.out.println(planete.isActive());
+		if (!planete.isActive()) return;
         final double G = 6.67430; // gravitational constant
 
 			Vector2D r = planete.getPosition().subtract(this.getPosition());

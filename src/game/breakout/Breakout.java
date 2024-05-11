@@ -932,7 +932,7 @@ public class Breakout extends Game {
 	public void planetExplosion(){
 
 		this.physicEngine.getPhysicalObjects().remove(this.planete);
-		this.gameframe.remove(this.planete.getRepresentation());
+		this.planete.destroy();
 
 	}
 
