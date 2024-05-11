@@ -36,6 +36,11 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Breakout extends Game {
 	public static final long serialVersionUID = 15L;
@@ -932,7 +937,18 @@ public class Breakout extends Game {
 	public void planetExplosion(){
 
 		this.physicEngine.getPhysicalObjects().remove(this.planete);
-		this.planete.destroy();
+		Image image = new ImageIcon(
+			Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator+"gifExplosion.gif").getImage();
+		this.planete.getRepresentation().setImage(image);
+		Timer timer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                planete.destroy();
+            }
+        });
+        
+        timer.setRepeats(false);
+        timer.start();
 
 	}
 
