@@ -103,7 +103,6 @@ public class Breakout extends Game {
 		this.getBalls().add(mainBall);
 
 		this.planete = new Ball (Ball.PLANET_IMAGE, 100, 750, new Vector2D(20, 20), false);
-		this.getBalls().add(planete);
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
 
@@ -887,6 +886,7 @@ public class Breakout extends Game {
 	 */
 	@Override
 	public void onUpdate(double deltaTime) {
+		System.out.println("ACTIF ? "+this.planete.isActive());
 		this.updatePlayer();
 		this.updateBall();
 		this.checkBallInGame();
@@ -935,7 +935,7 @@ public class Breakout extends Game {
 	 */
 
 	public void planetExplosion(){
-
+		this.planete.setActive(false);
 		this.physicEngine.getPhysicalObjects().remove(this.planete);
 		Image image = new ImageIcon(
 			Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator+"gifExplosion.gif").getImage();

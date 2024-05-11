@@ -63,7 +63,7 @@ public class PhysicsEngine implements Serializable{
        
             // updating objects position relatively to the time spent
          for (PhysicalObject object : physicalObjects) {
-            if (object instanceof Ball) ((Ball)object).applyGravitationalForces(deltaTime, planete); //System.out.println(object.getAcceleration());
+            if (object instanceof Ball && planete.isActive()) ((Ball)object).applyGravitationalForces(deltaTime, planete); //System.out.println(object.getAcceleration());
             object.updateVelocity(deltaTime); 
             if (object.isActive() && object.isMovable()){
                 
@@ -102,7 +102,7 @@ public class PhysicsEngine implements Serializable{
                         Vector2D distance = objectB.getPosition().subtract(objectA.getPosition());
                         if (objectA.isAPlanet()){
                             objectB.applyForce(distance.normalize().multiply(50000));
-                            objectA.setAcceleration(new Vector2D(0, 0));
+                            objectB.setAcceleration(new Vector2D(0, 0));
                             breakout.planetExplosion();
                         }
                         if (objectB.isAPlanet()){

@@ -201,6 +201,10 @@ public abstract class PhysicalObject implements Serializable{
         return active;
     }
 
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
     public abstract void resolveCollision(PhysicalObject objectB);
 
     public void resolveSpeedToHigh(){
