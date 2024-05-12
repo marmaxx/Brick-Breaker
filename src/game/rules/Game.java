@@ -1,6 +1,6 @@
 package game.rules;
 
-import display.view.GamePanel;
+import display.view.brickbreakerview.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

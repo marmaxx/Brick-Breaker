@@ -14,14 +14,14 @@ import game.breakout.entities.rules.Entity;
 public class Player extends Entity {
 	public static final long serialVersionUID = 13L;
 
-	transient public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();
-	public static final Color DEFAULT_COLOR = Color.WHITE;
+	transient public static Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "player.png").getImage();
+	public static Color DEFAULT_COLOR = Color.WHITE;
 	public static final int DEFAULT_SIZE = 100;
 	public static final int MIN_SIZE = DEFAULT_SIZE - (int)(0.2f * DEFAULT_SIZE);
 	public static final int MAX_SIZE = DEFAULT_SIZE + (int)(0.3f * DEFAULT_SIZE);
 	public static final int DEFAULT_POS_X = 300;
 	public static final int DEFAULT_POS_Y = 300;
-	public static final int DEFAULT_SPEED = 10;
+	public static int DEFAULT_SPEED = 10;
 	public static final int MIN_SPEED = DEFAULT_SPEED - (int)(0.5f * DEFAULT_SPEED);
 	public static final int MAX_SPEED = DEFAULT_SPEED + (int)(1.0f * DEFAULT_SPEED);
 	private Vector2D lastPos = new Vector2D(630, 700);

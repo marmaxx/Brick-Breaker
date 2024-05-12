@@ -2,7 +2,6 @@ package game.breakout;
 
 import java.util.*;
 import java.awt.AWTException;
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -16,8 +15,9 @@ import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
 
 import display.engine.utils.Vector2D;
+import display.engine.shapes.*; 
 import display.view.GameFrame;
-import display.view.GamePanel;
+import display.view.brickbreakerview.*;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Bonus;
 import game.breakout.entities.Player;
@@ -36,6 +36,8 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.Robot;
 import java.awt.Toolkit;
+
+import java.awt.*;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import javax.swing.Timer;
@@ -247,7 +249,7 @@ public class Breakout extends Game {
 					}
 					case KeyEvent.VK_X: {
 						BufferedImage screenShot = null;
-						if (!Breakout.this.gameframe.getGame().isPaused()){
+						if (!Breakout.this.gameframe.getBreakoutGame().isPaused()){
 							screenShot = screenShot();
 							Breakout.this.pause();
 							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
@@ -292,14 +294,14 @@ public class Breakout extends Game {
 						}
 						break;
 					case KeyEvent.VK_M:
-						if (!Breakout.this.gameframe.getGame().isPaused()){
+						if (!Breakout.this.gameframe.getBreakoutGame().isPaused()){
 							Breakout.this.pause();
 							Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(false);
 							Breakout.this.gameframe.getGamePanel().getMenu().setVisible(true);
 						}
 						break;
 					case KeyEvent.VK_R:
-					if (Breakout.this.gameframe.getGame().isPaused()){
+					if (Breakout.this.gameframe.getBreakoutGame().isPaused()){
 						Breakout.this.resume();
 						Breakout.this.gameframe.getGamePanel().getGameZone().setVisible(true);
 						Breakout.this.gameframe.getGamePanel().getMenu().setVisible(false);
@@ -533,8 +535,8 @@ public class Breakout extends Game {
 				int randomNumber = new Random().nextInt(4) + 1;
 				boolean dropBonus = (randomNumber == 1);
 	
-				Brick brick =new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				randomLifespan, dropBonus, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
 				this.physicEngine.getPhysicalObjects().add(brick);
@@ -573,6 +575,7 @@ public class Breakout extends Game {
 		int randomBonusType = new Random().nextInt(Bonus.MAX_BONUSTYPE);
 		this.getBonuses().add(new Bonus(Bonus.bonusTypes.get(BonusType.values()[randomBonusType]), posX, posY, Bonus.DEFAULT_SIZE, BonusType.values()[randomBonusType]));
 		for (Bonus bonus : this.getBonuses()) {
+			bonus.getRepresentation().setBounds(posX, posY, bonus.getRepresentation().getWidth(), bonus.getRepresentation().getHeight());
 			this.getPanel().getGameZone().add(bonus.getRepresentation());
 		}
 	}
@@ -622,7 +625,9 @@ public class Breakout extends Game {
 
 
 	 public void updateBall() {
-			if(this.getBall().active)this.getBall().trail.addPoint(new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10),this);
+		Circle trailPoint = new Circle(Color.RED, this.getBall().getRepresentation().getPosX()+(this.getBall().getRepresentation().getWidth()/2), this.getBall().getRepresentation().getPosY()+(this.getBall().getRepresentation().getHeight()/2), 10, 10);
+		trailPoint.setBounds(trailPoint.getPosX(), trailPoint.getPosY(), trailPoint.getWidth(), trailPoint.getHeight());
+		if(this.getBall().active) this.getBall().trail.addPoint(this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
@@ -695,9 +700,10 @@ public class Breakout extends Game {
 					boolean dropBonus = (randomNumber == 1);
 		
 					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-					randomLifespan, dropBonus,10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+					randomLifespan, dropBonus, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 					iterator.add(brick);
 					brick.moveRight();
+					brick.getRepresentation().setBounds(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY(), brick.getRepresentation().getWidth(), brick.getRepresentation().getHeight());
 					this.getPanel().getGameZone().add(brick.getRepresentation());
 					this.getPhysicEngine().getPhysicalObjects().add(brick);
 				}
@@ -808,12 +814,14 @@ public class Breakout extends Game {
 				while(iterator.hasNext()){
 					Ball ballToBeDuplicated = iterator.next();
 
+
 					Random randomDistance = new Random();
 					int randomX = (int)ballToBeDuplicated.getPosition().getX() + randomDistance.nextInt(-30, 30);
 					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-30, 30);
 					Vector2D ballPos = new Vector2D(randomX, randomY);
 
 					Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+					
 					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
 					ball.setSpeed(ballToBeDuplicated.getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
 
@@ -824,12 +832,10 @@ public class Breakout extends Game {
 				Iterator<Ball> ballsToBeAddedIterator = ballsToBeAdded.iterator();
 				while(ballsToBeAddedIterator.hasNext()){
 					Ball ball = ballsToBeAddedIterator.next();
-
 					this.getBalls().add(ball);
-
 					this.getPanel().getGameZone().add(ball.getRepresentation());
 					this.getPhysicEngine().getPhysicalObjects().add(ball);
-
+					
 				}
 
 				break;
@@ -859,7 +865,7 @@ public class Breakout extends Game {
 
 	public void checkBallInGame(){
 		if (this.ball.getPosition().getY() > this.getPanel().getGameZone().getHeight()){
-			this.ball.trail.remove(this);
+			this.ball.destroy();
 			this.getPanel().getGameZone().remove(this.ball.getRepresentation());
 			this.getPhysicEngine().getPhysicalObjects().remove(this.ball);
 			this.getBalls().remove(this.ball);
@@ -867,7 +873,7 @@ public class Breakout extends Game {
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
 			
-			Ball ball = new Ball(Ball.DEFAULT_IMAGE2, 30, 50, new Vector2D(x, y), true);
+			Ball ball = new Ball(Ball.DEFAULT_IMAGE, 30, 50, new Vector2D(x, y), true);
 			ball.setSpeed(new Vector2D(0.5, -0.5));
 			ball.active=false;
 			this.setBall(ball);

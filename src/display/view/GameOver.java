@@ -21,8 +21,7 @@ public class GameOver extends JPanel {
 
     public GameOver(GameFrame frame){
         this.setLayout(new FlowLayout());
-        this.setPreferredSize(SCREEN_FULL_SIZE);
-        
+        this.setPreferredSize(SCREEN_FULL_SIZE); 
 
          try {
             backgroundImage = ImageIO.read(new File(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "GameOver2.png"));
@@ -39,15 +38,27 @@ public class GameOver extends JPanel {
          //setting back to menu button 
          this.backToMenu.setPreferredSize(BUTTON_SIZE);
          this.backToMenu.addActionListener(e -> {
-            frame.getGame().clearGameComponents();
-            frame.getGamePanel().getGameZone().removeAll();
-            frame.getGame().setLife(3);
-            frame.getGame().setNbBricks(1);
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
-                }
-            });
+            if (frame.getNumberOfTheGame() == 0){
+                frame.getBreakoutGame().clearGameComponents();
+                frame.getGamePanel().getGameZone().removeAll();
+                frame.getBreakoutGame().setLife(3);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                    }
+                });
+            }else if(frame.getNumberOfTheGame() == 1 ){
+                frame.getSpaceInvaderGame().clearGameComponents();
+                frame.getGamePanel().getGameZone().removeAll();
+                frame.getSpaceInvaderGame().setLife(5);
+                frame.getSpaceInvaderGame().setnbEnemies(1);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        frame.getCardlayout().show(frame.getPanelContainer(), "homePage");
+                    }
+                });
+            }
+
         });
 
         this.exit.addMouseListener(new ButtonMouseListener(this.exit));

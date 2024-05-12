@@ -1,5 +1,6 @@
-package display.view;
+package display.view.brickbreakerview;
 
+import display.view.*;
 import javax.swing.*;
 
 import game.breakout.Breakout;
@@ -13,12 +14,15 @@ import javax.imageio.ImageIO;
 public class MenuPanel extends JPanel {
     public static final long serialVersionUID = 56L;
 	
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final Dimension BUTTON_SIZE =  new Dimension((int)(SCREEN_FULL_SIZE.getWidth()*20/100), (int)(SCREEN_FULL_SIZE.getHeight()*10/100)); 
 
 
     private JButton Marathon  = createStyledButton("Marathon mode");
     private JButton classic_Game  = createStyledButton("Classic Game");
+    private JButton settings = createStyledButton(" Settings");
+    private JButton locker = createStyledButton("Locker");
+    private JButton backHome = createStyledButton("Back");
     private JButton SavedGames = createStyledButton("Saved Games");
     transient private BufferedImage backgroundImage; // background image 
 
@@ -34,9 +38,6 @@ public class MenuPanel extends JPanel {
         }
 
 
-        Marathon.setPreferredSize(BUTTON_SIZE);
-        classic_Game.setPreferredSize(BUTTON_SIZE);
-        SavedGames.setPreferredSize(BUTTON_SIZE);
         
 
         Marathon.addActionListener((event) -> {
@@ -51,12 +52,30 @@ public class MenuPanel extends JPanel {
         classic_Game.addActionListener((event) -> {
             gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "classicGame"); //switching card layout
         });
+
+        settings.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "settingsPanel");
+        });
+
+        locker.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "lockerPanel");
+        });
+
+        backHome.addActionListener((event) -> {
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "homePage");
+        });
         this.SavedGames.addMouseListener(new ButtonMouseListener(this.SavedGames));
         this.Marathon.addMouseListener(new ButtonMouseListener(this.Marathon));
         this.classic_Game.addMouseListener(new ButtonMouseListener(this.classic_Game));
+        this.settings.addMouseListener(new ButtonMouseListener(this.settings));
+        this.locker.addMouseListener(new ButtonMouseListener(this.locker));
+        this.backHome.addMouseListener(new ButtonMouseListener(this.backHome));
 
         this.add(this.classic_Game);
         this.add(this.Marathon);
+        this.add(this.settings);
+        this.add(this.locker);
+        this.add(this.backHome);
         this.add(SavedGames);
     }
 
@@ -64,8 +83,8 @@ public class MenuPanel extends JPanel {
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setPreferredSize(BUTTON_SIZE);
+        button.setMaximumSize(BUTTON_SIZE);
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

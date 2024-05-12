@@ -6,7 +6,7 @@ import display.engine.rules.GraphicalObject;
 import display.engine.rules.PhysicalObject;
 
 import java.awt.Image;
-
+import java.io.Serializable;
 import java.util.LinkedList;
 
 
@@ -14,20 +14,19 @@ import javax.swing.ImageIcon;
 
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
-import display.view.GamePanel;
+import display.view.brickbreakerview.*;
 import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
 
-import java.io.Serializable;
-
 public class Ball extends Entity  {
 	public static final long serialversionUID =10L;
 
-	transient public static final Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
-	transient public static final Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
+	transient public static Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
+	transient public static Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
 	transient public static final Image PLANET_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "etoileNoire.png").getImage();
-	public static final Color DEFAULT_COLOR = Color.RED;
+	public static Color DEFAULT_COLOR = Color.RED;
+	public static Color DEFAULT_TRAIL_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
 	public static final int DEFAULT_POS_X = 600;
 	public static final int DEFAULT_POS_Y = 0;
@@ -35,7 +34,7 @@ public class Ball extends Entity  {
 	public int angle; // it will be used later
 	public boolean isMoving;
 
-	public BallTrail trail = new BallTrail();
+	public BallTrail trail = new BallTrail(DEFAULT_TRAIL_COLOR, this);
 
 	/**
  	*constructor to be used only for deserialziation 
@@ -174,11 +173,43 @@ public class Ball extends Entity  {
 	}
 
 	@Override
+	public void destroy(){
+		super.destroy();
+		for (Ball.BallTrail.TrailPoint point: trail.points){
+			point.point.destroy();
+		}
+	}
+
+	@Override
 	public void collided(PhysicalObject object) {
 		
 	}
 
 	public class BallTrail implements Serializable{
+		public Ball ball;
+		public Color trailColor;
+		public ImageIcon Image = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png");
+		public float r;
+		public float g;
+		public float b;
+		
+		public BallTrail(Color trailColor, Ball thisBall) {
+			this.ball = thisBall;
+			this.trailColor = trailColor;
+			this.r = trailColor.getRed();
+			this.g = trailColor.getGreen();
+			this.b = trailColor.getBlue();
+		}
+
+		public BallTrail(Ball thisBall) {
+			this.ball = thisBall;
+			this.trailColor = Color.RED;
+		}
+		public BallTrail(Image imageBall ,Ball thisBall) {
+			this.ball = thisBall;
+			this.Image = new ImageIcon(imageBall);
+		}
+		
 		private class TrailPoint implements Serializable{
 			public Circle point;
 			public double opacity;
@@ -188,28 +219,30 @@ public class Ball extends Entity  {
 				this.opacity = opacity;
 			}
 		}
-
+	
 		
 	
-		private LinkedList<TrailPoint> points = new LinkedList<>();
+	
+		public LinkedList<TrailPoint> points = new LinkedList<>();
 		private static final double OPACITY_DECREMENT = 0.1;
 
-		public void addPoint(Circle point, Breakout breakout) {
+		public void addPoint(Breakout breakout) {
 			for (TrailPoint tp : points) {
 				tp.opacity = Math.max(0, tp.opacity - OPACITY_DECREMENT);
-		
-				// Interpolate between red and yellow based on the opacity
-				float r = 1.0f;
-				float g = (float) tp.opacity;  // Green component increases as opacity decreases
-				float b = 0.0f;
-		
-				// Use the opacity field to set the color of the Circle
-				tp.point.setColor(new Color(r, g, b, (float) tp.opacity));
+
+				tp.point.setColor(new Color(r/255, g/255, b/255, (float) tp.opacity));
 			}
-		
+			Circle point =null;
+			if (trailColor ==null){
+				point = new Circle(Image.getImage(), ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
+				
+			}else{
+				point = new Circle(trailColor, ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
+			}
+			point.setBounds(ball.getRepresentation().getPosX()+(ball.getRepresentation().getWidth()/2), ball.getRepresentation().getPosY()+(ball.getRepresentation().getHeight()/2), 10, 10);
 			points.add(new TrailPoint(point, 1));
 			breakout.getPanel().getGameZone().add(point);
-		
+
 			if (points.size() > 10) { // Limit the trail length
 				breakout.getPanel().getGameZone().remove(points.getFirst().point);
 				points.removeFirst();
