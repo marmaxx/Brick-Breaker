@@ -55,15 +55,15 @@ public class PhysicsEngine implements Serializable{
      * 
      * @param deltaTime
      */
-    public void update(double deltaTime, Ball planete, Breakout breakout) {
+    public void update(double deltaTime) {
         applyGravity(deltaTime);
-        handleCollisions(deltaTime, breakout);
+        applyGravitationalForces(deltaTime);
+        handleCollisions(deltaTime);
         applyFriction(FRICTION_COEFFICIENT);
         
        
             // updating objects position relatively to the time spent
          for (PhysicalObject object : physicalObjects) {
-            if (object instanceof Ball && planete.isActive()) ((Ball)object).applyGravitationalForces(deltaTime, planete); //System.out.println(object.getAcceleration());
             object.updateVelocity(deltaTime); 
             if (object.isActive() && object.isMovable()){
                 
@@ -87,7 +87,7 @@ public class PhysicsEngine implements Serializable{
      * 
      * @param deltaTime
      */
-    private void handleCollisions(double deltaTime, Breakout breakout) {
+    private void handleCollisions(double deltaTime) {
         for (int i = 0; i < physicalObjects.size(); i++) {
             PhysicalObject objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
@@ -103,12 +103,12 @@ public class PhysicsEngine implements Serializable{
                         if (objectA.isAPlanet()){
                             objectB.applyForce(distance.normalize().multiply(50000));
                             objectB.setAcceleration(new Vector2D(0, 0));
-                            breakout.planetExplosion();
+                            Breakout.planetExplosion();
                         }
                         if (objectB.isAPlanet()){
                             objectA.applyForce(distance.normalize().multiply(-50000));
                             objectA.setAcceleration(new Vector2D(0, 0));
-                            breakout.planetExplosion();
+                            Breakout.planetExplosion();
                         }
                         //TODO: fonction qui fait exploser/disparaître la planete
                         //TODO: implémenter la force de souffle
@@ -159,6 +159,24 @@ public class PhysicsEngine implements Serializable{
                 Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
                 object.applyForce(frictionForce);
             }   
+        }
+    }
+
+    /**
+     * Applies gravitational field forces to all movable objects
+     * 
+     * @param deltaTime the time since last tick
+     */
+    public void applyGravitationalForces(double deltaTime) {
+        for (int i = 0; i < physicalObjects.size(); i++){
+            PhysicalObject objectA = physicalObjects.get(i);
+            for (int j = i+1; j < physicalObjects.size(); j++){
+                PhysicalObject objectB = physicalObjects.get(j);
+                if (objectA instanceof Ball && objectB instanceof Ball){
+                    if (objectA.isAPlanet()) ((Ball)objectB).applyGravitationalForces(deltaTime, (Ball)objectA);
+                    else if (objectB.isAPlanet()) ((Ball)objectA).applyGravitationalForces(deltaTime, (Ball)objectB);
+                }
+            }
         }
     }
 

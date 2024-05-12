@@ -57,7 +57,7 @@ public class Breakout extends Game {
 	private ArrayList<Ball>  Balls;
 	private Player player;
 	private Ball ball;
-	private Ball planete;
+	private static Ball planete;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 1;
 	// init at 1 because it takes time to initialize the list of bricks 
@@ -77,7 +77,7 @@ public class Breakout extends Game {
 	}
 
 
-	private PhysicsEngine physicEngine = new PhysicsEngine();
+	private static PhysicsEngine physicEngine = new PhysicsEngine();
 	
 	private int level = 0;
 
@@ -898,7 +898,7 @@ public class Breakout extends Game {
 		this.checkBallInGame();
 		//System.out.println(this.ball.getPosition());
 		// if (this.ball.getIsMoving() == true) 
-		this.physicEngine.update(deltaTime, this.planete, this);
+		this.physicEngine.update(deltaTime);
 		if(this.level != -1 ){
 			this.updateBricks();
 			this.ball.resolveSpeedToHigh();
@@ -940,12 +940,12 @@ public class Breakout extends Game {
 	 * method making the planet explode
 	 */
 
-	public void planetExplosion(){
-		this.planete.setActive(false);
-		this.physicEngine.getPhysicalObjects().remove(this.planete);
+	public static void planetExplosion(){
+		planete.setActive(false);
+		physicEngine.getPhysicalObjects().remove(planete);
 		Image image = new ImageIcon(
 			Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator+"gifExplosion.gif").getImage();
-		this.planete.getRepresentation().setImage(image);
+		planete.getRepresentation().setImage(image);
 		Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

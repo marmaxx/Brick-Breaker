@@ -144,7 +144,6 @@ public class Ball extends Entity  {
 
 
 
-
 	public boolean willLoose(GamePanel panel, int speed){
 		int [] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
 		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed  > panel.getGameZone().getHeight();
