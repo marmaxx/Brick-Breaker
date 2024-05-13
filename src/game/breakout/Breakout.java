@@ -112,12 +112,12 @@ public class Breakout extends Game {
 
 		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 0),false));
 
-		this.physicEngine.getPhysicalObjects().add(ball);
-		this.physicEngine.getPhysicalObjects().add(player);
-		this.physicEngine.getPhysicalObjects().add(eastWall);
-		this.physicEngine.getPhysicalObjects().add(westWall);
-		this.physicEngine.getPhysicalObjects().add(northWall);	
-		this.physicEngine.getPhysicalObjects().add(planete);	
+		physicEngine.getPhysicalObjects().add(ball);
+		physicEngine.getPhysicalObjects().add(player);
+		physicEngine.getPhysicalObjects().add(eastWall);
+		physicEngine.getPhysicalObjects().add(westWall);
+		physicEngine.getPhysicalObjects().add(northWall);	
+		physicEngine.getPhysicalObjects().add(planete);	
 
 	
 		this.addKeyListener();
@@ -180,7 +180,7 @@ public class Breakout extends Game {
 	 */
 	private void load(){
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
-		this.getPanel().getGameZone().add(this.planete.getRepresentation());
+		this.getPanel().getGameZone().add(planete.getRepresentation());
 		this.getBall().getRepresentation().setImage(Ball.DEFAULT_IMAGE2);
 		for (Ball ball : this.getBalls()){
 			this.getPanel().getGameZone().add(ball.getRepresentation());
@@ -539,7 +539,7 @@ public class Breakout extends Game {
 				randomLifespan, dropBonus, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
-				this.physicEngine.getPhysicalObjects().add(brick);
+				physicEngine.getPhysicalObjects().add(brick);
 				this.getPanel().getGameZone().add(brick.getRepresentation()); 
 			}
 		}
@@ -597,7 +597,7 @@ public class Breakout extends Game {
 		this.getPanel().getGameZone().add(this.getNorthWall().getRepresentation());
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
-		this.getPanel().getGameZone().add(this.planete.getRepresentation());
+		this.getPanel().getGameZone().add(planete.getRepresentation());
 
 
 		this.getPanel().updateScore(this.score, this.nbBricks);
