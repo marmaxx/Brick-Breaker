@@ -107,7 +107,7 @@ public class Breakout extends Game {
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
 
-		planete = new Planet (Planet.PLANET_IMAGE, 100, 750, new Vector2D(20, 20), false, 1);
+		planete = new Planet (Planet.PLANET_IMAGE, 100, 750, new Vector2D(20, 20), false, 5);
 		planets.add(planete);
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
@@ -950,16 +950,26 @@ public class Breakout extends Game {
 	public void clearGameComponents() {
 		// Remove all bricks from the list and game zone
 		for (Brick brick : this.getBricks()) {
-			this.getPanel().getGameZone().remove(brick.getRepresentation());
+			brick.destroy();
 		}
 		this.getBricks().clear();
 	
 		// Remove all bonuses from the list and game zone
 		for (Bonus bonus : this.getBonuses()) {
-			this.getPanel().getGameZone().remove(bonus.getRepresentation());
+			bonus.destroy();
 		}
 		this.getBonuses().clear();
 	
+		for (Ball ball : this.getBalls()) {
+			ball.destroy();
+		}
+		this.getBalls().clear();
+
+		for (Planet planet : this.getPlanets()) {
+			planet.destroy();
+		}
+		this.getPlanets().clear();
+
 		// Remove the player from the game zone
 		this.getPanel().getGameZone().remove(this.getPlayer().getRepresentation());
 	
