@@ -74,6 +74,9 @@ public class MenuInGame extends JPanel {
         });
         this.BackToMenuButton.addMouseListener(new MenuInGameListener(this.BackToMenuButton));
 
+        this.settings.addActionListener(e -> {
+            frame.getCardlayout().show(frame.getPanelContainer(), "SettingsInGame");
+        });
         this.settings.addMouseListener(new MenuInGameListener(this.settings));
 
 

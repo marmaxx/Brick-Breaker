@@ -34,6 +34,7 @@ public class GameFrame extends JFrame {
 	private SavedGames savedGames;
 	private HomePage homePage;
 	private CardLayout cardLayout;
+	private SettingsInGame settingInGame;
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public int nbLevelUnlock = 1;
     
@@ -62,6 +63,7 @@ public class GameFrame extends JFrame {
 		this.settings = new SettingsPanel(this);
 		this.locker = new LockerPanel(this);
 		this.savedGames = new SavedGames(this);
+		this.settingInGame = new SettingsInGame(this);
 
 
 		this.container.add(this.gamePanel, "gamePanel");
@@ -72,6 +74,7 @@ public class GameFrame extends JFrame {
 		this.container.add(this.settings, "settingsPanel");
 		this.container.add(this.locker, "lockerPanel");
 		this.container.add(this.savedGames, "Saved States");
+		this.container.add(this.settingInGame, "SettingsInGame");
 
 		this.add(this.container);
 		this.pack();
