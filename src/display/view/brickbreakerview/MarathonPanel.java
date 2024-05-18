@@ -42,7 +42,6 @@ public class MarathonPanel extends JPanel{
 
     this.Start.addActionListener((event) -> {
         gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
-        gameFrame.getPanelContainer().add(this, "MenuPanel");
         gameFrame.startBreakoutGame(-1);
     });
 
@@ -53,8 +52,6 @@ public class MarathonPanel extends JPanel{
     this.add(Start);
     this.add(Rules);
     this.add(menu);
-
-
     }
 
 
