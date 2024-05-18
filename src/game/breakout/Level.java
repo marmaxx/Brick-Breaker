@@ -21,12 +21,8 @@ public class Level implements Serializable {
      */
     public static void level(Breakout b) {
 		switch (b.getLevel()) {
-			case 0:
+			case 0: // case for the quick game
 				createLevel1(b);
-				//createLevel2(b);
-				//createLevel3(b);
-				//createLevel4(b);
-				//createLevel6(b);
 				break;
 			case 1:
 				createLevel1(b);
@@ -41,10 +37,10 @@ public class Level implements Serializable {
 				createLevel4(b);
 				break;
 			case 5:
-				createLevel1(b);
+				createLevel6(b);
 				break;
 			case 6:
-				createLevel1(b);
+				createLevel6(b);
 				break;
 			case 100:
 				break; // it just loads the saved state for now, later it will give the choice of selecting
