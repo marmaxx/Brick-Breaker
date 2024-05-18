@@ -147,9 +147,10 @@ public class PhysicsEngine implements Serializable{
             PhysicalObject objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++){
                 PhysicalObject objectB = physicalObjects.get(j);
-                    if (objectA.isAPlanet()) objectB.applyGravitationalForces(deltaTime, objectA);
-                    else if (objectB.isAPlanet()) objectA.applyGravitationalForces(deltaTime, objectB);
-                
+                if(objectA.isActive() && objectB.isActive()){
+                    if (objectB.isMovable() && objectA.isAPlanet()) objectB.applyGravitationalForces(deltaTime, objectA);
+                    else if (objectA.isMovable() && objectB.isAPlanet()) objectA.applyGravitationalForces(deltaTime, objectB);
+                }
             }
         }
     }

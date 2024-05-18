@@ -286,6 +286,7 @@ public class Breakout extends Game {
 						break;
 					case KeyEvent.VK_V :
 						Breakout.this.gameframe.setnbLevelUnlock();
+						Breakout.this.clearGameComponents();
 						Breakout.this.gameframe.getCardlayout().show(Breakout.this.gameframe.getPanelContainer(), "winPanel");
 					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().active){
@@ -651,6 +652,7 @@ public class Breakout extends Game {
 		trailPoint.setBounds(trailPoint.getPosX(), trailPoint.getPosY(), trailPoint.getWidth(), trailPoint.getHeight());
 		if(this.getBall().active) this.getBall().trail.addPoint(this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
+				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 		}
@@ -687,6 +689,7 @@ public class Breakout extends Game {
 		 
 		if (this.nbBricks == 0 && this.life >= 0){
 			this.gameframe.setnbLevelUnlock();
+			this.clearGameComponents();
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
 
@@ -752,6 +755,7 @@ public class Breakout extends Game {
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().getPosY()>this.getPlayer().getRepresentation().getPosY()){
+				this.clearGameComponents();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 			if(brick.willBeOffScreen(this.getPanel(),5)){
@@ -949,6 +953,8 @@ public class Breakout extends Game {
 
 	public void clearGameComponents() {
 		// Remove all bricks from the list and game zone
+		this.getPhysicEngine().getPhysicalObjects().clear();
+	
 		for (Brick brick : this.getBricks()) {
 			brick.destroy();
 		}
@@ -960,6 +966,7 @@ public class Breakout extends Game {
 		}
 		this.getBonuses().clear();
 	
+		this.getBall().destroy();
 		for (Ball ball : this.getBalls()) {
 			ball.destroy();
 		}
@@ -969,6 +976,9 @@ public class Breakout extends Game {
 			planet.destroy();
 		}
 		this.getPlanets().clear();
+
+
+		
 
 		// Remove the player from the game zone
 		this.getPanel().getGameZone().remove(this.getPlayer().getRepresentation());
