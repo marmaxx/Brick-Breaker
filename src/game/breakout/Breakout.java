@@ -309,11 +309,13 @@ public class Breakout extends Game {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().stopLeft();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().stopRight();
+						else Breakout.this.getPlayer().stopLeft();
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().stopRight();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().stopLeft();
+						else Breakout.this.getPlayer().stopRight();
 						break;
 				}
 			}
