@@ -73,6 +73,7 @@ public class Breakout extends Game {
 	
 	private int level = 0;
 
+	private boolean trollLevel = false;
 
 	/**
 	 * Instantiates a new Breakout game
@@ -217,7 +218,8 @@ public class Breakout extends Game {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:break;
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().moveLeft();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().moveRight();
+						else Breakout.this.getPlayer().moveLeft();
 						break;
 					case KeyEvent.VK_D:
 					{
@@ -259,7 +261,8 @@ public class Breakout extends Game {
 						break;
 					}
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().moveRight();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().moveLeft();
+						else Breakout.this.getPlayer().moveRight();
 						break;
 					case KeyEvent.VK_P:
 						if(Breakout.this.isPaused()){
@@ -503,6 +506,10 @@ public class Breakout extends Game {
 		return this.gameframe;
 	}
 
+
+	public void setTrollLevel(boolean troll){
+		this.trollLevel = troll;
+	}
 
 	
 	public void createBricks(int rows, int columns){

@@ -22,10 +22,11 @@ public class Level implements Serializable {
     public static void level(Breakout b) {
 		switch (b.getLevel()) {
 			case 0:
-				//createLevel1(b);
+				createLevel1(b);
 				//createLevel2(b);
 				//createLevel3(b);
-				createLevel4(b);
+				//createLevel4(b);
+				//createLevel6(b);
 				break;
 			case 1:
 				createLevel1(b);
@@ -70,6 +71,7 @@ public class Level implements Serializable {
 
 	// TODO: Prevent the amount of bricks from exceeding the panel's width and height
 		// See GraphicalObject#isOnScreen(x, y, panel)
+		b.setTrollLevel(false);
 		unbreakableBrickNumber = 0;
         int columns = 8; 
         int rows = 4;
@@ -117,6 +119,7 @@ public class Level implements Serializable {
 
         // TODO: Prevent the amount of bricks from exceeding the panel's width and height
 		// See GraphicalObject#isOnScreen(x, y, panel)
+		b.setTrollLevel(false);
 		unbreakableBrickNumber = 0;
         int columns = 8; 
         int rows = 4;
@@ -161,9 +164,10 @@ public class Level implements Serializable {
      * @param b the Breakout game instance
      */
 	public static void createLevel3(Breakout b) {
-
+		
         // TODO: Prevent the amount of bricks from exceeding the panel's width and height
 		// See GraphicalObject#isOnScreen(x, y, panel)
+		b.setTrollLevel(false);
 		unbreakableBrickNumber = 0;
         int columns = 8; 
         int rows = 4;
@@ -209,6 +213,7 @@ public class Level implements Serializable {
      * @param b the Breakout game instance
      */
 	public static void createLevel4(Breakout b){
+		b.setTrollLevel(false);
 		unbreakableBrickNumber = 0;
 		int columns = 8;
         int rows = 12;
@@ -242,6 +247,53 @@ public class Level implements Serializable {
 		}
 	}
 
+
+	/**
+     * Generates the bricks for level 2.
+     * 
+     * 
+     * Bricks are created in a grid layout with full life and optional bonus drops.
+	 * 
+	 * Additionnally, we have a probability of 1/10 that a brick appears unbreakable.
+     * 
+     * 
+     * @param b the Breakout game instance
+     */
+    public static void createLevel6(Breakout b) {
+
+        // TODO: Prevent the amount of bricks from exceeding the panel's width and height
+		// See GraphicalObject#isOnScreen(x, y, panel)
+		b.setTrollLevel(true);
+		unbreakableBrickNumber = 0;
+        int columns = 8; 
+        int rows = 4;
+		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+		// Start the bricks at the center of the panel
+		int initialXPos = (int) Math.floor(b.getPanel().getGameZone().getPreferredSize().getWidth()
+		/ 2 - (columns * BRICK_SPACING) / 2);
+		
+		for(int row = 0; row < rows; row++){
+			for(int column = 0; column < columns; column++){
+				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+				//int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN - 1);
+
+				// Generate a random number between 1 and 3
+				int randomNumber = new Random().nextInt(4) + 1;
+				boolean dropBonus = (randomNumber == 1);
+				
+				// Generate a random number between 1 and 10
+				int randomNumberUnbreakable = new Random().nextInt(11) + 1;
+				boolean unbreakable = (randomNumberUnbreakable == 1);
+				if (unbreakable) unbreakableBrickNumber += 1;
+				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				Brick.MAX_LIFESPAN-1, dropBonus, unbreakable,false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				b.getBricks().add(brick);
+
+				b.getPhysicEngine().getPhysicalObjects().add(brick);
+			}
+		}
+	}
 
 
 
