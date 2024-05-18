@@ -24,6 +24,7 @@ import game.breakout.entities.Player;
 import game.breakout.entities.Bonus.BonusType;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
+import game.breakout.entities.Planet;
 import game.rules.Game;
 
 import java.io.FileInputStream;
@@ -55,9 +56,10 @@ public class Breakout extends Game {
 	private ArrayList<Brick> bricks;
 	private ArrayList<Bonus> bonuses;
 	private ArrayList<Ball>  Balls;
+	private ArrayList<Planet> planets;
 	private Player player;
 	private Ball ball;
-	private static Ball planete;
+	private static Planet planete;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 1;
 	// init at 1 because it takes time to initialize the list of bricks 
@@ -95,6 +97,7 @@ public class Breakout extends Game {
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
 		this.setBalls(new ArrayList<Ball>());
+		this.setPlanets(new ArrayList<Planet>());
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
@@ -104,7 +107,8 @@ public class Breakout extends Game {
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
 
-		planete = new Ball (Ball.PLANET_IMAGE, 100, 750, new Vector2D(20, 20), false);
+		planete = new Planet (Planet.PLANET_IMAGE, 100, 750, new Vector2D(20, 20), false, 5);
+		planets.add(planete);
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
 
@@ -353,6 +357,24 @@ public class Breakout extends Game {
 	 */
 	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks = bricks;
+	}
+
+	/**
+	 * Get the list of planets in the game.
+	 * 
+	 * @return The list of planets
+	 */
+	public ArrayList<Planet> getPlanets() {
+		return this.planets;
+	}
+
+	/**
+	 * Set the list of planets in the game.
+	 * 
+	 * @param planets The list of planets
+	 */
+	public void setPlanets(ArrayList<Planet> planets) {
+		this.planets = planets;
 	}
 
 	/**
@@ -634,6 +656,22 @@ public class Breakout extends Game {
 		}
 	
 
+	/**
+	 * Update the planet entities
+	 */
+	public void updatePlanets() {
+		
+		Iterator<Planet> iterator = this.planets.iterator();
+		while (iterator.hasNext()) {
+			Planet planet = iterator.next();
+			if (!planet.isActive()){
+				this.getPhysicEngine().getPhysicalObjects().remove(planete);
+				iterator.remove();
+			}
+		}
+	}
+
+
 
 	/**
 	 * Update the bricks entities
@@ -790,13 +828,11 @@ public class Breakout extends Game {
 			case BONUS_SPEED:
 				if (Breakout.this.getPlayer().getIntSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
 					Breakout.this.getPlayer().setIntSpeed(this.getPlayer().getIntSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getIntSpeed());
 				}
 				break;
 			case MALUS_SPEED:
 				if (Breakout.this.getPlayer().getIntSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
 					Breakout.this.getPlayer().setIntSpeed(Breakout.this.getPlayer().getIntSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getIntSpeed());
 				}
 				break;
 			case BONUS_HEALTH:
@@ -892,7 +928,7 @@ public class Breakout extends Game {
 	 */
 	@Override
 	public void onUpdate(double deltaTime) {
-		System.out.println("ACTIF ? "+this.planete.isActive());
+		//System.out.println("ACTIF ? "+this.planete.isActive());
 		this.updatePlayer();
 		this.updateBall();
 		this.checkBallInGame();
@@ -936,27 +972,6 @@ public class Breakout extends Game {
 		this.getPanel().getGameZone().remove(this.getNorthWall().getRepresentation());
 	}
 
-	/**
-	 * method making the planet explode
-	 */
-
-	public static void planetExplosion(){
-		planete.setActive(false);
-		physicEngine.getPhysicalObjects().remove(planete);
-		Image image = new ImageIcon(
-			Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator+"gifExplosion.gif").getImage();
-		planete.getRepresentation().setImage(image);
-		Timer timer = new Timer(2000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                planete.destroy();
-            }
-        });
-        
-        timer.setRepeats(false);
-        timer.start();
-
-	}
 
 	
 }

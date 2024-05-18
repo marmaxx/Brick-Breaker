@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import display.engine.utils.*;
 import game.breakout.entities.Ball;
+import game.breakout.entities.Planet;
 public abstract class PhysicalObject implements Serializable{
     public static final long serialVersionUID = 2L;
     public boolean active;
@@ -118,7 +119,7 @@ public abstract class PhysicalObject implements Serializable{
     }
 
     public boolean isAPlanet(){
-        return (this instanceof Ball && this.mass==750);
+        return (this instanceof Planet);
     }
 
 
@@ -218,7 +219,7 @@ public abstract class PhysicalObject implements Serializable{
      * @param deltaTime the time since last tick
      */
     public void applyGravitationalForces(double deltaTime, PhysicalObject planete) {
-		System.out.println(planete.isActive());
+		//System.out.println(planete.isActive());
 		if (!planete.isActive()) return;
         final double G = 6.67430; // gravitational constant
 
@@ -227,8 +228,8 @@ public abstract class PhysicalObject implements Serializable{
 			double distance = r.magnitude();
 			if (distance<200) return;
 
-			System.out.println("objet 1: "+this.getMass()+" "+this.getPosition());
-			System.out.println("objet 2: "+planete.getMass()+" "+planete.getPosition());
+			//System.out.println("objet 1: "+this.getMass()+" "+this.getPosition());
+			//System.out.println("objet 2: "+planete.getMass()+" "+planete.getPosition());
 
 			double forceMagnitude = G * (this.getMass() * planete.getMass()) / (distance * distance);
 			//System.out.println("force norme :"+forceMagnitude);
@@ -236,10 +237,10 @@ public abstract class PhysicalObject implements Serializable{
 
 			this.applyForce(force.multiply(deltaTime));
 			//this.setSpeed(force.multiply(deltaTime));
-			System.out.println(force.multiply(deltaTime));
-			System.out.println(this.getAcceleration());
-			System.out.println(this.getSpeed());
-			System.out.println();
+			//System.out.println(force.multiply(deltaTime));
+			//System.out.println(this.getAcceleration());
+			//System.out.println(this.getSpeed());
+			//System.out.println();
     }
 
 

@@ -24,7 +24,6 @@ public class Ball extends Entity  {
 
 	transient public static Image DEFAULT_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "ball.png").getImage();
 	transient public static Image DEFAULT_IMAGE2 = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "Meteorite.png").getImage();
-	transient public static final Image PLANET_IMAGE = new ImageIcon(Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator + "etoileNoire.png").getImage();
 	public static Color DEFAULT_COLOR = Color.RED;
 	public static Color DEFAULT_TRAIL_COLOR = Color.RED;
 	public static final int DEFAULT_SIZE = 30;
@@ -256,35 +255,7 @@ public class Ball extends Entity  {
 	
 	}
 
-	/**
-     * Applies gravitational field forces to all movable objects
-     * 
-     * @param deltaTime the time since last tick
-     */
-    public void applyGravitationalForces(double deltaTime, Ball planete) {
-		System.out.println(planete.isActive());
-		if (!planete.isActive()) return;
-        final double G = 6.67430; // gravitational constant
 
-			Vector2D r = planete.getPosition().subtract(this.getPosition());
-			
-			double distance = r.magnitude();
-			if (distance<200) return;
-
-			System.out.println("objet 1: "+this.getMass()+" "+this.getPosition());
-			System.out.println("objet 2: "+planete.getMass()+" "+planete.getPosition());
-
-			double forceMagnitude = G * (this.getMass() * planete.getMass()) / (distance * distance);
-			//System.out.println("force norme :"+forceMagnitude);
-			Vector2D force = r.normalize().multiply(forceMagnitude*4);
-
-			this.applyForce(force.multiply(deltaTime));
-			//this.setSpeed(force.multiply(deltaTime));
-			System.out.println(force.multiply(deltaTime));
-			System.out.println(this.getAcceleration());
-			System.out.println(this.getSpeed());
-			System.out.println();
-    }
 
 
 	

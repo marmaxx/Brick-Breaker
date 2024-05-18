@@ -92,34 +92,9 @@ public class PhysicsEngine implements Serializable{
             PhysicalObject objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() && objectB.isActive()) {
-                    if (objectA.isAPlanet() || objectB.isAPlanet()){
-                    compteurPlanete++;
-                    //System.out.println("Planete");
-                    }
 
-                    if (compteurPlanete==5){
-                        Vector2D distance = objectB.getPosition().subtract(objectA.getPosition());
-                        if (objectA.isAPlanet()){
-                            objectB.applyForce(distance.normalize().multiply(50000));
-                            objectB.setAcceleration(new Vector2D(0, 0));
-                            Breakout.planetExplosion();
-                        }
-                        if (objectB.isAPlanet()){
-                            objectA.applyForce(distance.normalize().multiply(-50000));
-                            objectA.setAcceleration(new Vector2D(0, 0));
-                            Breakout.planetExplosion();
-                        }
-                        //TODO: fonction qui fait exploser/disparaître la planete
-                        //TODO: implémenter la force de souffle
-                    }
-                    //System.out.println("compteur: "+compteurPlanete);
-                    //System.out.println("COLLISION");
-                    //System.out.println(objectB.getPosition());
-                    //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
-                    //resolving collision between A and B+-
-                    //System.out.println("A= "+objectA.getMass());
-                    //System.out.println("B= "+objectB.getMass());
+                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() && objectB.isActive()) {
+
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
 
@@ -172,10 +147,9 @@ public class PhysicsEngine implements Serializable{
             PhysicalObject objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++){
                 PhysicalObject objectB = physicalObjects.get(j);
-                if (objectA instanceof Ball && objectB instanceof Ball){
                     if (objectA.isAPlanet()) objectB.applyGravitationalForces(deltaTime, objectA);
-                    else if (objectB.isAPlanet()) ((Ball)objectA).applyGravitationalForces(deltaTime, (Ball)objectB);
-                }
+                    else if (objectB.isAPlanet()) objectA.applyGravitationalForces(deltaTime, objectB);
+                
             }
         }
     }
