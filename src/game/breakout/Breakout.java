@@ -808,7 +808,7 @@ public class Breakout extends Game {
 				}
 				break;
 			case BONUS_HEALTH:
-				if (Breakout.this.getLife() + 1 < 3) {
+				if (Breakout.this.getLife() < 3) {
 					Breakout.this.setLife(Breakout.this.getLife() + 1);
 					Breakout.this.getPanel().updateLife(Breakout.this.getLife());
 				}
