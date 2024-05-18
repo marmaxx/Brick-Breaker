@@ -35,13 +35,10 @@ public class Planet extends Entity {
 		Image image = new ImageIcon(
 			Breakout.ASSETS_PATH + "images" + java.io.File.separator + "entities" + java.io.File.separator+"gifExplosion.gif").getImage();
 		this.getRepresentation().setImage(image);
-        Planet planet =this;
-		Timer timer = new Timer(2000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                planet.destroy();
-            }
-        });
+		Timer timer = new Timer(2000, (ActionEvent e) -> {
+	        this.destroy();
+	    });
+
         timer.setRepeats(false);
         timer.start();
     }

@@ -107,7 +107,7 @@ public class Breakout extends Game {
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
 
-		planete = new Planet (Planet.PLANET_IMAGE, 100, 750, new Vector2D(20, 20), false, 5);
+		planete = new Planet (Planet.PLANET_IMAGE, 100, 750, new Vector2D(20, 20), false, 1);
 		planets.add(planete);
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
