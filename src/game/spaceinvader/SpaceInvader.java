@@ -110,6 +110,7 @@ public class SpaceInvader extends Game{
 							//SpaceInvader.this.getPlayersAmmo().setIsMoving(true);
 							SpaceInvader.this.getPlayersAmmo().active=true;
 							Vector2D newPosition = new Vector2D(SpaceInvader.this.playersAmmo.getRepresentation().getX(), SpaceInvader.this.playersAmmo.getRepresentation().getY());
+							SpaceInvader.this.playersAmmo.getRepresentation().setBounds((int)newPosition.getX(), (int)newPosition.getY(), SpaceInvader.this.playersAmmo.getRepresentation().getWidth(), SpaceInvader.this.playersAmmo.getRepresentation().getHeight());
 							SpaceInvader.this.playersAmmo.setPosition(newPosition);
 							Vector2D speed = new Vector2D(0, -0.3);
 							SpaceInvader.this.playersAmmo.setSpeed(speed);
