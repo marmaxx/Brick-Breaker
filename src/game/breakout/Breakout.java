@@ -723,14 +723,16 @@ public class Breakout extends Game {
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 			if(brick.willBeOffScreen(this.getPanel(),5)){
-				brick.getRepresentation().setPosY(brick.getRepresentation().getPosY()+30);
-				brick.setPosition(new Vector2D(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY()+30));
-				if(brick.movingRight()){
-					brick.stopRight();
-					brick.moveLeft();
-				}else{
-					brick.stopLeft();
-					brick.moveRight();
+				for (Brick brick2 : this.getBricks()){
+					brick2.getRepresentation().setPosY(brick2.getRepresentation().getPosY()+20);
+					brick2.setPosition(new Vector2D(brick2.getRepresentation().getPosX(), brick2.getRepresentation().getPosY()+30));
+					if(brick2.movingRight()){
+						brick2.stopRight();
+						brick2.moveLeft();
+					}else{
+						brick2.stopLeft();
+						brick2.moveRight();
+					}
 				}
 			}
 			brick.move(1);
