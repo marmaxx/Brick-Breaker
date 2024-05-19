@@ -61,7 +61,7 @@ public class SavedGames extends JPanel {
         }
 
         this.menu.addActionListener((event) -> {
-            this.game_frame.getCardlayout().show(this.game_frame.getPanelContainer(), "classicGame");
+            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "menuPanel");
         });
         addMouseListener(menu);
 

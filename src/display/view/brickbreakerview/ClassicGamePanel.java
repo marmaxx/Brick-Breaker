@@ -40,7 +40,6 @@ public class ClassicGamePanel extends JPanel {
 
         //add actionListener to the Quickgame button
         QuickGame.addActionListener((event) -> {
-            gameFrame.getCardlayout().show(gameFrame.getPanelContainer(), "gamePanel"); // switching the card layout
             gameFrame.startBreakoutGame(0);
         });
 

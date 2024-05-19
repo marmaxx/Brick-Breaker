@@ -56,7 +56,6 @@ public class GameFrame extends JFrame {
 		this.cardLayout = new CardLayout(); //set new cardLayout
 		this.container = new JPanel(cardLayout); //creat containers for managing panel in the frame 
 
-		this.setGamePanel(new GamePanel(this));
 		this.game_over = new GameOver(this);
 		this.game_win = new WinPanel(this);
 		this.menu_level = new MenuLevel(this);
@@ -68,7 +67,6 @@ public class GameFrame extends JFrame {
 		this.settingInGame = new SettingsInGame(this);
 
 
-		this.container.add(this.gamePanel, "gamePanel");
 		this.container.add(this.game_over, "gameOver"); 
 		this.container.add(this.game_win, "winPanel");
 		this.container.add(this.menu_Marathon, "menuMarathon");
@@ -232,18 +230,27 @@ public class GameFrame extends JFrame {
 
 	public void startBreakoutGame(int level){
 		this.numberOfTheGame = 0;
+		this.setGamePanel(new GamePanel(this));
+		this.container.add(this.gamePanel, "gamePanel");
+		this.getCardlayout().show(this.getPanelContainer(), "gamePanel");
 		this.BreakoutGame = new Breakout(this, level); //created instance of Breakout
 		this.BreakoutGame.start(); //starting the game 
 	}
 
 	public void startSpaceInvaderGame(){
 		this.numberOfTheGame = 1;
+		this.setGamePanel(new GamePanel(this));
+		this.container.add(this.gamePanel, "gamePanel");
+		this.getCardlayout().show(this.getPanelContainer(), "gamePanel");
 		this.SpaceInvaderGame = new SpaceInvader(this); //created instance of SpaceInvader
 		this.SpaceInvaderGame.start();
 	}
 
 	public void startPongGame(){
 		this.numberOfTheGame = 2;
+		this.setGamePanel(new GamePanel(this));
+		this.container.add(this.gamePanel, "gamePanel");
+		this.getCardlayout().show(this.getPanelContainer(), "gamePanel");
 		this.PongGame = new Pong(this);
 		this.PongGame.start();
 	}

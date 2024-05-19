@@ -596,7 +596,6 @@ public class Breakout extends Game {
 		this.getPanel().getGameZone().add(this.getBall().getRepresentation());
 
 
-		this.getPanel().updateScore(this.score, this.nbBricks);
 		this.getPanel().updateLife(this.life);
 
 	}
@@ -660,7 +659,6 @@ public class Breakout extends Game {
 				this.score += 100; // Increment the score when the brick is broken
 				// Safely remove the brick from the collection
 				iterator.remove();
-				this.getPanel().updateScore(this.score, this.nbBricks);
 				
 				
 			}
@@ -745,7 +743,6 @@ public class Breakout extends Game {
 				this.score += 100; // Increment the score when the brick is broken
 				// Safely remove the brick from the collection
 				iterator.remove();
-				this.getPanel().updateScore(this.score, this.nbBricks);
 				
 				
 			}	

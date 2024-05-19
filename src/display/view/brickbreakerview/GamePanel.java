@@ -32,9 +32,8 @@ public class GamePanel extends JPanel {
          }
     };
     private JPanel statZone = new JPanel();
-	private JLabel score = new JLabel();
     private JLabel life = new JLabel();
-    private JLabel nbBricks = new JLabel();
+	private JLabel scorePong = new JLabel();
 	private JButton menu = createStyledButton("MENU");
 	private MenuInGame menuInGame; 
 	JLayeredPane layeredPane = new JLayeredPane();
@@ -67,15 +66,15 @@ public class GamePanel extends JPanel {
 		this.statZone.setBackground(new Color(0,0,0,0));
 		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout 
 
-		this.score.setPreferredSize(new Dimension(200, 100));
-        this.score.setForeground(Color.WHITE); // set color of the text
-
         this.life.setPreferredSize(new Dimension(200, 100));
         this.life.setForeground(Color.WHITE); // set color of the text
 		this.life.setFont(new Font("Ubuntu", Font.BOLD, 22));
 
-        this.nbBricks.setPreferredSize(new Dimension(200, 100));
-        this.nbBricks.setForeground(Color.WHITE); // set color of the text
+		this.scorePong.setPreferredSize(new Dimension(200, 100));
+		this.scorePong.setForeground(Color.WHITE); 
+		this.scorePong.setFont(new Font("Ubuntu", Font.BOLD, 22));
+
+
 
 		this.menu.addMouseListener(new ButtonMouseListener(this.menu));
 
@@ -92,8 +91,9 @@ public class GamePanel extends JPanel {
 			this.menuInGame.setVisible(true);
 		});
 
-
-        this.add(this.life);
+		System.out.print("number = " + gameFrame.getNumberOfTheGame());
+		if(gameFrame.getNumberOfTheGame() == 2){ this.add(this.scorePong); }
+		else { this.add(this.life); }
 		this.add(this.menu);
 		this.add(gameZone);
 		this.add(menuInGame);
@@ -151,19 +151,13 @@ public class GamePanel extends JPanel {
 	*/
 	public void updateLife(int life){
 		this.life.setText("Life : " + life);
-		//this.statZone.repaint(); // Redraw the statZone
 	}
 
-	/**
-	 * update game score and number of bricks in JLabel
-	 * @param score The score in game
-	 * @param bricks The number of bricks 
-	 */
-	public void updateScore(int score, int bricks){
-		//this.score.setText("Score : " + score);
-		//this.nbBricks.setText("Bricks : " + bricks);
-		//this.statZone.repaint(); // Redraw the statZone
+	public void updateScore(int score1, int score2){
+		this.scorePong.setText(score1 + " | " + score2);
 	}
+
+	
 
 
 	public void resumeGamePanel(){
