@@ -9,11 +9,14 @@ import display.engine.shapes.rules.Shape;
 public class Circle extends Shape {	
 	public static final long serialVersionUID = 4L;
 
-
 	/**
-	 * Instantiates a new Circle
+	 * Instantiates a new Circle with the specified color, position, width, and height.
 	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int, int)
+	 * @param color the color of the circle
+	 * @param posX the x-coordinate of the top-left corner of the circle
+	 * @param posY the y-coordinate of the top-left corner of the circle
+	 * @param width the width of the circle
+	 * @param height the height of the circle
 	 */
 	public Circle(Color color,
 		int posX, int posY,
@@ -23,9 +26,13 @@ public class Circle extends Shape {
 	}
 
 	/**
-	 * Instantiates a new Circle
+	 * Instantiates a new Circle with the specified image, position, width, and height.
 	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int, int)
+	 * @param image the image to be displayed as the circle
+	 * @param posX the x-coordinate of the top-left corner of the circle
+	 * @param posY the y-coordinate of the top-left corner of the circle
+	 * @param width the width of the circle
+	 * @param height the height of the circle
 	 */
 	public Circle(Image image,
 		int posX, int posY,
@@ -34,9 +41,12 @@ public class Circle extends Shape {
 		super(image, posX, posY, width, height);
 	}
 
-
 	/**
-	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
+	 * Overrides the paintComponent method to draw the circle on the graphics object.
+	 * If an image is set, it is drawn using the specified width and height.
+	 * If no image is set, a filled oval is drawn using the specified width and height.
+	 * 
+	 * @param g the graphics object to draw on
 	 */
 	@Override
 	public void paintComponent(Graphics g){

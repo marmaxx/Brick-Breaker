@@ -10,7 +10,7 @@ public abstract class Shape extends GraphicalObject {
 	transient protected Image image;
 
 	/**
-	 * Instantiates a new Shape
+	 * Instantiates a new Shape.
 	 * 
 	 * @param color the color of the graphical object
 	 * @param posX the initial x position of the graphical object
@@ -18,15 +18,12 @@ public abstract class Shape extends GraphicalObject {
 	 * @param width the width of the graphical object
 	 * @param height the height of the graphical object
 	 */
-    public Shape(Color color,
-        int posX, int posY,
-        int width, int height
-    ) {
-        super(color, posX, posY, width, height);
-    }
+	public Shape(Color color, int posX, int posY, int width, int height) {
+		super(color, posX, posY, width, height);
+	}
 
 	/**
-	 * Instantiates a new Image
+	 * Instantiates a new Shape with an image.
 	 * 
 	 * @param image the image to be displayed
 	 * @param posX the initial x position of the graphical object
@@ -34,15 +31,12 @@ public abstract class Shape extends GraphicalObject {
 	 * @param width the width of the graphical object
 	 * @param height the height of the graphical object
 	 */
-    public Shape(Image image,
-        int posX, int posY,
-        int width, int height
-    ) {
+	public Shape(Image image, int posX, int posY, int width, int height) {
 		super(image, posX, posY, width, height);
-    }
+	}
 
 	/**
-	 * Gets the image to be displayed
+	 * Gets the image to be displayed.
 	 * 
 	 * @return The image to be displayed
 	 */
@@ -51,7 +45,7 @@ public abstract class Shape extends GraphicalObject {
 	}
 
 	/**
-	 * Sets the image to be displayed
+	 * Sets the image to be displayed.
 	 * 
 	 * @param image The image to be displayed
 	 */
@@ -60,12 +54,11 @@ public abstract class Shape extends GraphicalObject {
 	}
 
 	/**
-	 * Paints the image on the screen
+	 * Paints the image on the screen.
 	 * 
 	 * @param g The graphics object to be painted
 	 */
-	public void paintComponent(java.awt.Graphics g){
+	public void paintComponent(java.awt.Graphics g) {
 		super.paintComponent(g);
 	}
-
 }

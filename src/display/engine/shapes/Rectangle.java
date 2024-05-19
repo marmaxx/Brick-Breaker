@@ -13,9 +13,15 @@ public class Rectangle extends Shape {
 	private int angle = 0;
 
 	/**
-	 * Instantiates a new Rectangle
+	 * Instantiates a new Rectangle.
 	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int, int)
+	 * @param color the color of the rectangle
+	 * @param posX the x-coordinate of the top-left corner of the rectangle
+	 * @param posY the y-coordinate of the top-left corner of the rectangle
+	 * @param width the width of the rectangle
+	 * @param height the height of the rectangle
+	 * 
+	 * @see display.engine.shapes.rules.Shape#Shape(Color, int, int, int, int)
 	 */
 	public Rectangle(Color color,
 		int posX, int posY,
@@ -25,9 +31,15 @@ public class Rectangle extends Shape {
 	}
 
 	/**
-	 * Instantiates a new Rectangle
+	 * Instantiates a new Rectangle.
 	 * 
-	 * @see display.engine.shapes.rules.Shape#Shape(Image, int, int, int, int, int)
+	 * @param image the image to be displayed as the rectangle
+	 * @param posX the x-coordinate of the top-left corner of the rectangle
+	 * @param posY the y-coordinate of the top-left corner of the rectangle
+	 * @param width the width of the rectangle
+	 * @param height the height of the rectangle
+	 * 
+	 * @see display.engine.shapes.rules.Shape#Shape(Image, int, int, int, int)
 	 */
 	public Rectangle(Image image,
 		int posX, int posY,
@@ -37,16 +49,20 @@ public class Rectangle extends Shape {
 	}
 
 	/**
- 	* Sets the rotation angle.
- 	* 
- 	* @param a an integer representing the angle of rotation
- 	*/
+	 * Sets the rotation angle of the rectangle.
+	 * 
+	 * @param a an integer representing the angle of rotation
+	 */
 	public void setRotate(int a){
 		this.angle = a;
 	}
 	
 	
 	/**
+	 * Overrides the paintComponent method to draw the rectangle on the screen.
+	 * 
+	 * @param g the Graphics object used for drawing
+	 * 
 	 * @see display.engine.shapes.rules.Shape#paintComponent(java.awt.Graphics)
 	 */
     @Override

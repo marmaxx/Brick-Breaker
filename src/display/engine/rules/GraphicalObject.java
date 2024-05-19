@@ -216,6 +216,7 @@ public abstract class GraphicalObject extends JComponent {
 	 * Get the coordinate of a boundary from this graphical object
 	 * 
 	 * @param boundary The boundary to retrieve
+	 * @return The coordinate of the boundary
 	 */
 	public float getBoundary(Boundary boundary) {
 		return this.getBoundaries()[boundary.ordinal()];
@@ -224,6 +225,7 @@ public abstract class GraphicalObject extends JComponent {
 	/**
 	 * Get the next coordinates of the boundaries from this object
 	 * 
+	 * @param nextPos The next position of the graphical object
 	 * @return The coordinates of the boundaries
 	 */
 	public int[] getNextBoundaries(int[] nextPos) {
@@ -238,9 +240,11 @@ public abstract class GraphicalObject extends JComponent {
 	}
 	
 	/**	
-	 * Get the next coordinates of a boundary from this graphical object
+	 * Get the next coordinate of a boundary from this graphical object
 	 * 
 	 * @param boundary The boundary to retrieve
+	 * @param nextPos The next position of the graphical object
+	 * @return The coordinate of the boundary
 	 */
 	public float getNextBoundary(Boundary boundary,int[] nextPos) {
 		return this.getNextBoundaries(nextPos)[boundary.ordinal()];
@@ -251,10 +255,9 @@ public abstract class GraphicalObject extends JComponent {
 	/**
 	 * Checks if the object is within its panel boundaries
 	 * 
-	 * @param x the x position to check
-	 * @param y the y position to check
-	 * @param panel the panel in which the object is rendered
-	 * 
+	 * @param x The x position to check
+	 * @param y The y position to check
+	 * @param panel The panel in which the object is rendered
 	 * @return true if the object is within the panel boundaries, false otherwise
 	 */
 	public static boolean isOnScreen(int x, int y, GamePanel panel) {
@@ -266,7 +269,6 @@ public abstract class GraphicalObject extends JComponent {
 	 * Check if this graphical object is colliding with another graphical object
 	 * 
 	 * @param object The graphical object to check collision with
-	 * 
 	 * @return true if the objects are colliding, false otherwise
 	 */
 	public boolean isColliding(GraphicalObject object) {
@@ -287,11 +289,12 @@ public abstract class GraphicalObject extends JComponent {
 
 
 	/**
-	 * check if this is going to collide with an object on the next tick
-	 * @param object the object we want to check collisions with
-	 * @param myNextPos my next coordinates 
-	 * @param objectNextPos their next coordinates
-	 * @return true if we are going to collide, false otherwise
+	 * Check if this graphical object is going to collide with another graphical object on the next tick
+	 * 
+	 * @param object The graphical object to check collision with
+	 * @param myNextPos The next position of this graphical object
+	 * @param objectNextPos The next position of the other graphical object
+	 * @return true if the objects are going to collide, false otherwise
 	 */
 	public boolean isGoingToCollide(GraphicalObject object, int[] myNextPos, int[]objectNextPos) {
 		int[] thisBoundingBox = this.getNextBoundaries(myNextPos);
@@ -310,9 +313,10 @@ public abstract class GraphicalObject extends JComponent {
 	}
 
 	/**
-	 *  
-	 * @param object the object we want our vector to point to
-	 * @return a vector that goes from this object's center to object in argument
+	 * Get a vector that goes from the center of this object to the center of another object
+	 * 
+	 * @param object The other graphical object
+	 * @return A vector that goes from the center of this object to the center of the other object
 	 */
 	public Vector2D vectorFromCenterToCenter(GraphicalObject object){
 		Vector2D rep = new Vector2D(0, 0);
@@ -322,10 +326,11 @@ public abstract class GraphicalObject extends JComponent {
 	}
 
 	/**
+	 * Get a vector that goes from the center of this object to the specified coordinates
 	 * 
-	 * @param x 
-	 * @param y
-	 * @return a vector from this object's center to (x,y)
+	 * @param x The x coordinate
+	 * @param y The y coordinate
+	 * @return A vector that goes from the center of this object to the specified coordinates
 	 */
 	public Vector2D vectorCenterToCoordinates(double x, double y){
 		Vector2D rep = new Vector2D(0, 0);
