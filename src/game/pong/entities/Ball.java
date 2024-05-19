@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 import display.engine.shapes.Rectangle;
 import display.engine.utils.Vector2D;
-import display.view.GamePanel;
+import display.view.brickbreakerview.GamePanel;
 import game.pong.Pong;
 import game.pong.entities.rules.Entity;
 

@@ -12,6 +12,7 @@ import game.pong.entities.Wall;
 import game.rules.Game;
 
 import display.view.*;
+import display.view.brickbreakerview.GamePanel;
 
 public class Pong extends Game{
 	
@@ -115,7 +116,7 @@ public class Pong extends Game{
 						break;
 					// M key to go to the menu
 					case KeyEvent.VK_M:
-						if (!Pong.this.gameframe.getGame().isPaused()){
+						if (!Pong.this.gameframe.getPongGame().isPaused()){
 							Pong.this.pause();
 							Pong.this.gameframe.getGamePanel().getGameZone().setVisible(false);
 							Pong.this.gameframe.getGamePanel().getMenu().setVisible(true);

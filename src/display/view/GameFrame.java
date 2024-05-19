@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 
 import game.breakout.Breakout;
+import game.pong.Pong;
 import game.spaceinvader.*;
 
 
@@ -18,6 +19,7 @@ public class GameFrame extends JFrame {
 
 	private Breakout BreakoutGame;
 	private SpaceInvader SpaceInvaderGame;
+	private Pong PongGame;
 
 	private GamePanel gamePanel;
 	private MenuPanel menuPanel;
@@ -204,6 +206,10 @@ public class GameFrame extends JFrame {
 		this.SpaceInvaderGame = game;
 	}
 
+	public void setGame(Pong game){
+		this.PongGame = game;
+	}
+
 	public void setnbLevelUnlock(){
 		++this.nbLevelUnlock;
 	}
@@ -220,6 +226,10 @@ public class GameFrame extends JFrame {
 		return this.SpaceInvaderGame;
 	}
 
+	public Pong getPongGame(){
+		return this.PongGame;
+	}
+
 	public void startBreakoutGame(int level){
 		this.numberOfTheGame = 0;
 		this.BreakoutGame = new Breakout(this, level); //created instance of Breakout
@@ -230,6 +240,12 @@ public class GameFrame extends JFrame {
 		this.numberOfTheGame = 1;
 		this.SpaceInvaderGame = new SpaceInvader(this); //created instance of SpaceInvader
 		this.SpaceInvaderGame.start();
+	}
+
+	public void startPongGame(){
+		this.numberOfTheGame = 2;
+		this.PongGame = new Pong(this);
+		this.PongGame.start();
 	}
 
 	public int getNumberOfTheGame(){

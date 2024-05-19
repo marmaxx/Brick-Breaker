@@ -22,7 +22,7 @@ public class HomePage extends JPanel{
 
     private JButton BrickBreaker  = createStyledButton(" Brick Breacker ");
     private JButton SpaceInvader = createStyledButton(" Space Invader ");
-    private JButton Ponk = createStyledButton(" Pong ");
+    private JButton Pong = createStyledButton(" Pong ");
     private JButton exit = createStyledButton(" Exit ");
 
     public HomePage(GameFrame gameframe){
@@ -48,18 +48,23 @@ public class HomePage extends JPanel{
             gameframe.startSpaceInvaderGame();
         });
 
+        this.Pong.addActionListener((event) -> {
+            gameframe.getCardlayout().show(gameframe.getPanelContainer(), "gamePanel");
+            gameframe.startPongGame();
+        });
+
         this.exit.addActionListener((event) -> {
             System.exit(0);
         });
 
         this.BrickBreaker.addMouseListener(new ButtonMouseListener(this.BrickBreaker));
         this.SpaceInvader.addMouseListener(new ButtonMouseListener(this.SpaceInvader));
-        this.Ponk.addMouseListener(new ButtonMouseListener(this.Ponk));
+        this.Pong.addMouseListener(new ButtonMouseListener(this.Pong));
         this.exit.addMouseListener(new ButtonMouseListener(this.exit));
 
         this.add(this.BrickBreaker); 
         this.add(this.SpaceInvader); 
-        this.add(this.Ponk);  
+        this.add(this.Pong);  
         this.add(this.exit);                                            
     }
 
