@@ -9,9 +9,12 @@ import display.view.brickbreakerview.GamePanel;
 import game.pong.Pong;
 import game.pong.entities.Player;
 
-
+/**
+ * The abstract class representing an entity in the game.
+ * An entity is a physical object with a graphical representation.
+ */
 public abstract class Entity extends PhysicalObject {
-    protected GraphicalObject representation;
+	protected GraphicalObject representation;
 	protected final static int WALL_WIDTH = 20;
 
 	private boolean movingLeft=false;
@@ -22,104 +25,170 @@ public abstract class Entity extends PhysicalObject {
 	private static final boolean DEFAULT_MOVABLE =true;
 	private static final int DEFAULT_MASS = 0;
 
-
 	/**
-	 *  Instantiates a new Entity
-	 * @param mass	the mass of the Entity
-	 * @param position	its current position
-	 * @param movable	true if collisions affect its position
-	 * @param representation	the graphical representation of the entity
+	 * Instantiates a new Entity with the given mass, position, movability, and graphical representation.
+	 * 
+	 * @param mass the mass of the Entity
+	 * @param position its current position
+	 * @param movable true if collisions affect its position
+	 * @param representation the graphical representation of the entity
 	 */
 	public Entity(double mass, Vector2D position, boolean movable, GraphicalObject representation){
 		super(mass, position, movable, representation);
 		this.setRepresentation(representation);
-    }
-
-	/**
-	 * Instantiates a new Entity
-	 * 
-	 * @param representation the graphical representation of the entity
-	 */
-    public Entity(GraphicalObject representation) {
-		super(DEFAULT_MASS,new Vector2D(representation.getPosX(),representation.getPosY()),DEFAULT_MOVABLE,representation);
-		this.setRepresentation(representation);
-		 
-    }
-
-	/**
-	 * Gets the graphical representation of the entity
-	 * 
-	 * @return the graphical representation of the entity
-	 */
-    public GraphicalObject getRepresentation(){
-        return this.representation;
-    }
-
-    public Vector2D getPosition(){
-        return this.position;
-    }
-
-    public void setPosition(Vector2D newPos){
-        this.position=newPos;
-    }
-
-	/**
-	 * Sets the graphical representation of the entity
-	 * 
-	 * @param representation the new graphical representation of the entity
-	 */
-    public void setRepresentation(GraphicalObject representation) {
-        this.representation = representation;
-    }
-
-	public boolean isActive(){
-        return active;
 	}
 
 	/**
-	 * basic movement used by some Entities, mainly the ones with movable=false  
+	 * Instantiates a new Entity with the given graphical representation.
+	 * 
+	 * @param representation the graphical representation of the entity
+	 */
+	public Entity(GraphicalObject representation) {
+		super(DEFAULT_MASS,new Vector2D(representation.getPosX(),representation.getPosY()),DEFAULT_MOVABLE,representation);
+		this.setRepresentation(representation);
+	}
+
+	/**
+	 * Gets the graphical representation of the entity.
+	 * 
+	 * @return the graphical representation of the entity
+	 */
+	public GraphicalObject getRepresentation(){
+		return this.representation;
+	}
+
+	/**
+	 * Gets the current position of the entity.
+	 * 
+	 * @return the current position of the entity
+	 */
+	public Vector2D getPosition(){
+		return this.position;
+	}
+
+	/**
+	 * Sets the position of the entity.
+	 * 
+	 * @param newPos the new position of the entity
+	 */
+	public void setPosition(Vector2D newPos){
+		this.position=newPos;
+	}
+
+	/**
+	 * Sets the graphical representation of the entity.
+	 * 
+	 * @param representation the new graphical representation of the entity
+	 */
+	public void setRepresentation(GraphicalObject representation) {
+		this.representation = representation;
+	}
+
+	/**
+	 * Checks if the entity is active.
+	 * 
+	 * @return true if the entity is active, false otherwise
+	 */
+	public boolean isActive(){
+		return active;
+	}
+
+	/**
+	 * Moves the entity to the left.
 	 */
 	public void moveLeft(){
 		movingLeft=true;
 	}
+
+	/**
+	 * Moves the entity to the right.
+	 */
 	public void moveRight(){
 		movingRight=true;
 	}
+
+	/**
+	 * Moves the entity up.
+	 */
 	public void moveUp(){
 		movingUp=true;
 	}
+
+	/**
+	 * Moves the entity down.
+	 */
 	public void moveDown(){
 		movingDown=true;
 	}
+
+	/**
+	 * Stops the entity from moving to the left.
+	 */
 	public void stopLeft(){
 		movingLeft=false;
 	}
+
+	/**
+	 * Stops the entity from moving to the right.
+	 */
 	public void stopRight(){
 		movingRight=false;
 	}
+
+	/**
+	 * Stops the entity from moving up.
+	 */
 	public void stopUp(){
 		movingUp=false;
 	}
+
+	/**
+	 * Stops the entity from moving down.
+	 */
 	public void stopDown(){
 		movingDown=false;
 	}
+
+	/**
+	 * Checks if the entity is moving to the left.
+	 * 
+	 * @return true if the entity is moving to the left, false otherwise
+	 */
 	public boolean movingLeft(){
 		return movingLeft;
 	}
+
+	/**
+	 * Checks if the entity is moving to the right.
+	 * 
+	 * @return true if the entity is moving to the right, false otherwise
+	 */
 	public boolean movingRight(){
 		return movingRight;
 	}
+
+	/**
+	 * Checks if the entity is moving up.
+	 * 
+	 * @return true if the entity is moving up, false otherwise
+	 */
 	public boolean movingUp(){
 		return movingUp;
 	}
+
+	/**
+	 * Checks if the entity is moving down.
+	 * 
+	 * @return true if the entity is moving down, false otherwise
+	 */
 	public boolean movingDown(){
 		return movingDown;
 	}
 
 	/**
-	 * move the entity with the set speed
+	 * Moves the entity with the given speed.
 	 * 
-	 * @param speed
+	 * @param speed the speed at which the entity will move
 	 */
 	public void move(int speed){
 		
@@ -143,11 +212,10 @@ public abstract class Entity extends PhysicalObject {
 	}
 
 	/**
-	 * Checks if the entity will be off the screen if it moves in a given direction
+	 * Checks if the entity will be off the screen if it moves in a given direction.
 	 * 
+	 * @param panel the game panel
 	 * @param speed the number of pixels the entity will move
-	 * @param direction the direction in which the entity will move
-	 * 
 	 * @return true if the entity will be off the screen, false otherwise
 	 */
 	public boolean willBeOffScreen(GamePanel panel,int speed) {
@@ -179,17 +247,20 @@ public abstract class Entity extends PhysicalObject {
 	}
 
 	/**
-	 * updates velocity using acceleration and time spent. Overriden by Player because its movement is differenty
-	 * @param deltaTime 
+	 * Updates the velocity of the entity using acceleration and time spent.
+	 * This method is overridden by Player because its movement is different.
+	 * 
+	 * @param deltaTime the time spent since the last update
 	 */
-    public void updateVelocity(double deltaTime) {
-        this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
-    }
+	public void updateVelocity(double deltaTime) {
+		this.speed = this.speed.add(acceleration.multiply(deltaTime/1000000));
+	}
 
 	/**
+	 * Gets the current position of the entity.
 	 * 
 	 * @param speed the number of pixels the entity will move
-	 * @return a list containing the current position of the entity. first element in the list is X and second is Y
+	 * @return an array containing the current position of the entity, where the first element is X and the second is Y
 	 */
 	public int[] getCurrPos(int speed){
 		int[] rep= new int[2];
@@ -199,58 +270,61 @@ public abstract class Entity extends PhysicalObject {
 	}
 
 	/**
-	 *  Returns a correct impact point for all non ball shaped Objects, for ball Objects there is a overloading done in each class
+	 * Returns a correct impact point for all non-ball shaped objects.
+	 * For ball objects, there is an overloading done in each class.
+	 * 
 	 * @param object the entity we want to get the impact point of the collision with
-	 * @return	a vector representing the collision point
+	 * @return a vector representing the collision point
 	 */
-    public Vector2D getImpactPoint(PhysicalObject object){
-        Vector2D topRightPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
-        Vector2D topLeftPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
-        Vector2D bottomLeftPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
-        Vector2D bottomRightPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
+	public Vector2D getImpactPoint(PhysicalObject object){
+		Vector2D topRightPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
+		Vector2D topLeftPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MAX_Y.ordinal()]);
+		Vector2D bottomLeftPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MIN_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
+		Vector2D bottomRightPositionA = new Vector2D(object.getRepresentation().getBoundaries()[Boundary.MAX_X.ordinal()],object.getRepresentation().getBoundaries()[Boundary.MIN_Y.ordinal()]);
 		//the vector from the paddle's center to its top left corner
-        Vector2D centerToTopRightCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(topRightPositionA.getX(), topRightPositionA.getY()); 
-        Vector2D centerToTopLeftCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(topLeftPositionA.getX(), topLeftPositionA.getY());
-        Vector2D centerToBottomLeftCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(bottomLeftPositionA.getX(), bottomLeftPositionA.getY());
-      	Vector2D centerToBottomRightCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(bottomRightPositionA.getX(), bottomRightPositionA.getY());
+		Vector2D centerToTopRightCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(topRightPositionA.getX(), topRightPositionA.getY()); 
+		Vector2D centerToTopLeftCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(topLeftPositionA.getX(), topLeftPositionA.getY());
+		Vector2D centerToBottomLeftCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(bottomLeftPositionA.getX(), bottomLeftPositionA.getY());
+		Vector2D centerToBottomRightCornerVectorA = object.getRepresentation().vectorCenterToCoordinates(bottomRightPositionA.getX(), bottomRightPositionA.getY());
 
-    	Vector2D objectAToEntityVector = object.getRepresentation().vectorFromCenterToCenter(this.getRepresentation());
-            
-        if (centerToTopLeftCornerVectorA.angleFromTo(objectAToEntityVector)<0 && centerToTopRightCornerVectorA.angleFromTo(objectAToEntityVector)>0){
-            // la balle est au dessus 
-            return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, object.getPosition().getY());
-        } 
-        else if(centerToBottomRightCornerVectorA.angleFromTo(objectAToEntityVector)>0 && centerToTopRightCornerVectorA.angleFromTo(objectAToEntityVector)<0){
-                // la balle est a droite
-                return new Vector2D(object.getPosition().getX(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
-        }
-        else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToEntityVector)<0 && centerToTopLeftCornerVectorA.angleFromTo(objectAToEntityVector)>0){
-            // la balle est a gauche 
-            return new Vector2D(object.getPosition().getX() + object.getRepresentation().getWidth(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
-        }
-        else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToEntityVector)>0 && centerToBottomRightCornerVectorA.angleFromTo(objectAToEntityVector)<0){
-            // la balle est en dessous
-            return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, object.getPosition().getY() + object.getRepresentation().getHeight());
-        }
-        else{
-            Vector2D nearestVertex = object.getNearestVertex(this.getPosition());
-            return nearestVertex;
-        }
-    }
+		Vector2D objectAToEntityVector = object.getRepresentation().vectorFromCenterToCenter(this.getRepresentation());
+			
+		if (centerToTopLeftCornerVectorA.angleFromTo(objectAToEntityVector)<0 && centerToTopRightCornerVectorA.angleFromTo(objectAToEntityVector)>0){
+			// the entity is above
+			return new Vector2D(this.getPosition().getX()+this.getRepresentation().getWidth()/2, object.getPosition().getY());
+		} 
+		else if(centerToBottomRightCornerVectorA.angleFromTo(objectAToEntityVector)>0 && centerToTopRightCornerVectorA.angleFromTo(objectAToEntityVector)<0){
+			// the entity is to the right
+			return new Vector2D(object.getPosition().getX(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
+		}
+		else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToEntityVector)<0 && centerToTopLeftCornerVectorA.angleFromTo(objectAToEntityVector)>0){
+			// the entity is to the left
+			return new Vector2D(object.getPosition().getX() + object.getRepresentation().getWidth(), this.getPosition().getY()+this.getRepresentation().getWidth()/2);
+		}
+		else if(centerToBottomLeftCornerVectorA.angleFromTo(objectAToEntityVector)>0 && centerToBottomRightCornerVectorA.angleFromTo(objectAToEntityVector)<0){
+			// the entity is below
+			return new Vector2D(this.getPosition().getX() + this.getRepresentation().getWidth()/2, object.getPosition().getY() + object.getRepresentation().getHeight());
+		}
+		else{
+			Vector2D nearestVertex = object.getNearestVertex(this.getPosition());
+			return nearestVertex;
+		}
+	}
 
-	
 	/**
-	 * resolves collisions between two Entities
+	 * Resolves collisions between two entities.
+	 * 
 	 * @param object the entity we want to resolve collisions with
 	 */
-    public void resolveCollision(PhysicalObject object) {
-        //TODO: penser à l'élasticité : regarder formules physiques
-        if (isMovable()){
-            if (object.isMovable()){
-                // TODO resolve collision when the two objects are moveable
-            }
+	public void resolveCollision(PhysicalObject object) {
+		//TODO: penser à l'élasticité : regarder formules physiques
+		if (isMovable()){
+			if (object.isMovable()){
+				// TODO resolve collision when the two objects are movable
+			}
 			else{
-                Vector2D impact = this.getImpactPoint(object);
+				Vector2D impact = this.getImpactPoint(object);
+				// TODO resolve collision when the other object is not movable
                 if (impact == object.getTopLeftPosition() || impact == object.getTopRightPosition() || impact == object.getBottomLeftPosition() || impact == object.getBottomRightPosition()){
                     this.setSpeed(new Vector2D(- this.getSpeed().getX(), - this.getSpeed().getY()));
                 }else{

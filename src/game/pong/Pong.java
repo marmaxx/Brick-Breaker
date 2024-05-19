@@ -17,6 +17,23 @@ import java.awt.Toolkit;
 import display.view.*;
 import display.view.brickbreakerview.GamePanel;
 
+/**
+ * The `Pong` class represents the Pong game. It extends the `Game` class and contains
+ * the game logic, entities, and physics engine. It handles player input, ball movement,
+ * scoring, and collision detection with walls. The game is displayed in a `GameFrame`.
+ * 
+ * The `Pong` class provides methods to start the game, update the game state, reset the score,
+ * check for collisions with walls, update player positions, and clear game components.
+ * 
+ * The game is played by two players who control paddles on opposite sides of the screen.
+ * The objective is to hit the ball with the paddle and prevent it from hitting the walls
+ * behind the paddles. Each time the ball hits a wall behind the opponent's paddle, the
+ * corresponding player's score increases. The game ends when one player reaches a certain
+ * score limit.
+ * 
+ * The `Pong` class also provides getters and setters for accessing and modifying game
+ * components such as players, ball, and score.
+ */
 public class Pong extends Game{
 	
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();

@@ -26,156 +26,140 @@ public class Ball extends Entity {
 	public boolean isMoving;
 
 	/**
-	 * Instantiates a new PlayerAmmo
+	 * Instantiates a new Ball with color, size, mass, position, and movability.
 	 * 
-	 * @param posX the initial x position of the playerAmmo
-	 * @param posY the initial y position of the playerAmmo
-	 * @param size the size of the playerAmmo
-	 * @param color the color of the playerAmmo (ignored if the playerAmmo is represented by an image)
+	 * @param color    the color of the ball (ignored if the ball is represented by an image)
+	 * @param size     the size of the ball
+	 * @param mass     the mass of the ball
+	 * @param position the initial position of the ball
+	 * @param movable  indicates if the ball is movable or not
 	 */
-    public Ball(
-		Color color,
-        int size,
-		double mass, Vector2D position, boolean movable
-    ) {
-		super(mass,position,movable,new Rectangle(color, (int)position.getX(), (int)position.getY(), size, size));
-    }
-
-	/**
-	 * Instantiates a new PlayerAmmo
-	 * 
-	 * @param posX the initial x position of the playerAmmo
-	 * @param posY the initial y position of the playerAmmo
-	 * @param size the size of the playerAmmo
-	 * @param color the color of the playerAmmo (ignored if the playerAmmo is represented by an image)
-	 */
-    public Ball(
-		Image image,
-        int size,
-		double mass, Vector2D position, boolean movable
-    ) {
-		super(mass,position,movable,new Rectangle(image, (int)position.getX(), (int)position.getY(), size, size));
-    }
-
-	/**
-	 * Instantiates a new PlayerAmmo
-	 * 
-	 * @param posX the initial x position of the playerAmmo
-	 * @param posY the initial y position of the playerAmmo
-	 */
-	public Ball(double mass, Vector2D position, boolean movable) {
-		this(DEFAULT_IMAGE, DEFAULT_SIZE,mass,position,movable);
-
+	public Ball(Color color, int size, double mass, Vector2D position, boolean movable) {
+		super(mass, position, movable, new Rectangle(color, (int) position.getX(), (int) position.getY(), size, size));
 	}
 
-  	/**
-	 * Instantiates a new PlayerAmmo
+	/**
+	 * Instantiates a new Ball with image, size, mass, position, and movability.
 	 * 
-	 * @param posX the initial x position of the playerAmmo
-	 * @param posY the initial y position of the playerAmmo
-	 * @param size the size of the playerAmmo
-	 * @param color the color of the playerAmmo (ignored if the playerAmmo is represented by an image)
+	 * @param image    the image representing the ball
+	 * @param size     the size of the ball
+	 * @param mass     the mass of the ball
+	 * @param position the initial position of the ball
+	 * @param movable  indicates if the ball is movable or not
 	 */
-    public Ball(
-		Color color,
-        int posX, int posY,
-        int size
-    ) {
+	public Ball(Image image, int size, double mass, Vector2D position, boolean movable) {
+		super(mass, position, movable, new Rectangle(image, (int) position.getX(), (int) position.getY(), size, size));
+	}
+
+	/**
+	 * Instantiates a new Ball with default image, size, mass, position, and movability.
+	 * 
+	 * @param mass     the mass of the ball
+	 * @param position the initial position of the ball
+	 * @param movable  indicates if the ball is movable or not
+	 */
+	public Ball(double mass, Vector2D position, boolean movable) {
+		this(DEFAULT_IMAGE, DEFAULT_SIZE, mass, position, movable);
+	}
+
+	/**
+	 * Instantiates a new Ball with color, position, and size.
+	 * 
+	 * @param color the color of the ball (ignored if the ball is represented by an image)
+	 * @param posX  the initial x position of the ball
+	 * @param posY  the initial y position of the ball
+	 * @param size  the size of the ball
+	 */
+	public Ball(Color color, int posX, int posY, int size) {
 		super(new Rectangle(color, posX, posY, size, size));
-    }
+	}
 
 	/**
-	 * Instantiates a new PlayerAmmo
+	 * Instantiates a new Ball with image, position, and size.
 	 * 
-	 * @param posX the initial x position of the playerAmmo
-	 * @param posY the initial y position of the playerAmmo
-	 * @param size the size of the playerAmmo
-	 * @param color the color of the playerAmmo (ignored if the playerAmmo is represented by an image)
+	 * @param image the image representing the ball
+	 * @param posX  the initial x position of the ball
+	 * @param posY  the initial y position of the ball
+	 * @param size  the size of the ball
 	 */
-    public Ball(
-		Image image,
-        int posX, int posY,
-        int size
-    ) {
-		super(new Rectangle(image, posX, posY, size/1, size));
-    }
+	public Ball(Image image, int posX, int posY, int size) {
+		super(new Rectangle(image, posX, posY, size / 1, size));
+	}
 
 	/**
-	 * Instantiates a new PlayerAmmo
+	 * Instantiates a new Ball with default image, position, and size.
 	 * 
-	 * @param posX the initial x position of the playerAmmo
-	 * @param posY the initial y position of the playerAmmo
+	 * @param posX the initial x position of the ball
+	 * @param posY the initial y position of the ball
 	 */
 	public Ball(int posX, int posY) {
 		this(DEFAULT_IMAGE, posX, posY, DEFAULT_SIZE);
-
 	}
 
 	/**
-	 * Instantiates a new PlayerAmmo
+	 * Instantiates a new Ball with default values.
 	 */
 	public Ball() {
 		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE);
 	}
 
 	/**
-	 * Indicate if the ball is moving or not
+	 * Returns whether the ball is moving or not.
 	 * 
-	 * @return
+	 * @return true if the ball is moving, false otherwise
 	 */
-	public boolean getIsMoving(){
+	public boolean getIsMoving() {
 		return this.isMoving;
 	}
 
 	/**
-	 * Set the ball to moving or not
+	 * Sets the ball to be moving or not.
 	 * 
-	 * @param b
+	 * @param b true to set the ball as moving, false otherwise
 	 */
-	public void setIsMoving(boolean b){
+	public void setIsMoving(boolean b) {
 		this.isMoving = b;
 	}
 
 	/**
-	 * Check if the ball will out by taking into account the panel size of the game and the speed of the entity
+	 * Checks if the ball will go out of bounds by taking into account the panel size of the game and the speed of the entity.
 	 * 
-	 * @param panel
-	 * @param speed
-	 * @return
+	 * @param panel the game panel
+	 * @param speed the speed of the ball
+	 * @return true if the ball will go out of bounds, false otherwise
 	 */
-	public boolean willLoose(GamePanel panel, int speed){
-		int [] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
-		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed  > panel.getGameZone().getHeight();
+	public boolean willLoose(GamePanel panel, int speed) {
+		int[] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
+		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed > panel.getGameZone().getHeight();
 	}
 
 	/**
-	 * Get the impact point of where the entity may collide
+	 * Calculates the impact point where the ball may collide with another ball.
 	 * 
-	 * @param ammo
-	 * @return
+	 * @param ammo the other ball
+	 * @return the impact point as a Vector2D
 	 */
-    public Vector2D getImpactPoint(Ball ammo){
-		double distanceX = Math.abs(this.getPosition().getX()+this.getRepresentation().getWidth()/2 - ammo.getPosition().getX());
-        double distanceY = Math.abs(this.getPosition().getY()+this.getRepresentation().getWidth()/2 - ammo.getPosition().getY());
-        Vector2D vectorImpact = new Vector2D(distanceX/2, distanceY/2);
-        return vectorImpact.add(ammo.getPosition());
+	public Vector2D getImpactPoint(Ball ammo) {
+		double distanceX = Math.abs(this.getPosition().getX() + this.getRepresentation().getWidth() / 2 - ammo.getPosition().getX());
+		double distanceY = Math.abs(this.getPosition().getY() + this.getRepresentation().getWidth() / 2 - ammo.getPosition().getY());
+		Vector2D vectorImpact = new Vector2D(distanceX / 2, distanceY / 2);
+		return vectorImpact.add(ammo.getPosition());
 	}
-	
 
 	@Override
 	public void collided(PhysicalObject object) {
 		super.collided();
-		if (object instanceof Wall){
-			if (((Wall)object).getTriggerRespawn()){
+		if (object instanceof Wall) {
+			if (((Wall) object).getTriggerRespawn()) {
 				this.setHasHitAWall(true);
 			}
 		}
 	}
 
 	/**
-	 * Determine if the ball has collided with a wall and reset the bool if so
+	 * Determines if the ball has collided with a wall and resets the collision state.
 	 * 
-	 * @return a bool corresponding with the collision state of the ball
+	 * @return true if the ball has collided with a wall, false otherwise
 	 */
 	public boolean collidingWithWall() {
 		if (this.getHasHitAWall() == true) {
@@ -186,47 +170,46 @@ public class Ball extends Entity {
 	}
 
 	/**
-	 * check if two objects are colliding
+	 * Checks if the ball is colliding with another physical object.
 	 * 
-	 * @param object1
-	 * @param object2
-	 * @return boolean true if the two objects are colliding
+	 * @param object the other physical object
+	 * @return true if the ball is colliding with the object, false otherwise
 	 */
-	public boolean checkCollision(PhysicalObject object){
+	public boolean checkCollision(PhysicalObject object) {
 		return this.getRepresentation().isColliding(object.getRepresentation());
 	}
 
 	/**
-	 * Respawn the ball at the x,y location of the game
+	 * Respawns the ball at the specified x and y coordinates.
 	 * 
-	 * @param pong
-	 * @param x
-	 * @param y
+	 * @param pong the Pong game instance
+	 * @param x    the x coordinate of the respawn location
+	 * @param y    the y coordinate of the respawn location
 	 */
-	public void respawnBall(Pong pong, int x, int y){
+	public void respawnBall(Pong pong, int x, int y) {
 		Ball ball = new Ball(Ball.DEFAULT_IMAGE, 30, 50, new Vector2D(x, y), true);
 		ball.setSpeed(new Vector2D(0, -0.3));
-		ball.active=false;
+		ball.active = false;
 		pong.setBall(ball);
 		pong.getPanel().getGameZone().add(pong.getBall().getRepresentation());
 		pong.getPhysicEngine().getPhysicalObjects().add(ball);
 	}
 
 	/**
-	 * get a boolean to indicate if it has hitten a wall or not
+	 * Returns whether the ball has hit a wall or not.
 	 * 
-	 * @return
-	 */	
-	public boolean getHasHitAWall(){
+	 * @return true if the ball has hit a wall, false otherwise
+	 */
+	public boolean getHasHitAWall() {
 		return Ball.hasHitAWall;
 	}
-	
+
 	/**
-	 * Set the boolean to indicate if it has hitten a wall or not
+	 * Sets whether the ball has hit a wall or not.
 	 * 
-	 * @param b
+	 * @param b true if the ball has hit a wall, false otherwise
 	 */
-	public void setHasHitAWall(boolean b){
+	public void setHasHitAWall(boolean b) {
 		Ball.hasHitAWall = b;
 	}
 }

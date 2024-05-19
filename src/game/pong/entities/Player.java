@@ -26,131 +26,158 @@ public class Player extends Entity {
 	private int intSpeed = DEFAULT_SPEED;
 
 	/**
-	 * Instantiates a new Player
+	 * Instantiates a new Player object with the specified color, size, speed, mass, position, and movability.
+	 * 
+	 * @param color the color of the player object
+	 * @param size the size of the player
+	 * @param speed the speed of the player
+	 * @param mass the mass of the player
+	 * @param position the initial position of the player
+	 * @param movable indicates whether the player is movable or not
+	 */
+	public Player(
+		Color color,
+		int size,
+		int speed,
+		double mass,
+		Vector2D position,
+		boolean movable
+	) {
+		super(mass, position, movable, new Rectangle(color, (int)position.getX(), (int)position.getY(), size/5, size));
+		this.intSpeed = speed;
+	}
+
+	/**
+	 * Instantiates a new Player object with the specified image, size, speed, mass, position, and movability.
+	 * 
+	 * @param image the image representing the player
+	 * @param size the size of the player
+	 * @param speed the speed of the player
+	 * @param mass the mass of the player
+	 * @param position the initial position of the player
+	 * @param movable indicates whether the player is movable or not
+	 */
+	public Player(
+		Image image,
+		int size,
+		int speed,
+		double mass,
+		Vector2D position,
+		boolean movable
+	) {
+		super(mass, position, movable, new Rectangle(image, (int)position.getX(), (int)position.getY(), size/5, size));
+		this.intSpeed = speed;
+	}
+
+	/**
+	 * Instantiates a new Player object with the specified size, mass, position, and movability.
+	 * 
+	 * @param size the size of the player
+	 * @param mass the mass of the player
+	 * @param position the initial position of the player
+	 * @param movable indicates whether the player is movable or not
+	 */
+	public Player(
+		int size,
+		double mass,
+		Vector2D position,
+		boolean movable
+	) {
+		this(DEFAULT_IMAGE, size, DEFAULT_SPEED, mass, position, movable);
+	}
+
+	/**
+	 * Instantiates a new Player object with the default image, size, speed, mass, position, and movability.
+	 * 
+	 * @param mass the mass of the player
+	 * @param position the initial position of the player
+	 * @param movable indicates whether the player is movable or not
+	 */
+	public Player(
+		double mass,
+		Vector2D position,
+		boolean movable
+	) {
+		this(DEFAULT_IMAGE, DEFAULT_SIZE, DEFAULT_SPEED, mass, position, movable);
+	}
+
+	/**
+	 * Instantiates a new Player object with the specified color, position, size, and speed.
 	 * 
 	 * @param color the color of the player object
 	 * @param posX the initial x position of the player
 	 * @param posY the initial y position of the player
 	 * @param size the size of the player
+	 * @param speed the speed of the player
 	 */
-    public Player(
+	public Player(
 		Color color,
-        int size,
-		int speed,
-		double mass, Vector2D position, boolean movable
-    ) {
-		super(mass,position,movable,new Rectangle(color, (int)position.getX(), (int)position.getY(), size/5, size));
+		int posX,
+		int posY,
+		int size,
+		int speed
+	) {
+		super(new Rectangle(color, posX, posY, size/5, size));
 		this.intSpeed = speed;
 	}
 
 	/**
-	 * Instantiates a new Player
+	 * Instantiates a new Player object with the specified image, position, size, and speed.
 	 * 
 	 * @param image the image representing the player
 	 * @param posX the initial x position of the player
 	 * @param posY the initial y position of the player
 	 * @param size the size of the player
+	 * @param speed the speed of the player
 	 */
-    public Player(
+	public Player(
 		Image image,
-        int size,
-		int speed,
-		double mass, Vector2D position, boolean movable
-    ) {
-		super(mass,position,movable,new Rectangle(image, (int)position.getX(), (int)position.getY(), size/5, size));
+		int posX,
+		int posY,
+		int size,
+		int speed
+	) {
+		super(new Rectangle(image, posX, posY, size/5, size));
 		this.intSpeed = speed;
-    }
+	}
 
 	/**
-	 * Instantiates a new Player
+	 * Instantiates a new Player object with the specified position and size.
 	 * 
 	 * @param posX the initial x position of the player
 	 * @param posY the initial y position of the player
 	 * @param size the size of the player
 	 */
 	public Player(
-		 int size,
-		 double mass, Vector2D position, boolean movable
+		int posX,
+		int posY,
+		int size
 	) {
-		this(DEFAULT_IMAGE, size, DEFAULT_SPEED,mass,position,movable);
-	}
-
-	/**
-	 * Instantiates a new Player
-	 * 
-	 * @param posX the initial x position of the player
-	 * @param posY the initial y position of the player
-	 */
-	public Player(double mass, Vector2D position, boolean movable) {
-		this(DEFAULT_IMAGE,  DEFAULT_SIZE, DEFAULT_SPEED,mass,position,movable);
-	}
-
-	/**
-	 * Instantiates a new Player
-	 * 
-	 * @param color the color of the player object
-	 * @param posX the initial x position of the player
-	 * @param posY the initial y position of the player
-	 * @param size the size of the player
-	 */
-    public Player(
-		Color color,
-        int posX, int posY,
-        int size,
-		int speed
-    ) {
-		super(new Rectangle(color, posX, posY, size/5, size));
-		this.intSpeed = speed;
-    }
-
-	/**
-	 * Instantiates a new Player
-	 * 
-	 * @param image the image representing the player
-	 * @param posX the initial x position of the player
-	 * @param posY the initial y position of the player
-	 * @param size the size of the player
-	 */
-    public Player(
-		Image image,
-        int posX, int posY,
-        int size,
-		int speed
-    ) {
-		super(new Rectangle(image, posX, posY, size/5, size));
-		this.intSpeed = speed;
-    }
-
-	/**
-	 * Instantiates a new Player
-	 * 
-	 * @param posX the initial x position of the player
-	 * @param posY the initial y position of the player
-	 * @param size the size of the player
-	 */
-	public Player(int posX, int posY, int size) {
 		this(DEFAULT_IMAGE, posX, posY, size, DEFAULT_SPEED);
 	}
 
 	/**
-	 * Instantiates a new Player
+	 * Instantiates a new Player object with the specified position.
 	 * 
 	 * @param posX the initial x position of the player
 	 * @param posY the initial y position of the player
 	 */
-	public Player(int posX, int posY) {
+	public Player(
+		int posX,
+		int posY
+	) {
 		this(DEFAULT_IMAGE, posX, posY, DEFAULT_SIZE, DEFAULT_SPEED);
 	}
 
 	/**
-	 * Instantiates a new Player
+	 * Instantiates a new Player object with the default values.
 	 */
 	public Player() {
 		this(DEFAULT_IMAGE, DEFAULT_POS_X, DEFAULT_POS_Y, DEFAULT_SIZE, DEFAULT_SPEED);
 	}
 
 	/**
-	 * to get the speed of the player
+	 * Returns the speed of the player.
 	 * 
 	 * @return the speed in int of the player
 	 */
@@ -159,43 +186,43 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * to get the minimal speed of the player
+	 * Returns the minimal speed of the player.
 	 * 
-	 * @return return minimal speed in int of the player
+	 * @return the minimal speed in int of the player
 	 */
 	public int getMinSpeed() {
 		return MIN_SPEED;
 	}
 
 	/**
-	 * to get the maximal speed of the player
+	 * Returns the maximal speed of the player.
 	 * 
-	 * @return return maximal speed in int of the player
+	 * @return the maximal speed in int of the player
 	 */
 	public int getMaxSpeed() {
 		return MAX_SPEED;
 	}
 
 	/**
-	 * to get the last position of the player
+	 * Returns the last position of the player.
 	 * 
-	 * @return a Vector2D corresponding with player's last position
+	 * @return a Vector2D corresponding to the player's last position
 	 */
 	public Vector2D getLastPos(){
 		return this.lastPos;
 	}
 
 	/**
-	 * to set the last position of the player
+	 * Sets the last position of the player.
 	 * 
-	 * @param vect a Vector2D corresponding with player's last position
+	 * @param vect a Vector2D corresponding to the player's last position
 	 */
 	public void setLastPos(Vector2D vect){
 		this.lastPos = vect;
 	}
 
 	/**
-	 * to set the speed of the player
+	 * Sets the speed of the player.
 	 * 
 	 * @param intSpeed the speed in int of the player
 	 */
@@ -203,21 +230,23 @@ public class Player extends Entity {
 		this.intSpeed = intSpeed;
 	}
 
-
 	/**
-	 * updating speed using previous position and time 
+	 * Updates the velocity of the player using the previous position and time.
+	 * 
+	 * @param deltaTime the time difference between the current and previous frame
 	 */
 	@Override
 	public void updateVelocity(double deltaTime) {
-			this.speed =((this.position.add(this.getLastPos().multiply(-1))).multiply(1/deltaTime));
+		this.speed = ((this.position.add(this.getLastPos().multiply(-1))).multiply(1/deltaTime));
 	}
 
 	/**
-	 * updating position using previous position and time 
+	 * Handles the collision between the player and another physical object.
+	 * 
+	 * @param object the physical object that the player collided with
 	 */
 	@Override
 	public void collided(PhysicalObject object) {
 		super.collided();
 	}
-
 }
