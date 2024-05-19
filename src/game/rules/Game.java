@@ -10,6 +10,10 @@ import javax.swing.Timer;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The abstract Game class represents a game that can be rendered and updated.
+ * It provides basic functionality for starting, pausing, and updating the game.
+ */
 public abstract class Game implements Serializable{
 
 	public static final long serialVersionUID = 16L;
@@ -27,7 +31,7 @@ public abstract class Game implements Serializable{
 
 	
 	/**
-	 * Initialize a new game
+	 * Initialize a new game.
 	 * 
 	 * @param panel The panel to render the game
 	 * @param name The name of the game
@@ -44,7 +48,7 @@ public abstract class Game implements Serializable{
     }
 
 	/**
-	 * Get the panel in which the game is rendered
+	 * Get the panel in which the game is rendered.
 	 * 	
 	 * @return The panel in which the game is rendered
 	 */
@@ -53,7 +57,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Set the panel in which the game is rendered
+	 * Set the panel in which the game is rendered.
 	 * 
 	 * @param panel The panel to set
 	 */
@@ -62,7 +66,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Get the name of the game
+	 * Get the name of the game.
 	 * 
 	 * @return The name of the game
 	 */
@@ -71,7 +75,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Set the name of the game
+	 * Set the name of the game.
 	 * 
 	 * @param name The name to set
 	 */
@@ -80,7 +84,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Get the total number of frames rendered
+	 * Get the total number of frames rendered.
 	 * 
 	 * @return The number of frames rendered
 	 */
@@ -89,7 +93,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Set the total number of frames rendered
+	 * Set the total number of frames rendered.
 	 * 
 	 * @param renderedFrames The number of frames to set
 	 */
@@ -98,7 +102,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Get the current FPS
+	 * Get the current FPS.
 	 * 
 	 * @return The current FPS
 	 */
@@ -107,7 +111,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Set the current FPS
+	 * Set the current FPS.
 	 * 
 	 * @param currentFPS The FPS to set
 	 */
@@ -116,7 +120,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Get the maximum FPS
+	 * Get the maximum FPS.
 	 * 
 	 * @return The maximum FPS
 	 */
@@ -125,7 +129,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Set the maximum FPS
+	 * Set the maximum FPS.
 	 * 
 	 * @param maxFPS The maximum FPS to set
 	 */
@@ -134,7 +138,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Get the time of the last render
+	 * Get the time of the last render.
 	 * 
 	 * @return The time of the last render
 	 */
@@ -143,7 +147,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Set the time of the last render
+	 * Set the time of the last render.
 	 * 
 	 * @param lastRenderTime The time of the last render to set
 	 */
@@ -152,7 +156,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Get the VSync state
+	 * Get the VSync state.
 	 * 
 	 * @return The VSync state
 	 */
@@ -161,7 +165,7 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Set the VSync state
+	 * Set the VSync state.
 	 * 
 	 * @param vSync The VSync state to set
 	 */
@@ -170,10 +174,10 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Start the game<br>
-	 * This method starts a new thread that updates the game<br>
-	 * Note: This method has to be Overridden to start your custom game
-	 * (using super.start() to keep the update loop running)
+	 * Start the game.
+	 * This method starts a new thread that updates the game.
+	 * Note: This method has to be overridden to start your custom game
+	 * (using super.start() to keep the update loop running).
 	 */
 	public void start() {
 		long second;
@@ -223,7 +227,7 @@ public abstract class Game implements Serializable{
 
 
 	/**
-	 * Pause the game
+	 * Pause the game.
 	 */
 	public void pause() {
 		this.getPanel().getFrame().setTitle(this.getName() + " (Pause)");
@@ -231,14 +235,14 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * Resume the game
+	 * Resume the game.
 	 */
 	public void resume() {
 		this.paused = false;
 	}
 
 	/**
-	 * Check if the game is paused
+	 * Check if the game is paused.
 	 * 
 	 * @return True if the game is paused, false otherwise
 	 */
@@ -248,9 +252,9 @@ public abstract class Game implements Serializable{
 
 	/**
 	 * This method is called every frame to update the game.
-	 * It refreshes both the logic and the rendering of the game
-	 * This method is called every frame to update the game.
-	 * It refreshes both the logic and the rendering of the game
+	 * It refreshes both the logic and the rendering of the game.
+	 * 
+	 * @param deltaTime The time elapsed since the last update in milliseconds
 	 */
 	public void update(double deltaTime) {
 		this.render();
@@ -258,12 +262,14 @@ public abstract class Game implements Serializable{
 	}
 
 	/**
-	 * This method is called every frame to update the game logic
+	 * This method is called every frame to update the game logic.
+	 * 
+	 * @param deltaTime The time elapsed since the last update in milliseconds
 	 */
 	public abstract void onUpdate(double deltaTime);
 
 	/**
-	 * Render the game and calculate the FPS
+	 * Render the game and calculate the FPS.
 	 */
 	public void render(){
 		// Calculate maxFPS

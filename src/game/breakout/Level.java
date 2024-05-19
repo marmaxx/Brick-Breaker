@@ -1,3 +1,8 @@
+/**
+ * The Level class is responsible for generating different levels of bricks for the Breakout game.
+ * Each level is created with a specific layout and configuration of bricks.
+ * The class also keeps track of the number of unbreakable bricks for the win condition.
+ */
 package game.breakout;
 import java.util.Random;
 
