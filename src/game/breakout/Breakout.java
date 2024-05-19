@@ -47,6 +47,7 @@ import java.awt.event.ActionListener;
 
 public class Breakout extends Game {
 	public static final long serialVersionUID = 15L;
+	private boolean gameEnded;
 
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
@@ -287,7 +288,7 @@ public class Breakout extends Game {
 						break;
 					case KeyEvent.VK_V :
 						Breakout.this.gameframe.setnbLevelUnlock();
-						Breakout.this.clearGameComponents();
+						Breakout.this.endGame();
 						Breakout.this.gameframe.getCardlayout().show(Breakout.this.gameframe.getPanelContainer(), "winPanel");
 					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().active){
@@ -653,11 +654,15 @@ public class Breakout extends Game {
 		trailPoint.setBounds(trailPoint.getPosX(), trailPoint.getPosY(), trailPoint.getWidth(), trailPoint.getHeight());
 		if(this.getBall().active) this.getBall().trail.addPoint(this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
-				this.clearGameComponents();
+				this.endGame();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 		}
 	
+	public void endGame(){
+		this.gameEnded = true;
+		this.clearGameComponents();
+	}
 
 	/**
 	 * Update the planet entities
@@ -690,7 +695,7 @@ public class Breakout extends Game {
 		 
 		if (this.nbBricks == 0 && this.life >= 0){
 			this.gameframe.setnbLevelUnlock();
-			this.clearGameComponents();
+			this.endGame();
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
 
@@ -756,7 +761,7 @@ public class Breakout extends Game {
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().getPosY()>this.getPlayer().getRepresentation().getPosY()){
-				this.clearGameComponents();
+				this.endGame();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 			if(brick.willBeOffScreen(this.getPanel(),5)){
@@ -934,19 +939,21 @@ public class Breakout extends Game {
 	@Override
 	public void onUpdate(double deltaTime) {
 		//System.out.println("ACTIF ? "+this.planete.isActive());
-		this.updatePlayer();
-		this.updateBall();
-		this.checkBallInGame();
-		//System.out.println(this.ball.getPosition());
-		// if (this.ball.getIsMoving() == true) 
-		this.physicEngine.update(deltaTime);
-		if(this.level != -1 ){
-			this.updateBricks();
-			this.ball.resolveSpeedToHigh();
-		}else{
-		this.updateMarathonBricks();
+		if(!this.gameEnded){
+			this.updatePlayer();
+			this.updateBall();
+			this.checkBallInGame();
+			//System.out.println(this.ball.getPosition());
+			// if (this.ball.getIsMoving() == true) 
+			this.physicEngine.update(deltaTime);
+			if(this.level != -1 ){
+				this.updateBricks();
+				this.ball.resolveSpeedToHigh();
+			}else{
+			this.updateMarathonBricks();
+			}
+			this.updateBonus();
 		}
-		this.updateBonus();
 		//this.updateDebug();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 	}

@@ -39,12 +39,17 @@ public class GameOver extends JPanel {
          this.backToMenu.setPreferredSize(BUTTON_SIZE);
          this.backToMenu.addActionListener(e -> {
             if (frame.getNumberOfTheGame() == 0){
-                frame.getBreakoutGame().clearGameComponents();
+                frame.getBreakoutGame().endGame();
                 frame.getGamePanel().getGameZone().removeAll();
-                frame.getBreakoutGame().setLife(3);
+                
+                frame.getGamePanel().getGameZone().removeAll();
+                frame.getGamePanel().getMenu().setVisible(false);
+                frame.getGamePanel().getGameZone().setVisible(true);
+                //frame.getBreakoutGame().setLife(3);
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                        //frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
+                        frame.getCardlayout().show(frame.getPanelContainer(), "homePage");
                     }
                 });
             }else if(frame.getNumberOfTheGame() == 1 ){
