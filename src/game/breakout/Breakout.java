@@ -1,7 +1,6 @@
 package game.breakout;
 
 import java.util.*;
-import java.awt.AWTException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -15,6 +14,7 @@ import display.engine.shapes.Circle;
 
 import display.engine.utils.Vector2D;
 import display.view.GameFrame;
+import display.view.Scale;
 import display.view.brickbreakerview.*;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Bonus;
@@ -33,12 +33,15 @@ import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.awt.Robot;
-import java.awt.Toolkit;
 
 import java.awt.*;
 
 public class Breakout extends Game {
+
+	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
 	public static final long serialVersionUID = 15L;
 	private boolean gameEnded;
 
@@ -54,28 +57,21 @@ public class Breakout extends Game {
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
-	private static final int WALL_WIDTH = 5;
+	private static final int WALL_WIDTH = 5; // fixed value, it's ok since it's just a thickness of 5
+	
 	// init at 1 because it takes time to initialize the list of bricks 
 	// and it would lead us to the win panel directly
 	private int nbBricks = 1; 
-
 	private int score = 0;
-
-
-	private int life = 3; // number of hearths when the game starts
-
-
+	private int life = 3; 
 
 	public PhysicsEngine getPhysicEngine() {
-
 		return physicEngine;
 	}
-
 
 	private PhysicsEngine physicEngine = new PhysicsEngine();
 	
 	private int level = 0;
-
 	private boolean trollLevel = false;
 
 	/**
