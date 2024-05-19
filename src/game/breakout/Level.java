@@ -4,6 +4,7 @@ import java.util.Random;
 
 import display.engine.utils.Vector2D;
 import game.breakout.entities.Brick;
+import game.breakout.entities.Planet;
 
 import java.io.Serializable;
 
@@ -37,7 +38,7 @@ public class Level implements Serializable {
 				createLevel4(b);
 				break;
 			case 5:
-				createLevel6(b);
+				createLevel5(b);
 				break;
 			case 6:
 				createLevel6(b);
@@ -239,6 +240,57 @@ public class Level implements Serializable {
 
 					b.getPhysicEngine().getPhysicalObjects().add(brick);
 				}
+			}
+		}
+	}
+
+	/**
+     * Generates the bricks for level 2.
+     * 
+     * 
+     * Bricks are created in a grid layout with full life and optional bonus drops.
+	 * 
+	 * Additionnally, we have a probability of 1/10 that a brick appears unbreakable.
+     * 
+     * 
+     * @param b the Breakout game instance
+     */
+    public static void createLevel5(Breakout b) {
+		Planet planet = new Planet (Planet.PLANET_IMAGE, 100, 750, new Vector2D(500, 300), false, 5);
+		b.setPlanet(planet);
+		b.getPlanets().add(planet);
+		b.getPhysicEngine().getPhysicalObjects().add(planet);
+		b.getGameFrame().getGamePanel().getGameZone().add(planet.getRepresentation());
+        // TODO: Prevent the amount of bricks from exceeding the panel's width and height
+		// See GraphicalObject#isOnScreen(x, y, panel)
+		b.setTrollLevel(false);
+		unbreakableBrickNumber = 0;
+        int columns = 8; 
+        int rows = 4;
+		final int BRICK_SPACING = Brick.DEFAULT_WIDTH + 10;
+
+		// Start the bricks at the center of the panel
+		int initialXPos = (int) Math.floor(b.getPanel().getGameZone().getPreferredSize().getWidth()
+		/ 2 - (columns * BRICK_SPACING) / 2);
+		
+		for(int row = 0; row < rows; row++){
+			for(int column = 0; column < columns; column++){
+				int verticalPos = Brick.DEFAULT_POS_Y + row * (Brick.DEFAULT_HEIGHT + 10);
+				//int randomLifespan = new Random().nextInt(Brick.MAX_LIFESPAN - 1);
+
+				// Generate a random number between 1 and 3
+				int randomNumber = new Random().nextInt(4) + 1;
+				boolean dropBonus = (randomNumber == 1);
+				
+				// Generate a random number between 1 and 10
+				int randomNumberUnbreakable = new Random().nextInt(11) + 1;
+				boolean unbreakable = (randomNumberUnbreakable == 1);
+				if (unbreakable) unbreakableBrickNumber += 1;
+				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
+				Brick.MAX_LIFESPAN-1, dropBonus, unbreakable,false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				b.getBricks().add(brick);
+
+				b.getPhysicEngine().getPhysicalObjects().add(brick);
 			}
 		}
 	}
