@@ -74,10 +74,10 @@ public class Pong extends Game{
 		this.setBall(ball);
 		ball.active=false;
 		// to set the walls of the game which would be used as delimitation borders
-		this.setEastWall(new Wall(WALL_WIDTH, (int)(ratio * 40), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false, true));
-		this.setWestWall(new Wall(WALL_WIDTH, (int)(ratio * 40),100,new Vector2D(0, 0),false, true));
+		this.setEastWall(new Wall(WALL_WIDTH, 800, 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false, true));
+		this.setWestWall(new Wall(WALL_WIDTH, 800,100,new Vector2D(0, 0),false, true));
 		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 0),false, false));
-		this.setSouthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, (int)(ratio * 40)),false, false));
+		this.setSouthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 800),false, false));
 		// to add the entities to the physic engine
 		this.physicEngine.getPhysicalObjects().add(ball);
 		this.physicEngine.getPhysicalObjects().add(northWall);
