@@ -1,7 +1,8 @@
 package display.engine.rules;
 import java.io.Serializable;
 
-
+import display.engine.rules.GraphicalObject.Boundary;
+import display.engine.shapes.Circle;
 import display.engine.utils.*;
 import game.breakout.entities.Ball;
 import game.breakout.entities.Planet;
@@ -155,18 +156,52 @@ public abstract class PhysicalObject implements Serializable{
         return rep;
     }
 
-
-    // checking if a collision happened
-    public boolean isColliding(PhysicalObject objectB) {
-        return this.representation.isColliding(objectB.representation);
+public boolean isColliding(PhysicalObject objectB) {
+        int[] thisBoundingBox = this.getRepresentation().getBoundaries();
+        int[] objectBoundingBox = objectB.getRepresentation().getBoundaries();
+    
+        if (objectB.getRepresentation() instanceof Circle && this.getRepresentation() instanceof Circle){
+            Circle circle1 = (Circle) this.getRepresentation();
+            Circle circle2 = (Circle) objectB.getRepresentation();
+    
+            double distance = Math.sqrt(Math.pow(circle2.getCenterX() - circle1.getCenterX(), 2) + Math.pow(circle2.getCenterY() - circle1.getCenterY(), 2));
+            return distance <= (circle1.getWidth() + circle2.getWidth());
+        }    
+        else{
+            boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+                && thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+                && thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+                && thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
+    
+            return isColliding;
+        }
+    
     }
 
     public boolean isGoingToCollide(PhysicalObject objectB, double deltaTime){
         int[] thisNextPos = this.getNextPos(deltaTime);
         int[] BNextPos = objectB.getNextPos(deltaTime);
-        return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
 
+        int[] thisBoundingBox = this.getRepresentation().getNextBoundaries(thisNextPos);
+        int[] objectBoundingBox = objectB.getRepresentation().getNextBoundaries(BNextPos);
+
+        if (objectB.getRepresentation() instanceof Circle && this.getRepresentation() instanceof Circle){
+            Circle circle1 = (Circle) this.getRepresentation();
+            Circle circle2 = (Circle) objectB.getRepresentation();
+    
+            double distance = Math.sqrt(Math.pow(circle2.getCenterX() - circle1.getCenterX(), 2) + Math.pow(circle2.getCenterY() - circle1.getCenterY(), 2));
+            return distance <= (circle1.getWidth() + circle2.getWidth());
+        }
+        else{
+            boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+            && thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+            && thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+            && thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
+
+        return isColliding;
+        }
     }
+
 
 
     public Vector2D getNearestVertex(Vector2D point){
