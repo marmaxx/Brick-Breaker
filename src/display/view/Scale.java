@@ -1,12 +1,12 @@
 package display.view;
 
 import java.awt.Toolkit;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 public class Scale {
 
     // Logger for test purposes
-    private static final Logger LOGGER = Logger.getLogger(Scale.class.getName());
+    //private static final Logger LOGGER = Logger.getLogger(Scale.class.getName());
 
     /**
      * Calculates the ratio to apply to the scale of the map based on the screen resolution
@@ -16,7 +16,7 @@ public class Scale {
      */
     public static int getRatioForResolution(double screenWidth, double screenHeight) {
 
-        LOGGER.info("Screen size: " + screenWidth + "x" + screenHeight);
+        //LOGGER.info("Screen size: " + screenWidth + "x" + screenHeight);
 
         // Default values for 1920*1200 resolution used as references (125% scaling windows 11 settings)
         double default_scale = 13;
@@ -24,14 +24,16 @@ public class Scale {
 
         // Current values for the scale
         double current_dpi = getScreenDPI();
-        double dpiDifference = current_dpi - 120.0; 
+        //double dpiDifference = current_dpi - 120.0; 
         double percentageMultiplierScale = percentageMultiplier(120.0, current_dpi);
         double current_scale = default_scale * percentageMultiplierScale;
 
+        /* test purpose
         System.out.println(" Current DPI : " + current_dpi);
         System.out.println(" DPI Difference : " + dpiDifference);
         System.out.println(" Percentage Multiplier Scale : " + percentageMultiplierScale);
         System.out.println(" Current Scale : " + current_scale);
+        */
 
         // Current values for the ratio
         double current_ratio = screenWidth / screenHeight;
@@ -39,10 +41,12 @@ public class Scale {
         double current_ratio_multiplier = percentageMultiplierRatio;
         double final_multiplier = current_ratio_multiplier * current_scale;
 
+        /* 
         System.out.println(" Current Ratio : " + screenWidth + "/" + screenHeight);
         System.out.println(" Percentage Multiplier Ratio : " + percentageMultiplierRatio);
         System.out.println(" Current Ratio Multiplier : " + current_ratio_multiplier);
         System.out.println(" Final Multiplier : " + (int)Math.ceil(final_multiplier));
+        */
 
         // Just in case someone is still living in 2003
         int lastCorrection = (current_dpi < 110.0) ? -1 : 0;
