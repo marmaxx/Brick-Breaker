@@ -236,15 +236,16 @@ public class Breakout extends Game {
 						break;
 					case KeyEvent.VK_D:
 					{
-
+						int ballDistanceX = Breakout.this.getBall().getRepresentation().getWidth();
+						int ballDistanceY = Breakout.this.getBall().getRepresentation().getHeight();
 						Random randomDistance = new Random();
-						int randomX = (int)getBall().getPosition().getX() + randomDistance.nextInt(-30, 30);
-						int randomY = (int)getBall().getPosition().getY() + randomDistance.nextInt(-30, 30);
+						int randomX = (int)getBall().getPosition().getX() +  20+ballDistanceX;
+						int randomY = (int)getBall().getPosition().getY() + 10+ballDistanceY;
 						Vector2D ballPos = new Vector2D(randomX, randomY);
 	
-						Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+						Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,20,ballPos,true);
 						ball.setAcceleration(getBall().getAcceleration());
-						ball.setSpeed(getBall().getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
+						ball.setSpeed(Breakout.this.getBall().getSpeed().add(new Vector2D(randomDistance.nextDouble(0.1), randomDistance.nextDouble(0.1))));
 	
 						getBalls().add(ball);
 						getPanel().getGameZone().add(ball.getRepresentation());

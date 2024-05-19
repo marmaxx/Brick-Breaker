@@ -161,12 +161,34 @@ public class Ball extends Entity  {
 	@Override
 	public void resolveCollision(PhysicalObject object) {
 		super.resolveCollision(object);
-		if (isMovable()){
-            if (object.isMovable()){
-				if (object.getRepresentation() instanceof Circle){
-					//TODO: handle ball to ball collision
-				}
-			}
+		if (isMovable() && object.isMovable() && object.getRepresentation() instanceof Circle) {
+			// handle ball to ball collision
+			double dx = this.getPosition().getX() - object.getPosition().getX();
+			double dy = this.getPosition().getY() - object.getPosition().getY();
+
+			// Calculate angle, sine, and cosine
+			double angle = Math.atan2(dy, dx);
+			double sin = Math.sin(angle);
+			double cos = Math.cos(angle);
+	
+			// Rotate velocities to line up with collision angle
+			double vel0 = (this.getSpeed().getX() * cos + this.getSpeed().getY() * sin);
+			double vel1 = (object.getSpeed().getX() * cos + object.getSpeed().getY() * sin);
+	
+			// Get the masses of the balls
+			double m0 = this.getMass();
+			double m1 = object.getMass();
+
+			// Collision reaction along the normal
+			double velocityX0 = ((m0 - m1) / (m0 + m1)) * vel0 + ((2 * m1) / (m0 + m1)) * vel1;
+	
+			// Velocities along the tangent remain the same
+			double velocityY0 = this.getSpeed().getY() * cos - this.getSpeed().getX() * sin;
+	
+			// Rotate velocities back
+			this.getSpeed().setX(velocityX0 * cos - velocityY0 * sin);
+			this.getSpeed().setY(velocityY0 * cos + velocityX0 * sin);
+
 		}
 	}
 
