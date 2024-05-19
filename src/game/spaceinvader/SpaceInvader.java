@@ -17,8 +17,6 @@ import game.spaceinvader.entities.Wall;
 import game.spaceinvader.entities.EnemiesAmmo.EnemiesAmmoType;
 import display.view.brickbreakerview.*;
 import display.view.*;
-import display.view.brickbreakerview.ClassicGamePanel;
-import display.view.Scale;
 
 public class SpaceInvader extends Game{
 	

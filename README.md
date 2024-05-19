@@ -53,9 +53,11 @@ git clone https://gaufre.informatique.univ-paris-diderot.fr/labbi/casse-brique-g
 ```
 (marche également dans le terminal de Visual Studio Code)
 
-Étape 2: Aller dans le dossier du projet
+Étape 2: Aller dans le dossier du projet *
 
 Étape 3: Ouvrir n'importe quel fichier et appuyer sur F5 ou bien exécuter le main.java dans le dossier racine
+
+* On peut aller directement dans le dossier racine et ouvrir le .bat ou .sh
 
 
 ## Documentation
