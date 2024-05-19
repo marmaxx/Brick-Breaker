@@ -9,8 +9,12 @@ import java.io.Serializable;
 public class ButtonMouseListener extends MouseAdapter implements Serializable{
     public static final long serialVersionUID = 106L;
 
+    public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
     private JButton button;
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
+    public static final Dimension BUTTON_SIZE = new Dimension((int)(ratio * 23),(int)(ratio * 8)); 
 
     public ButtonMouseListener(JButton button) {
         this.button = button;
@@ -19,12 +23,10 @@ public class ButtonMouseListener extends MouseAdapter implements Serializable{
     @Override
     public void mouseEntered(MouseEvent e) {
         button.setForeground(Color.BLACK);
-        //button.setFont(new Font("Ubuntu", Font.BOLD, 30));
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        //button.setFont(new Font("Ubuntu", Font.BOLD, 22));
         button.setForeground(Color.WHITE);
     }
 }

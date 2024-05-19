@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import java.io.IOException;
@@ -25,6 +26,10 @@ import java.nio.file.Path;
 public class SavedGames extends JPanel {
     public static final long serialVersionUID = 111L;
 	
+    public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
     public ArrayList<String> saveFileNames = getSaveFileNames("src"+java.io.File.separator+"Saves");
     private GameFrame game_frame;
   
@@ -147,8 +152,8 @@ public class SavedGames extends JPanel {
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setPreferredSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
+        button.setMaximumSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

@@ -15,8 +15,11 @@ import javax.imageio.ImageIO;
 public class ClassicGamePanel extends JPanel {
     public static final long serialVersionUID = 100L;
 
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
+    // instead of creating a button of a 300,300 size, it take 10% of the height and 30% of the width
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+    public static final Dimension BUTTON_SIZE = new Dimension((int)(21 * ratio), (int)(9 * ratio));
 
     private JButton QuickGame = createStyledButton("Quick Game"); //button to start quick game
     private JButton Level = createStyledButton(" Level ");
@@ -63,9 +66,9 @@ public class ClassicGamePanel extends JPanel {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio*2)));
+        button.setPreferredSize(new Dimension((int)(ratio*30), (int)(ratio*6)));
+        button.setMaximumSize(new Dimension((int)(ratio*30), (int)(ratio*6)));
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

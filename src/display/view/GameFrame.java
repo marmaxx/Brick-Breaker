@@ -37,6 +37,8 @@ public class GameFrame extends JFrame {
 	private HomePage homePage;
 	private CardLayout cardLayout;
 	private SettingsInGame settingInGame;
+
+	
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public int nbLevelUnlock = 1;
     

@@ -28,8 +28,10 @@ import game.breakout.entities.Ball;
 import game.breakout.entities.Player;
 
 public class LockerPanel extends JPanel{
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+    public static final Dimension BUTTON_SIZE = new Dimension((int)(ratio * 21),(int)(ratio * 8)); 
     public static final Dimension LOCKER_ZONE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
     
     transient private BufferedImage backgroundImage;
@@ -75,12 +77,12 @@ public class LockerPanel extends JPanel{
     private JLabel ballLabel = createStyledLabel("Ball:    ");
     private JLabel trailLabel = createStyledLabel("Trail:");
     private JLabel paddleLabel = createStyledLabel("Paddle: ");
-    private JButton leftBallButton = createStyledButton(30, 27, "left_arrow.png");
-    private JButton rightBallButton = createStyledButton(30, 27, "right_arrow.png");
-    private JButton leftTrailButton = createStyledButton(30, 27, "left_arrow.png");
-    private JButton rightTrailButton = createStyledButton(30, 27, "right_arrow.png");
-    private JButton leftPaddleButton = createStyledButton(30, 27, "left_arrow.png");
-    private JButton rightPaddleButton = createStyledButton(30, 27, "right_arrow.png");
+    private JButton leftBallButton = createStyledButton((int)(ratio * 2.0), (int)(ratio * 1.7), "left_arrow.png");
+    private JButton rightBallButton = createStyledButton((int)(ratio * 2.0), (int)(ratio * 1.7), "right_arrow.png");
+    private JButton leftTrailButton = createStyledButton((int)(ratio * 2.0), (int)(ratio * 1.7), "left_arrow.png");
+    private JButton rightTrailButton = createStyledButton((int)(ratio * 2.0), (int)(ratio * 1.7), "right_arrow.png");
+    private JButton leftPaddleButton = createStyledButton((int)(ratio * 2.0), (int)(ratio * 1.7), "left_arrow.png");
+    private JButton rightPaddleButton = createStyledButton((int)(ratio * 2.0), (int)(ratio * 1.7), "right_arrow.png");
     private JButton submitButton = createStyledButton("Submit");
     private JButton reinitializeButton = createStyledButton("Reinitialize");
     private JButton backButton = createStyledButton("Back");
@@ -106,7 +108,7 @@ public class LockerPanel extends JPanel{
                 // Dessiner l'image de fond
                 if (ballImage != null) {
                     Image image = ballImage.getImage();
-                    g.drawImage(image, 0, 0, 160, 160, this);
+                    g.drawImage(image, 0, 0, (int)(ratio * 10), (int)(ratio * 9), this);
                 }
             }
         };
@@ -119,7 +121,7 @@ public class LockerPanel extends JPanel{
                 // Dessiner l'image de fond
                 if (trailImage != null) {
                     Image image = trailImage.getImage();
-                    g.drawImage(image, 0, 0, 160, 160, this);
+                    g.drawImage(image, 0, 0, (int)(ratio * 10), (int)(ratio * 9), this);
                 }
             }
         };
@@ -304,7 +306,7 @@ public class LockerPanel extends JPanel{
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
@@ -326,7 +328,7 @@ public class LockerPanel extends JPanel{
     private JLabel createStyledLabel (String text){
         JLabel label = new JLabel(text);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        label.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
         return label;
     }
 

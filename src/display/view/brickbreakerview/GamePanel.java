@@ -17,6 +17,8 @@ public class GamePanel extends JPanel {
 	
 	private static final Color GAME_BACKGROUND_COLOR = new Color(30,30,30);
 	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
 	public static final Dimension GAME_ZONE_SIZE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
 	public static final Dimension STAT_ZONE_GAME = new Dimension(SCREEN_FULL_SIZE.width,SCREEN_FULL_SIZE.height/10);
     
@@ -57,7 +59,8 @@ public class GamePanel extends JPanel {
 
 		this.setFrame(gameFrame);
 		this.setBackground(color);
-		this.setLayout(new FlowLayout()); //set GamePanel to FlowLayout
+		//set GamePanel to FlowLayout
+		this.setLayout(new FlowLayout()); 
 		this.setPreferredSize(SCREEN_FULL_SIZE);
 
 		this.gameZone.setPreferredSize(GAME_ZONE_SIZE);
@@ -66,15 +69,13 @@ public class GamePanel extends JPanel {
 		this.statZone.setBackground(new Color(0,0,0,0));
 		this.statZone.setLayout(new FlowLayout()); // set StatZone to flow Layout 
 
-        this.life.setPreferredSize(new Dimension(200, 100));
+        this.life.setPreferredSize(new Dimension((int)(ratio * 16), (int)(ratio * 8)));
         this.life.setForeground(Color.WHITE); // set color of the text
-		this.life.setFont(new Font("Ubuntu", Font.BOLD, 22));
+		this.life.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
 
-		this.scorePong.setPreferredSize(new Dimension(200, 100));
+		this.scorePong.setPreferredSize(new Dimension((int)(ratio * 16), (int)(ratio * 8)));
 		this.scorePong.setForeground(Color.WHITE); 
-		this.scorePong.setFont(new Font("Ubuntu", Font.BOLD, 22));
-
-
+		this.scorePong.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
 
 		this.menu.addMouseListener(new ButtonMouseListener(this.menu));
 

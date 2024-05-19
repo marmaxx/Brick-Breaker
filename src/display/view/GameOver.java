@@ -12,8 +12,10 @@ import game.breakout.Breakout;
 public class GameOver extends JPanel {
     public static final long serialVersionUID = 51L;
 
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+    public static final Dimension BUTTON_SIZE = new Dimension((int)(ratio * 23),(int)(ratio * 8)); 
     private JButton exit = createStyledButton(" Exit ");
     private JButton backToMenu = createStyledButton(" Back to Menu ");
     private JButton restartLevel = createStyledButton(" Restart Level ");
@@ -107,8 +109,8 @@ public class GameOver extends JPanel {
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setPreferredSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
+        button.setMaximumSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

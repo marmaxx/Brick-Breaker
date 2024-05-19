@@ -14,8 +14,11 @@ import game.breakout.Breakout;
 public class WinPanel extends JPanel {
     public static final long serialVersionUID = 57L;
 	
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
+    public static final Dimension BUTTON_SIZE = new Dimension((int)(ratio * 23),(int)(ratio * 8)); 
     private JButton exit = createStyledButton(" Exit ");
     private JButton backToMenu = createStyledButton(" Back to Menu ");
     transient private BufferedImage backgroundImage; // background image 
@@ -44,8 +47,6 @@ public class WinPanel extends JPanel {
             if (frame.getNumberOfTheGame() == 0){
                 frame.getBreakoutGame().endGame();
                 frame.getGamePanel().getGameZone().removeAll();
-                //frame.getBreakoutGame().setLife(3);
-                //frame.getBreakoutGame().setNbBricks(1);
                 frame.getGamePanel().getGameZone().removeAll();
                 frame.getGamePanel().getMenu().setVisible(false);
                 frame.getGamePanel().getGameZone().setVisible(true);
@@ -78,9 +79,9 @@ public class WinPanel extends JPanel {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
+        button.setPreferredSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
+        button.setMaximumSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

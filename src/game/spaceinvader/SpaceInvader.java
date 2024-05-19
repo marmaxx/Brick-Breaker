@@ -17,6 +17,7 @@ import game.spaceinvader.entities.Wall;
 import game.spaceinvader.entities.EnemiesAmmo.EnemiesAmmoType;
 import display.view.brickbreakerview.*;
 import display.view.*;
+import display.view.brickbreakerview.ClassicGamePanel;
 import display.view.Scale;
 
 public class SpaceInvader extends Game{
@@ -430,7 +431,8 @@ public class SpaceInvader extends Game{
 
 
 		// Call getRatioForResolution from Scale.java and print the result
-		int resolutionRatio = Scale.getRatioForResolution();
+		// use width and heigth from classicgamejava
+		int resolutionRatio = Scale.getRatioForResolution(ClassicGamePanel.SCREEN_FULL_SIZE.getWidth(), ClassicGamePanel.SCREEN_FULL_SIZE.getHeight());
 		System.out.println("Resolution Ratio: " + resolutionRatio);
 
 

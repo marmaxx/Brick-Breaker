@@ -1,6 +1,5 @@
 package display.view;
 
-import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Logger;
 
@@ -11,25 +10,22 @@ public class Scale {
 
     /**
      * Calculates the ratio to apply to the scale of the map based on the screen resolution
+     * @param screenWidth the width of the screen
+     * @param screenHeight the height of the screen
      * @return an integer to apply to the scale
      */
-    public static int getRatioForResolution() {
-
-        // Get screen size
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double screenWidth = screenSize.getWidth();
-        double screenHeight = screenSize.getHeight();
+    public static int getRatioForResolution(double screenWidth, double screenHeight) {
 
         LOGGER.info("Screen size: " + screenWidth + "x" + screenHeight);
 
-        // Default values for 1920*1080 resolution used as references (125% scaling windows 11 settings)
-        double default_scale = 14;
-        double default_ratio = 16.0/9.0;
+        // Default values for 1920*1200 resolution used as references (125% scaling windows 11 settings)
+        double default_scale = 13;
+        double default_ratio = 16.0/10.0;
 
         // Current values for the scale
         double current_dpi = getScreenDPI();
-        double dpiDifference = current_dpi - 126.0; // default_dpi for 1920*1080
-        double percentageMultiplierScale = percentageMultiplier(126.0, current_dpi);
+        double dpiDifference = current_dpi - 120.0; 
+        double percentageMultiplierScale = percentageMultiplier(120.0, current_dpi);
         double current_scale = default_scale * percentageMultiplierScale;
 
         System.out.println(" Current DPI : " + current_dpi);

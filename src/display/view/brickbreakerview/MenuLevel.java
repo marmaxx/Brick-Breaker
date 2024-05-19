@@ -16,6 +16,9 @@ import javax.imageio.ImageIO;
 public class MenuLevel extends JPanel {
     public static final long serialVersionUID = 55L;
 	
+    public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
 
     private GameFrame game_frame;
     private int nbLevelUnlock;
@@ -53,8 +56,8 @@ public class MenuLevel extends JPanel {
         this.addActionListener();
 
         this.menu.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        this.menu.setPreferredSize(new Dimension(400, 80));
-        this.menu.setMaximumSize(new Dimension(400, 80));
+        this.menu.setPreferredSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
+        this.menu.setMaximumSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
         this.menu.setForeground(Color.WHITE);
         this.menu.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.menu.setFocusPainted(false); 
@@ -109,15 +112,15 @@ public class MenuLevel extends JPanel {
 
     private JButton createStyledButton(String level, String imagePath) {
         ImageIcon icon = new ImageIcon(imagePath);
-        Image image = icon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
+        Image image = icon.getImage().getScaledInstance((int)(ratio * 15),(int)(ratio * 11), Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(image);
         JButton button = new JButton(level, scaledIcon);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
 
 
-        button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setPreferredSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
+        button.setMaximumSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
         button.setForeground(Color.WHITE);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false); 

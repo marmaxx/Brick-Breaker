@@ -16,8 +16,11 @@ import game.breakout.Breakout;
 import game.breakout.entities.Player;
 
 public class SettingsPanel extends JPanel{
-    public static final Dimension BUTTON_SIZE = new Dimension(300,100); 
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
+    public static final Dimension BUTTON_SIZE = new Dimension((int)(ratio * 23),(int)(ratio * 8)); 
     public static final Dimension SETTINGS_ZONE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
     public static final int GRAVITY_DEFAULT_VALUE = 5;
     public static final int REBOUND_DEFAULT_VALUE = 100;
@@ -259,15 +262,12 @@ public class SettingsPanel extends JPanel{
 
     private JSlider createStyledSlider (String text, int min, int max, int value){
         JSlider slider = new JSlider(min, max, value);
-        //slider.setBackground(Color.WHITE);
-        //slider.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
-        //slider.setUI(new CustomSliderUI(slider));
         return slider;
     }
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false); 
         button.setBorderPainted(false); 
@@ -278,7 +278,7 @@ public class SettingsPanel extends JPanel{
     private JLabel createStyledLabel (String text){
         JLabel label = new JLabel(text);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        label.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
         return label;
     }
 

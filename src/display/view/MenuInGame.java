@@ -1,6 +1,7 @@
 package display.view;
 
-import display.view.brickbreakerview.*;
+import display.view.brickbreakerview.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +17,10 @@ import game.breakout.Breakout;
 public class MenuInGame extends JPanel {
     public static final long serialVersionUID = 54L;
 
+    public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
     private JButton resumeButton = createButton("Reprendre");
     private JButton BackToMenuButton = createButton("Retour Accueil");
     private JButton settings = createButton("Settings");
@@ -30,7 +35,6 @@ public class MenuInGame extends JPanel {
         }
     };
     transient private BufferedImage backgroundImage; // background image 
-    public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension MENU_ZONE = new Dimension(SCREEN_FULL_SIZE.width*4/5, SCREEN_FULL_SIZE.height*9/10);
 
     public MenuInGame(GameFrame frame, GamePanel pane){
@@ -85,12 +89,12 @@ public class MenuInGame extends JPanel {
 
 
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
-        buttonContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
+        buttonContainer.setBorder(new EmptyBorder((int)(ratio *1.5), (int)(ratio *1.5), (int)(ratio *1.5), (int)(ratio *1.5)));
         buttonContainer.add(Box.createVerticalGlue());
         buttonContainer.add(resumeButton);
-        buttonContainer.add(Box.createVerticalStrut(40));
+        buttonContainer.add(Box.createVerticalStrut((int)(ratio * 3)));
         buttonContainer.add(BackToMenuButton);
-        buttonContainer.add(Box.createVerticalStrut(40));
+        buttonContainer.add(Box.createVerticalStrut((int)(ratio * 3)));
         buttonContainer.add(settings);
         buttonContainer.add(Box.createVerticalGlue());
 
@@ -105,9 +109,9 @@ public class MenuInGame extends JPanel {
 
     private JButton createButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
-        button.setPreferredSize(new Dimension(400, 80));
-        button.setMaximumSize(new Dimension(400, 80));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 3)));
+        button.setPreferredSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
+        button.setMaximumSize(new Dimension((int)(ratio * 30),(int)(ratio * 6)));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false); 
@@ -129,7 +133,12 @@ public class MenuInGame extends JPanel {
 
 class MenuInGameListener extends MouseAdapter {
     private JButton button;
-    public static final Dimension BUTTON_SIZE = new Dimension(500,80); 
+
+    public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
+    public static final Dimension BUTTON_SIZE = new Dimension((int)(ratio * 38),(int)(ratio * 6)); 
 
     public MenuInGameListener(JButton button) {
         this.button = button;
@@ -138,13 +147,13 @@ class MenuInGameListener extends MouseAdapter {
     @Override
     public void mouseEntered(MouseEvent e) {
         // Action à effectuer lorsque la souris entre dans la zone du bouton
-        button.setFont(new Font("Ubuntu", Font.BOLD, 30));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2.4)));
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         // Action à effectuer lorsque la souris sort de la zone du bouton
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
     }
 }
 

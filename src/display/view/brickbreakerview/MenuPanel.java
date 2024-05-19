@@ -15,6 +15,8 @@ public class MenuPanel extends JPanel {
     public static final long serialVersionUID = 56L;
 	
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
     public static final Dimension BUTTON_SIZE =  new Dimension((int)(SCREEN_FULL_SIZE.getWidth()*20/100), (int)(SCREEN_FULL_SIZE.getHeight()*10/100)); 
 
 
@@ -82,7 +84,7 @@ public class MenuPanel extends JPanel {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Ubuntu", Font.BOLD, 22));
+        button.setFont(new Font("Ubuntu", Font.BOLD, (int)(ratio * 2)));
         button.setPreferredSize(BUTTON_SIZE);
         button.setMaximumSize(BUTTON_SIZE);
         button.setForeground(Color.WHITE);
