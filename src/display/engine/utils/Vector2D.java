@@ -6,7 +6,6 @@ import java.io.Serializable;
  * This class represents a two-dimensional vector.
  * It stores the x and the y coordinates of a point in space.
  */
-
 public class Vector2D implements Serializable{
     public static final long serialVersionUID = 7L;
 
@@ -37,15 +36,24 @@ public class Vector2D implements Serializable{
         return y;
     }
 
+    /**
+     * Set the x-coordinate of the vector.
+     * @param x the new x-coordinate value.
+     */
     public void setX(double x) {
         this.x=x;
     }
 
+    /**
+     * Set the y-coordinate of the vector.
+     * @param y the new y-coordinate value.
+     */
     public void setY(double y) {
         this.y=y;
     }
     
     /**
+     * Calculate the magnitude of the vector.
      * @return the magnitude of the vector.
      */
     public double magnitude() {
@@ -53,7 +61,7 @@ public class Vector2D implements Serializable{
     }
 
     /**
-     * Method to normalize the vector.
+     * Normalize the vector.
      * @return the normalized vector.
      */
     public Vector2D normalize() {
@@ -63,23 +71,26 @@ public class Vector2D implements Serializable{
     }
 
     /**
-     * @param other represents another vector.
-     * @return a new vector which represents the addition of the two previous one.
+     * Add another vector to this vector.
+     * @param other the vector to be added.
+     * @return a new vector which represents the addition of the two vectors.
      */
     public Vector2D add(Vector2D other) {
         return new Vector2D(this.x + other.getX(), this.y + other.getY());
     }
 
     /**
-     * @param other represents another vector. 
-     * @return a new vector which represents the substraction of the two previous one.
+     * Subtract another vector from this vector.
+     * @param other the vector to be subtracted.
+     * @return a new vector which represents the subtraction of the two vectors.
      */
     public Vector2D subtract(Vector2D other) {
         return new Vector2D(this.x - other.getX(), this.y - other.getY());
     }
 
     /**
-     * @param scalar represents a scalar with which we multiply the vector. 
+     * Multiply the vector by a scalar value.
+     * @param scalar the scalar value to multiply the vector by.
      * @return the multiplied vector.
      */
     public Vector2D multiply(double scalar) {
@@ -87,16 +98,18 @@ public class Vector2D implements Serializable{
     }
 
     /**
-     * @param other represents another vector.
-     * @return the dot product between these two vectors.
+     * Calculate the dot product between this vector and another vector.
+     * @param other the other vector.
+     * @return the dot product between the two vectors.
      */
     public double dotProduct(Vector2D other) {
         return this.x * other.getX() + this.y * other.getY();
     }
 
     /**
-     * @param other represents another vector.
-     * @return the angle between these two vectors.
+     * Calculate the angle between this vector and another vector.
+     * @param other the other vector.
+     * @return the angle between the two vectors.
      */
     public double angleBetween(Vector2D other) {
         double dotProduct = dotProduct(other);
@@ -104,9 +117,10 @@ public class Vector2D implements Serializable{
         return Math.acos(dotProduct / magnitudeProduct);
     }
 
-        /**
-     * @param other represents another vector.
-     * @return the angle in radians from the this vector to the 'other' vector.
+    /**
+     * Calculate the angle in radians from this vector to the 'other' vector.
+     * @param other the other vector.
+     * @return the angle in radians from this vector to the 'other' vector.
      */
     public double angleFromTo(Vector2D other) {
         double dotProduct = this.x * other.getX() + this.y * other.getY();
@@ -116,8 +130,10 @@ public class Vector2D implements Serializable{
         return angle;
     }
 
-    
-
+    /**
+     * Get a string representation of the vector.
+     * @return a string representation of the vector.
+     */
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";

@@ -19,6 +19,9 @@ import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 
 
+/**
+ * Represents a ball entity in the breakout game.
+ */
 public class Ball extends Entity  {
 	public static final long serialversionUID =10L;
 
@@ -36,19 +39,20 @@ public class Ball extends Entity  {
 	public BallTrail trail = new BallTrail(DEFAULT_TRAIL_COLOR, this);
 
 	/**
- 	*constructor to be used only for deserialziation 
- 	*/
+	 * Default constructor to be used only for deserialization.
+	 */
 	public Ball(){
 
 	}
 
 	/**
-	 * Instantiates a new Ball
+	 * Instantiates a new Ball with the specified color, size, mass, position, and movability.
 	 * 
-	 * @param posX the initial x position of the ball
-	 * @param posY the initial y position of the ball
-	 * @param size the size of the ball
 	 * @param color the color of the ball (ignored if the ball is represented by an image)
+	 * @param size the size of the ball
+	 * @param mass the mass of the ball
+	 * @param position the initial position of the ball
+	 * @param movable whether the ball is movable or not
 	 */
     public Ball(
 		Color color,
@@ -59,12 +63,13 @@ public class Ball extends Entity  {
     }
 
 	/**
-	 * Instantiates a new Ball
+	 * Instantiates a new Ball with the specified image, size, mass, position, and movability.
 	 * 
-	 * @param posX the initial x position of the ball
-	 * @param posY the initial y position of the ball
+	 * @param image the image representing the ball
 	 * @param size the size of the ball
-	 * @param color the color of the ball (ignored if the ball is represented by an image)
+	 * @param mass the mass of the ball
+	 * @param position the initial position of the ball
+	 * @param movable whether the ball is movable or not
 	 */
     public Ball(
 		Image image,
@@ -75,10 +80,11 @@ public class Ball extends Entity  {
     }
 
 	/**
-	 * Instantiates a new Ball
+	 * Instantiates a new Ball with the default image, size, mass, position, and movability.
 	 * 
-	 * @param posX the initial x position of the ball
-	 * @param posY the initial y position of the ball
+	 * @param mass the mass of the ball
+	 * @param position the initial position of the ball
+	 * @param movable whether the ball is movable or not
 	 */
 	public Ball(double mass, Vector2D position, boolean movable) {
 		this(DEFAULT_IMAGE, DEFAULT_SIZE,mass,position,movable);
@@ -86,12 +92,12 @@ public class Ball extends Entity  {
 	}
 
   	/**
-	 * Instantiates a new Ball
+	 * Instantiates a new Ball with the specified color, position, and size.
 	 * 
+	 * @param color the color of the ball (ignored if the ball is represented by an image)
 	 * @param posX the initial x position of the ball
 	 * @param posY the initial y position of the ball
 	 * @param size the size of the ball
-	 * @param color the color of the ball (ignored if the ball is represented by an image)
 	 */
     public Ball(
 		Color color,
@@ -102,12 +108,12 @@ public class Ball extends Entity  {
     }
 
 	/**
-	 * Instantiates a new Ball
+	 * Instantiates a new Ball with the specified image, position, and size.
 	 * 
+	 * @param image the image representing the ball
 	 * @param posX the initial x position of the ball
 	 * @param posY the initial y position of the ball
 	 * @param size the size of the ball
-	 * @param color the color of the ball (ignored if the ball is represented by an image)
 	 */
     public Ball(
 		Image image,
@@ -118,7 +124,7 @@ public class Ball extends Entity  {
     }
 
 	/**
-	 * Instantiates a new Ball
+	 * Instantiates a new Ball with the default image, position, and size.
 	 * 
 	 * @param posX the initial x position of the ball
 	 * @param posY the initial y position of the ball
@@ -128,29 +134,42 @@ public class Ball extends Entity  {
 
 	}
 
-
-
-
-
-
+	/**
+	 * Gets the current moving state of the ball.
+	 * 
+	 * @return true if the ball is moving, false otherwise
+	 */
 	public boolean getIsMoving(){
 		return this.isMoving;
 	}
 
+	/**
+	 * Sets the moving state of the ball.
+	 * 
+	 * @param b the new moving state of the ball
+	 */
 	public void setIsMoving(boolean b){
 		this.isMoving = b;
 	}
 
-
-
+	/**
+	 * Checks if the ball will lose the game by going below the game panel.
+	 * 
+	 * @param panel the game panel
+	 * @param speed the speed of the ball
+	 * @return true if the ball will lose, false otherwise
+	 */
 	public boolean willLoose(GamePanel panel, int speed){
 		int [] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
 		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed  > panel.getGameZone().getHeight();
 	}
 
-
-
-
+    /**
+     * Gets the impact point of this ball with another ball.
+     * 
+     * @param ball the other ball
+     * @return the impact point as a vector
+     */
     public Vector2D getImpactPoint(Ball ball){
 		double distanceX = Math.abs(this.getPosition().getX()+this.getRepresentation().getWidth()/2 - ball.getPosition().getX());
         double distanceY = Math.abs(this.getPosition().getY()+this.getRepresentation().getWidth()/2 - ball.getPosition().getY());
@@ -217,6 +236,9 @@ public class Ball extends Entity  {
 		
 	}
 
+	/**
+	 * Represents the trail of the ball.
+	 */
 	public class BallTrail implements Serializable{
 		public Ball ball;
 		public Color trailColor;
@@ -254,10 +276,14 @@ public class Ball extends Entity  {
 	
 		
 	
-	
 		public LinkedList<TrailPoint> points = new LinkedList<>();
 		private static final double OPACITY_DECREMENT = 0.1;
 
+		/**
+		 * Adds a new point to the ball trail.
+		 * 
+		 * @param breakout the breakout game instance
+		 */
 		public void addPoint(Breakout breakout) {
 			for (TrailPoint tp : points) {
 				tp.opacity = Math.max(0, tp.opacity - OPACITY_DECREMENT);
@@ -281,6 +307,11 @@ public class Ball extends Entity  {
 			}
 		}
 
+		/**
+		 * Removes the ball trail from the game panel.
+		 * 
+		 * @param breakout the breakout game instance
+		 */
 		public void remove(Breakout breakout){
 			for (int i = 0; i < points.size(); i++) breakout.getPanel().getGameZone().remove(points.getFirst().point);
 			points.clear();

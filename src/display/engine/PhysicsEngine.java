@@ -7,7 +7,7 @@ import display.engine.rules.PhysicalObject;
 import display.engine.utils.*;
 
 /**
- * PhysicsEngine
+ * The PhysicsEngine class represents a physics engine that simulates physical interactions between objects.
  */
 public class PhysicsEngine implements Serializable{
     public static final long serialVersionUID = 8L;
@@ -18,39 +18,43 @@ public class PhysicsEngine implements Serializable{
     private List<PhysicalObject> physicalObjects;
 
     /**
-     * Create a new PhysicsEngine
+     * Creates a new PhysicsEngine object.
      */
     public PhysicsEngine() {
         this.physicalObjects = new ArrayList<>();
     }
 
     /**
-     * Set the gravity constant
+     * Sets the gravity constant.
+     * 
+     * @param scalar The scalar value to multiply the gravity constant by.
      */
     public static void setGravityConstant (double scalar){
         GRAVITY_CONSTANT*=scalar;
     }
 
     /**
-     * Get the gravity constant
+     * Returns the list of physical objects in the physics engine.
+     * 
+     * @return The list of physical objects.
      */
     public List<PhysicalObject> getPhysicalObjects(){
         return this.physicalObjects;
     }
 
     /**
-     * Add a physical object to the physics engine
+     * Adds a physical object to the physics engine.
      * 
-     * @param object The object to add
+     * @param object The object to add.
      */
     public void addPhysicalObject(PhysicalObject object) {
         physicalObjects.add(object);
     }
 
     /**
-     * update the physics engine
+     * Updates the physics engine by applying various forces and handling collisions.
      * 
-     * @param deltaTime
+     * @param deltaTime The time elapsed since the last update.
      */
     public void update(double deltaTime) {
         applyGravity(deltaTime);
@@ -58,31 +62,21 @@ public class PhysicsEngine implements Serializable{
         handleCollisions(deltaTime);
         applyFriction(FRICTION_COEFFICIENT);
         
-       
-            // updating objects position relatively to the time spent
-         for (PhysicalObject object : physicalObjects) {
+        // updating objects position relatively to the time spent
+        for (PhysicalObject object : physicalObjects) {
             object.updateVelocity(deltaTime); 
             if (object.isActive() && object.isMovable()){
-                
-                //System.out.println("vitesse: "+object.getSpeed());
-                //System.out.println("acceleration: "+object.getAcceleration());
-                //System.out.println("DeltaTime: "+deltaTime);
-                //System.out.println(object.getPosition());
                 object.updatePosition(deltaTime);
                 object.getRepresentation().setPosX((int)object.getPosition().getX());
                 object.getRepresentation().setPosY((int)object.getPosition().getY());
             }
-            
-            
         }
     }
 
-    
-
     /**
-     * Handle collisions between objects
+     * Handles collisions between objects.
      * 
-     * @param deltaTime
+     * @param deltaTime The time elapsed since the last collision check.
      */
     private void handleCollisions(double deltaTime) {
         for (int i = 0; i < physicalObjects.size(); i++) {
@@ -91,43 +85,36 @@ public class PhysicsEngine implements Serializable{
                 PhysicalObject objectB = physicalObjects.get(j);
 
                 if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() && objectB.isActive()) {
-
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
 
                     objectA.collided(objectB);
                     objectB.collided(objectA);
-                    
                 }
             }
         }
     }
 
-
     /**
-     * Apply gravity to all objects in a certain amount of time
+     * Applies gravity to all objects in a certain amount of time.
      * 
-     * @param deltaTime
+     * @param deltaTime The time elapsed since the last gravity application.
      */
     private void applyGravity(double deltaTime) {
-        
         for (PhysicalObject object : physicalObjects) {
             // applying acceleration due to gravity
-            if(object.isMovable() &&object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
+            if(object.isMovable() && object.isActive()) object.applyForce(new Vector2D(0, GRAVITY_CONSTANT * object.getMass()));
         }
     }
 
-     
-
     /**
-     * Apply friction to all objects depending on the friction coefficient
+     * Applies friction to all objects depending on the friction coefficient.
      * 
-     * @param frictionCoefficient
+     * @param frictionCoefficient The coefficient of friction to apply.
      */
     private void applyFriction(double frictionCoefficient) {
-        
         for (PhysicalObject object : physicalObjects) {
-            if(object.isMovable() &&object.isActive()){
+            if(object.isMovable() && object.isActive()){
                 Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
                 object.applyForce(frictionForce);
             }   
@@ -135,9 +122,9 @@ public class PhysicsEngine implements Serializable{
     }
 
     /**
-     * Applies gravitational field forces to all movable objects
+     * Applies gravitational field forces to all movable objects.
      * 
-     * @param deltaTime the time since last tick
+     * @param deltaTime The time elapsed since the last gravitational force application.
      */
     public void applyGravitationalForces(double deltaTime) {
         for (int i = 0; i < physicalObjects.size(); i++){
@@ -151,6 +138,4 @@ public class PhysicsEngine implements Serializable{
             }
         }
     }
-
-
 }

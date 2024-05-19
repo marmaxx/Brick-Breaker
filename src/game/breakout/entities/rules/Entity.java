@@ -1,3 +1,11 @@
+/**
+ * The Entity class represents an abstract entity in the game. It extends the PhysicalObject class and provides basic functionality for movement and collision resolution.
+ * 
+ * The Entity class contains methods for setting and getting the graphical representation of the entity, as well as methods for moving the entity in different directions.
+ * It also provides methods for checking if the entity will be off the screen if it moves in a given direction, updating the velocity of the entity, and getting the current position of the entity.
+ * 
+ * The Entity class is meant to be extended by specific entity classes in the game, such as Player and Ball.
+ */
 package game.breakout.entities.rules;
 
 

@@ -1,3 +1,12 @@
+/**
+ * The `Breakout` class represents a Breakout game. It extends the `Game` class and implements the `KeyListener` interface.
+ * It contains methods for serializing and deserializing the game state, handling key events, and initializing the game objects.
+ * The game consists of bricks, bonuses, balls, planets, a player, and walls. The player controls a paddle to bounce the ball and break the bricks.
+ * The game is displayed in a `GameFrame` and rendered in a `GamePanel`.
+ * 
+ * @param gameFrame The frame in which the game is displayed
+ * @param level The level of the game
+ */
 package game.breakout;
 
 import java.util.*;
