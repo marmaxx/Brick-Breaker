@@ -428,14 +428,6 @@ public class SpaceInvader extends Game{
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
 		this.getPanel().getGameZone().add(this.getPlayersAmmo().getRepresentation());
 		this.getPanel().updateLife(this.life);
-
-
-		// Call getRatioForResolution from Scale.java and print the result
-		// use width and heigth from classicgamejava
-		int resolutionRatio = Scale.getRatioForResolution(ClassicGamePanel.SCREEN_FULL_SIZE.getWidth(), ClassicGamePanel.SCREEN_FULL_SIZE.getHeight());
-		System.out.println("Resolution Ratio: " + resolutionRatio);
-
-
 	}
 
 	/**
