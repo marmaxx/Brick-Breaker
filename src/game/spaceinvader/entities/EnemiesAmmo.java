@@ -48,6 +48,7 @@ public class EnemiesAmmo extends Entity {
         EnemiesAmmoType enemiesAmmoType
     ) {
         super(new Circle(enemiesAmmoTypes.get(enemiesAmmoType), posX, posY, size/5, size));
+        this.getRepresentation().setBounds(posX, posY, size/5, size);
         if (!enemiesAmmoTypes.containsKey(enemiesAmmoType)) {
             throw new IllegalArgumentException("Argument invalide !");
         }

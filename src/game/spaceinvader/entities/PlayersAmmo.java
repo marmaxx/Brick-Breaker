@@ -200,6 +200,7 @@ public class PlayersAmmo extends Entity {
 		int y = si.player.getRepresentation().getY()-si.player.getRepresentation().getWidth()/3;
 		*/
 		PlayersAmmo playerAmmo = new PlayersAmmo(PlayersAmmo.DEFAULT_IMAGE, 30, 50, new Vector2D(x, y), true);
+		playerAmmo.getRepresentation().setBounds(x, y, 30, 30);
 		playerAmmo.setSpeed(new Vector2D(0, -0.3));
 		playerAmmo.active=false;
 		si.setPlayersAmmo(playerAmmo);

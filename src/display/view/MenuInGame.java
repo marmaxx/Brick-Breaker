@@ -58,6 +58,8 @@ public class MenuInGame extends JPanel {
                 frame.getBreakoutGame().clearGameComponents();
             }else if( frame.getNumberOfTheGame() == 1){
                 frame.getSpaceInvaderGame().clearGameComponents();
+            }else if (frame.getNumberOfTheGame() == 2){
+                frame.getPongGame().clearGameComponents();
             }
             pane.getGameZone().removeAll();
             pane.getMenu().setVisible(false);
@@ -68,12 +70,17 @@ public class MenuInGame extends JPanel {
                         frame.getCardlayout().show(frame.getPanelContainer(), "menuPanel");
                     }else if( frame.getNumberOfTheGame() == 1){
                         frame.getCardlayout().show(frame.getPanelContainer(), "homePage");
+                    }else if (frame.getNumberOfTheGame() == 2){
+                        frame.getCardlayout().show(frame.getPanelContainer(), "homePage");
                     }
                 }
             });
         });
         this.BackToMenuButton.addMouseListener(new MenuInGameListener(this.BackToMenuButton));
 
+        this.settings.addActionListener(e -> {
+            frame.getCardlayout().show(frame.getPanelContainer(), "SettingsInGame");
+        });
         this.settings.addMouseListener(new MenuInGameListener(this.settings));
 
 

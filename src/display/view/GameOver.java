@@ -16,6 +16,7 @@ public class GameOver extends JPanel {
     public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private JButton exit = createStyledButton(" Exit ");
     private JButton backToMenu = createStyledButton(" Back to Menu ");
+    private JButton restartLevel = createStyledButton(" Restart Level ");
     transient private BufferedImage backgroundImage; // background image 
 
 
@@ -66,12 +67,41 @@ public class GameOver extends JPanel {
 
         });
 
+        this.restartLevel.setPreferredSize(BUTTON_SIZE);
+        this.restartLevel.addActionListener(e -> {
+            if (frame.getNumberOfTheGame() == 0){
+                frame.getBreakoutGame().clearGameComponents();
+                frame.getGamePanel().getGameZone().removeAll();
+                frame.getBreakoutGame().setLife(3);
+                frame.getBreakoutGame().setNbBricks(1);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run (){
+                        frame.getCardlayout().show(frame.getPanelContainer(), "gamePanel");
+                        frame.startBreakoutGame(frame.getBreakoutGame().getLevel());
+                    }
+                });
+            }
+            else if(frame.getNumberOfTheGame() == 1 ){
+                frame.getSpaceInvaderGame().clearGameComponents();
+                frame.getGamePanel().getGameZone().removeAll();
+                frame.getSpaceInvaderGame().setLife(5);
+                frame.getSpaceInvaderGame().setnbEnemies(1);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        frame.getCardlayout().show(frame.getPanelContainer(), "gamePanel");
+                        frame.startSpaceInvaderGame();
+                    }
+                });
+            }
+        });
+
         this.exit.addMouseListener(new ButtonMouseListener(this.exit));
         this.backToMenu.addMouseListener(new ButtonMouseListener(this.backToMenu));
-
+        this.restartLevel.addMouseListener(new ButtonMouseListener(this.restartLevel));
 
         this.add(this.exit);
         this.add(this.backToMenu);
+        this.add(this.restartLevel);
     }
 
     private JButton createStyledButton(String text) {

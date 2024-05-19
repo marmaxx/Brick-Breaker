@@ -62,7 +62,7 @@ public class Breakout extends Game {
 	private Ball ball;
 	private static Planet planete;
 	private Wall eastWall, northWall, westWall;
-	private static final int WALL_WIDTH = 1;
+	private static final int WALL_WIDTH = 5;
 	// init at 1 because it takes time to initialize the list of bricks 
 	// and it would lead us to the win panel directly
 	private int nbBricks = 1; 
@@ -84,6 +84,7 @@ public class Breakout extends Game {
 	
 	private int level = 0;
 
+	private boolean trollLevel = false;
 
 	/**
 	 * Instantiates a new Breakout game
@@ -233,7 +234,8 @@ public class Breakout extends Game {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:break;
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().moveLeft();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().moveRight();
+						else Breakout.this.getPlayer().moveLeft();
 						break;
 					case KeyEvent.VK_D:
 					{
@@ -276,7 +278,8 @@ public class Breakout extends Game {
 						break;
 					}
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().moveRight();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().moveLeft();
+						else Breakout.this.getPlayer().moveRight();
 						break;
 					case KeyEvent.VK_P:
 						if(Breakout.this.isPaused()){
@@ -324,11 +327,13 @@ public class Breakout extends Game {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						Breakout.this.getPlayer().stopLeft();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().stopRight();
+						else Breakout.this.getPlayer().stopLeft();
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						Breakout.this.getPlayer().stopRight();
+						if (Breakout.this.trollLevel) Breakout.this.getPlayer().stopLeft();
+						else Breakout.this.getPlayer().stopRight();
 						break;
 				}
 			}
@@ -540,6 +545,10 @@ public class Breakout extends Game {
 	}
 
 
+	public void setTrollLevel(boolean troll){
+		this.trollLevel = troll;
+	}
+
 	
 	public void createBricks(int rows, int columns){
 		// TODO: Prevent the amount of bricks from exceeding the panel's width and height
@@ -561,7 +570,7 @@ public class Breakout extends Game {
 				boolean dropBonus = (randomNumber == 1);
 	
 				Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-				randomLifespan, dropBonus, true, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+				randomLifespan, dropBonus, true, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
 				physicEngine.getPhysicalObjects().add(brick);
@@ -693,7 +702,7 @@ public class Breakout extends Game {
 		Iterator<Brick> iterator = this.getBricks().iterator();
 	
 		 
-		if (this.nbBricks == 0 && this.life >= 0){
+		if ((this.nbBricks == 0 && this.life >= 0) || (this.nbBricks == Level.unbreakableBrickNumber && this.life >= 0)){
 			this.gameframe.setnbLevelUnlock();
 			this.endGame();
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
@@ -702,21 +711,31 @@ public class Breakout extends Game {
 
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
-				if (!brick.isActive()) {
-					if (brick.doesDropBonus()){
-						// store the size of the brick
-						createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
-					}
-					this.nbBricks--; // Decrement the count of brick when the brick is broken
-					this.score += 100; // Increment the score when the brick is broken
-					// Safely remove the brick from the collection
-					iterator.remove();
-					this.getPanel().updateScore(this.score, this.nbBricks);
-					
-					
+			if (!brick.isActive()) {
+				if (brick.doesDropBonus()){
+					// store the size of the brick
+					createBonus(brick.getRepresentation().getPosX() + brick.getRepresentation().getWidth()/2, brick.getRepresentation().getPosY());
 				}
+				this.nbBricks--; // Decrement the count of brick when the brick is broken
+				this.score += 100; // Increment the score when the brick is broken
+				// Safely remove the brick from the collection
+				iterator.remove();
+				this.getPanel().updateScore(this.score, this.nbBricks);
 				
-			
+				
+			}
+			if (brick.isMoving()){
+				if(brick.willBeOffScreen(this.getPanel(),5)){
+					if(brick.movingRight()){
+						brick.stopRight();
+						brick.moveLeft();
+					}else{
+						brick.stopLeft();
+						brick.moveRight();
+					}
+				}
+				brick.move(1);
+			}
 		}
 	}
 	
@@ -747,7 +766,7 @@ public class Breakout extends Game {
 					boolean dropBonus = (randomNumber == 1);
 		
 					Brick brick = new Brick(Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT,
-					randomLifespan, dropBonus, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
+					randomLifespan, dropBonus, false, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 					iterator.add(brick);
 					brick.moveRight();
 					brick.getRepresentation().setBounds(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY(), brick.getRepresentation().getWidth(), brick.getRepresentation().getHeight());
@@ -765,14 +784,16 @@ public class Breakout extends Game {
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 			if(brick.willBeOffScreen(this.getPanel(),5)){
-				brick.getRepresentation().setPosY(brick.getRepresentation().getPosY()+30);
-				brick.setPosition(new Vector2D(brick.getRepresentation().getPosX(), brick.getRepresentation().getPosY()+30));
-				if(brick.movingRight()){
-					brick.stopRight();
-					brick.moveLeft();
-				}else{
-					brick.stopLeft();
-					brick.moveRight();
+				for (Brick brick2 : this.getBricks()){
+					brick2.getRepresentation().setPosY(brick2.getRepresentation().getPosY()+20);
+					brick2.setPosition(new Vector2D(brick2.getRepresentation().getPosX(), brick2.getRepresentation().getPosY()+30));
+					if(brick2.movingRight()){
+						brick2.stopRight();
+						brick2.moveLeft();
+					}else{
+						brick2.stopLeft();
+						brick2.moveRight();
+					}
 				}
 			}
 			brick.move(1);
@@ -846,7 +867,7 @@ public class Breakout extends Game {
 				}
 				break;
 			case BONUS_HEALTH:
-				if (Breakout.this.getLife() + 1 < 3) {
+				if (Breakout.this.getLife() < 3) {
 					Breakout.this.setLife(Breakout.this.getLife() + 1);
 					Breakout.this.getPanel().updateLife(Breakout.this.getLife());
 				}
@@ -919,7 +940,7 @@ public class Breakout extends Game {
 			int x = this.player.getRepresentation().getX()+this.player.getRepresentation().getWidth()/3;
 			int y = this.player.getRepresentation().getY()-this.player.getRepresentation().getWidth()/3;
 			
-			Ball ball = new Ball(Ball.DEFAULT_IMAGE, 30, 50, new Vector2D(x, y), true);
+			Ball ball = new Ball(Ball.DEFAULT_IMAGE2, 30, 50, new Vector2D(x, y), true);
 			ball.setSpeed(new Vector2D(0.5, -0.5));
 			ball.active=false;
 			this.setBall(ball);
