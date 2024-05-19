@@ -14,7 +14,8 @@ public abstract class PhysicalObject implements Serializable{
     protected Vector2D acceleration = new Vector2D(0, 0);
     protected boolean movable; //indicates if the object can move, if its position is influenced by collisions or frictions 
     protected GraphicalObject representation;
-    protected double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
+    protected double rotationCoeff = 1; // coeff of rotation after the paddle hit the ball with speed; has an impact on the next collision
+
 
 
     protected Vector2D normalVectorVT = new Vector2D(0, 1);
@@ -80,12 +81,23 @@ public abstract class PhysicalObject implements Serializable{
         return this.position;
     }
 
+    
+    public double getRotationCoeff() {
+        return rotationCoeff;
+    }
+
+    public void setRotationCoeff(double rotationCoeff) {
+        this.rotationCoeff = rotationCoeff;
+    }
+
 
 
     // Getters et setters
     public double getMass() {
             return this.mass;
         }
+
+    
 
     public Vector2D getSpeed() {
         return this.speed;

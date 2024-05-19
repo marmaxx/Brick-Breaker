@@ -45,6 +45,7 @@ public class Pong extends Game{
 		this.setPlayer0(new Player(Player.DEFAULT_IMAGE, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 0,new Vector2D(0 + WALL_WIDTH + 10, 400),false));
 		this.setPlayer1(new Player(Player.DEFAULT_IMAGE, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 0,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth() - 2*WALL_WIDTH - 10, 400),false));
 		Ball ball = new Ball(game.pong.entities.Ball.DEFAULT_IMAGE,  30, 50,new Vector2D(500,400),true);
+		ball.setRotationCoeff(0.5);
 		// to set the ball
 		this.setBall(ball);
 		ball.active=false;
@@ -52,7 +53,7 @@ public class Pong extends Game{
 		this.setEastWall(new Wall(WALL_WIDTH, 800, 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false, true));
 		this.setWestWall(new Wall(WALL_WIDTH, 800,100,new Vector2D(0, 0),false, true));
 		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 0),false, false));
-		this.setSouthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 800),false, false));
+		this.setSouthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, (int)GamePanel.GAME_ZONE_SIZE.getHeight()-3*WALL_WIDTH),false, false));
 		// to add the entities to the physic engine
 		this.physicEngine.getPhysicalObjects().add(ball);
 		this.physicEngine.getPhysicalObjects().add(northWall);	
