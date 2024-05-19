@@ -191,7 +191,7 @@ public boolean isColliding(PhysicalObject objectB) {
     
 
             double distance = Math.sqrt(Math.pow(circle2.getCenterX() - circle1.getCenterX(), 2) + Math.pow(circle2.getCenterY() - circle1.getCenterY(), 2));
-            return distance <= (circle1.getWidth() + circle2.getWidth());
+            return distance <= (circle1.getWidth() + circle2.getWidth())/2;
         }
         else{
             boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
