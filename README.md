@@ -55,40 +55,14 @@ git clone https://gaufre.informatique.univ-paris-diderot.fr/labbi/casse-brique-g
 
 Étape 2: Aller dans le dossier du projet
 
-Étape 3: à déterminer
+Étape 3: Ouvrir n'importe quel fichier et appuyer sur F5 ou bien exécuter le main.java dans le dossier racine
 
-
-## À faire
-
-- 404
-
-### Optionnel
-
-- 4
-- 0
-- 4
-
-![Optionnel]
 
 ## Documentation
 
 ### Comment l'application est structurée (voir Structure.pdf)
 
-#### Configuration
-
-Les fichiers dans le dossier config servent à la création de la map et du labyrinth.
-
-#### Géométrie
-
-Les fichiers dans le dossier geometry permettent la gestion des coordonnées sur le labyrinth et les entitées.
-
-#### GUI
-
-Dossier principal gui qui contient les fichiers essentiels pour le lancement du jeu et la partie interface graphique.
-
-#### Modèle
-
-Contient entitées et leur gestion.
+Assister à la présentation ou bien lire le rapport.
 
 ### Conventions et nomenclature
 
