@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.*;
-import game.breakout.Breakout;
-import game.breakout.entities.Ball;
 
 /**
  * PhysicsEngine

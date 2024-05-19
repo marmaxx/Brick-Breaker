@@ -4,7 +4,6 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import display.engine.PhysicsEngine;
 import display.engine.rules.PhysicalObject;
 import display.engine.shapes.Circle;
 import display.engine.utils.Vector2D;
@@ -12,8 +11,6 @@ import game.breakout.Breakout;
 import game.breakout.entities.rules.Entity;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Timer;
 
 public class Planet extends Entity {
 	public static final long serialVersionUID = 1234L;

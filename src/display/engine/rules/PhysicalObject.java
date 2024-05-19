@@ -4,7 +4,6 @@ import java.io.Serializable;
 import display.engine.rules.GraphicalObject.Boundary;
 import display.engine.shapes.Circle;
 import display.engine.utils.*;
-import game.breakout.entities.Ball;
 import game.breakout.entities.Planet;
 public abstract class PhysicalObject implements Serializable{
     public static final long serialVersionUID = 2L;

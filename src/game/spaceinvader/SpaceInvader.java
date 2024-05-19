@@ -16,8 +16,8 @@ import game.spaceinvader.entities.PlayersAmmo;
 import game.spaceinvader.entities.Wall;
 import game.spaceinvader.entities.EnemiesAmmo.EnemiesAmmoType;
 import display.view.brickbreakerview.*;
-import display.view.spaceinvaderview.*;
 import display.view.*;
+import display.view.Scale;
 
 public class SpaceInvader extends Game{
 	
@@ -49,10 +49,6 @@ public class SpaceInvader extends Game{
 	 */
 	public SpaceInvader(GameFrame gameFrame) {
 
-		// TODO : we should find a way to have an x and y position that depends on the size of the screen and not just a fixed value (not top priority)
-
-		// TODO : We should remove everything that has to do with physics since it's not required in a Space Invader, but it wouldn't change a lot gameplay-wise (so not top priority)
-
 		// to set the title of the game
 		super(gameFrame.getGamePanel(), "Space Invader");
 		this.gameframe = gameFrame;
@@ -78,12 +74,6 @@ public class SpaceInvader extends Game{
 		// to add the entities to the physic engine
 		this.physicEngine.getPhysicalObjects().add(playersAmmo);
 		this.physicEngine.getPhysicalObjects().add(northWall);	
-		/* not necessary
-		this.physicEngine.getPhysicalObjects().add(player);
-		this.physicEngine.getPhysicalObjects().add(eastWall);
-		this.physicEngine.getPhysicalObjects().add(westWall);
-		*/	
-
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -494,8 +484,6 @@ public class SpaceInvader extends Game{
 			if(enemy.willBeOffScreen(this.getPanel(),5)){
 				shouldChangeDirection = true;
 			}
-			// the higher the number the less the enemies shoot
-			// TODO : The less there are ennemies, the less they shoot, which isn't great (not top proriority though)
 			if (new Random().nextInt(5000) == 1){
 				createEnemyAmmo(enemy.getRepresentation().getPosX() + enemy.getRepresentation().getWidth()/2, enemy.getRepresentation().getPosY());
 			}
@@ -662,11 +650,6 @@ public class SpaceInvader extends Game{
 		this.physicEngine.update(deltaTime);
 		this.updateMarathonEnemies();
 		this.updateEnemyAmmo();
-		//this.getPanel().updateLife(life);
-		//this.life--;
-		//this.getPanel().updateUI(); // we may have found the source of the ui problem !
-		//this.updateDebug();
-		//this.getPanel().updateStat(this.score, this.life, this.nbEnemies); // update JLabel of statZone in GamePanel 
 	}
 
 
