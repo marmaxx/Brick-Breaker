@@ -8,7 +8,7 @@ import display.engine.utils.Vector2D;
 import game.pong.entities.rules.Entity;
 
 public class Wall extends Entity {
-    public static final Color DEFAULT_COLOR = Color.GRAY;
+    public static final Color DEFAULT_COLOR = Color.WHITE;
 
     public boolean triggerRespawn;
 
