@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import display.engine.rules.PhysicalObject;
 import display.engine.utils.*;
+import game.breakout.Breakout;
+import game.breakout.entities.Ball;
 
 /**
  * PhysicsEngine
@@ -54,14 +56,16 @@ public class PhysicsEngine implements Serializable{
      */
     public void update(double deltaTime) {
         applyGravity(deltaTime);
+        applyGravitationalForces(deltaTime);
         handleCollisions(deltaTime);
         applyFriction(FRICTION_COEFFICIENT);
+        
        
             // updating objects position relatively to the time spent
          for (PhysicalObject object : physicalObjects) {
-            //if (object instanceof Ball) System.out.println(object.getAcceleration());
             object.updateVelocity(deltaTime); 
             if (object.isActive() && object.isMovable()){
+                
                 //System.out.println("vitesse: "+object.getSpeed());
                 //System.out.println("acceleration: "+object.getAcceleration());
                 //System.out.println("DeltaTime: "+deltaTime);
@@ -87,18 +91,15 @@ public class PhysicsEngine implements Serializable{
             PhysicalObject objectA = physicalObjects.get(i);
             for (int j = i+1; j < physicalObjects.size(); j++) {
                 PhysicalObject objectB = physicalObjects.get(j);
-                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() &&objectB.isActive()) {
-                   //System.out.println("COLLISION");
-                    //System.out.println(objectB.getPosition());
-                    //if (objectA.getObject() instanceof Wall) System.out.println(objectA.getRepresentation().getWidth()+" ; "+objectA.getPosition());
-                    // resolving collision between A and B+-
-                    //System.out.println("A= "+objectA.getMass());
-                    //System.out.println("B= "+objectB.getMass());
+
+                if (objectA.isGoingToCollide(objectB, deltaTime) && objectA!=objectB && objectA.isActive() && objectB.isActive()) {
+
                     objectA.resolveCollision(objectB);
                     objectB.resolveCollision(objectA);
 
                     objectA.collided(objectB);
                     objectB.collided(objectA);
+                    
                 }
             }
         }
@@ -118,6 +119,8 @@ public class PhysicsEngine implements Serializable{
         }
     }
 
+     
+
     /**
      * Apply friction to all objects depending on the friction coefficient
      * 
@@ -130,6 +133,24 @@ public class PhysicsEngine implements Serializable{
                 Vector2D frictionForce = object.getSpeed().multiply(-1).normalize().multiply(frictionCoefficient);
                 object.applyForce(frictionForce);
             }   
+        }
+    }
+
+    /**
+     * Applies gravitational field forces to all movable objects
+     * 
+     * @param deltaTime the time since last tick
+     */
+    public void applyGravitationalForces(double deltaTime) {
+        for (int i = 0; i < physicalObjects.size(); i++){
+            PhysicalObject objectA = physicalObjects.get(i);
+            for (int j = i+1; j < physicalObjects.size(); j++){
+                PhysicalObject objectB = physicalObjects.get(j);
+                if(objectA.isActive() && objectB.isActive()){
+                    if (objectB.isMovable() && objectA.isAPlanet()) objectB.applyGravitationalForces(deltaTime, objectA);
+                    else if (objectA.isMovable() && objectB.isAPlanet()) objectA.applyGravitationalForces(deltaTime, objectB);
+                }
+            }
         }
     }
 

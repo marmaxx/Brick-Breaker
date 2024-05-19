@@ -11,6 +11,8 @@ import java.io.ObjectOutputStream;
 
 
 import display.engine.PhysicsEngine;
+import display.engine.rules.PhysicalObject;
+import display.engine.shapes.Circle;
 
 import display.engine.utils.Vector2D;
 import display.engine.shapes.*; 
@@ -22,6 +24,7 @@ import game.breakout.entities.Player;
 import game.breakout.entities.Bonus.BonusType;
 import game.breakout.entities.Wall;
 import game.breakout.entities.Brick;
+import game.breakout.entities.Planet;
 import game.rules.Game;
 
 import java.io.FileInputStream;
@@ -36,9 +39,15 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 
 import java.awt.*;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Breakout extends Game {
 	public static final long serialVersionUID = 15L;
+	private boolean gameEnded;
 
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "breakout" + File.separator + "assets" + File.separator;
@@ -48,6 +57,7 @@ public class Breakout extends Game {
 	private ArrayList<Brick> bricks;
 	private ArrayList<Bonus> bonuses;
 	private ArrayList<Ball>  Balls;
+	private ArrayList<Planet> planets;
 	private Player player;
 	private Ball ball;
 	private Wall eastWall, northWall, westWall;
@@ -88,6 +98,7 @@ public class Breakout extends Game {
 		this.setBricks(new ArrayList<Brick>());
 		this.setBonuses(new ArrayList<Bonus>());
 		this.setBalls(new ArrayList<Ball>());
+		this.setPlanets(new ArrayList<Planet>());
 
 		this.setPlayer(new Player(Player.DEFAULT_COLOR, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 51,new Vector2D(530, 700),false));
 
@@ -96,7 +107,6 @@ public class Breakout extends Game {
 
 		mainBall.active=false;
 		this.getBalls().add(mainBall);
-
 		
 		this.setEastWall(new Wall(WALL_WIDTH, (int)GamePanel.GAME_ZONE_SIZE.getHeight(), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false));
 
@@ -104,11 +114,11 @@ public class Breakout extends Game {
 
 		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 0),false));
 
-		this.physicEngine.getPhysicalObjects().add(ball);
-		this.physicEngine.getPhysicalObjects().add(player);
-		this.physicEngine.getPhysicalObjects().add(eastWall);
-		this.physicEngine.getPhysicalObjects().add(westWall);
-		this.physicEngine.getPhysicalObjects().add(northWall);		
+		physicEngine.getPhysicalObjects().add(ball);
+		physicEngine.getPhysicalObjects().add(player);
+		physicEngine.getPhysicalObjects().add(eastWall);
+		physicEngine.getPhysicalObjects().add(westWall);
+		physicEngine.getPhysicalObjects().add(northWall);	
 
 	
 		this.addKeyListener();
@@ -155,6 +165,7 @@ public class Breakout extends Game {
 		super.setMaxFPS(DEFAULT_FPS);
 		super.setVSync(true);
 
+
 		this.load();
 		this.level=level;
 
@@ -171,6 +182,12 @@ public class Breakout extends Game {
 	 */
 	private void load(){
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
+
+		for (Planet planete : this.getPlanets()){
+			if(planete.isActive()) planete.getRepresentation().setImage(Planet.PLANET_IMAGE);
+			this.getPanel().getGameZone().add(planete.getRepresentation());
+		}
+		
 		this.getBall().getRepresentation().setImage(Ball.DEFAULT_IMAGE2);
 		for (Ball ball : this.getBalls()){
 			this.getPanel().getGameZone().add(ball.getRepresentation());
@@ -223,15 +240,16 @@ public class Breakout extends Game {
 						break;
 					case KeyEvent.VK_D:
 					{
-
+						int ballDistanceX = Breakout.this.getBall().getRepresentation().getWidth();
+						int ballDistanceY = Breakout.this.getBall().getRepresentation().getHeight();
 						Random randomDistance = new Random();
-						int randomX = (int)getBall().getPosition().getX() + randomDistance.nextInt(-30, 30);
-						int randomY = (int)getBall().getPosition().getY() + randomDistance.nextInt(-30, 30);
+						int randomX = (int)getBall().getPosition().getX() +  20+ballDistanceX;
+						int randomY = (int)getBall().getPosition().getY() + 10+ballDistanceY;
 						Vector2D ballPos = new Vector2D(randomX, randomY);
 	
-						Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+						Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,20,ballPos,true);
 						ball.setAcceleration(getBall().getAcceleration());
-						ball.setSpeed(getBall().getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
+						ball.setSpeed(Breakout.this.getBall().getSpeed().add(new Vector2D(randomDistance.nextDouble(0.1), randomDistance.nextDouble(0.1))));
 	
 						getBalls().add(ball);
 						getPanel().getGameZone().add(ball.getRepresentation());
@@ -274,6 +292,7 @@ public class Breakout extends Game {
 						break;
 					case KeyEvent.VK_V :
 						Breakout.this.gameframe.setnbLevelUnlock();
+						Breakout.this.endGame();
 						Breakout.this.gameframe.getCardlayout().show(Breakout.this.gameframe.getPanelContainer(), "winPanel");
 					case KeyEvent.VK_SPACE:
 						if (!Breakout.this.getBall().active){
@@ -347,6 +366,24 @@ public class Breakout extends Game {
 	 */
 	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks = bricks;
+	}
+
+	/**
+	 * Get the list of planets in the game.
+	 * 
+	 * @return The list of planets
+	 */
+	public ArrayList<Planet> getPlanets() {
+		return this.planets;
+	}
+
+	/**
+	 * Set the list of planets in the game.
+	 * 
+	 * @param planets The list of planets
+	 */
+	public void setPlanets(ArrayList<Planet> planets) {
+		this.planets = planets;
 	}
 
 	/**
@@ -513,6 +550,7 @@ public class Breakout extends Game {
 		this.trollLevel = troll;
 	}
 
+
 	
 	public void createBricks(int rows, int columns){
 		// TODO: Prevent the amount of bricks from exceeding the panel's width and height
@@ -537,7 +575,7 @@ public class Breakout extends Game {
 				randomLifespan, dropBonus, true, false, 10,new Vector2D(initialXPos+column*BRICK_SPACING,verticalPos),false);
 				this.getBricks().add(brick);
 
-				this.physicEngine.getPhysicalObjects().add(brick);
+				physicEngine.getPhysicalObjects().add(brick);
 				this.getPanel().getGameZone().add(brick.getRepresentation()); 
 			}
 		}
@@ -559,6 +597,7 @@ public class Breakout extends Game {
 	public void setLevel(int level){
 		this.level = level;
 	}
+
 
 	/**
 	 * Create a bonus at a given position (posX is the center of the bonus, however y is the top)
@@ -624,10 +663,31 @@ public class Breakout extends Game {
 		trailPoint.setBounds(trailPoint.getPosX(), trailPoint.getPosY(), trailPoint.getWidth(), trailPoint.getHeight());
 		if(this.getBall().active) this.getBall().trail.addPoint(this);
 			if( this.getLife() <=0 && this.getNbBricks() > 0){
+				this.endGame();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 		}
 	
+	public void endGame(){
+		this.gameEnded = true;
+		this.clearGameComponents();
+	}
+
+	/**
+	 * Update the planet entities
+	 */
+	public void updatePlanets() {
+		
+		Iterator<Planet> iterator = this.planets.iterator();
+		while (iterator.hasNext()) {
+			Planet planet = iterator.next();
+			if (!planet.isActive()){
+				this.getPhysicEngine().getPhysicalObjects().remove(planet);
+				iterator.remove();
+			}
+		}
+	}
+
 
 
 	/**
@@ -644,6 +704,7 @@ public class Breakout extends Game {
 		 
 		if ((this.nbBricks == 0 && this.life >= 0) || (this.nbBricks == Level.unbreakableBrickNumber && this.life >= 0)){
 			this.gameframe.setnbLevelUnlock();
+			this.endGame();
 			this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "winPanel");
 		}
 
@@ -718,6 +779,7 @@ public class Breakout extends Game {
 		while (iterator.hasNext()) {
 			Brick brick = iterator.next();
 			if (brick.getRepresentation().getPosY()>this.getPlayer().getRepresentation().getPosY()){
+				this.endGame();
 				this.gameframe.getCardlayout().show(this.gameframe.getPanelContainer(), "gameOver");
 			}
 			if(brick.willBeOffScreen(this.getPanel(),5)){
@@ -795,13 +857,11 @@ public class Breakout extends Game {
 			case BONUS_SPEED:
 				if (Breakout.this.getPlayer().getIntSpeed() + (int)(0.2f*Player.DEFAULT_SPEED) <= Player.MAX_SPEED) {
 					Breakout.this.getPlayer().setIntSpeed(this.getPlayer().getIntSpeed() + (int)(0.2f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getIntSpeed());
 				}
 				break;
 			case MALUS_SPEED:
 				if (Breakout.this.getPlayer().getIntSpeed() - (int)(0.1f*Player.DEFAULT_SPEED) >= Player.MIN_SPEED) {
 					Breakout.this.getPlayer().setIntSpeed(Breakout.this.getPlayer().getIntSpeed() - (int)(0.1f*Player.DEFAULT_SPEED));
-					System.out.println(Breakout.this.getPlayer().getIntSpeed());
 				}
 				break;
 			case BONUS_HEALTH:
@@ -821,11 +881,11 @@ public class Breakout extends Game {
 
 
 					Random randomDistance = new Random();
-					int randomX = (int)ballToBeDuplicated.getPosition().getX() + randomDistance.nextInt(-30, 30);
-					int randomY = (int)ballToBeDuplicated.getPosition().getY() + randomDistance.nextInt(-30, 30);
+					int randomX = (int)ballToBeDuplicated.getPosition().getX() +10+this.getBall().getRepresentation().getWidth();
+					int randomY = (int)ballToBeDuplicated.getPosition().getY() -30 -this.getBall().getRepresentation().getHeight();
 					Vector2D ballPos = new Vector2D(randomX, randomY);
 
-					Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,50,ballPos,true);
+					Ball ball = new Ball(Ball.DEFAULT_COLOR, 20,20,ballPos,true);
 					
 					ball.setAcceleration(ballToBeDuplicated.getAcceleration());
 					ball.setSpeed(ballToBeDuplicated.getSpeed().add(new Vector2D(randomDistance.nextDouble(0.3), randomDistance.nextDouble(0.3))));
@@ -897,19 +957,22 @@ public class Breakout extends Game {
 	 */
 	@Override
 	public void onUpdate(double deltaTime) {
-		this.updatePlayer();
-		this.updateBall();
-		this.checkBallInGame();
-		//System.out.println(this.ball.getPosition());
-		// if (this.ball.getIsMoving() == true) 
-		this.physicEngine.update(deltaTime);
-		if(this.level != -1 ){
-			this.updateBricks();
-			this.ball.resolveSpeedToHigh();
-		}else{
-		this.updateMarathonBricks();
+		//System.out.println("ACTIF ? "+this.planete.isActive());
+		if(!this.gameEnded){
+			this.updatePlayer();
+			this.updateBall();
+			this.checkBallInGame();
+			//System.out.println(this.ball.getPosition());
+			// if (this.ball.getIsMoving() == true) 
+			this.physicEngine.update(deltaTime);
+			if(this.level != -1 ){
+				this.updateBricks();
+				this.ball.resolveSpeedToHigh();
+			}else{
+			this.updateMarathonBricks();
+			}
+			this.updateBonus();
 		}
-		this.updateBonus();
 		//this.updateDebug();
 		//this.getPanel().updateStat(this.score, this.life, this.nbBricks); // update JLabel of statZone in GamePanel 
 	}
@@ -917,17 +980,33 @@ public class Breakout extends Game {
 
 	public void clearGameComponents() {
 		// Remove all bricks from the list and game zone
+		this.getPhysicEngine().getPhysicalObjects().clear();
+	
 		for (Brick brick : this.getBricks()) {
-			this.getPanel().getGameZone().remove(brick.getRepresentation());
+			brick.destroy();
 		}
 		this.getBricks().clear();
 	
 		// Remove all bonuses from the list and game zone
 		for (Bonus bonus : this.getBonuses()) {
-			this.getPanel().getGameZone().remove(bonus.getRepresentation());
+			bonus.destroy();
 		}
 		this.getBonuses().clear();
 	
+		this.getBall().destroy();
+		for (Ball ball : this.getBalls()) {
+			ball.destroy();
+		}
+		this.getBalls().clear();
+
+		for (Planet planet : this.getPlanets()) {
+			planet.destroy();
+		}
+		this.getPlanets().clear();
+
+
+		
+
 		// Remove the player from the game zone
 		this.getPanel().getGameZone().remove(this.getPlayer().getRepresentation());
 	
@@ -939,5 +1018,7 @@ public class Breakout extends Game {
 		this.getPanel().getGameZone().remove(this.getWestWall().getRepresentation());
 		this.getPanel().getGameZone().remove(this.getNorthWall().getRepresentation());
 	}
+
+
 	
 }

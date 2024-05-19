@@ -1,8 +1,11 @@
 package display.engine.rules;
 import java.io.Serializable;
 
-
+import display.engine.rules.GraphicalObject.Boundary;
+import display.engine.shapes.Circle;
 import display.engine.utils.*;
+import game.breakout.entities.Ball;
+import game.breakout.entities.Planet;
 public abstract class PhysicalObject implements Serializable{
     public static final long serialVersionUID = 2L;
     public boolean active;
@@ -11,11 +14,8 @@ public abstract class PhysicalObject implements Serializable{
     protected Vector2D speed = new Vector2D(0, 0);
     protected Vector2D acceleration = new Vector2D(0, 0);
     protected boolean movable; //indicates if the object can move, if its position is influenced by collisions or frictions 
-    //TODO: regarder si movable est vraiment utile, pareil pour elasticity
     protected GraphicalObject representation;
-    protected double elasticity;
     protected double rotationCoeff=1; //coeff of rotation after the paddle hit the ball with speed ; has an impact on the next collision
-    //TODO: gérer la rotation 
 
 
     protected Vector2D normalVectorVT = new Vector2D(0, 1);
@@ -119,6 +119,10 @@ public abstract class PhysicalObject implements Serializable{
         return this.movable;
     }
 
+    public boolean isAPlanet(){
+        return (this instanceof Planet);
+    }
+
 
     public void setSpeed(Vector2D newSpeed){
         this.speed=newSpeed;
@@ -152,18 +156,53 @@ public abstract class PhysicalObject implements Serializable{
         return rep;
     }
 
-
-    // checking if a collision happened
-    public boolean isColliding(PhysicalObject objectB) {
-        return this.representation.isColliding(objectB.representation);
+public boolean isColliding(PhysicalObject objectB) {
+        int[] thisBoundingBox = this.getRepresentation().getBoundaries();
+        int[] objectBoundingBox = objectB.getRepresentation().getBoundaries();
+    
+        if (objectB.getRepresentation() instanceof Circle && this.getRepresentation() instanceof Circle){
+            Circle circle1 = (Circle) this.getRepresentation();
+            Circle circle2 = (Circle) objectB.getRepresentation();
+    
+            double distance = Math.sqrt(Math.pow(circle2.getCenterX() - circle1.getCenterX(), 2) + Math.pow(circle2.getCenterY() - circle1.getCenterY(), 2));
+            return distance <= (circle1.getWidth() + circle2.getWidth());
+        }    
+        else{
+            boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+                && thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+                && thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+                && thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
+    
+            return isColliding;
+        }
+    
     }
 
     public boolean isGoingToCollide(PhysicalObject objectB, double deltaTime){
         int[] thisNextPos = this.getNextPos(deltaTime);
         int[] BNextPos = objectB.getNextPos(deltaTime);
-        return this.representation.isGoingToCollide(objectB.getRepresentation(), thisNextPos, BNextPos);
 
+        int[] thisBoundingBox = this.getRepresentation().getNextBoundaries(thisNextPos);
+        int[] objectBoundingBox = objectB.getRepresentation().getNextBoundaries(BNextPos);
+
+        if (objectB.getRepresentation() instanceof Circle && this.getRepresentation() instanceof Circle){
+            Circle circle1 = (Circle) this.getRepresentation();
+            Circle circle2 = (Circle) objectB.getRepresentation();
+    
+
+            double distance = Math.sqrt(Math.pow(circle2.getCenterX() - circle1.getCenterX(), 2) + Math.pow(circle2.getCenterY() - circle1.getCenterY(), 2));
+            return distance <= (circle1.getWidth() + circle2.getWidth())/2;
+        }
+        else{
+            boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+            && thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+            && thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+            && thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
+
+        return isColliding;
+        }
     }
+
 
 
     public Vector2D getNearestVertex(Vector2D point){
@@ -199,11 +238,46 @@ public abstract class PhysicalObject implements Serializable{
         return active;
     }
 
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
     public abstract void resolveCollision(PhysicalObject objectB);
 
     public void resolveSpeedToHigh(){
         if (this.getSpeed().getX() > MAX_SPEED) this.setSpeed(new Vector2D(MAX_SPEED, this.getSpeed().getY()));
         if (this.getSpeed().getY() > MAX_SPEED) this.setSpeed(new Vector2D(this.getSpeed().getX(), MAX_SPEED));
     }
+
+    /**
+     * Applies gravitational field forces to all movable objects
+     * 
+     * @param deltaTime the time since last tick
+     */
+    public void applyGravitationalForces(double deltaTime, PhysicalObject planete) {
+		//System.out.println(planete.isActive());
+		if (!planete.isActive()) return;
+        final double G = 6.67430; // gravitational constant
+
+			Vector2D r = planete.getPosition().subtract(this.getPosition());
+			
+			double distance = r.magnitude();
+			if (distance<200) return;
+
+			//System.out.println("objet 1: "+this.getMass()+" "+this.getPosition());
+			//System.out.println("objet 2: "+planete.getMass()+" "+planete.getPosition());
+
+			double forceMagnitude = G * (this.getMass() * planete.getMass()) / (distance * distance);
+			//System.out.println("force norme :"+forceMagnitude);
+			Vector2D force = r.normalize().multiply(forceMagnitude*4);
+
+			this.applyForce(force.multiply(deltaTime));
+			//this.setSpeed(force.multiply(deltaTime));
+			//System.out.println(force.multiply(deltaTime));
+			//System.out.println(this.getAcceleration());
+			//System.out.println(this.getSpeed());
+			//System.out.println();
+    }
+
 
 }

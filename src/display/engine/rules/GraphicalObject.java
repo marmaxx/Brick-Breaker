@@ -37,6 +37,7 @@ public abstract class GraphicalObject extends JComponent {
         int posX, int posY,
         int width, int height
     ) {
+		this.setBounds(posX, posY, width, height);
 		this.setColor(null);
 		this.setImage(image);
 		this.setPosX(posX);
@@ -59,6 +60,7 @@ public abstract class GraphicalObject extends JComponent {
 		int posX, int posY,
         int width, int height
     ) {
+		this.setBounds(posX, posY, width, height);
 		this.setColor(color);
 		this.setImage(null);
 		this.setPosX(posX);

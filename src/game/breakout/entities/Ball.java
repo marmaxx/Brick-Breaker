@@ -143,7 +143,6 @@ public class Ball extends Entity  {
 
 
 
-
 	public boolean willLoose(GamePanel panel, int speed){
 		int [] boundaries = this.getRepresentation().getNextBoundaries(this.getNextPos(speed));
 		return boundaries[GraphicalObject.Boundary.MAX_Y.ordinal()] + speed  > panel.getGameZone().getHeight();
@@ -161,13 +160,47 @@ public class Ball extends Entity  {
 
 	@Override
 	public void resolveCollision(PhysicalObject object) {
-		super.resolveCollision(object);
-		if (isMovable()){
-            if (object.isMovable()){
-				if (object.getRepresentation() instanceof Circle){
-					//TODO: handle ball to ball collision
-				}
+		if (isMovable() && object.isMovable() && object.getRepresentation() instanceof Circle) {
+			// handle ball to ball collision
+			double dx = this.getPosition().getX() - object.getPosition().getX();
+			double dy = this.getPosition().getY() - object.getPosition().getY();
+	
+			// Get the radii of the balls
+			double r0 = ((Circle) this.getRepresentation()).getWidth();
+			double r1 = ((Circle) object.getRepresentation()).getWidth();
+	
+			// If the balls are intersecting, do nothing
+			if (Math.sqrt(dx * dx + dy * dy) < (r0 + r1)/2) {
+				return;
 			}
+	
+			double angle = Math.atan2(dy, dx);
+			double sin = Math.sin(angle);
+			double cos = Math.cos(angle);
+	
+			// Rotate velocities to line up with collision angle
+			double vel0 = (this.getSpeed().getX() * cos + this.getSpeed().getY() * sin);
+			double vel1 = (object.getSpeed().getX() * cos + object.getSpeed().getY() * sin);
+	
+			// Get the masses of the balls
+			double m0 = this.getMass();
+			double m1 = object.getMass();
+	
+			// Collision reaction along the normal
+			double velocityX0 = (m0 == m1) ? vel0 : ((m0 - m1) / (m0 + m1)) * vel0 + ((2 * m1) / (m0 + m1)) * vel1;
+	
+			// Velocities along the tangent remain the same
+			double velocityY0 = this.getSpeed().getY() * cos - this.getSpeed().getX() * sin;
+	
+			// Rotate velocities back
+			this.getSpeed().setX(velocityX0 * cos - velocityY0 * sin);
+			this.getSpeed().setY(velocityY0 * cos + velocityX0 * sin);
+		}else if (isMovable() && object.getRepresentation() instanceof Circle) {
+            // If the other object is not movable, reverse the direction of this object
+            this.getSpeed().setX(-this.getSpeed().getX());
+            this.getSpeed().setY(-this.getSpeed().getY());
+        }else{
+			super.resolveCollision(object);
 		}
 	}
 
@@ -218,7 +251,9 @@ public class Ball extends Entity  {
 				this.opacity = opacity;
 			}
 		}
+	
 		
+	
 	
 		public LinkedList<TrailPoint> points = new LinkedList<>();
 		private static final double OPACITY_DECREMENT = 0.1;
@@ -251,7 +286,10 @@ public class Ball extends Entity  {
 			points.clear();
 		}
 
-		}
+	
+	}
+
+
 
 
 	
