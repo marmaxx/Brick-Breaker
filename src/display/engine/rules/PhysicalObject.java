@@ -189,6 +189,7 @@ public boolean isColliding(PhysicalObject objectB) {
             Circle circle1 = (Circle) this.getRepresentation();
             Circle circle2 = (Circle) objectB.getRepresentation();
     
+
             double distance = Math.sqrt(Math.pow(circle2.getCenterX() - circle1.getCenterX(), 2) + Math.pow(circle2.getCenterY() - circle1.getCenterY(), 2));
             return distance <= (circle1.getWidth() + circle2.getWidth());
         }
