@@ -257,7 +257,6 @@ public class Level implements Serializable {
      */
     public static void createLevel5(Breakout b) {
 		Planet planet = new Planet (Planet.PLANET_IMAGE, 100, 750, new Vector2D(500, 300), false, 5);
-		b.setPlanet(planet);
 		b.getPlanets().add(planet);
 		b.getPhysicEngine().getPhysicalObjects().add(planet);
 		b.getGameFrame().getGamePanel().getGameZone().add(planet.getRepresentation());

@@ -18,7 +18,6 @@ public class PhysicsEngine implements Serializable{
     public static double rebondForce = 100;
     public static double FRICTION_COEFFICIENT = 0.5;
     private List<PhysicalObject> physicalObjects;
-    private int compteurPlanete=0;
 
     /**
      * Create a new PhysicsEngine

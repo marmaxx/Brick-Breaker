@@ -60,7 +60,6 @@ public class Breakout extends Game {
 	private ArrayList<Planet> planets;
 	private Player player;
 	private Ball ball;
-	private static Planet planete;
 	private Wall eastWall, northWall, westWall;
 	private static final int WALL_WIDTH = 5;
 	// init at 1 because it takes time to initialize the list of bricks 
@@ -80,7 +79,7 @@ public class Breakout extends Game {
 	}
 
 
-	private static PhysicsEngine physicEngine = new PhysicsEngine();
+	private PhysicsEngine physicEngine = new PhysicsEngine();
 	
 	private int level = 0;
 
@@ -170,6 +169,7 @@ public class Breakout extends Game {
 		super.setMaxFPS(DEFAULT_FPS);
 		super.setVSync(true);
 
+
 		this.load();
 		this.level=level;
 
@@ -186,7 +186,12 @@ public class Breakout extends Game {
 	 */
 	private void load(){
 		this.getPanel().getGameZone().add(this.getPlayer().getRepresentation());
-		this.getPanel().getGameZone().add(planete.getRepresentation());
+
+		for (Planet planete : this.getPlanets()){
+			if(planete.isActive()) planete.getRepresentation().setImage(Planet.PLANET_IMAGE);
+			this.getPanel().getGameZone().add(planete.getRepresentation());
+		}
+		
 		this.getBall().getRepresentation().setImage(Ball.DEFAULT_IMAGE2);
 		for (Ball ball : this.getBalls()){
 			this.getPanel().getGameZone().add(ball.getRepresentation());
@@ -549,9 +554,6 @@ public class Breakout extends Game {
 		this.trollLevel = troll;
 	}
 
-	public void setPlanet(Planet planet){
-		planete = planet;
-	}
 
 	
 	public void createBricks(int rows, int columns){
@@ -686,7 +688,7 @@ public class Breakout extends Game {
 		while (iterator.hasNext()) {
 			Planet planet = iterator.next();
 			if (!planet.isActive()){
-				this.getPhysicEngine().getPhysicalObjects().remove(planete);
+				this.getPhysicEngine().getPhysicalObjects().remove(planet);
 				iterator.remove();
 			}
 		}
