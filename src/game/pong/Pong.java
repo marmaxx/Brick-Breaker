@@ -11,11 +11,18 @@ import game.pong.entities.Ball;
 import game.pong.entities.Wall;
 import game.rules.Game;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import display.view.*;
 import display.view.brickbreakerview.GamePanel;
 
 public class Pong extends Game{
 	
+	public static final Dimension SCREEN_FULL_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    static double ratio = Scale.getRatioForResolution(SCREEN_FULL_SIZE.getWidth(), SCREEN_FULL_SIZE.getHeight());
+    int scale = (int) (SCREEN_FULL_SIZE.getWidth() / SCREEN_FULL_SIZE.getHeight() * ratio);
+
 	// Path to the assets folder
 	public final static String ASSETS_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator 
 	+ "game" + File.separator + "pong" + File.separator + "assets" + File.separator;
@@ -42,21 +49,21 @@ public class Pong extends Game{
 		this.gameframe = gameFrame;
 		this.gameframe.setGame(this);
 		// to set the entities that will be needed for the game
-		this.setPlayer0(new Player(Player.DEFAULT_IMAGE, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 0,new Vector2D(0 + WALL_WIDTH + 10, 400),false));
-		this.setPlayer1(new Player(Player.DEFAULT_IMAGE, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 0,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth() - 2*WALL_WIDTH - 10, 400),false));
-		Ball ball = new Ball(game.pong.entities.Ball.DEFAULT_IMAGE,  30, 50,new Vector2D(500,400),true);
+		this.setPlayer0(new Player(Player.DEFAULT_IMAGE, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 0,new Vector2D(WALL_WIDTH + 10, (int)(ratio * 20)),false));
+		this.setPlayer1(new Player(Player.DEFAULT_IMAGE, Player.DEFAULT_SIZE,Player.DEFAULT_SPEED, 0,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth() - 2*WALL_WIDTH - 10, (int)(ratio * 20)),false));
+		Ball ball = new Ball(game.pong.entities.Ball.DEFAULT_IMAGE,  30, 50,new Vector2D((int)(ratio * 30),(int)(ratio * 20)),true);
 		ball.setRotationCoeff(0.5);
 		// to set the ball
 		this.setBall(ball);
 		ball.active=false;
 		// to set the walls of the game which would be used as delimitation borders
-		this.setEastWall(new Wall(WALL_WIDTH, 800, 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false, true));
-		this.setWestWall(new Wall(WALL_WIDTH, 800,100,new Vector2D(0, 0),false, true));
+		this.setEastWall(new Wall(WALL_WIDTH, (int)(ratio * 40), 100,new Vector2D((int)GamePanel.GAME_ZONE_SIZE.getWidth()-WALL_WIDTH, 0),false, true));
+		this.setWestWall(new Wall(WALL_WIDTH, (int)(ratio * 40),100,new Vector2D(0, 0),false, true));
 		this.setNorthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, 0),false, false));
-		this.setSouthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, (int)GamePanel.GAME_ZONE_SIZE.getHeight()-3*WALL_WIDTH),false, false));
+		this.setSouthWall(new Wall((int)GamePanel.GAME_ZONE_SIZE.getWidth(), WALL_WIDTH,100,new Vector2D(0, (int)(ratio * 40)),false, false));
 		// to add the entities to the physic engine
 		this.physicEngine.getPhysicalObjects().add(ball);
-		this.physicEngine.getPhysicalObjects().add(northWall);	
+		this.physicEngine.getPhysicalObjects().add(northWall);
 		this.physicEngine.getPhysicalObjects().add(player0);
 		this.physicEngine.getPhysicalObjects().add(player1);
 		this.physicEngine.getPhysicalObjects().add(eastWall);
@@ -74,7 +81,7 @@ public class Pong extends Game{
 							// the reset key will just reset its position
 							//Pong.this.getBall().deleteBall(Pong.this);
 							Pong.this.getBall().deleteEntity(Pong.this);
-							Pong.this.getBall().respawnBall(Pong.this, 500, 400);
+							Pong.this.getBall().respawnBall(Pong.this, (int)(ratio * 30),(int)(ratio * 20));
 						}
 						// if the ball is not active but still the reset button is pressed
 						else { 
@@ -205,7 +212,7 @@ public class Pong extends Game{
 				this.setScore1(this.getscore1()+1);
 			}
 			this.getBall().deleteEntity(this);
-			this.getBall().respawnBall(this, 500, 400);
+			this.getBall().respawnBall(this, (int)(ratio * 30),(int)(ratio * 20));
 			this.getPanel().updateScore(this.getscore0(), this.getscore1());
 		}
 	}
