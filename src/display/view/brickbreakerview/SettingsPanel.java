@@ -114,7 +114,7 @@ public class SettingsPanel extends JPanel{
         this.paddleSpeedSlider.setBackground(new Color(0,0,0,0));
 
         this.submitButton.addActionListener((event) -> {
-            PhysicsEngine.GRAVITY_CONSTANT = (gravityValue/10);
+            PhysicsEngine.GRAVITY_CONSTANT = gravityValue;
             PhysicsEngine.rebondForce = reboundValue;
             PhysicsEngine.FRICTION_COEFFICIENT = frictionValue;
             Player.DEFAULT_SPEED= paddleSpeedValue;
